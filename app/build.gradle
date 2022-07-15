@@ -1,0 +1,133 @@
+plugins {
+    id "com.android.application"
+    id "com.google.devtools.ksp"
+    id "com.google.gms.google-services"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "kotlin-parcelize"
+    id "org.jetbrains.kotlin.android"
+    id "androidx.navigation.safeargs.kotlin"
+}
+
+android {
+    compileSdk 32
+    defaultConfig {
+        minSdk 26
+        targetSdk 32
+        versionCode 69
+        versionName "2.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] = "$projectDir/schemas".toString()
+                arguments["room.incremental"] = "true"
+                arguments["room.expandProjection"] = "true"
+            }
+        }
+    }
+    flavorDimensions "environment"
+    productFlavors {
+        development {
+            applicationId "com.castcle.android.dev"
+        }
+        production {
+            applicationId "com.castcle.android"
+        }
+        staging {
+            applicationId "com.castcle.android.stg"
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    applicationVariants.all { variant ->
+        variant.sourceSets.java.each {
+            it.srcDirs += "build/generated/ksp/${variant.name}/kotlin"
+        }
+    }
+}
+
+dependencies {
+
+    // Android
+    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "androidx.core:core-ktx:1.8.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+
+    // Dimension Resource
+    implementation "com.intuit.sdp:sdp-android:1.0.6"
+
+    // Facebook
+    implementation "com.facebook.android:facebook-android-sdk:13.1.0"
+
+    // Firebase
+    implementation "com.google.firebase:firebase-messaging-ktx"
+    implementation platform("com.google.firebase:firebase-bom:30.1.0")
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:4.13.1"
+    kapt "com.github.bumptech.glide:compiler:4.13.1"
+
+    // Google
+    implementation "com.google.android.gms:play-services-auth:20.2.0"
+    implementation "com.google.android.material:material:1.6.1"
+
+    // Koin
+    implementation "io.insert-koin:koin-android:3.2.0"
+    implementation "io.insert-koin:koin-annotations:1.0.0-beta-2"
+    ksp "io.insert-koin:koin-ksp-compiler:1.0.0-beta-2"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+
+    // Network
+    implementation "com.squareup.okhttp3:logging-interceptor"
+    implementation "com.squareup.okhttp3:okhttp"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation platform("com.squareup.okhttp3:okhttp-bom:4.9.3")
+
+    // Reactivex
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
+
+    // Room
+    implementation "androidx.room:room-ktx:2.4.2"
+    implementation "androidx.room:room-paging:2.4.2"
+    implementation "androidx.room:room-rxjava2:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+
+    // Shimmer Effect
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:5.0.1"
+
+    // Time Ago
+    implementation "com.github.perfomer:blitz:1.0.10"
+
+    // Twitter
+    implementation ("com.twitter.sdk.android:twitter:3.3.0") {
+        exclude group: "com.android.support"
+    }
+
+}

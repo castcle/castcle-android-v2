@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black_background_1">
+
+    <FrameLayout
+        android:id="@+id/flAvatar"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_margin="@dimen/_6sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_avatar" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flProvider2"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/flProvider1"
+        app:layout_constraintStart_toStartOf="@+id/flProvider1"
+        app:layout_constraintTop_toTopOf="@+id/flProvider1">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProvider2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/blue_twitter"
+            android:padding="@dimen/_4sdp"
+            app:srcCompat="@drawable/ic_twitter" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flProvider1"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintCircle="@+id/flAvatar"
+        app:layout_constraintCircleAngle="135"
+        app:layout_constraintCircleRadius="@dimen/_18sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProvider1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/blue_facebook"
+            android:padding="@dimen/_4sdp"
+            app:srcCompat="@drawable/ic_facebook" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

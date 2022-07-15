@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.castcle.android.presentation.home.HomeFragment">
+
+        <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toSettingFragment"
+            app:destination="@id/settingFragment" />
+
+        <action
+            android:id="@+id/toWhoToFollowFragment"
+            app:destination="@id/whoToFollowFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.castcle.android.presentation.login.LoginFragment" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.castcle.android.presentation.profile.ProfileFragment">
+
+        <argument
+            android:name="user"
+            app:argType="com.castcle.android.domain.user.entity.UserEntity" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.castcle.android.presentation.setting.SettingFragment">
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/whoToFollowFragment"
+        android:name="com.castcle.android.presentation.who_to_follow.WhoToFollowFragment">
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
+
+</navigation>

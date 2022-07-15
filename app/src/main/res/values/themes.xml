@@ -1,0 +1,285 @@
+<resources>
+
+    <style name="Theme.Castcle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/blue</item>
+        <item name="colorSecondaryVariant">@color/blue</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">@color/black_background_1</item>
+        <item name="enterAnim">@anim/slide_in_right</item>
+        <item name="exitAnim">@anim/slide_out_left</item>
+        <item name="popEnterAnim">@anim/slide_in_left</item>
+        <item name="popExitAnim">@anim/slide_out_right</item>
+    </style>
+
+    <style name="CastcleTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
+        <item name="buttonTint">@color/blue</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="colorControlActivated">@color/gray_4</item>
+        <item name="boxStrokeColor">@color/black_background_2</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxBackgroundColor">@color/black_background_3</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_25sdp</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/_25sdp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_25sdp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_25sdp</item>
+        <item name="android:cursorVisible">true</item>
+    </style>
+
+    <style name="AppTextKanit">
+        <item name="fontFamily">@font/kanit_regular</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="AppTextKanit.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextKanit.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextKanit.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextKanit.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextKanit.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextKanit.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextKanit.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold">
+        <item name="fontFamily">@font/kanit_bold</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="AppTextKanitBold.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight">
+        <item name="fontFamily">@font/kanit_light</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="AppTextKanitLight.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextKanitLight.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight">
+        <item name="fontFamily">@font/kanit_extralight</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="AppTextKanitExLight.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextKanitExLight.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextKanit.Active">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTextKanit.InActive">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="AppTextSarabun">
+        <item name="fontFamily">@font/sarabun_medium</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="AppTextSarabun.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold">
+        <item name="fontFamily">@font/sarabun_bold</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="AppTextSarabunBold.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextSarabunBold.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight">
+        <item name="fontFamily">@font/sarabun_light</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="AppTextSarabunLight.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextSarabunLight.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
+
+    <style name="AppTextSarabun.Active">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTextSarabun.InActive">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+</resources>

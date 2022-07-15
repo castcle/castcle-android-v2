@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_4sdp"
+    android:background="@color/black_background_2"
+    app:shimmer_auto_start="true"
+    app:shimmer_direction="left_to_right"
+    app:shimmer_dropoff="@integer/material_motion_duration_medium_1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/ivPreviewAvatar"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_margin="@dimen/_12sdp"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/ivPreviewDisplayName"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_23sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintBottom_toBottomOf="@+id/ivPreviewAvatar"
+            app:layout_constraintStart_toEndOf="@id/ivPreviewAvatar" />
+
+        <View
+            android:id="@+id/ivPreviewDateTime"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_9sdp"
+            android:layout_marginTop="@dimen/_22sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintStart_toStartOf="@id/ivPreviewDisplayName"
+            app:layout_constraintTop_toTopOf="@id/ivPreviewAvatar" />
+
+        <View
+            android:id="@+id/ivPreviewContent1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_17sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivPreviewAvatar"
+            app:layout_constraintTop_toBottomOf="@id/ivPreviewAvatar" />
+
+        <View
+            android:id="@+id/ivPreviewContent2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivPreviewAvatar"
+            app:layout_constraintTop_toBottomOf="@id/ivPreviewContent1" />
+
+        <View
+            android:id="@+id/ivPreviewContent3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivPreviewAvatar"
+            app:layout_constraintTop_toBottomOf="@id/ivPreviewContent2" />
+
+        <View
+            android:id="@+id/ivPreviewContent4"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintStart_toStartOf="@id/ivPreviewAvatar"
+            app:layout_constraintTop_toBottomOf="@id/ivPreviewContent3" />
+
+        <View
+            android:id="@+id/ivPreviewUrlImage"
+            android:layout_width="@dimen/_72sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivPreviewAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/ivPreviewContent4" />
+
+        <View
+            android:id="@+id/ivPreviewUrlContent1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivPreviewUrlImage"
+            app:layout_constraintTop_toTopOf="@+id/ivPreviewUrlImage" />
+
+        <View
+            android:id="@+id/ivPreviewUrlContent2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivPreviewUrlImage"
+            app:layout_constraintTop_toBottomOf="@+id/ivPreviewUrlContent1" />
+
+        <View
+            android:id="@+id/ivPreviewUrlContent3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivPreviewUrlImage"
+            app:layout_constraintTop_toBottomOf="@+id/ivPreviewUrlContent2" />
+
+        <View
+            android:id="@+id/ivPreviewUrlContent4"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/bg_corner_8dp"
+            android:backgroundTint="@color/gray_1"
+            app:layout_constraintStart_toEndOf="@id/ivPreviewUrlImage"
+            app:layout_constraintTop_toBottomOf="@+id/ivPreviewUrlContent3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

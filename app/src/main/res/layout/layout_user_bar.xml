@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_background_2">
+
+    <FrameLayout
+        android:id="@+id/flAvatar"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_margin="@dimen/_12sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_avatar" />
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivPublic"
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDateTime"
+        app:layout_constraintStart_toStartOf="@id/tvDisplayName"
+        app:layout_constraintTop_toTopOf="@+id/tvDateTime"
+        app:srcCompat="@drawable/ic_public" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xxSmall"
+        android:id="@+id/tvDateTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textColor="@color/gray_3"
+        app:layout_constraintEnd_toStartOf="@+id/ivOption"
+        app:layout_constraintStart_toEndOf="@+id/ivPublic"
+        app:layout_constraintTop_toTopOf="@id/flAvatar"
+        tools:text="March 2, 1995" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:ellipsize="end"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
+        android:maxLines="1"
+        android:padding="@dimen/_4sdp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
+        app:layout_constraintEnd_toStartOf="@+id/ivOfficial"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/flAvatar"
+        tools:text="Prakan Sornbootnark" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivOfficial"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:padding="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="@id/tvDisplayName"
+        app:layout_constraintEnd_toStartOf="@+id/tvFollow"
+        app:layout_constraintStart_toEndOf="@id/tvDisplayName"
+        app:layout_constraintTop_toTopOf="@id/tvDisplayName"
+        app:srcCompat="@drawable/ic_official" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp"
+        android:text="@string/follow"
+        android:textColor="@color/blue"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvDisplayName"
+        app:layout_constraintEnd_toStartOf="@+id/ivOption"
+        app:layout_constraintStart_toEndOf="@id/ivOfficial"
+        app:layout_constraintTop_toTopOf="@id/tvDisplayName" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivOption"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flAvatar"
+        app:srcCompat="@drawable/ic_option" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
