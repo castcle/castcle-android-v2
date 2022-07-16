@@ -33,6 +33,7 @@
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.2845" />
         <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_castcle.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.373" />
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_discord.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.394" />
@@ -53,8 +54,10 @@
         <entry key="app/src/main/res/drawable/ic_public.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_recast.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.373" />
         <entry key="app/src/main/res/drawable/ic_signal.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_telegram.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_top_trends.xml" value="0.316" />
         <entry key="app/src/main/res/drawable/ic_twitter.xml" value="0.394" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_wallet.xml" value="0.394" />
@@ -73,7 +76,7 @@
         <entry key="app/src/main/res/layout/item_feed_image_2.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_image_3.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_feed_image_4.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.5276041666666667" />
+        <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.7942332896461337" />
         <entry key="app/src/main/res/layout/item_feed_quote.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_recast.xml" value="0.5519379844961241" />
         <entry key="app/src/main/res/layout/item_feed_suggestion_follow.xml" value="0.5286458333333334" />
@@ -81,6 +84,7 @@
         <entry key="app/src/main/res/layout/item_feed_web.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_who_to_follow.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_load_state_feed.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_loading.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_cast.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_profile.xml" value="0.67" />
@@ -94,6 +98,9 @@
         <entry key="app/src/main/res/layout/item_setting_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_setting_profile_section.xml" value="0.5183861082737488" />
         <entry key="app/src/main/res/layout/item_setting_verify_email.xml" value="0.5479166666666667" />
+        <entry key="app/src/main/res/layout/item_top_trends.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_top_trends_search.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_top_trends_title.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_who_to_follow.xml" value="0.34894398530762166" />
         <entry key="app/src/main/res/layout/layout_action_bar.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_bottom_navigation.xml" value="0.5286458333333334" />
@@ -103,6 +110,9 @@
         <entry key="app/src/main/res/layout/layout_load_state_refresh_item.xml" value="0.67" />
         <entry key="app/src/main/res/layout/layout_participate_bar.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/layout_recycler_view.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/layout_recycler_view_with_search_bar.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/layout_search.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/layout_search_bar.xml" value="0.67" />
         <entry key="app/src/main/res/layout/layout_shrimmer_cast.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_shrimmer_user_profile.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/layout_user_bar.xml" value="0.5" />

@@ -5,6 +5,7 @@
     <string name="advertised">Advertised</string>
     <string name="app_name">Castcle</string>
     <string name="casts">Casts</string>
+    <string name="cast_count">%s Cast</string>
     <string name="copy_message">Copy message</string>
     <string name="docs">Docs</string>
     <string name="edit_page">Edit Page</string>
@@ -39,6 +40,7 @@
     <string name="password">Password</string>
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="rank_trending">%d. Trending</string>
     <string name="read_more"> …Read more</string>
     <string name="retry">Retry</string>
     <string name="search">Search</string>
@@ -48,6 +50,8 @@
     <string name="whats_on_your_mind">What\'s on your mind\?</string>
     <string name="who_to_follow">Who to follow</string>
     <string name="whitepaper">Whitepaper</string>
+    <string name="world_trends_search">World trends search</string>
+    <string name="world_trends_title">Top 10 World Trends</string>
     <string name="you_recasted">You recasted</string>
     <string name="user_recasted">%s recasted</string>
     <string name="version">Version %s (%s)</string>

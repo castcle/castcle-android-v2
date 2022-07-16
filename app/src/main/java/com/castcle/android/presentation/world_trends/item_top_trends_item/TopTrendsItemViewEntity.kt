@@ -1,0 +1,28 @@
+package com.castcle.android.presentation.world_trends.item_top_trends_item
+
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
+import com.castcle.android.domain.search.entity.TopTrendsEntity
+
+class TopTrendsItemViewEntity(
+    val trend: TopTrendsEntity = TopTrendsEntity(),
+    override val uniqueId: String = "",
+) : CastcleViewEntity {
+
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<TopTrendsItemViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<TopTrendsItemViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_top_trends_item
+
+    companion object {
+        fun map(entity: TopTrendsEntity): CastcleViewEntity = TopTrendsItemViewEntity(
+            trend = entity,
+            uniqueId = entity.slug,
+        )
+    }
+
+}

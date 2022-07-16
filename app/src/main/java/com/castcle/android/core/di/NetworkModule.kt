@@ -3,10 +3,8 @@ package com.castcle.android.core.di
 import android.content.Context
 import com.castcle.android.BuildConfig
 import com.castcle.android.R
-import com.castcle.android.core.api.*
 import com.castcle.android.core.constants.NETWORK_TIMEOUT
 import com.castcle.android.core.interceptor.NetworkInterceptor
-import com.castcle.android.core.storage.app_config.AppConfig
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,17 +42,5 @@ val networkModule = module {
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
-    }
-    single {
-        get<Retrofit>().create(AuthenticationApi::class.java).also { get<AppConfig>().api = it }
-    }
-    single {
-        get<Retrofit>().create(FeedApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(NotificationApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(UserApi::class.java)
     }
 }

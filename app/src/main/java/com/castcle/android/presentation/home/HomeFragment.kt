@@ -5,7 +5,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseBottomNavigationFragment
 import com.castcle.android.core.extensions.cast
 import com.castcle.android.presentation.feed.FeedFragment
-import com.castcle.android.presentation.search.SearchFragment
+import com.castcle.android.presentation.world_trends.TopTrendsFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemReselectedListener {
@@ -17,7 +17,7 @@ class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemRes
             fragment = listOf(
                 R.id.feed to FeedFragment.newInstance(),
                 R.id.new_cast to null,
-                R.id.search to SearchFragment.newInstance(),
+                R.id.search to TopTrendsFragment.newInstance(),
             ),
         )
         setIconWithoutTint(index = 1, drawableId = R.drawable.ic_new_cast)
@@ -28,6 +28,10 @@ class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemRes
         if (item.itemId == R.id.feed) {
             childFragmentManager.fragments.find { it is FeedFragment }
                 ?.cast<FeedFragment>()
+                ?.scrollToTop()
+        } else if (item.itemId == R.id.search) {
+            childFragmentManager.fragments.find { it is TopTrendsFragment }
+                ?.cast<TopTrendsFragment>()
                 ?.scrollToTop()
         }
     }

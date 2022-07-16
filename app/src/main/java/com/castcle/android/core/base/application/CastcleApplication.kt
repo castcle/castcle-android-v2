@@ -24,6 +24,7 @@ class CastcleApplication : Application() {
             androidLogger()
             modules(
                 ApplicationModule().module,
+                apiModule,
                 applicationModule,
                 networkModule,
                 storageModule,
