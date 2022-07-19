@@ -1,9 +1,9 @@
-package com.castcle.android.presentation.world_trends.item_top_trends_search
+package com.castcle.android.presentation.top_trends.item_top_trends_search
 
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.onClick
 import com.castcle.android.databinding.ItemTopTrendsSearchBinding
-import com.castcle.android.presentation.world_trends.TopTrendsListener
+import com.castcle.android.presentation.top_trends.TopTrendsListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 

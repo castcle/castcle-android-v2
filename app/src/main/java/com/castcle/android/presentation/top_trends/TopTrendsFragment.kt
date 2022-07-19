@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.world_trends
+package com.castcle.android.presentation.top_trends
 
 import android.os.Bundle
 import android.view.*
@@ -8,11 +8,11 @@ import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.presentation.world_trends.item_top_trends_item.TopTrendsItemViewRenderer
-import com.castcle.android.presentation.world_trends.item_top_trends_search.TopTrendsSearchViewRenderer
-import com.castcle.android.presentation.world_trends.item_top_trends_title.TopTrendsTitleViewRenderer
+import com.castcle.android.presentation.home.HomeFragmentDirections
+import com.castcle.android.presentation.top_trends.item_top_trends_item.TopTrendsItemViewRenderer
+import com.castcle.android.presentation.top_trends.item_top_trends_search.TopTrendsSearchViewRenderer
+import com.castcle.android.presentation.top_trends.item_top_trends_title.TopTrendsTitleViewRenderer
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import timber.log.Timber
 
 class TopTrendsFragment : BaseFragment(), TopTrendsListener {
 
@@ -37,7 +37,8 @@ class TopTrendsFragment : BaseFragment(), TopTrendsListener {
     }
 
     override fun onSearchClicked() {
-
+        HomeFragmentDirections.toSearchSuggestionFragment().navigate()
+        scrollToTop()
     }
 
     override fun onTrendClicked(keyword: String) {

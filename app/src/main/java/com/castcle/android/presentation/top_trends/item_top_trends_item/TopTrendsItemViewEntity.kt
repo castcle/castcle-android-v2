@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.world_trends.item_top_trends_item
+package com.castcle.android.presentation.top_trends.item_top_trends_item
 
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity

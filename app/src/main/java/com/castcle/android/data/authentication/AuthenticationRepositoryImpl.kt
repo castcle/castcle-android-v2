@@ -57,19 +57,8 @@ class AuthenticationRepositoryImpl(
         database.accessToken().insert(AccessTokenEntity.map(response))
     }
 
-
     override suspend fun loginWithEmail(body: LoginWithEmailRequest) {
-        val response = apiCall { api.loginWithEmail(body = body) }
-        val user = UserEntity.mapOwner(response?.profile)
-        val page = UserEntity.mapOwner(response?.pages)
-        val syncSocialUser = SyncSocialEntity.map(response?.profile)
-        val syncSocialPage = SyncSocialEntity.map(response?.pages)
-        val accessToken = AccessTokenEntity.map(response)
-        glidePreloader.loadUser(page.plus(user))
-        database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
-        database.user().upsert(page.plus(user))
-        database.accessToken().insert(accessToken)
-        registerFirebaseMessagingToken()
+        updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
     }
 
     override suspend fun loginWithFacebook() {
@@ -119,7 +108,10 @@ class AuthenticationRepositoryImpl(
     }
 
     override suspend fun loginWithSocial(body: LoginWithSocialRequest) {
-        val response = apiCall { api.loginWithSocial(body = body) }
+        updateWhenLoginSuccess(apiCall { api.loginWithSocial(body = body) })
+    }
+
+    private suspend fun updateWhenLoginSuccess(response: LoginResponse?) {
         val user = UserEntity.mapOwner(response?.profile)
         val page = UserEntity.mapOwner(response?.pages)
         val syncSocialUser = SyncSocialEntity.map(response?.profile)

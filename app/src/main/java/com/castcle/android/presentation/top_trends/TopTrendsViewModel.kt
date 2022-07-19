@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.world_trends
+package com.castcle.android.presentation.top_trends
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -8,9 +8,9 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
 import com.castcle.android.domain.search.SearchRepository
-import com.castcle.android.presentation.world_trends.item_top_trends_item.TopTrendsItemViewEntity
-import com.castcle.android.presentation.world_trends.item_top_trends_search.TopTrendsSearchViewEntity
-import com.castcle.android.presentation.world_trends.item_top_trends_title.TopTrendsTitleViewEntity
+import com.castcle.android.presentation.top_trends.item_top_trends_item.TopTrendsItemViewEntity
+import com.castcle.android.presentation.top_trends.item_top_trends_search.TopTrendsSearchViewEntity
+import com.castcle.android.presentation.top_trends.item_top_trends_title.TopTrendsTitleViewEntity
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel

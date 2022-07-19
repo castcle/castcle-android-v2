@@ -28,13 +28,13 @@ android {
     flavorDimensions "environment"
     productFlavors {
         development {
-            applicationId "com.castcle.android.dev"
+            applicationId "com.castcle.android.dev.v2"
         }
         production {
             applicationId "com.castcle.android"
         }
         staging {
-            applicationId "com.castcle.android.stg"
+            applicationId "com.castcle.android.stg.v2"
         }
     }
     buildFeatures {
@@ -65,7 +65,7 @@ dependencies {
     // Android
     implementation "androidx.appcompat:appcompat:1.4.2"
     implementation "androidx.core:core-ktx:1.8.0"
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
 
@@ -93,8 +93,8 @@ dependencies {
     ksp "io.insert-koin:koin-ksp-compiler:1.0.0-beta-2"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.0"
 
     // Network
     implementation "com.squareup.okhttp3:logging-interceptor"
