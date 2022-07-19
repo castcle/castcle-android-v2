@@ -54,7 +54,7 @@
     <string name="world_trends_title">Top 10 World Trends</string>
     <string name="you_recasted">You recasted</string>
     <string name="user_recasted">%s recasted</string>
-    <string name="version">Version %s (%s)</string>
+    <string name="version">Castcle Version %s (%s)</string>
     <string name="view_page">View Page</string>
     <string name="view_profile">View Profile</string>
 </resources>

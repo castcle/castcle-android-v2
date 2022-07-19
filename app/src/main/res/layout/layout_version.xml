@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_background_1">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvJoinUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/join_us"
+        android:textColor="@color/blue"
+        app:layout_constraintEnd_toStartOf="@+id/viewDivider1"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvVersion" />
+
+    <View
+        android:id="@+id/viewDivider1"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:background="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvJoinUs"
+        app:layout_constraintEnd_toStartOf="@+id/tvDocs"
+        app:layout_constraintStart_toEndOf="@+id/tvJoinUs"
+        app:layout_constraintTop_toTopOf="@+id/tvJoinUs" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvDocs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/docs"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvJoinUs"
+        app:layout_constraintEnd_toStartOf="@+id/viewDivider2"
+        app:layout_constraintStart_toEndOf="@+id/viewDivider1"
+        app:layout_constraintTop_toTopOf="@+id/tvJoinUs" />
+
+    <View
+        android:id="@+id/viewDivider2"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:background="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvJoinUs"
+        app:layout_constraintEnd_toStartOf="@+id/tvWhitepaper"
+        app:layout_constraintStart_toEndOf="@+id/tvDocs"
+        app:layout_constraintTop_toTopOf="@+id/tvJoinUs" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvWhitepaper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/whitepaper"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvJoinUs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewDivider2"
+        app:layout_constraintTop_toTopOf="@+id/tvJoinUs" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/terms_of_service"
+        android:textColor="@color/blue"
+        app:layout_constraintEnd_toStartOf="@+id/viewDivider3"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvJoinUs" />
+
+    <View
+        android:id="@+id/viewDivider3"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:background="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTerms"
+        app:layout_constraintEnd_toStartOf="@+id/tvPrivacy"
+        app:layout_constraintStart_toEndOf="@+id/tvTerms"
+        app:layout_constraintTop_toTopOf="@+id/tvTerms" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvPrivacy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:text="@string/privacy_policy"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTerms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewDivider3"
+        app:layout_constraintTop_toTopOf="@+id/tvTerms" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFacebook"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivTwitter"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTerms"
+        app:srcCompat="@drawable/ic_facebook"
+        app:tint="@color/gray_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTwitter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFacebook"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/ivMedium"
+        app:layout_constraintStart_toEndOf="@+id/ivFacebook"
+        app:layout_constraintTop_toTopOf="@+id/ivFacebook"
+        app:srcCompat="@drawable/ic_twitter"
+        app:tint="@color/gray_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivMedium"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFacebook"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/ivTelegram"
+        app:layout_constraintStart_toEndOf="@+id/ivTwitter"
+        app:layout_constraintTop_toTopOf="@+id/ivFacebook"
+        app:srcCompat="@drawable/ic_medium"
+        app:tint="@color/gray_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTelegram"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFacebook"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/ivGithub"
+        app:layout_constraintStart_toEndOf="@+id/ivMedium"
+        app:layout_constraintTop_toTopOf="@+id/ivFacebook"
+        app:srcCompat="@drawable/ic_telegram"
+        app:tint="@color/gray_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivGithub"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFacebook"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/ivDiscord"
+        app:layout_constraintStart_toEndOf="@+id/ivTelegram"
+        app:layout_constraintTop_toTopOf="@+id/ivFacebook"
+        app:srcCompat="@drawable/ic_github"
+        app:tint="@color/gray_6" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDiscord"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFacebook"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivGithub"
+        app:layout_constraintTop_toTopOf="@+id/ivTelegram"
+        app:srcCompat="@drawable/ic_discord"
+        app:tint="@color/gray_6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

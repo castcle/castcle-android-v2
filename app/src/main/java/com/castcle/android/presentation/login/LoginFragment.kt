@@ -115,6 +115,10 @@ class LoginFragment : BaseFragment(), LoginListener {
         })
     }
 
+    override fun onUrlClicked(url: String) {
+        openUrl(url)
+    }
+
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(LoginViewRenderer())

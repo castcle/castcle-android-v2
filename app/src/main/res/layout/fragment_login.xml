@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="1"
-        tools:listitem="@layout/item_feed_text" />
+        tools:listitem="@layout/item_login" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivClose"

@@ -18,7 +18,7 @@ class SettingLogoutViewHolder(
 ) : CastcleViewHolder<SettingLogoutViewEntity>(binding.root) {
 
     init {
-        binding.tvVersion.text = context().getString(
+        binding.version.tvVersion.text = context().getString(
             R.string.version,
             BuildConfig.VERSION_NAME,
             BuildConfig.VERSION_CODE,
@@ -26,37 +26,37 @@ class SettingLogoutViewHolder(
         compositeDisposable += binding.tvLogout.onClick {
             listener.onLogoutClick()
         }
-        compositeDisposable += binding.ivFacebook.onClick {
+        compositeDisposable += binding.version.ivFacebook.onClick {
             listener.onUrlClicked(URL_FACEBOOK)
         }
-        compositeDisposable += binding.ivTwitter.onClick {
+        compositeDisposable += binding.version.ivTwitter.onClick {
             listener.onUrlClicked(URL_TWITTER)
         }
-        compositeDisposable += binding.ivMedium.onClick {
+        compositeDisposable += binding.version.ivMedium.onClick {
             listener.onUrlClicked(URL_MEDIUM)
         }
-        compositeDisposable += binding.ivTelegram.onClick {
+        compositeDisposable += binding.version.ivTelegram.onClick {
             listener.onUrlClicked(URL_TELEGRAM)
         }
-        compositeDisposable += binding.ivGithub.onClick {
+        compositeDisposable += binding.version.ivGithub.onClick {
             listener.onUrlClicked(URL_GITHUB)
         }
-        compositeDisposable += binding.ivDiscord.onClick {
+        compositeDisposable += binding.version.ivDiscord.onClick {
             listener.onUrlClicked(URL_DISCORD)
         }
-        compositeDisposable += binding.tvJoinUs.onClick {
+        compositeDisposable += binding.version.tvJoinUs.onClick {
             listener.onUrlClicked(URL_JOIN_US)
         }
-        compositeDisposable += binding.tvDocs.onClick {
+        compositeDisposable += binding.version.tvDocs.onClick {
             listener.onUrlClicked(URL_DOCS)
         }
-        compositeDisposable += binding.tvWhitepaper.onClick {
+        compositeDisposable += binding.version.tvWhitepaper.onClick {
             listener.onUrlClicked(URL_WHITE_PAPER)
         }
-        compositeDisposable += binding.tvTerms.onClick {
+        compositeDisposable += binding.version.tvTerms.onClick {
             listener.onUrlClicked(URL_TERMS_OF_SERVICE)
         }
-        compositeDisposable += binding.tvPrivacy.onClick {
+        compositeDisposable += binding.version.tvPrivacy.onClick {
             listener.onUrlClicked(URL_PRIVACY_POLICY)
         }
     }
