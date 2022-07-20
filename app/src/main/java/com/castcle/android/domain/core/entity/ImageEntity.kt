@@ -19,8 +19,8 @@ data class ImageEntity(
                 null
             } else {
                 ImageEntity(
-                    original = response?.original ?: "",
-                    thumbnail = response?.thumbnail ?: "",
+                    original = response?.original ?: response?.thumbnail ?: "",
+                    thumbnail = response?.thumbnail ?: response?.original ?: "",
                 )
             }
         }
