@@ -4,20 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_4sdp"
-    android:background="@color/black_background_2">
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_corner_16dp"
-        android:backgroundTint="@color/black_background_3"
-        app:layout_constraintBottom_toBottomOf="@+id/tvHint"
-        app:layout_constraintEnd_toEndOf="@+id/tvHint"
-        app:layout_constraintStart_toStartOf="@+id/tvHint"
-        app:layout_constraintTop_toTopOf="@+id/tvHint" />
+    android:background="@color/black_background_3">
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/AppTextKanitLight.Small"
+        style="@style/AppTextSarabunLight.Small"
         android:id="@+id/tvHint"
         android:layout_width="0dp"
         android:layout_height="@dimen/_32sdp"
@@ -30,9 +20,9 @@
         android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_4sdp"
-        android:text="@string/whats_on_your_mind"
-        android:textColor="@color/gray_4"
+        android:paddingEnd="@dimen/_16sdp"
+        android:text="@string/whats_new_today"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/flAvatar"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +34,7 @@
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:background="@drawable/bg_circle"
-        android:backgroundTint="@color/black_background_1"
+        android:backgroundTint="@color/white"
         android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_1sdp"
         app:layout_constraintBottom_toBottomOf="@+id/tvHint"

@@ -77,7 +77,7 @@
         <entry key="app/src/main/res/layout/item_feed_image_2.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_image_3.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_feed_image_4.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.7942332896461337" />
+        <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.75" />
         <entry key="app/src/main/res/layout/item_feed_quote.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_recast.xml" value="0.5519379844961241" />
         <entry key="app/src/main/res/layout/item_feed_suggestion_follow.xml" value="0.5286458333333334" />
