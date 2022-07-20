@@ -29,7 +29,8 @@ class ScaleCenterCrop(
 
     override fun equals(other: Any?): Boolean {
         if (other is ScaleCenterCrop) {
-            return scaleWidth == scaleWidth && scaleHeight == other.scaleHeight
+            return scaleWidth == other.scaleWidth &&
+                scaleHeight == other.scaleHeight
         }
         return false
     }

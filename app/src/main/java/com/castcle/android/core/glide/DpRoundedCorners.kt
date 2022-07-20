@@ -38,8 +38,7 @@ class DpRoundedCorners(
 
     override fun equals(other: Any?): Boolean {
         if (other is DpRoundedCorners) {
-            return context == context &&
-                viewSizePx == other.viewSizePx &&
+            return viewSizePx == other.viewSizePx &&
                 cornersSizeId == other.cornersSizeId &&
                 enableTopLeft == other.enableTopLeft &&
                 enableTopRight == other.enableTopRight &&

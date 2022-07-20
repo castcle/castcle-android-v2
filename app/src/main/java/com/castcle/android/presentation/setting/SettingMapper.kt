@@ -3,7 +3,6 @@ package com.castcle.android.presentation.setting
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.constants.URL_ABOUT_US
-import com.castcle.android.core.constants.URL_PRIVACY_POLICY
 import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
 import com.castcle.android.domain.user.entity.UserWithSyncSocialEntity
 import com.castcle.android.domain.user.type.UserType
@@ -53,12 +52,6 @@ class SettingMapper {
                 menu = R.string.account,
                 menuIcon = R.drawable.ic_user,
                 uniqueId = "${R.string.account}",
-            ),
-            SettingMenuViewEntity(
-                action = { it.onUrlClicked(URL_PRIVACY_POLICY) },
-                menu = R.string.privacy,
-                menuIcon = R.drawable.ic_privacy,
-                uniqueId = "${R.string.privacy}",
             ),
             SettingMenuViewEntity(
                 action = { it.onUrlClicked(URL_ABOUT_US) },
