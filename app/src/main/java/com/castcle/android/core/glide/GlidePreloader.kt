@@ -31,7 +31,7 @@ class GlidePreloader(private val context: Context) {
     private fun startPreload(url: String?) {
         if (!url.isNullOrBlank()) {
             GlideApp.with(context)
-                .load(url)
+                .load(GlideUrlWithQueryParameter(url))
                 .preload()
         }
     }

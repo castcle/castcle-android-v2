@@ -69,14 +69,14 @@ class FeedImage2ViewHolder(
         binding.ivImage1.loadCenterCropWithRoundedCorners(
             thumbnailUrl = item.cast.image.getOrNull(0)?.thumbnail,
             url = item.cast.image.getOrNull(0)?.original,
-            viewSizeDp = screenWidthPx().minus(dimenPx(com.intuit.sdp.R.dimen._28sdp)).div(2),
+            viewSizeDp = screenWidthPx().minus(dimenPx(com.intuit.sdp.R.dimen._24sdp)).div(2),
             enableTopRight = false,
             enableBottomRight = false,
         )
         binding.ivImage2.loadCenterCropWithRoundedCorners(
             thumbnailUrl = item.cast.image.getOrNull(1)?.thumbnail,
             url = item.cast.image.getOrNull(1)?.original,
-            viewSizeDp = screenWidthPx().minus(dimenPx(com.intuit.sdp.R.dimen._28sdp)).div(2),
+            viewSizeDp = screenWidthPx().minus(dimenPx(com.intuit.sdp.R.dimen._24sdp)).div(2),
             enableTopLeft = false,
             enableBottomLeft = false,
         )

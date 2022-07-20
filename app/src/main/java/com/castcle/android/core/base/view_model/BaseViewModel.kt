@@ -13,8 +13,8 @@ abstract class BaseViewModel : ViewModel() {
     fun launch(
         onError: (Throwable) -> Unit = { Timber.e(it) },
         action: suspend () -> Unit
-    ) {
-        viewModelScope
+    ): Job {
+        return viewModelScope
             .plus(CoroutineExceptionHandler { _, throwable -> onError(throwable) })
             .launch(Dispatchers.IO) { action() }
     }

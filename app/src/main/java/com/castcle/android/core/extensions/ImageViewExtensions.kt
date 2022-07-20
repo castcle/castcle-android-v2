@@ -1,38 +1,20 @@
 package com.castcle.android.core.extensions
 
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.bumptech.glide.signature.ObjectKey
 import com.castcle.android.R
 import com.castcle.android.core.glide.*
 
 fun ImageView.loadAvatarImage(imageUrl: String?) {
-    val uniqueId = imageUrl?.split("?")
-        ?.firstOrNull()
-        ?: imageUrl
-        ?: ""
     GlideApp.with(context).clear(this)
     GlideApp.with(context)
-        .load(imageUrl ?: R.drawable.ic_avatar)
-        .signature(ObjectKey(uniqueId))
+        .load(GlideUrlWithQueryParameter(imageUrl))
         .error(R.drawable.ic_avatar)
         .placeholder(R.drawable.ic_avatar)
         .circleCrop()
-        .dontAnimate()
-        .into(object : CustomTarget<Drawable>() {
-            override fun onLoadCleared(placeholder: Drawable?) {
-                setImageDrawable(placeholder)
-            }
-
-            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                setImageDrawable(resource)
-            }
-        })
+        .into(this)
 }
 
 fun ImageView.loadImage(
@@ -54,13 +36,13 @@ fun ImageView.loadScaleCenterCrop(
     )
     val thumbnail = GlideApp.with(context)
         .asDrawable()
-        .load(thumbnailUrl)
+        .load(GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(scaleCenterCrop)
     val error = GlideApp.with(context)
         .load(R.drawable.ic_image)
         .transform(scaleCenterCrop)
     GlideApp.with(context)
-        .load(url)
+        .load(GlideUrlWithQueryParameter(url))
         .thumbnail(thumbnail)
         .placeholder(R.drawable.ic_image)
         .transform(scaleCenterCrop)
@@ -115,12 +97,12 @@ fun ImageView.loadCenterCropWithRoundedCorners(
         .load(R.drawable.ic_image)
         .transform(centerCrop, roundedCorners)
     val thumbnail = GlideApp.with(context)
-        .load(thumbnailUrl)
+        .load(GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(centerCrop, roundedCorners)
         .thumbnail(placeholder)
         .error(placeholder)
     GlideApp.with(context)
-        .load(url)
+        .load(GlideUrlWithQueryParameter(url))
         .transform(centerCrop, roundedCorners)
         .thumbnail(thumbnail)
         .error(placeholder)
@@ -149,12 +131,12 @@ fun ImageView.loadScaleCenterCropWithRoundedCorners(
         .load(R.drawable.ic_image)
         .transform(centerCrop, roundedCorners)
     val thumbnail = GlideApp.with(context)
-        .load(thumbnailUrl)
+        .load(GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(centerCrop, roundedCorners)
         .thumbnail(placeholder)
         .error(placeholder)
     GlideApp.with(context)
-        .load(url)
+        .load(GlideUrlWithQueryParameter(url))
         .transform(centerCrop, roundedCorners)
         .thumbnail(thumbnail)
         .error(placeholder)

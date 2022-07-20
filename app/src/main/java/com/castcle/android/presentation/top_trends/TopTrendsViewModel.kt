@@ -40,11 +40,11 @@ class TopTrendsViewModel(
     }
 
     fun saveItemsState(layoutManager: RecyclerView.LayoutManager) {
-        state.set(SAVE_STATE_RECYCLER_VIEW, layoutManager.onSaveInstanceState())
+        state[SAVE_STATE_RECYCLER_VIEW] = layoutManager.onSaveInstanceState()
     }
 
     fun restoreItemsState(layoutManager: RecyclerView.LayoutManager) {
-        layoutManager.onRestoreInstanceState(state.get(SAVE_STATE_RECYCLER_VIEW))
+        layoutManager.onRestoreInstanceState(state[SAVE_STATE_RECYCLER_VIEW])
     }
 
     companion object {

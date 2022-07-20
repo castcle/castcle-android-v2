@@ -42,7 +42,7 @@ class TopTrendsFragment : BaseFragment(), TopTrendsListener {
     }
 
     override fun onTrendClicked(keyword: String) {
-
+        HomeFragmentDirections.toSearchFragment(keyword).navigate()
     }
 
     fun scrollToTop() {

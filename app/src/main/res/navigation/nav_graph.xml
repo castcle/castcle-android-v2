@@ -17,6 +17,10 @@
             app:destination="@id/profileFragment" />
 
         <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
+        <action
             android:id="@+id/toSearchSuggestionFragment"
             app:destination="@id/searchSuggestionFragment"
             app:enterAnim="@null"
@@ -53,8 +57,30 @@
     </fragment>
 
     <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.castcle.android.presentation.search.SearchFragment">
+
+        <argument
+            android:name="keyword"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/searchSuggestionFragment"
-        android:name="com.castcle.android.presentation.search_suggestion.SearchSuggestionFragment" />
+        android:name="com.castcle.android.presentation.search_suggestion.SearchSuggestionFragment">
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment"
+            app:popUpTo="@+id/searchSuggestionFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/settingFragment"

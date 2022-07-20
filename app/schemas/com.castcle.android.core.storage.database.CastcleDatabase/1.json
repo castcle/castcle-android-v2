@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "af2a6108c3950dd0b996bbba244359fa",
+    "identityHash": "0521353a90ee728772f7c4ad99e91f1f",
     "entities": [
       {
         "tableName": "accessToken",
@@ -377,6 +377,32 @@
         "foreignKeys": []
       },
       {
+        "tableName": "recentSearch",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recentSearch_keyword` TEXT NOT NULL, `recentSearch_timestamp` INTEGER NOT NULL, PRIMARY KEY(`recentSearch_keyword`))",
+        "fields": [
+          {
+            "fieldPath": "keyword",
+            "columnName": "recentSearch_keyword",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timestamp",
+            "columnName": "recentSearch_timestamp",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "recentSearch_keyword"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
         "tableName": "syncSocial",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`syncSocial_active` INTEGER NOT NULL, `syncSocial_autoPost` INTEGER NOT NULL, `syncSocial_avatar` TEXT NOT NULL, `syncSocial_displayName` TEXT NOT NULL, `syncSocial_id` TEXT NOT NULL, `syncSocial_provider` TEXT NOT NULL, `syncSocial_socialId` TEXT NOT NULL, `syncSocial_userId` TEXT NOT NULL, `syncSocial_userName` TEXT NOT NULL, PRIMARY KEY(`syncSocial_id`))",
         "fields": [
@@ -668,7 +694,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af2a6108c3950dd0b996bbba244359fa')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0521353a90ee728772f7c4ad99e91f1f')"
     ]
   }
 }

@@ -1,8 +1,8 @@
 package com.castcle.android.domain.search.entity
 
-import com.castcle.android.data.search.entity.SearchResponse
+import com.castcle.android.data.search.entity.SearchSuggestionResponse
 
-data class TopTrendsEntity(
+data class SearchSuggestionHashtagEntity(
     val count: Int = 0,
     val name: String = "",
     val rank: Int = 0,
@@ -10,8 +10,8 @@ data class TopTrendsEntity(
 ) {
 
     companion object {
-        fun map(response: SearchResponse?) = response?.hashtags.orEmpty().map {
-            TopTrendsEntity(
+        fun map(response: List<SearchSuggestionResponse.Hashtags>?) = response.orEmpty().map {
+            SearchSuggestionHashtagEntity(
                 count = it.count ?: 0,
                 name = it.name ?: "",
                 rank = it.rank ?: 0,

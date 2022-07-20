@@ -3,10 +3,10 @@ package com.castcle.android.presentation.top_trends.item_top_trends_item
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.search.entity.TopTrendsEntity
+import com.castcle.android.domain.search.entity.SearchSuggestionHashtagEntity
 
 class TopTrendsItemViewEntity(
-    val trend: TopTrendsEntity = TopTrendsEntity(),
+    val trend: SearchSuggestionHashtagEntity = SearchSuggestionHashtagEntity(),
     override val uniqueId: String = "",
 ) : CastcleViewEntity {
 
@@ -19,7 +19,7 @@ class TopTrendsItemViewEntity(
     override fun viewType() = R.layout.item_top_trends_item
 
     companion object {
-        fun map(entity: TopTrendsEntity): CastcleViewEntity = TopTrendsItemViewEntity(
+        fun map(entity: SearchSuggestionHashtagEntity): CastcleViewEntity = TopTrendsItemViewEntity(
             trend = entity,
             uniqueId = entity.slug,
         )

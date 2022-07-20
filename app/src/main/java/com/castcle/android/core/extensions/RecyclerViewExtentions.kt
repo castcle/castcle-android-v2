@@ -8,10 +8,14 @@ import android.widget.Toast
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
+import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
 
 fun RecyclerView.ViewHolder.color(@ColorRes id: Int?) = if (id != null) {
     ContextCompat.getColor(itemView.context, id)
@@ -40,11 +44,19 @@ fun RecyclerView.ViewHolder.drawable(@DrawableRes id: Int?): Drawable? =
         null
     )
 
+fun MutableLiveData<List<CastcleViewEntity>>.error(error: Throwable?, retryAction: () -> Unit) {
+    postValue(listOf(ErrorStateViewEntity(error = error, retryAction = retryAction)))
+}
+
 fun RecyclerView.firstVisibleItemPosition(): Int {
     return layoutManager
         ?.cast<LinearLayoutManager>()
         ?.findFirstVisibleItemPosition()
         ?: Int.MAX_VALUE
+}
+
+fun MutableLiveData<List<CastcleViewEntity>>.loading() {
+    postValue(listOf(LoadingViewEntity()))
 }
 
 fun RecyclerView.ViewHolder.screenWidthPx(): Int {

@@ -5,7 +5,7 @@ import com.castcle.android.data.user.entity.UserResponse
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class SearchResponse(
+data class SearchSuggestionResponse(
     @SerializedName("hashtags") val hashtags: List<Hashtags>? = null,
     @SerializedName("keyword") val keyword: List<Keyword>? = null,
     @SerializedName("users") val users: List<UserResponse>? = null,

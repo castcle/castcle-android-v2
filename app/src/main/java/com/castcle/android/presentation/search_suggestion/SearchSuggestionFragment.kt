@@ -9,18 +9,21 @@ import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorSta
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.hideKeyboard
 import com.castcle.android.databinding.FragmentSearchSuggestionBinding
-import com.castcle.android.presentation.top_trends.item_top_trends_item.TopTrendsItemViewRenderer
-import com.castcle.android.presentation.top_trends.item_top_trends_search.TopTrendsSearchViewRenderer
-import com.castcle.android.presentation.top_trends.item_top_trends_title.TopTrendsTitleViewRenderer
+import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.search_suggestion.item_keyword.SearchSuggestionKeywordViewRenderer
+import com.castcle.android.presentation.search_suggestion.item_title.SearchSuggestionTitleViewEntity
+import com.castcle.android.presentation.search_suggestion.item_title.SearchSuggestionTitleViewRenderer
+import com.castcle.android.presentation.search_suggestion.item_user.SearchSuggestionUserViewRenderer
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
-import timber.log.Timber
 
 class SearchSuggestionFragment : BaseFragment(), SearchSuggestionListener {
 
     private val viewModel by stateViewModel<SearchSuggestionViewModel>()
 
     override fun initViewProperties() {
-        binding.searchBar.focus()
+        if (binding.recyclerView.adapter == null) {
+            binding.searchBar.focus()
+        }
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
         binding.actionBar.bind(
@@ -35,16 +38,33 @@ class SearchSuggestionFragment : BaseFragment(), SearchSuggestionListener {
             hideKeyboard()
             binding.searchBar.clearFocus()
             if (keyword.isNotBlank()) {
-                Timber.e("KUY : setSearchClickedListener, $keyword")
+                hideKeyboard()
+                SearchSuggestionFragmentDirections.toSearchFragment(keyword).navigate()
             }
         }
         binding.searchBar.setTextChangeListener { keyword ->
-            Timber.e("KUY : setTextChangeListener, $keyword")
+            viewModel.search(keyword)
         }
     }
 
     override fun initObserver() {
+        viewModel.views.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+    }
 
+    override fun onClearRecentSearch() {
+        viewModel.clearRecentSearch()
+    }
+
+    override fun onKeywordClicked(keyword: String) {
+        hideKeyboard()
+        SearchSuggestionFragmentDirections.toSearchFragment(keyword).navigate()
+    }
+
+    override fun onUserClicked(user: UserEntity) {
+        hideKeyboard()
+        SearchSuggestionFragmentDirections.toProfileFragment(user).navigate()
     }
 
     override fun onPause() {
@@ -61,9 +81,10 @@ class SearchSuggestionFragment : BaseFragment(), SearchSuggestionListener {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(ErrorStateViewRenderer())
             registerRenderer(LoadingViewRenderer())
-            registerRenderer(TopTrendsTitleViewRenderer())
-            registerRenderer(TopTrendsSearchViewRenderer())
-            registerRenderer(TopTrendsItemViewRenderer())
+            registerRenderer(SearchSuggestionKeywordViewRenderer())
+            registerRenderer(SearchSuggestionTitleViewRenderer())
+            registerRenderer(SearchSuggestionUserViewRenderer())
+            submitList(listOf(SearchSuggestionTitleViewEntity()))
         }
     }
 
