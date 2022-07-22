@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0521353a90ee728772f7c4ad99e91f1f",
+    "identityHash": "d6b93433d8e9876d9775c6e7887bf4f3",
     "entities": [
       {
         "tableName": "accessToken",
@@ -403,6 +403,82 @@
         "foreignKeys": []
       },
       {
+        "tableName": "search",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`search_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_originalCastId` TEXT, `search_originalUserId` TEXT, `search_referenceCastId` TEXT, `search_referenceUserId` TEXT, `search_sessionId` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "search_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalCastId",
+            "columnName": "search_originalCastId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "originalUserId",
+            "columnName": "search_originalUserId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "referenceCastId",
+            "columnName": "search_referenceCastId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "referenceUserId",
+            "columnName": "search_referenceUserId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "search_sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "search_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "searchKeyword",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`searchKeyword_keyword` TEXT NOT NULL, `searchKeyword_sessionId` INTEGER NOT NULL, PRIMARY KEY(`searchKeyword_sessionId`))",
+        "fields": [
+          {
+            "fieldPath": "keyword",
+            "columnName": "searchKeyword_keyword",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "searchKeyword_sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "searchKeyword_sessionId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
         "tableName": "syncSocial",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`syncSocial_active` INTEGER NOT NULL, `syncSocial_autoPost` INTEGER NOT NULL, `syncSocial_avatar` TEXT NOT NULL, `syncSocial_displayName` TEXT NOT NULL, `syncSocial_id` TEXT NOT NULL, `syncSocial_provider` TEXT NOT NULL, `syncSocial_socialId` TEXT NOT NULL, `syncSocial_userId` TEXT NOT NULL, `syncSocial_userName` TEXT NOT NULL, PRIMARY KEY(`syncSocial_id`))",
         "fields": [
@@ -694,7 +770,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0521353a90ee728772f7c4ad99e91f1f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6b93433d8e9876d9775c6e7887bf4f3')"
     ]
   }
 }

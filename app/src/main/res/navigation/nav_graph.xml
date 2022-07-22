@@ -64,6 +64,14 @@
             android:name="keyword"
             app:argType="string" />
 
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
     </fragment>
 
     <fragment

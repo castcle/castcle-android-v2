@@ -60,4 +60,8 @@ class SearchBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         binding.etSearch.showKeyboard()
     }
 
+    fun setText(text: String) {
+        binding.etSearch.setText(text)
+    }
+
 }

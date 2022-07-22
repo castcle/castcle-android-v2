@@ -9,14 +9,19 @@ import androidx.paging.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.base.recyclerview.*
+import com.castcle.android.core.custom_view.load_state.LoadStateRefreshItemsType.*
 import com.castcle.android.core.custom_view.load_state.item_empty_state_feed.EmptyStateFeedViewEntity
 import com.castcle.android.core.custom_view.load_state.item_empty_state_feed.EmptyStateFeedViewRenderer
+import com.castcle.android.core.custom_view.load_state.item_empty_state_search.EmptyStateSearchViewEntity
+import com.castcle.android.core.custom_view.load_state.item_empty_state_search.EmptyStateSearchViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewRenderer
+import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewEntity
+import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewRenderer
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutLoadStateRefreshBinding
 import io.reactivex.disposables.CompositeDisposable
@@ -30,9 +35,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(EmptyStateFeedViewRenderer())
+            registerRenderer(EmptyStateSearchViewRenderer())
             registerRenderer(ErrorStateViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer())
             registerRenderer(LoadingStateProfileViewRenderer())
+            registerRenderer(LoadingStateUserViewRenderer())
         }
     }
 
@@ -44,12 +51,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     private var isRefreshing = false
 
-    private var stateItems: Triple<List<CastcleViewEntity>, List<CastcleViewEntity>, List<CastcleViewEntity>> =
-        Triple(
-            EmptyStateFeedViewEntity.create(1),
-            EmptyStateFeedViewEntity.create(1),
-            LoadingStateCastViewEntity.create(3),
-        )
+    private var stateItems = StateItems(
+        empty = EmptyStateFeedViewEntity.create(1),
+        error = EmptyStateFeedViewEntity.create(1),
+        loading = LoadingStateCastViewEntity.create(3),
+    )
 
     init {
         binding.recyclerView.adapter = adapter
@@ -75,11 +81,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 val itemCount = pagingAdapter.itemCount
                 when {
                     it.isEmptyState(itemCount) -> setEmptyState(
-                        emptyItems = stateItems.first,
+                        emptyItems = stateItems.empty,
                     )
                     it.isErrorState() -> setErrorState(
                         error = it.refresh.cast<LoadState.Error>()?.error,
-                        errorItems = stateItems.second,
+                        errorItems = stateItems.error,
                         refreshAction = { pagingAdapter.refresh() },
                         retryAction = { pagingAdapter.retry() },
                     )
@@ -87,7 +93,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                         pagingRecyclerView = pagingRecyclerView,
                     )
                     it.isLoadingState() -> setLoadingState(
-                        loadingItems = stateItems.third,
+                        loadingItems = stateItems.loading,
                     )
                 }
             }
@@ -166,22 +172,39 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     private fun updateStateItems(type: LoadStateRefreshItemsType) {
         stateItems = when (type) {
-            LoadStateRefreshItemsType.FEED -> Triple(
-                EmptyStateFeedViewEntity.create(1),
-                EmptyStateFeedViewEntity.create(1),
-                LoadingStateCastViewEntity.create(3),
+            FEED -> StateItems(
+                empty = EmptyStateFeedViewEntity.create(1),
+                error = EmptyStateFeedViewEntity.create(1),
+                loading = LoadingStateCastViewEntity.create(3),
             )
-            LoadStateRefreshItemsType.PROFILE -> Triple(
-                ErrorStateViewEntity.create(1),
-                ErrorStateViewEntity.create(1),
-                LoadingStateProfileViewEntity.create(1).plus(LoadingStateCastViewEntity.create(1)),
+            PROFILE -> StateItems(
+                empty = ErrorStateViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingStateProfileViewEntity.create(1)
+                    .plus(LoadingStateCastViewEntity.create(1)),
             )
-            LoadStateRefreshItemsType.WHO_TO_FOLLOW -> Triple(
-                ErrorStateViewEntity.create(1),
-                ErrorStateViewEntity.create(1),
-                LoadingStateCastViewEntity.create(3),
+            SEARCH_CAST -> StateItems(
+                empty = EmptyStateSearchViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingStateCastViewEntity.create(3),
+            )
+            SEARCH_USER -> StateItems(
+                empty = EmptyStateSearchViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingStateUserViewEntity.create(10),
+            )
+            WHO_TO_FOLLOW -> StateItems(
+                empty = ErrorStateViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingStateCastViewEntity.create(3),
             )
         }
     }
+
+    data class StateItems(
+        val empty: List<CastcleViewEntity> = listOf(),
+        val error: List<CastcleViewEntity> = listOf(),
+        val loading: List<CastcleViewEntity> = listOf(),
+    )
 
 }
