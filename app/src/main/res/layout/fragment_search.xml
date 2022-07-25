@@ -29,12 +29,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchBar"
-        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorColor="@color/blue"
         app:tabIndicatorHeight="@dimen/_2sdp"
         app:tabRippleColor="@color/transparent"
-        app:tabSelectedTextColor="@color/white"
+        app:tabSelectedTextColor="@color/blue"
         app:tabTextAppearance="@style/TabIndicatorTheme"
-        app:tabTextColor="@color/gray_1"/>
+        app:tabTextColor="@color/white"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
