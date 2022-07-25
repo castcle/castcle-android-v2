@@ -12,6 +12,8 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
     <string name="empty_feed_title">Trouble Loading News Feed</string>
+    <string name="empty_search_title">We didn\'t find any results</string>
+    <string name="empty_search_description">Make sure everything is spelled correctly or try different keywords.</string>
     <string name="error_base">Something went wrong. Please try again later.</string>
     <string name="feed">Feed</string>
     <string name="follow">Follow</string>

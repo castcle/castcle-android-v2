@@ -21,6 +21,7 @@ interface UserDao {
     suspend fun insert(items: List<UserEntity>): List<Long>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1")
+    @Transaction
     fun retrieveWithSyncSocial(): Flow<List<UserWithSyncSocialEntity>>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 AND user_type = :type")

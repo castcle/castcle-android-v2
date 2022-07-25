@@ -6,7 +6,7 @@ import androidx.paging.*
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_DEFAULT
+import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
 import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.core.storage.database.CastcleDatabase
@@ -47,8 +47,8 @@ class ProfileViewModel(
         .flatMapLatest { user ->
             Pager(
                 config = PagingConfig(
-                    initialLoadSize = PARAMETER_MAX_RESULTS_DEFAULT,
-                    pageSize = PARAMETER_MAX_RESULTS_DEFAULT,
+                    initialLoadSize = PARAMETER_MAX_RESULTS_LARGE_ITEM,
+                    pageSize = PARAMETER_MAX_RESULTS_LARGE_ITEM,
                 ), pagingSourceFactory = {
                     database.profile().pagingSource(sessionId)
                 }, remoteMediator = ProfileRemoteMediator(

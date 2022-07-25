@@ -7,6 +7,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
+import com.castcle.android.core.storage.database.CastcleDatabase
 import com.castcle.android.domain.search.SearchRepository
 import com.castcle.android.presentation.top_trends.item_top_trends_item.TopTrendsItemViewEntity
 import com.castcle.android.presentation.top_trends.item_top_trends_search.TopTrendsSearchViewEntity
@@ -15,6 +16,7 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class TopTrendsViewModel(
+    private val database: CastcleDatabase,
     private val repository: SearchRepository,
     private val state: SavedStateHandle,
 ) : BaseViewModel() {
@@ -22,7 +24,15 @@ class TopTrendsViewModel(
     val views = MutableLiveData<List<CastcleViewEntity>>()
 
     init {
+        clearSearch()
         getTopTrends()
+    }
+
+    private fun clearSearch() {
+        launch {
+            database.search().delete()
+            database.searchKeyword().delete()
+        }
     }
 
     private fun getTopTrends() {

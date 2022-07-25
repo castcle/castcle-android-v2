@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_4sdp"
+    android:background="@color/black_background_2"
+    android:foreground="@drawable/bg_ripple_rectangle"
+    android:paddingBottom="@dimen/_12sdp">
+
+    <FrameLayout
+        android:id="@+id/flAvatar"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_margin="@dimen/_12sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_avatar" />
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvFollow"
+        android:layout_width="@dimen/_76sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="@drawable/bg_outline_corner_16dp"
+        android:backgroundTint="@color/blue"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
+        android:gravity="center"
+        android:text="@string/follow"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flAvatar" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/tvCastcleId"
+        app:layout_constraintEnd_toStartOf="@+id/ivOfficial"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/flAvatar"
+        app:layout_constraintTop_toTopOf="@id/flAvatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Prakan Sornbootnark" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivOfficial"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="@id/tvUserName"
+        app:layout_constraintEnd_toStartOf="@+id/tvFollow"
+        app:layout_constraintStart_toEndOf="@+id/tvUserName"
+        app:layout_constraintTop_toTopOf="@id/tvUserName"
+        app:srcCompat="@drawable/ic_official" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvCastcleId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_1sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/gray_4"
+        app:layout_constraintBottom_toBottomOf="@id/flAvatar"
+        app:layout_constraintEnd_toStartOf="@+id/tvFollow"
+        app:layout_constraintStart_toStartOf="@id/tvUserName"
+        app:layout_constraintTop_toBottomOf="@id/tvUserName"
+        tools:text="\@earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvOverview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/gray_7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvUserName"
+        app:layout_constraintTop_toBottomOf="@id/tvCastcleId"
+        tools:text="Prakan Sornbootnark" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
