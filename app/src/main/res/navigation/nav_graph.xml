@@ -5,6 +5,24 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
+        android:id="@+id/followingFollowersFragment"
+        android:name="com.castcle.android.presentation.following_followers.FollowingFollowersFragment">
+
+        <argument
+            android:name="isFollowing"
+            app:argType="boolean" />
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.castcle.android.presentation.home.HomeFragment">
 
@@ -49,6 +67,10 @@
         <argument
             android:name="user"
             app:argType="com.castcle.android.domain.user.entity.UserEntity" />
+
+        <action
+            android:id="@+id/toFollowingFollowersFragment"
+            app:destination="@id/followingFollowersFragment" />
 
         <action
             android:id="@+id/toProfileFragment"

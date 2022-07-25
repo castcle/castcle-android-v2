@@ -6,6 +6,8 @@ sealed class LoadKeyType(val id: String) {
 
     object Feed : LoadKeyType(id = "feed")
 
+    object FollowingFollowers : LoadKeyType(id = "followingFollowers")
+
     object Profile : LoadKeyType(id = "profile")
 
     object Search : LoadKeyType(id = "search")
@@ -15,6 +17,7 @@ sealed class LoadKeyType(val id: String) {
     companion object {
         fun getFromId(id: String?) = when (id) {
             Feed.id -> Feed
+            FollowingFollowers.id -> FollowingFollowers
             Profile.id -> Profile
             Search.id -> Search
             else -> WhoToFollow

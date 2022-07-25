@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/_4sdp"
     android:background="@color/black_background_2"
-    android:foreground="@drawable/bg_ripple_rectangle">
+    android:foreground="@drawable/bg_ripple_rectangle"
+    android:paddingBottom="@dimen/_12sdp">
 
     <FrameLayout
         android:id="@+id/flAvatar"
@@ -16,7 +17,6 @@
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/white"
         android:padding="@dimen/_1sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -50,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constrainedWidth="true"
@@ -66,7 +67,7 @@
         android:id="@+id/ivOfficial"
         android:layout_width="@dimen/_12sdp"
         android:layout_height="@dimen/_12sdp"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="@id/tvUserName"
         app:layout_constraintEnd_toStartOf="@+id/tvFollow"
@@ -89,5 +90,20 @@
         app:layout_constraintStart_toStartOf="@id/tvUserName"
         app:layout_constraintTop_toBottomOf="@id/tvUserName"
         tools:text="\@earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvOverview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/gray_7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvUserName"
+        app:layout_constraintTop_toBottomOf="@id/tvCastcleId"
+        tools:text="Prakan Sornbootnark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

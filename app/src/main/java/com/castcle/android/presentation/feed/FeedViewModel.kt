@@ -69,6 +69,7 @@ class FeedViewModel(
     private fun clearDatabase() {
         launch {
             database.withTransaction {
+                database.followingFollowers().delete()
                 database.profile().delete()
                 database.loadKey().delete(LoadKeyType.Profile)
             }

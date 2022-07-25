@@ -14,6 +14,22 @@ interface UserApi {
         @Body body: FollowUserRequest,
     ): Response<Unit>
 
+    @GET("v2/users/{$PARAMETER_ID}/followers")
+    suspend fun getFollowers(
+        @Path(PARAMETER_ID) id: String,
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
+        @Query(PARAMETER_UNTIL_ID) untilId: String?,
+        @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
+    ): Response<BaseResponse<UserResponse>>
+
+    @GET("v2/users/{$PARAMETER_ID}/following")
+    suspend fun getFollowing(
+        @Path(PARAMETER_ID) id: String,
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
+        @Query(PARAMETER_UNTIL_ID) untilId: String?,
+        @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
+    ): Response<BaseResponse<UserResponse>>
+
     @GET("v2/users/{$PARAMETER_ID}")
     suspend fun getUser(
         @Path(PARAMETER_ID) id: String,
@@ -33,6 +49,13 @@ interface UserApi {
         @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
     ): Response<BaseResponse<UserResponse>>
 
+    @GET("v2/users/me/suggestion-follow")
+    suspend fun getWhoToFollow(
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
+        @Query(PARAMETER_UNTIL_ID) untilId: String?,
+        @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
+    ): Response<BaseResponse<UserResponse>>
+
     @POST("v2/users/me/likes-casts")
     suspend fun likeCasts(
         @Body body: LikeCastsRequest,
@@ -47,12 +70,5 @@ interface UserApi {
     suspend fun unlikeCasts(
         @Path("contentId") contentId: String,
     ): Response<Unit>
-
-    @GET("v2/users/me/suggestion-follow")
-    suspend fun getWhoToFollow(
-        @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
-        @Query(PARAMETER_UNTIL_ID) untilId: String?,
-        @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
-    ): Response<BaseResponse<UserResponse>>
 
 }

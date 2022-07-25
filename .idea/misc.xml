@@ -95,7 +95,7 @@
         <entry key="app/src/main/res/layout/item_login.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_profile_page.xml" value="0.6001821493624773" />
         <entry key="app/src/main/res/layout/item_profile_user.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/item_search_people.xml" value="0.5183861082737488" />
+        <entry key="app/src/main/res/layout/item_search_people.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_search_suggestion_keyword.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_search_suggestion_title.xml" value="0.5183861082737488" />
         <entry key="app/src/main/res/layout/item_search_suggestion_user.xml" value="0.5479166666666667" />

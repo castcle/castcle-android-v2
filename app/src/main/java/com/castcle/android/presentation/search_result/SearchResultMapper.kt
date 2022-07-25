@@ -15,7 +15,6 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEnti
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
 import com.castcle.android.presentation.search_result.item_search_people.SearchPeopleViewEntity
-import com.castcle.android.presentation.who_to_follow.item_who_to_follow.WhoToFollowViewEntity
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -27,11 +26,6 @@ class SearchResultMapper {
                 uniqueId = item.originalUser?.id ?: "",
                 user = item.originalUser ?: UserEntity(),
             )
-//            FeedTextViewEntity(
-//                cast = item.originalCast ?: CastEntity(),
-//                uniqueId = item.originalCast?.id ?: "",
-//                user = item.originalUser ?: UserEntity(),
-//            )
         } else {
             mapContentItem(item)
         }
