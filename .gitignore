@@ -2,7 +2,6 @@ app/build
 *.iml
 .gradle
 /local.properties
-/keystore.properties
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -18,4 +17,3 @@ local.properties
 keystore.properties
 **/google-services.json
 **/secret_key.xml
-**/keystore.properties

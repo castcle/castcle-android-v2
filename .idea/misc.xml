@@ -69,7 +69,7 @@
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.47719298245614034" />
         <entry key="app/src/main/res/layout/fragment_search_suggestion.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_empty_state.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_empty_state_feed.xml" value="0.25" />
