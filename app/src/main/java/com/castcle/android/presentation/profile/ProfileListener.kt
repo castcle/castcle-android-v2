@@ -5,4 +5,5 @@ import com.castcle.android.domain.user.entity.UserEntity
 
 interface ProfileListener : CastcleListener {
     fun onFollowClicked(user: UserEntity) = Unit
+    fun onFollowingFollowersClicked(isFollowing: Boolean, user: UserEntity) = Unit
 }

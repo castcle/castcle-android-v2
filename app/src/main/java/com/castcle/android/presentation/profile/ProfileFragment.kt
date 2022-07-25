@@ -11,7 +11,6 @@ import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastclePagingDataAdapter
 import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
-import com.castcle.android.core.extensions.gone
 import com.castcle.android.core.extensions.setRefreshColor
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.cast.entity.CastEntity
@@ -97,6 +96,10 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     override fun onFollowClicked(user: UserEntity) {
         shareViewModel.followUser(targetUser = user)
+    }
+
+    override fun onFollowingFollowersClicked(isFollowing: Boolean, user: UserEntity) {
+        ProfileFragmentDirections.toFollowingFollowersFragment(isFollowing, user.id).navigate()
     }
 
     override fun onUserClicked(user: UserEntity) {

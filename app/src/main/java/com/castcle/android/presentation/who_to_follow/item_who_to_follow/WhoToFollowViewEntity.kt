@@ -6,7 +6,7 @@ import com.castcle.android.core.extensions.cast
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.entity.WhoToFollowWithResultEntity
 
-class WhoToFollowViewEntity(
+data class WhoToFollowViewEntity(
     override val uniqueId: String = "",
     val user: UserEntity = UserEntity(),
 ) : CastcleViewEntity {
