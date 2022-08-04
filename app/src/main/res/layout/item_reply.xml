@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_background_1">
+
+    <FrameLayout
+        android:id="@+id/flAvatar"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginStart="@dimen/_42sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:foreground="@drawable/bg_ripple_circle"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_avatar" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="@dimen/_1sdp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:background="@color/gray_8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:ellipsize="end"
+        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
+        android:maxLines="1"
+        android:padding="@dimen/_4sdp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
+        app:layout_constraintEnd_toStartOf="@+id/tvDateTime"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/flAvatar"
+        app:layout_constraintTop_toTopOf="@+id/flAvatar"
+        tools:text="Prakan Sornbootnark" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xxSmall"
+        android:id="@+id/tvDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:textColor="@color/gray_3"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDisplayName"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDisplayName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvDisplayName"
+        app:layout_constraintTop_toTopOf="@id/tvDisplayName"
+        tools:text="March 2, 1995" />
+
+    <com.castcle.android.core.custom_view.mention_view.MentionTextView
+        style="@style/AppTextSarabunLight.Small"
+        android:id="@+id/tvMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:bufferType="spannable"
+        android:lineSpacingMultiplier="1.25"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/flAvatar"
+        app:layout_constraintTop_toBottomOf="@id/tvDisplayName"
+        tools:text="Prakan Sornbootnark" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivLike"
+        android:layout_width="@dimen/_28sdp"
+        android:layout_height="@dimen/_28sdp"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/flAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tvMessage"
+        app:srcCompat="@drawable/ic_like"
+        app:tint="@color/blue" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvLike"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/_0sdp"
+        android:paddingEnd="@dimen/_8sdp"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLike"
+        app:layout_constraintStart_toEndOf="@+id/ivLike"
+        app:layout_constraintTop_toTopOf="@+id/ivLike"
+        tools:text="69" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

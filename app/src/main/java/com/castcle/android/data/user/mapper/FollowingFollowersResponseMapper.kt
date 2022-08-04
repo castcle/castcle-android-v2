@@ -16,7 +16,7 @@ class FollowingFollowersResponseMapper {
 
     fun apply(
         ownerUserId: List<String>,
-        response: BaseResponse<UserResponse>?,
+        response: BaseResponse<List<UserResponse>>?,
         sessionId: Long,
     ): FollowingFollowersResponseResult {
         val userItems = mutableListOf<UserEntity>()

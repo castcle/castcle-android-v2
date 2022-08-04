@@ -84,8 +84,8 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
         }
     }
 
-    override fun onCommentClicked(cast: CastEntity) {
-
+    override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
+        SearchFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
     }
 
     override fun onFollowClicked(user: UserEntity) {
@@ -129,9 +129,9 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
         adapter.retry()
     }
 
-    override fun onPause() {
+    override fun onStop() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
-        super.onPause()
+        super.onStop()
     }
 
     override fun onStart() {
@@ -169,8 +169,8 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
     }
 
     companion object {
-        const val SESSION_ID = "SESSION_ID"
-        const val TYPE = "TYPE"
+        private const val SESSION_ID = "SESSION_ID"
+        private const val TYPE = "TYPE"
         fun newInstance(sessionId: Long, type: SearchType) = SearchResultFragment().apply {
             arguments = Bundle().apply {
                 putLong(SESSION_ID, sessionId)

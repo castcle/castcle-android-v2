@@ -17,6 +17,9 @@ interface UserDao {
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1")
     suspend fun get(): List<UserEntity>
 
+    @Query("SELECT * FROM $TABLE_USER WHERE user_id = :userId")
+    suspend fun get(userId: String): List<UserEntity>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(items: List<UserEntity>): List<Long>
 

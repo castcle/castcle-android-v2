@@ -56,6 +56,7 @@
         <entry key="app/src/main/res/drawable/ic_recast.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.373" />
+        <entry key="app/src/main/res/drawable/ic_sent_comment.xml" value="0.3405" />
         <entry key="app/src/main/res/drawable/ic_signal.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_telegram.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_top_trends.xml" value="0.316" />
@@ -66,11 +67,14 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.5" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/fragment_content.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.47719298245614034" />
         <entry key="app/src/main/res/layout/fragment_search_suggestion.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_content_metrics.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_empty_state.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_empty_state_feed.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_empty_state_search.xml" value="0.24739583333333334" />
@@ -89,12 +93,16 @@
         <entry key="app/src/main/res/layout/item_load_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_cast.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_loading_state_comment.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_loading_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_profile.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_loading_state_user.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_login.xml" value="0.5276041666666667" />
+        <entry key="app/src/main/res/layout/item_mention_hashtag.xml" value="0.5276041666666667" />
+        <entry key="app/src/main/res/layout/item_mention_user.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_profile_page.xml" value="0.6001821493624773" />
         <entry key="app/src/main/res/layout/item_profile_user.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/item_reply.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_search_people.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_search_suggestion_keyword.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_search_suggestion_title.xml" value="0.5183861082737488" />

@@ -79,7 +79,7 @@ class FeedImage1ViewHolder(
     }
 
     override fun onCommentClicked(cast: CastEntity) {
-        listener.onCommentClicked(cast)
+        listener.onCommentClicked(cast, item.user)
     }
 
     override fun onFollowClicked(user: UserEntity) {

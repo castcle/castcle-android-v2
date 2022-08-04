@@ -18,7 +18,7 @@ class SearchResponseMapper {
     )
 
     fun apply(
-        searchResponse: BaseResponse<out Any>?,
+        searchResponse: BaseResponse<out List<Any>>?,
         ownerUserId: List<String>,
         sessionId: Long
     ): SearchResponseResult {
