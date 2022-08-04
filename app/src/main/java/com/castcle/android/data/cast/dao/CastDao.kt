@@ -19,7 +19,7 @@ interface CastDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(item: CastEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(items: List<CastEntity>)
+    @Query("UPDATE $TABLE_CAST SET casts_commentCount = casts_commentCount + 1 WHERE casts_id = :castId")
+    suspend fun increaseCommentCount(castId: String)
 
 }

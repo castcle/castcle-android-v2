@@ -6,8 +6,6 @@ import com.castcle.android.core.extensions.filterNotNullOrBlank
 import com.castcle.android.data.cast.entity.CastResponse
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.core.entity.ImageEntity
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 @Entity(tableName = TABLE_CAST)
 data class CastEntity(
@@ -38,6 +36,11 @@ data class CastEntity(
     companion object {
         fun map(ownerUserId: String?, response: CastResponse?) = map(listOf(ownerUserId), response)
 
+        fun map(ownerUserId: List<String?>?, response: List<CastResponse>?) = response
+            .orEmpty()
+            .map { map(ownerUserId, it) }
+            .toMutableList()
+
         fun map(ownerUserId: List<String?>?, response: CastResponse?) = CastEntity(
             authorId = response?.authorId ?: "",
             commentCount = response?.metrics?.commentCount ?: 0,
@@ -64,18 +67,6 @@ data class CastEntity(
             type = CastType.getFromId(response?.referencedCasts?.type ?: response?.type),
             updatedAt = response?.updatedAt ?: "",
         )
-    }
-
-    class Converter {
-
-        private val type = object : TypeToken<CastEntity>() {}.type
-
-        @TypeConverter
-        fun fromEntity(item: CastEntity?): String = Gson().toJson(item, type)
-
-        @TypeConverter
-        fun toEntity(item: String): CastEntity? = Gson().fromJson(item, type)
-
     }
 
 }

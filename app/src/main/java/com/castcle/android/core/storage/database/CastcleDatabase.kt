@@ -4,6 +4,8 @@ import androidx.room.*
 import com.castcle.android.core.constants.DATABASE_VERSION
 import com.castcle.android.data.authentication.dao.AccessTokenDao
 import com.castcle.android.data.cast.dao.CastDao
+import com.castcle.android.data.content.dao.CommentDao
+import com.castcle.android.data.content.dao.ContentDao
 import com.castcle.android.data.core.dao.LoadKeyDao
 import com.castcle.android.data.feed.dao.FeedDao
 import com.castcle.android.data.notification.dao.NotificationBadgesDao
@@ -13,6 +15,9 @@ import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.type.AccessTokenType
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
+import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.content.entity.ContentEntity
+import com.castcle.android.domain.content.type.ContentType
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
@@ -28,6 +33,8 @@ import com.castcle.android.domain.user.type.*
     entities = [
         AccessTokenEntity::class,
         CastEntity::class,
+        CommentEntity::class,
+        ContentEntity::class,
         FeedEntity::class,
         FollowingFollowersEntity::class,
         LoadKeyEntity::class,
@@ -43,8 +50,8 @@ import com.castcle.android.domain.user.type.*
 )
 @TypeConverters(
     AccessTokenType.Converter::class,
-    CastEntity.Converter::class,
     CastType.Converter::class,
+    ContentType.Converter::class,
     FeedType.Converter::class,
     ImageEntity.Converter::class,
     ImageEntity.ListConverter::class,
@@ -56,6 +63,8 @@ import com.castcle.android.domain.user.type.*
 abstract class CastcleDatabase : RoomDatabase() {
     abstract fun accessToken(): AccessTokenDao
     abstract fun cast(): CastDao
+    abstract fun comment(): CommentDao
+    abstract fun content(): ContentDao
     abstract fun feed(): FeedDao
     abstract fun followingFollowers(): FollowingFollowersDao
     abstract fun loadKey(): LoadKeyDao

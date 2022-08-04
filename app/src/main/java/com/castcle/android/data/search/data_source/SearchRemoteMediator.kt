@@ -74,7 +74,7 @@ class SearchRemoteMediator(
             }
 
             val ownerUserId = database.withTransaction {
-                database.user().get().filter { it.type is UserType.People }.map { it.id }
+                database.user().get().map { it.id }
             }
 
             val items = if (response.isSuccessful && response.body() != null) {
@@ -101,7 +101,7 @@ class SearchRemoteMediator(
                 database.user().upsert(items.user)
             }
 
-            MediatorResult.Success(endOfPaginationReached = false)
+            MediatorResult.Success(endOfPaginationReached = nextLoadKey.loadKey == null)
         } catch (exception: Exception) {
             MediatorResult.Error(exception)
         }

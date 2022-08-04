@@ -103,8 +103,8 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
         binding.recyclerView.scrollToPosition(0)
     }
 
-    override fun onCommentClicked(cast: CastEntity) {
-
+    override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
+        HomeFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
     }
 
     override fun onFollowClicked(user: UserEntity) {

@@ -12,7 +12,6 @@ import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.feed.entity.FeedWithResultEntity
-import com.castcle.android.domain.user.entity.UserEntity
 
 @ExperimentalPagingApi
 class FeedRemoteMediator(
@@ -21,7 +20,6 @@ class FeedRemoteMediator(
     private val glidePreloader: GlidePreloader,
     private val isGuest: Boolean,
     private val mapper: FeedResponseMapper,
-    private val user: UserEntity?,
 ) : RemoteMediator<Int, FeedWithResultEntity>() {
 
     private val sessionId = System.currentTimeMillis()
@@ -60,8 +58,12 @@ class FeedRemoteMediator(
                 )
             }
 
+            val ownerUser = database.withTransaction {
+                database.user().get()
+            }
+
             val items = if (response.isSuccessful && response.body() != null) {
-                mapper.apply(user, loadType, response.body(), isGuest)
+                mapper.apply(response.body(), isGuest, loadType, ownerUser)
             } else {
                 return MediatorResult.Error(ApiException.map(response.errorBody()))
             }

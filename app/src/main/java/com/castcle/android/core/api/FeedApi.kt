@@ -12,7 +12,7 @@ interface FeedApi {
     suspend fun getFeedGuest(
         @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
         @Query(PARAMETER_UNTIL_ID) untilId: String?,
-    ): Response<BaseResponse<FeedResponse>>
+    ): Response<BaseResponse<List<FeedResponse>>>
 
     @GET("feeds/members/{$PARAMETER_FEATURE_SLUG}/{$PARAMETER_CIRCLE_SLUG}")
     suspend fun getFeedMember(
@@ -21,6 +21,6 @@ interface FeedApi {
         @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
         @Query(PARAMETER_UNTIL_ID) untilId: String?,
         @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
-    ): Response<BaseResponse<FeedResponse>>
+    ): Response<BaseResponse<List<FeedResponse>>>
 
 }

@@ -12,6 +12,7 @@ const val HEADER_PLATFORM = "Platform"
 
 const val PARAMETER_CIRCLE_SLUG = "circle_slug"
 const val PARAMETER_CIRCLE_SLUG_FOR_YOU = "forYou"
+const val PARAMETER_CONTENT_ID = "contentId"
 const val PARAMETER_CONTENT_TYPE = "contentType"
 const val PARAMETER_CONTENT_TYPE_PHOTO = "photo"
 const val PARAMETER_FEATURE_SLUG = "feature_slug"

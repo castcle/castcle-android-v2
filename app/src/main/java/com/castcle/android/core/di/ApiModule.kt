@@ -10,6 +10,9 @@ val apiModule = module {
         get<Retrofit>().create(AuthenticationApi::class.java).also { get<AppConfig>().api = it }
     }
     single {
+        get<Retrofit>().create(ContentApi::class.java)
+    }
+    single {
         get<Retrofit>().create(FeedApi::class.java)
     }
     single {

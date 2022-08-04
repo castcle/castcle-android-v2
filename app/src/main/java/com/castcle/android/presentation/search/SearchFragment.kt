@@ -51,6 +51,7 @@ class SearchFragment : BaseFragment() {
         binding.searchBar.setSearchClickedListener {
             hideKeyboard()
             binding.searchBar.clearFocus()
+            viewModel.updateRecentSearch(it)
             viewModel.updateSearchKeyword(it)
         }
     }

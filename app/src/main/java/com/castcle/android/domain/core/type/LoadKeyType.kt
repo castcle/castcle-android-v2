@@ -4,6 +4,8 @@ import androidx.room.TypeConverter
 
 sealed class LoadKeyType(val id: String) {
 
+    object Content : LoadKeyType(id = "content")
+
     object Feed : LoadKeyType(id = "feed")
 
     object FollowingFollowers : LoadKeyType(id = "followingFollowers")
@@ -16,6 +18,7 @@ sealed class LoadKeyType(val id: String) {
 
     companion object {
         fun getFromId(id: String?) = when (id) {
+            Content.id -> Content
             Feed.id -> Feed
             FollowingFollowers.id -> FollowingFollowers
             Profile.id -> Profile

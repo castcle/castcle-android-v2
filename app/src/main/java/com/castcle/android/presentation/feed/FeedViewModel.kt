@@ -13,7 +13,6 @@ import com.castcle.android.core.storage.database.CastcleDatabase
 import com.castcle.android.data.feed.data_source.FeedRemoteMediator
 import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.type.LoadKeyType
-import com.castcle.android.domain.user.type.UserType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import org.koin.android.annotation.KoinViewModel
@@ -37,16 +36,11 @@ class FeedViewModel(
         .map { it.firstOrNull()?.isGuest() ?: true }
         .distinctUntilChanged()
 
-    private val currentUser = database.user()
-        .retrieve(UserType.People)
-        .map { it.firstOrNull() }
-        .distinctUntilChangedBy { it?.id }
-
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
-    val views = isGuest.combine(currentUser) { isGuest, user -> isGuest to user }
+    val views = isGuest
         .distinctUntilChanged()
-        .flatMapLatest { (isGuest, user) ->
+        .flatMapLatest { isGuest ->
             Pager(
                 config = PagingConfig(
                     initialLoadSize = PARAMETER_MAX_RESULTS_LARGE_ITEM,
@@ -59,7 +53,6 @@ class FeedViewModel(
                     glidePreloader = glidePreloader,
                     isGuest = isGuest,
                     mapper = feedResponseMapper,
-                    user = user,
                 )
             ).flow.map { pagingData ->
                 pagingData.map { feedMapper.apply(it) }
@@ -69,6 +62,8 @@ class FeedViewModel(
     private fun clearDatabase() {
         launch {
             database.withTransaction {
+                database.comment().delete()
+                database.content().delete()
                 database.followingFollowers().delete()
                 database.profile().delete()
                 database.loadKey().delete(LoadKeyType.Profile)

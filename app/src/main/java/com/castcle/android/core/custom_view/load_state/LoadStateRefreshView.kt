@@ -18,6 +18,8 @@ import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorSta
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
+import com.castcle.android.core.custom_view.load_state.item_loading_state_comment.LoadingStateCommentViewEntity
+import com.castcle.android.core.custom_view.load_state.item_loading_state_comment.LoadingStateCommentViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewEntity
@@ -38,6 +40,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
             registerRenderer(EmptyStateSearchViewRenderer())
             registerRenderer(ErrorStateViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer())
+            registerRenderer(LoadingStateCommentViewRenderer())
             registerRenderer(LoadingStateProfileViewRenderer())
             registerRenderer(LoadingStateUserViewRenderer())
         }
@@ -172,6 +175,12 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     private fun updateStateItems(type: LoadStateRefreshItemsType) {
         stateItems = when (type) {
+            CONTENT -> StateItems(
+                empty = ErrorStateViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingStateCastViewEntity.create(1)
+                    .plus(LoadingStateCommentViewEntity.create(5)),
+            )
             FEED -> StateItems(
                 empty = EmptyStateFeedViewEntity.create(1),
                 error = EmptyStateFeedViewEntity.create(1),
