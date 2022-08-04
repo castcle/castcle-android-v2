@@ -5,6 +5,25 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
+        android:id="@+id/contentFragment"
+        android:name="com.castcle.android.presentation.content.ContentFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string" />
+
+        <argument
+            android:name="contentOwnerDisplayName"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/followingFollowersFragment"
         android:name="com.castcle.android.presentation.following_followers.FollowingFollowersFragment">
 
@@ -25,6 +44,10 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.castcle.android.presentation.home.HomeFragment">
+
+        <action
+            android:id="@+id/toContentFragment"
+            app:destination="@id/contentFragment" />
 
         <action
             android:id="@+id/toLoginFragment"
@@ -69,6 +92,10 @@
             app:argType="com.castcle.android.domain.user.entity.UserEntity" />
 
         <action
+            android:id="@+id/toContentFragment"
+            app:destination="@id/contentFragment" />
+
+        <action
             android:id="@+id/toFollowingFollowersFragment"
             app:destination="@id/followingFollowersFragment" />
 
@@ -85,6 +112,10 @@
         <argument
             android:name="keyword"
             app:argType="string" />
+
+        <action
+            android:id="@+id/toContentFragment"
+            app:destination="@id/contentFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
@@ -124,7 +155,7 @@
 
     <fragment
         android:id="@+id/whoToFollowFragment"
-        android:name="com.castcle.android.presentation.who_to_follow.WhoToFollowFragment">
+        android:name="com.castcle.android.presentation.content.WhoToFollowFragment">
 
         <action
             android:id="@+id/toProfileFragment"

@@ -10,6 +10,7 @@ import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.feed.entity.FeedEntity
 import com.castcle.android.domain.feed.type.FeedType
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.user.type.UserType
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -22,15 +23,17 @@ class FeedResponseMapper {
     )
 
     fun apply(
-        user: UserEntity?,
-        loadType: LoadType,
-        feedResponse: BaseResponse<FeedResponse>?,
+        feedResponse: BaseResponse<List<FeedResponse>>?,
         isGuest: Boolean,
+        loadType: LoadType,
+        ownerUser: List<UserEntity>,
     ): FeedResponseResult {
+        val ownerUserId = ownerUser.map { it.id }
+        val userId = ownerUser.find { it.type is UserType.People }?.id ?: ""
         val newCastItems = if (loadType == LoadType.REFRESH && !isGuest) {
             val item = FeedEntity(
                 id = FeedType.NewCast.id,
-                originalUserId = user?.id,
+                originalUserId = userId,
                 type = FeedType.NewCast,
             )
             listOf(item)
@@ -39,12 +42,12 @@ class FeedResponseMapper {
         }
         val userItems = feedResponse?.includes
             ?.users
-            ?.map { UserEntity.map(user?.id, it) }
+            ?.map { UserEntity.map(ownerUserId, it) }
             ?.toMutableList()
             ?: mutableListOf()
         val castItems = feedResponse?.includes
             ?.casts
-            ?.map { CastEntity.map(user?.id, it) }
+            ?.map { CastEntity.map(ownerUserId, it) }
             ?.toMutableList()
             ?: mutableListOf()
         val feedItems = feedResponse?.payload.orEmpty().mapNotNull { response ->
@@ -52,7 +55,7 @@ class FeedResponseMapper {
                 FeedType.AdsContent,
                 FeedType.Content -> {
                     val payload = mapObject<CastResponse>(response.payload)
-                    val cast = CastEntity.map(user?.id, payload).also(castItems::add)
+                    val cast = CastEntity.map(ownerUserId, payload).also(castItems::add)
                     val referencedCast = castItems.find { it.id == payload?.referencedCasts?.id }
                     FeedEntity(
                         campaignMessage = response.campaignMessage,
@@ -67,7 +70,7 @@ class FeedResponseMapper {
                 }
                 FeedType.AdsPage -> {
                     val adsPage = mapObject<UserResponse>(response.payload)
-                        .let { UserEntity.map(user?.id, it) }
+                        .let { UserEntity.map(ownerUserId, it) }
                         .also(userItems::add)
                     FeedEntity(
                         campaignMessage = response.campaignMessage,
@@ -79,7 +82,7 @@ class FeedResponseMapper {
                 }
                 FeedType.WhoToFollow -> {
                     val suggestionFollow = mapListObject<UserResponse>(response.payload)
-                        .map { UserEntity.map(user?.id, it) }
+                        .map { UserEntity.map(ownerUserId, it) }
                         .filter { !it.isOwner }
                         .also(userItems::addAll)
                     if (suggestionFollow.isEmpty()) {

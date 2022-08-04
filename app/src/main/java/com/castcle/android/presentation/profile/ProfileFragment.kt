@@ -86,12 +86,8 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
         }
     }
 
-    override fun onRetryClicked() {
-
-    }
-
-    override fun onLikeClicked(cast: CastEntity) {
-        shareViewModel.likeCasts(targetCasts = cast)
+    override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
+        ProfileFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
     }
 
     override fun onFollowClicked(user: UserEntity) {
@@ -100,6 +96,18 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     override fun onFollowingFollowersClicked(isFollowing: Boolean, user: UserEntity) {
         ProfileFragmentDirections.toFollowingFollowersFragment(isFollowing, user.id).navigate()
+    }
+
+    override fun onLikeClicked(cast: CastEntity) {
+        shareViewModel.likeCasts(targetCasts = cast)
+    }
+
+    override fun onRefreshClicked() {
+        adapter.refresh()
+    }
+
+    override fun onRetryClicked() {
+        adapter.retry()
     }
 
     override fun onUserClicked(user: UserEntity) {

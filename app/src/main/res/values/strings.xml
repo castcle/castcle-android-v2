@@ -4,6 +4,7 @@
     <string name="account_settings">Account Settings</string>
     <string name="advertised">Advertised</string>
     <string name="app_name">Castcle V2</string>
+    <string name="cast_of">Cast of %s</string>
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
     <string name="copy_message">Copy message</string>
@@ -36,6 +37,7 @@
     <string name="fragment_setting_title_5">+ New Page</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
+    <string name="like_count">%s Likes</string>
     <string name="logout">Log out</string>
     <string name="new_cast">New Cast</string>
     <string name="notification">Notification</string>
@@ -43,14 +45,18 @@
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="rank_trending">%d. Trending</string>
+    <string name="quote_cast_count">%s Quote Casts</string>
     <string name="read_more"> …Read more</string>
+    <string name="recast_count">%s Recasts</string>
     <string name="recent_searches">Recent searches</string>
+    <string name="reply">Reply</string>
     <string name="retry">Retry</string>
     <string name="search">Search</string>
     <string name="setting">Setting</string>
     <string name="show_more">Show more</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="whats_new_today">What\'s new today\?</string>
+    <string name="whats_on_your_mind">What\'s on your mind\?</string>
     <string name="who_to_follow">Who to follow</string>
     <string name="whitepaper">Whitepaper</string>
     <string name="world_trends_search">World trends search</string>

@@ -51,8 +51,11 @@ data class UserEntity(
             return response.orEmpty().map { map(listOf(), it).copy(isOwner = true) }
         }
 
-        fun map(ownerUserId: List<String?>?, response: List<UserResponse>?): List<UserEntity> {
-            return response.orEmpty().map { map(ownerUserId, it) }
+        fun map(
+            ownerUserId: List<String?>?,
+            response: List<UserResponse>?
+        ): MutableList<UserEntity> {
+            return response.orEmpty().map { map(ownerUserId, it) }.toMutableList()
         }
 
         fun map(ownerUserId: String?, response: UserResponse?) = map(listOf(ownerUserId), response)

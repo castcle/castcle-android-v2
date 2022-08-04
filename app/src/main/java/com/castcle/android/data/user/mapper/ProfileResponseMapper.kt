@@ -23,7 +23,7 @@ class ProfileResponseMapper {
         sessionId: Long,
         loadType: LoadType,
         ownerUserId: List<String>,
-        profileResponse: BaseResponse<CastResponse>?
+        profileResponse: BaseResponse<List<CastResponse>>?
     ): ProfileResponseResult {
         val profileItem = if (loadType == LoadType.REFRESH) {
             val item = ProfileEntity(
