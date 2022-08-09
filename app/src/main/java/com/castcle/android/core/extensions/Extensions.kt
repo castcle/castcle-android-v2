@@ -191,3 +191,7 @@ fun View.setPadding(
 fun View.visible() {
     visibility = View.VISIBLE
 }
+
+fun Boolean.toInt(): Int {
+    return if (this) 1 else 0
+}

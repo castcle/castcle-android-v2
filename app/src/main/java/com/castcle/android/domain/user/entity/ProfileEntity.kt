@@ -6,6 +6,7 @@ import com.castcle.android.domain.user.type.ProfileType
 
 @Entity(tableName = TABLE_PROFILE)
 data class ProfileEntity(
+    @ColumnInfo(name = "${TABLE_PROFILE}_createdAt") val createdAt: Long = 0L,
     @ColumnInfo(name = "${TABLE_PROFILE}_id") @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo(name = "${TABLE_PROFILE}_originalCastId") val originalCastId: String? = null,
     @ColumnInfo(name = "${TABLE_PROFILE}_originalUserId") val originalUserId: String? = null,

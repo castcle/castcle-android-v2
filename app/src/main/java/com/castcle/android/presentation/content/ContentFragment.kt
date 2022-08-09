@@ -1,7 +1,6 @@
 package com.castcle.android.presentation.content
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.lifecycleScope
@@ -22,10 +21,7 @@ import com.castcle.android.presentation.content.item_comment.CommentViewRenderer
 import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewRenderer
 import com.castcle.android.presentation.content.item_reply.ReplyViewRenderer
 import com.castcle.android.presentation.feed.FeedListener
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewRenderer
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
@@ -87,13 +83,6 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
             binding.swipeRefresh.isRefreshing = false
             adapter.refresh()
             clearComment()
-        }
-        binding.root.setOnApplyWindowInsetsListener { _, windowInsets ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val imeHeight = windowInsets.getInsets(WindowInsets.Type.ime()).bottom
-                binding.root.setPadding(0, 0, 0, imeHeight)
-            }
-            windowInsets
         }
         binding.etComment.setMentionEnabled(true)
         binding.etComment.setMentionTextChangedListener(object : MentionView.OnChangedListener {
@@ -175,7 +164,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun onRecastClicked(cast: CastEntity) {
-
+        ContentFragmentDirections.toRecastDialogFragment(cast.id).navigate()
     }
 
     override fun onRecastCountClicked(contentId: String, hasLike: Boolean) {
@@ -194,39 +183,23 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         ContentFragmentDirections.toProfileFragment(user).navigate()
     }
 
-    override fun onPause() {
+    override fun onStop() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
         changeSoftInputMode(false)
-        super.onPause()
+        super.onStop()
     }
 
-    override fun onResume() {
+    override fun onStart() {
+        super.onStart()
         binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
         changeSoftInputMode(true)
-        super.onResume()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun changeSoftInputMode(isResize: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            activity?.window?.setDecorFitsSystemWindows(!isResize)
-        } else {
-            if (isResize) {
-                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-            } else {
-                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-            }
-        }
     }
 
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
             registerRenderer(CommentViewRenderer())
             registerRenderer(ContentMetricsViewRenderer())
-            registerRenderer(FeedImage1ViewRenderer())
-            registerRenderer(FeedImage2ViewRenderer())
-            registerRenderer(FeedImage3ViewRenderer())
-            registerRenderer(FeedImage4ViewRenderer())
+            registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
             registerRenderer(FeedTextViewRenderer())

@@ -14,6 +14,14 @@ data class ImageEntity(
 ) : Parcelable {
 
     companion object {
+        fun map(url: String?): ImageEntity? {
+            return if (url.isNullOrBlank()) {
+                null
+            } else {
+                ImageEntity(original = url, thumbnail = url)
+            }
+        }
+
         fun map(response: PhotoResponse?): ImageEntity? {
             return if (response?.original.isNullOrBlank() && response?.thumbnail.isNullOrBlank()) {
                 null

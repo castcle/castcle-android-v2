@@ -17,10 +17,7 @@ import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.search.type.SearchType
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.FeedListener
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewRenderer
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
@@ -113,7 +110,7 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
     }
 
     override fun onRecastClicked(cast: CastEntity) {
-
+        SearchFragmentDirections.toRecastDialogFragment(cast.id).navigate()
     }
 
     override fun onUserClicked(user: UserEntity) {
@@ -141,10 +138,7 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
 
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
-            registerRenderer(FeedImage1ViewRenderer())
-            registerRenderer(FeedImage2ViewRenderer())
-            registerRenderer(FeedImage3ViewRenderer())
-            registerRenderer(FeedImage4ViewRenderer())
+            registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
             registerRenderer(FeedTextViewRenderer())

@@ -4,6 +4,20 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <dialog
+        android:id="@+id/recastDialogFragment"
+        android:name="com.castcle.android.presentation.dialog.recast.RecastDialogFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toNewCastFragment"
+            app:destination="@id/newCastFragment" />
+
+    </dialog>
+
     <fragment
         android:id="@+id/contentFragment"
         android:name="com.castcle.android.presentation.content.ContentFragment">
@@ -20,6 +34,10 @@
         <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
 
     </fragment>
 
@@ -54,8 +72,16 @@
             app:destination="@id/loginFragment" />
 
         <action
+            android:id="@+id/toNewCastFragment"
+            app:destination="@id/newCastFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
 
         <action
             android:id="@+id/toSearchFragment"
@@ -84,6 +110,21 @@
         android:name="com.castcle.android.presentation.login.LoginFragment" />
 
     <fragment
+        android:id="@+id/newCastFragment"
+        android:name="com.castcle.android.presentation.new_cast.NewCastFragment">
+
+        <argument
+            android:name="quoteCastId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.castcle.android.presentation.profile.ProfileFragment">
 
@@ -100,8 +141,16 @@
             app:destination="@id/followingFollowersFragment" />
 
         <action
+            android:id="@+id/toNewCastFragment"
+            app:destination="@id/newCastFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
 
     </fragment>
 
@@ -120,6 +169,10 @@
         <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
 
         <action
             android:id="@+id/toSearchFragment"

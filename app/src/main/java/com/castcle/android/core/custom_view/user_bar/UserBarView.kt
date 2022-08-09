@@ -23,8 +23,9 @@ class UserBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(cont
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun bind(cast: CastEntity, user: UserEntity, listener: UserBarListener) {
+    fun bind(cast: CastEntity, user: UserEntity, listener: UserBarListener, optionEnable: Boolean) {
         compositeDisposable.clear()
+        binding.ivOption.isVisible = optionEnable
         binding.tvDisplayName.text = user.displayName
         binding.ivAvatar.loadAvatarImage(imageUrl = user.avatar.thumbnail)
         binding.tvFollow.isGone = user.followed || user.isOwner

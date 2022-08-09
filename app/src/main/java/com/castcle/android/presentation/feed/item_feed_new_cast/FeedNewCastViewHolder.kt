@@ -20,8 +20,8 @@ class FeedNewCastViewHolder(
         compositeDisposable += binding.flAvatar.onClick {
             listener.onUserClicked(item.user)
         }
-        compositeDisposable += binding.tvHint.onClick {
-            listener.onNewCastClicked()
+        compositeDisposable += binding.root.onClick {
+            listener.onNewCastClicked(item.user.id)
         }
     }
 

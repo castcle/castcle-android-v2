@@ -17,7 +17,6 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/bg_outline_corner_16dp"
         android:backgroundTint="@color/black_background_1"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/_16sdp"
         android:paddingEnd="@dimen/_16sdp"

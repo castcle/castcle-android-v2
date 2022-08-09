@@ -7,12 +7,13 @@ import com.castcle.android.domain.user.entity.UserEntity
 
 interface FeedListener : CastcleListener {
     fun onCommentClicked(cast: CastEntity, user: UserEntity) = Unit
+    fun onDeleteImageClicked(index: Int) = Unit
     fun onFollowClicked(user: UserEntity) = Unit
     fun onHashtagClicked(keyword: String) = Unit
     fun onImageClicked(photo: ImageEntity) = Unit
     fun onLikeClicked(cast: CastEntity) = Unit
     fun onLinkClicked(url: String) = Unit
-    fun onNewCastClicked() = Unit
+    fun onNewCastClicked(userId: String) = Unit
     fun onOptionClicked(cast: CastEntity, user: UserEntity) = Unit
     fun onRecastClicked(cast: CastEntity) = Unit
     fun onUserClicked(user: UserEntity) = Unit
