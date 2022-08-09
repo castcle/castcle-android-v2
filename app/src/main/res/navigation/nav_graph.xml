@@ -191,6 +191,8 @@
         <action
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment"
+            app:enterAnim="@null"
+            app:exitAnim="@null"
             app:popUpTo="@+id/searchSuggestionFragment"
             app:popUpToInclusive="true" />
 
