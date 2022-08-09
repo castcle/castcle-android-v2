@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_background_2">
+    tools:background="@color/black_background_2">
 
     <FrameLayout
         android:id="@+id/flAvatar"

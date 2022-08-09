@@ -29,7 +29,12 @@ import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.*
 
 @Database(
-    version = DATABASE_VERSION,
+//    autoMigrations = [
+//        AutoMigration(
+//            from = DATABASE_VERSION.minus(1),
+//            to = DATABASE_VERSION,
+//        )
+//    ],
     entities = [
         AccessTokenEntity::class,
         CastEntity::class,
@@ -47,6 +52,7 @@ import com.castcle.android.domain.user.type.*
         UserEntity::class,
         WhoToFollowEntity::class,
     ],
+    version = DATABASE_VERSION,
 )
 @TypeConverters(
     AccessTokenType.Converter::class,

@@ -16,15 +16,13 @@ import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.FeedListener
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewRenderer
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.home.HomeFragmentDirections
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.profile.item_profile_page.ProfilePageViewRenderer
 import com.castcle.android.presentation.profile.item_profile_user.ProfileUserViewRenderer
@@ -102,6 +100,14 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
         shareViewModel.likeCasts(targetCasts = cast)
     }
 
+    override fun onNewCastClicked(userId: String) {
+        ProfileFragmentDirections.toNewCastFragment(quoteCastId = null, userId = userId).navigate()
+    }
+
+    override fun onRecastClicked(cast: CastEntity) {
+        ProfileFragmentDirections.toRecastDialogFragment(contentId = cast.id).navigate()
+    }
+
     override fun onRefreshClicked() {
         adapter.refresh()
     }
@@ -126,10 +132,7 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
-            registerRenderer(FeedImage1ViewRenderer())
-            registerRenderer(FeedImage2ViewRenderer())
-            registerRenderer(FeedImage3ViewRenderer())
-            registerRenderer(FeedImage4ViewRenderer())
+            registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedNewCastViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())

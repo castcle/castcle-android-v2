@@ -1,6 +1,7 @@
 package com.castcle.android.data.user.dao
 
 import androidx.room.*
+import com.castcle.android.core.constants.TABLE_CAST
 import com.castcle.android.core.constants.TABLE_USER
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -11,14 +12,23 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
+    @Query("UPDATE $TABLE_USER SET user_casts = case when user_casts IS NOT NULL then user_casts - 1 else NULL end  WHERE user_id = :userId")
+    suspend fun decreaseCastCount(userId: String)
+
     @Query("DELETE FROM $TABLE_USER")
     suspend fun delete()
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1")
     suspend fun get(): List<UserEntity>
 
+    @Query("SELECT * FROM $TABLE_USER WHERE user_type = :type AND user_isOwner = 1")
+    suspend fun get(type: UserType): List<UserEntity>
+
     @Query("SELECT * FROM $TABLE_USER WHERE user_id = :userId")
     suspend fun get(userId: String): List<UserEntity>
+
+    @Query("UPDATE $TABLE_USER SET user_casts = case when user_casts IS NOT NULL then user_casts + 1 else NULL end  WHERE user_id = :userId")
+    suspend fun increaseCastCount(userId: String)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(items: List<UserEntity>): List<Long>

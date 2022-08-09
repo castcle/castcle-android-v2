@@ -5,6 +5,7 @@
     <string name="advertised">Advertised</string>
     <string name="app_name">Castcle V2</string>
     <string name="cast_of">Cast of %s</string>
+    <string name="cast">Cast</string>
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
     <string name="copy_message">Copy message</string>
@@ -22,6 +23,7 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="for_you">For you</string>
+    <string name="dialog_recast_title">Choose Page or User</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
     <string name="fragment_login_title_3">Enter your email address</string>
@@ -39,14 +41,18 @@
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
     <string name="logout">Log out</string>
+    <string name="more_image">+%d</string>
     <string name="new_cast">New Cast</string>
     <string name="notification">Notification</string>
     <string name="password">Password</string>
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="public_title">Public</string>
     <string name="rank_trending">%d. Trending</string>
+    <string name="quote_cast">Quote Cast</string>
     <string name="quote_cast_count">%s Quote Casts</string>
     <string name="read_more"> …Read more</string>
+    <string name="recast">Recast</string>
     <string name="recast_count">%s Recasts</string>
     <string name="recent_searches">Recent searches</string>
     <string name="reply">Reply</string>
@@ -55,6 +61,7 @@
     <string name="setting">Setting</string>
     <string name="show_more">Show more</string>
     <string name="terms_of_service">Terms of Service</string>
+    <string name="warning_permission_required">Permission required for this feature to be available.</string>
     <string name="whats_new_today">What\'s new today\?</string>
     <string name="whats_on_your_mind">What\'s on your mind\?</string>
     <string name="who_to_follow">Who to follow</string>
@@ -62,6 +69,7 @@
     <string name="world_trends_search">World trends search</string>
     <string name="world_trends_title">Top 10 World Trends</string>
     <string name="you_recasted">You recasted</string>
+    <string name="unrecast">Unrecast</string>
     <string name="user_recasted">%s recasted</string>
     <string name="version">Castcle Version %s (%s)</string>
     <string name="view_page">View Page</string>

@@ -39,7 +39,6 @@
         android:layout_margin="@dimen/_12sdp"
         android:foreground="@drawable/bg_outline_corner_16dp"
         android:foregroundTint="@color/gray_1"
-        android:paddingBottom="@dimen/_12sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

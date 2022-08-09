@@ -1,5 +1,6 @@
 package com.castcle.android.core.extensions
 
+import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
@@ -76,6 +77,7 @@ fun ImageView.loadCenterCropWithRoundedCorners(
 }
 
 fun ImageView.loadCenterCropWithRoundedCorners(
+    uri: Uri?,
     url: String?,
     thumbnailUrl: String?,
     viewSizeDp: Int,
@@ -97,12 +99,12 @@ fun ImageView.loadCenterCropWithRoundedCorners(
         .load(R.drawable.ic_image)
         .transform(centerCrop, roundedCorners)
     val thumbnail = GlideApp.with(context)
-        .load(GlideUrlWithQueryParameter(thumbnailUrl))
+        .load(uri ?: GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(centerCrop, roundedCorners)
         .thumbnail(placeholder)
         .error(placeholder)
     GlideApp.with(context)
-        .load(GlideUrlWithQueryParameter(url))
+        .load(uri ?: GlideUrlWithQueryParameter(url))
         .transform(centerCrop, roundedCorners)
         .thumbnail(thumbnail)
         .error(placeholder)
@@ -110,6 +112,7 @@ fun ImageView.loadCenterCropWithRoundedCorners(
 }
 
 fun ImageView.loadScaleCenterCropWithRoundedCorners(
+    uri: Uri?,
     url: String?,
     thumbnailUrl: String?,
     viewSizeDp: Int,
@@ -131,12 +134,12 @@ fun ImageView.loadScaleCenterCropWithRoundedCorners(
         .load(R.drawable.ic_image)
         .transform(centerCrop, roundedCorners)
     val thumbnail = GlideApp.with(context)
-        .load(GlideUrlWithQueryParameter(thumbnailUrl))
+        .load(uri ?: GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(centerCrop, roundedCorners)
         .thumbnail(placeholder)
         .error(placeholder)
     GlideApp.with(context)
-        .load(GlideUrlWithQueryParameter(url))
+        .load(uri ?: GlideUrlWithQueryParameter(url))
         .transform(centerCrop, roundedCorners)
         .thumbnail(thumbnail)
         .error(placeholder)

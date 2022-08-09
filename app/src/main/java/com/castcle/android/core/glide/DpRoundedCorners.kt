@@ -7,7 +7,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.castcle.android.core.extensions.convertDpToPx
-import java.nio.charset.Charset
+import com.castcle.android.core.extensions.toInt
 import java.security.MessageDigest
 
 class DpRoundedCorners(
@@ -48,12 +48,16 @@ class DpRoundedCorners(
         return false
     }
 
-    private val id = DpRoundedCorners::class.java.simpleName
-
-    override fun hashCode() = id.hashCode()
+    override fun hashCode() = DpRoundedCorners::class.java.simpleName.hashCode() +
+        (viewSizePx * 123) +
+        (cornersSizeId * 234) +
+        (enableTopLeft.toInt() * 345) +
+        (enableTopRight.toInt() * 456) +
+        (enableBottomLeft.toInt() * 567) +
+        (enableBottomRight.toInt() * 678)
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
-        messageDigest.update(id.toByteArray(Charset.forName("UTF-8")))
+        messageDigest.update(hashCode().toByte())
     }
 
 }
