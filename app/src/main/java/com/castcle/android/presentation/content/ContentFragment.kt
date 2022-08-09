@@ -155,21 +155,15 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         viewModel.likeComment(comment)
     }
 
-    override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) {
+    override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) = Unit
 
-    }
-
-    override fun onQuoteCastCountClicked(contentId: String) {
-
-    }
+    override fun onQuoteCastCountClicked(contentId: String) = Unit
 
     override fun onRecastClicked(cast: CastEntity) {
         ContentFragmentDirections.toRecastDialogFragment(cast.id).navigate()
     }
 
-    override fun onRecastCountClicked(contentId: String, hasLike: Boolean) {
-
-    }
+    override fun onRecastCountClicked(contentId: String, hasLike: Boolean) = Unit
 
     @SuppressLint("SetTextI18n")
     override fun onReplyClicked(castcleId: String, commentId: String) {

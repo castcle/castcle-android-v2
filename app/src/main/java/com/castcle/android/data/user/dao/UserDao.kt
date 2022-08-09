@@ -1,7 +1,6 @@
 package com.castcle.android.data.user.dao
 
 import androidx.room.*
-import com.castcle.android.core.constants.TABLE_CAST
 import com.castcle.android.core.constants.TABLE_USER
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
