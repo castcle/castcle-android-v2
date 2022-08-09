@@ -14,6 +14,11 @@ interface ContentApi {
         @Body body: CreateContentRequest,
     ): Response<BaseResponse<CastResponse>>
 
+    @DELETE("v2/contents/{$PARAMETER_CONTENT_ID}")
+    suspend fun deleteContent(
+        @Path(PARAMETER_CONTENT_ID) contentId: String,
+    ): Response<Unit>
+
     @GET("v2/contents/{$PARAMETER_CONTENT_ID}/comments")
     suspend fun getComment(
         @Path(PARAMETER_CONTENT_ID) contentId: String,

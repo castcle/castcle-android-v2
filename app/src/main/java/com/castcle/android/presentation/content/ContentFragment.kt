@@ -20,6 +20,7 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.content.item_comment.CommentViewRenderer
 import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewRenderer
 import com.castcle.android.presentation.content.item_reply.ReplyViewRenderer
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
@@ -145,6 +146,15 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
         binding.etComment.showKeyboard()
+    }
+
+    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.DeleteContent(contentId = cast.id)
+        } else {
+            OptionDialogType.ReportContent(contentId = cast.id)
+        }
+        ContentFragmentDirections.toOptionDialogFragment(optionType).navigate()
     }
 
     override fun onLikeClicked(cast: CastEntity) {

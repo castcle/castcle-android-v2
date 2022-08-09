@@ -48,6 +48,15 @@ class ContentRepositoryImpl(
         }
     }
 
+    override suspend fun deleteContent(contentId: String, userId: String) {
+        apiCall { api.deleteContent(contentId = contentId) }
+        database.withTransaction {
+            database.profile().deleteByOriginalCast(contentId)
+            database.profile().deleteByReferenceCast(contentId)
+            database.user().decreaseCastCount(userId)
+        }
+    }
+
     override suspend fun getContent(contentId: String, sessionId: Long): ContentEntity {
         val response = apiCall { api.getContent(contentId = contentId) }
         val ownerUserId = database.user().get().map { it.id }

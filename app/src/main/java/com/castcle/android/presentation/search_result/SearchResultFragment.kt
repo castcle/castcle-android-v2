@@ -16,6 +16,7 @@ import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.search.type.SearchType
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
@@ -105,8 +106,13 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
         openUrl(url)
     }
 
-    override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-
+    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.DeleteContent(contentId = cast.id)
+        } else {
+            OptionDialogType.ReportContent(contentId = cast.id)
+        }
+        SearchFragmentDirections.toOptionDialogFragment(optionType).navigate()
     }
 
     override fun onRecastClicked(cast: CastEntity) {

@@ -23,6 +23,7 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="for_you">For you</string>
+    <string name="delete">Delete</string>
     <string name="dialog_recast_title">Choose Page or User</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
@@ -56,6 +57,7 @@
     <string name="recast_count">%s Recasts</string>
     <string name="recent_searches">Recent searches</string>
     <string name="reply">Reply</string>
+    <string name="report_cast">Report cast</string>
     <string name="retry">Retry</string>
     <string name="search">Search</string>
     <string name="setting">Setting</string>

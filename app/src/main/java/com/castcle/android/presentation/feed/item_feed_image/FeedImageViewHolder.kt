@@ -113,7 +113,7 @@ class FeedImageViewHolder(
     }
 
     override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-        listener.onOptionClicked(cast, user)
+        listener.onContentOptionClicked(cast, user)
     }
 
     override fun onRecastClicked(cast: CastEntity) {

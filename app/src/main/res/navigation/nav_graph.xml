@@ -18,6 +18,16 @@
 
     </dialog>
 
+    <dialog
+        android:id="@+id/optionDialogFragment"
+        android:name="com.castcle.android.presentation.dialog.option.OptionDialogFragment">
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.presentation.dialog.option.OptionDialogType" />
+
+    </dialog>
+
     <fragment
         android:id="@+id/contentFragment"
         android:name="com.castcle.android.presentation.content.ContentFragment">
@@ -30,6 +40,10 @@
             android:name="contentOwnerDisplayName"
             app:argType="string"
             app:nullable="true" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
@@ -74,6 +88,10 @@
         <action
             android:id="@+id/toNewCastFragment"
             app:destination="@id/newCastFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
@@ -145,6 +163,10 @@
             app:destination="@id/newCastFragment" />
 
         <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
@@ -165,6 +187,10 @@
         <action
             android:id="@+id/toContentFragment"
             app:destination="@id/contentFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
