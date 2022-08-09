@@ -15,6 +15,12 @@ interface SearchDao {
     @Query("DELETE FROM $TABLE_SEARCH WHERE search_sessionId = :sessionId")
     suspend fun delete(sessionId: Long)
 
+    @Query("DELETE FROM $TABLE_SEARCH WHERE search_originalCastId = :castId")
+    suspend fun deleteByOriginalCast(castId: String)
+
+    @Query("DELETE FROM $TABLE_SEARCH WHERE search_referenceCastId = :castId")
+    suspend fun deleteByReferenceCast(castId: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<SearchEntity>)
 

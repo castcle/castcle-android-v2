@@ -51,8 +51,11 @@ class ContentRepositoryImpl(
     override suspend fun deleteContent(contentId: String, userId: String) {
         apiCall { api.deleteContent(contentId = contentId) }
         database.withTransaction {
+            database.cast().delete(contentId)
             database.profile().deleteByOriginalCast(contentId)
             database.profile().deleteByReferenceCast(contentId)
+            database.search().deleteByOriginalCast(contentId)
+            database.search().deleteByReferenceCast(contentId)
             database.user().decreaseCastCount(userId)
         }
     }
