@@ -14,7 +14,7 @@ interface FeedListener : CastcleListener {
     fun onLikeClicked(cast: CastEntity) = Unit
     fun onLinkClicked(url: String) = Unit
     fun onNewCastClicked(userId: String) = Unit
-    fun onOptionClicked(cast: CastEntity, user: UserEntity) = Unit
+    fun onContentOptionClicked(cast: CastEntity, user: UserEntity) = Unit
     fun onRecastClicked(cast: CastEntity) = Unit
     fun onUserClicked(user: UserEntity) = Unit
     fun onWhoToFollowClicked() = Unit

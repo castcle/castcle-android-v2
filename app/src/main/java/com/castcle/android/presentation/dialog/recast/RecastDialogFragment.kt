@@ -13,8 +13,8 @@ import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorSta
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.DialogOptionBinding
-import com.castcle.android.presentation.dialog.item_dialog_option.DialogOptionViewListener
-import com.castcle.android.presentation.dialog.item_dialog_option.DialogOptionViewRenderer
+import com.castcle.android.presentation.dialog.option.OptionDialogListener
+import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_recast_title.RecastTitleViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_select_recast_user.SelectRecastUserViewRenderer
 import kotlinx.coroutines.FlowPreview
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 
-class RecastDialogFragment : BaseBottomSheetDialogFragment(), DialogOptionViewListener,
+class RecastDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListener,
     RecastDialogListener {
 
     private val viewModel by stateViewModel<RecastDialogViewModel> { parametersOf(args.contentId) }
@@ -86,7 +86,7 @@ class RecastDialogFragment : BaseBottomSheetDialogFragment(), DialogOptionViewLi
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(ErrorStateViewRenderer())
-            registerRenderer(DialogOptionViewRenderer())
+            registerRenderer(OptionDialogViewRenderer())
             registerRenderer(LoadingViewRenderer())
             registerRenderer(RecastTitleViewRenderer())
             registerRenderer(SelectRecastUserViewRenderer())

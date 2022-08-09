@@ -15,6 +15,7 @@ import com.castcle.android.core.extensions.setRefreshColor
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
@@ -22,7 +23,6 @@ import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRender
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
-import com.castcle.android.presentation.home.HomeFragmentDirections
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.profile.item_profile_page.ProfilePageViewRenderer
 import com.castcle.android.presentation.profile.item_profile_user.ProfileUserViewRenderer
@@ -86,6 +86,15 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
         ProfileFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
+    }
+
+    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.DeleteContent(contentId = cast.id)
+        } else {
+            OptionDialogType.ReportContent(contentId = cast.id)
+        }
+        ProfileFragmentDirections.toOptionDialogFragment(optionType).navigate()
     }
 
     override fun onFollowClicked(user: UserEntity) {

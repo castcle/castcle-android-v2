@@ -12,7 +12,7 @@ import com.castcle.android.domain.content.entity.ParticipateEntity
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.UserType
-import com.castcle.android.presentation.dialog.item_dialog_option.DialogOptionViewEntity
+import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewEntity
 import com.castcle.android.presentation.dialog.recast.item_recast_title.RecastTitleViewEntity
 import com.castcle.android.presentation.dialog.recast.item_select_recast_user.SelectRecastUserViewEntity
 import kotlinx.coroutines.FlowPreview
@@ -120,11 +120,11 @@ class RecastDialogViewModel(
         val selectedUserItem = RecastTitleViewEntity(
             user = this,
         )
-        val recastItem = DialogOptionViewEntity(
+        val recastItem = OptionDialogViewEntity(
             icon = R.drawable.ic_recast,
             title = if (isRecasted) R.string.unrecast else R.string.recast
         )
-        val quoteCastItem = DialogOptionViewEntity(
+        val quoteCastItem = OptionDialogViewEntity(
             icon = R.drawable.ic_discord,
             title = R.string.quote_cast
         )

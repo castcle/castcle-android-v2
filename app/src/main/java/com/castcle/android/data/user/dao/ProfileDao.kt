@@ -17,7 +17,10 @@ interface ProfileDao {
     suspend fun delete(sessionId: Long)
 
     @Query("DELETE FROM $TABLE_PROFILE WHERE profile_originalCastId = :castId")
-    suspend fun delete(castId: String)
+    suspend fun deleteByOriginalCast(castId: String)
+
+    @Query("DELETE FROM $TABLE_PROFILE WHERE profile_referenceCastId = :castId")
+    suspend fun deleteByReferenceCast(castId: String)
 
     @Query("SELECT DISTINCT profile_sessionId FROM $TABLE_PROFILE WHERE profile_originalUserId = :userId AND profile_type = :type")
     suspend fun getExistSessionIdByUserId(userId: String, type: ProfileType): List<Long>

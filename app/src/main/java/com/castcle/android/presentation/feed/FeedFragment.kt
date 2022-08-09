@@ -15,6 +15,7 @@ import com.castcle.android.databinding.FragmentFeedBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
@@ -104,6 +105,15 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
         HomeFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
     }
 
+    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.DeleteContent(contentId = cast.id)
+        } else {
+            OptionDialogType.ReportContent(contentId = cast.id)
+        }
+        HomeFragmentDirections.toOptionDialogFragment(optionType).navigate()
+    }
+
     override fun onFollowClicked(user: UserEntity) {
         shareViewModel.followUser(targetUser = user)
     }
@@ -126,10 +136,6 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
 
     override fun onNewCastClicked(userId: String) {
         HomeFragmentDirections.toNewCastFragment(quoteCastId = null, userId = userId).navigate()
-    }
-
-    override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-
     }
 
     override fun onRecastClicked(cast: CastEntity) {
