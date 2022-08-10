@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.top_trends.item_top_trends_title
+package com.castcle.android.presentation.search.top_trends.item_top_trends_title
 
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.databinding.ItemTopTrendsTitleBinding
