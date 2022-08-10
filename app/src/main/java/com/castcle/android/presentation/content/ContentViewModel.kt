@@ -88,6 +88,12 @@ class ContentViewModel(
             }
         }.cachedIn(viewModelScope)
 
+    fun fetchContent() {
+        launch {
+            contentRepository.getContent(contentId = contentId, sessionId = sessionId)
+        }
+    }
+
     private fun getContent() {
         launch({
             loadState.value = RetryException.loadState(it) { getContent() }

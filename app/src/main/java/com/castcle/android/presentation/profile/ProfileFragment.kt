@@ -56,6 +56,7 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
     override fun initListener() {
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
+            viewModel.fetchUser()
             adapter.refresh()
         }
     }

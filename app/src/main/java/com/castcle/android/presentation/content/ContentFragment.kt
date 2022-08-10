@@ -83,6 +83,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         }
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
+            viewModel.fetchContent()
             adapter.refresh()
             clearComment()
         }
