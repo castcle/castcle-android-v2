@@ -64,6 +64,12 @@ class ProfileViewModel(
             }
         }.cachedIn(viewModelScope)
 
+    fun fetchUser() {
+        launch {
+            repository.getUser(userId)
+        }
+    }
+
     private fun getUser() {
         launch({
             loadState.value = RetryException.loadState(it) { getUser() }
