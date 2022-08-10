@@ -58,12 +58,12 @@ class RecastDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
         }
     }
 
-    override fun onOptionClicked(titleId: Int) {
-        when (titleId) {
+    override fun onOptionClicked(eventType: Int) {
+        when (eventType) {
             R.string.quote_cast -> navigateToCreateQuoteCast()
             R.string.recast, R.string.unrecast -> {
                 showLoading()
-                viewModel.recast(isRecasted = titleId == R.string.unrecast)
+                viewModel.recast(isRecasted = eventType == R.string.unrecast)
             }
         }
     }

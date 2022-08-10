@@ -21,6 +21,7 @@ import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRender
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
@@ -34,7 +35,7 @@ import org.koin.core.parameter.parametersOf
 
 class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, ProfileListener {
 
-    private val viewModel by stateViewModel<ProfileViewModel> { parametersOf(args.user.castcleId) }
+    private val viewModel by stateViewModel<ProfileViewModel> { parametersOf(args.user.id) }
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
@@ -90,9 +91,9 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
         val optionType = if (cast.isOwner) {
-            OptionDialogType.DeleteContent(contentId = cast.id)
+            OptionDialogType.MyContentOption(contentId = cast.id)
         } else {
-            OptionDialogType.ReportContent(contentId = cast.id)
+            OptionDialogType.OtherContentOption(contentId = cast.id)
         }
         ProfileFragmentDirections.toOptionDialogFragment(optionType).navigate()
     }
@@ -113,6 +114,10 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
         ProfileFragmentDirections.toNewCastFragment(quoteCastId = null, userId = userId).navigate()
     }
 
+    override fun onOptionClicked(type: OptionDialogType) {
+        ProfileFragmentDirections.toOptionDialogFragment(type).navigate()
+    }
+
     override fun onRecastClicked(cast: CastEntity) {
         ProfileFragmentDirections.toRecastDialogFragment(contentId = cast.id).navigate()
     }
@@ -127,6 +132,10 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     override fun onUserClicked(user: UserEntity) {
         ProfileFragmentDirections.toProfileFragment(user).navigate()
+    }
+
+    override fun onViewReportingClicked(contentId: List<String>) {
+        shareViewModel.showReportingContent(contentId = contentId)
     }
 
     override fun onPause() {
@@ -145,6 +154,7 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
             registerRenderer(FeedNewCastViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
+            registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)

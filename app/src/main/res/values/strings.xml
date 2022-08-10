@@ -4,12 +4,14 @@
     <string name="account_settings">Account Settings</string>
     <string name="advertised">Advertised</string>
     <string name="app_name">Castcle V2</string>
+    <string name="block_user">Block %s</string>
     <string name="cast_of">Cast of %s</string>
     <string name="cast">Cast</string>
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
     <string name="copy_message">Copy message</string>
     <string name="docs">Docs</string>
+    <string name="done">Done</string>
     <string name="edit_page">Edit Page</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
@@ -24,6 +26,7 @@
     <string name="following">Following</string>
     <string name="for_you">For you</string>
     <string name="delete">Delete</string>
+    <string name="delete_page">Delete page</string>
     <string name="dialog_recast_title">Choose Page or User</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
@@ -33,6 +36,15 @@
     <string name="fragment_login_title_6">Login</string>
     <string name="fragment_login_title_7">Or continue with</string>
     <string name="fragment_login_title_8">Don’t have an account? <font color="#01D2FF">Sign up</font></string>
+    <string name="fragment_report_detail_message_hint">Write you message here…</string>
+    <string name="fragment_report_detail_cast_title">Are there any additional issues with this Cast you want to report? Tell us more.</string>
+    <string name="fragment_report_detail_user_title">Are there any additional issues with this User you want to report? Tell us more.</string>
+    <string name="fragment_report_subject_footer">Get to know more about <u><font color="#01D2FF">Castcle Terms and Agreement</font></u></string>
+    <string name="fragment_report_subject_header_cast">Why are you reporting this Cast?</string>
+    <string name="fragment_report_subject_header_user">Why are you reporting this User?</string>
+    <string name="fragment_report_success_title">Thank you for letting us know the issue.</string>
+    <string name="fragment_report_success_description_cast">If this Cast violates Castcle Terms and Agreement, it will be removed.</string>
+    <string name="fragment_report_success_description_user">If this User violates Castcle Terms and Agreement, it will be removed.</string>
     <string name="fragment_setting_title_1">%s New notification</string>
     <string name="fragment_setting_title_2">Verify e-mail</string>
     <string name="fragment_setting_title_3">Please verify your e-mail</string>
@@ -42,6 +54,7 @@
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
     <string name="logout">Log out</string>
+    <string name="message">Message</string>
     <string name="more_image">+%d</string>
     <string name="new_cast">New Cast</string>
     <string name="notification">Notification</string>
@@ -58,10 +71,17 @@
     <string name="recent_searches">Recent searches</string>
     <string name="reply">Reply</string>
     <string name="report_cast">Report cast</string>
+    <string name="report_user">Report %s</string>
+    <string name="report_cast_title">Report Cast</string>
+    <string name="reported_content_title">This cast has been reported by you</string>
+    <string name="reporting_content_title">You reported this cast.</string>
+    <string name="report_user_title">Report User</string>
     <string name="retry">Retry</string>
     <string name="search">Search</string>
     <string name="setting">Setting</string>
     <string name="show_more">Show more</string>
+    <string name="sync_social_media">Sync social media</string>
+    <string name="submit">Submit</string>
     <string name="terms_of_service">Terms of Service</string>
     <string name="warning_permission_required">Permission required for this feature to be available.</string>
     <string name="whats_new_today">What\'s new today\?</string>
@@ -73,7 +93,8 @@
     <string name="you_recasted">You recasted</string>
     <string name="unrecast">Unrecast</string>
     <string name="user_recasted">%s recasted</string>
-    <string name="version">Castcle Version %s (%s)</string>
+    <string name="version">Castcle Version %s (%d)</string>
+    <string name="view">View</string>
     <string name="view_page">View Page</string>
     <string name="view_profile">View Profile</string>
 </resources>

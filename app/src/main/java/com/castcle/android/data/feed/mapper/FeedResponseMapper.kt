@@ -29,7 +29,7 @@ class FeedResponseMapper {
         ownerUser: List<UserEntity>,
     ): FeedResponseResult {
         val ownerUserId = ownerUser.map { it.id }
-        val userId = ownerUser.find { it.type is UserType.People }?.id ?: ""
+        val userId = ownerUser.find { it.type is UserType.People }?.id.orEmpty()
         val newCastItems = if (loadType == LoadType.REFRESH && !isGuest) {
             val item = FeedEntity(
                 id = FeedType.NewCast.id,
@@ -60,7 +60,7 @@ class FeedResponseMapper {
                     FeedEntity(
                         campaignMessage = response.campaignMessage,
                         campaignName = response.campaignName,
-                        id = response.id ?: "",
+                        id = response.id.orEmpty(),
                         originalCastId = cast.id,
                         originalUserId = cast.authorId,
                         referenceCastId = referencedCast?.id,
@@ -75,7 +75,7 @@ class FeedResponseMapper {
                     FeedEntity(
                         campaignMessage = response.campaignMessage,
                         campaignName = response.campaignName,
-                        id = response.id ?: "",
+                        id = response.id.orEmpty(),
                         originalUserId = adsPage.id,
                         type = type,
                     )
@@ -89,7 +89,7 @@ class FeedResponseMapper {
                         null
                     } else {
                         FeedEntity(
-                            id = response.id ?: "",
+                            id = response.id.orEmpty(),
                             originalUserId = suggestionFollow.firstOrNull()?.id,
                             referenceUserId = suggestionFollow.secondOrNull()?.id,
                             type = type,

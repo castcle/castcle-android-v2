@@ -42,8 +42,8 @@ class FeedWhoToFollowViewHolder(
         binding.ivAvatar2.loadAvatarImage(item.user2?.avatar?.thumbnail)
         binding.tvUserName1.text = item.user1?.displayName
         binding.tvUserName2.text = item.user2?.displayName
-        binding.tvCastcleId1.text = "@${item.user1?.castcleId}"
-        binding.tvCastcleId2.text = "@${item.user2?.castcleId}"
+        binding.tvCastcleId1.text = item.user1?.castcleId
+        binding.tvCastcleId2.text = item.user2?.castcleId
         binding.ivOfficial1.isVisible = item.user1?.verifiedOfficial == true
         binding.ivOfficial2.isVisible = item.user2?.verifiedOfficial == true
         binding.tvDescription1.text = item.user1?.overview

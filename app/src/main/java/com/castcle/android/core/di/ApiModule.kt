@@ -16,6 +16,9 @@ val apiModule = module {
         get<Retrofit>().create(FeedApi::class.java)
     }
     single {
+        get<Retrofit>().create(MetadataApi::class.java)
+    }
+    single {
         get<Retrofit>().create(NotificationApi::class.java)
     }
     single {

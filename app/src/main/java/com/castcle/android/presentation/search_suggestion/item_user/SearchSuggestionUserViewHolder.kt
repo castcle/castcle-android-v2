@@ -24,7 +24,7 @@ class SearchSuggestionUserViewHolder(
 
     override fun bind(bindItem: SearchSuggestionUserViewEntity) {
         binding.tvDisplayName.text = item.user.displayName
-        binding.tvCastcleId.text = "@${item.user.castcleId}"
+        binding.tvCastcleId.text = item.user.castcleId
         binding.ivAvatar.loadAvatarImage(imageUrl = item.user.avatar.thumbnail)
     }
 

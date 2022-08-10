@@ -29,7 +29,7 @@ class WhoToFollowViewHolder(
     override fun bind(bindItem: WhoToFollowViewEntity) {
         binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
         binding.tvUserName.text = item.user.displayName
-        binding.tvCastcleId.text = "@${item.user.castcleId}"
+        binding.tvCastcleId.text = item.user.castcleId
         binding.ivOfficial.isVisible = item.user.verifiedOfficial
         binding.tvDescription.text = item.user.overview
         binding.tvDescription.isVisible = !item.user.overview.isNullOrBlank()

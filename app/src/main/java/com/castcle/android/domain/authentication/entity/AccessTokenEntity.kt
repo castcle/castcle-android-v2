@@ -19,14 +19,14 @@ data class AccessTokenEntity(
 
     companion object {
         fun map(response: GetGuestAccessTokenResponse?) = AccessTokenEntity(
-            accessToken = response?.accessToken ?: "",
-            refreshToken = response?.refreshToken ?: "",
+            accessToken = response?.accessToken.orEmpty(),
+            refreshToken = response?.refreshToken.orEmpty(),
             type = AccessTokenType.Guest,
         )
 
         fun map(response: LoginResponse?) = AccessTokenEntity(
-            accessToken = response?.accessToken ?: "",
-            refreshToken = response?.refreshToken ?: "",
+            accessToken = response?.accessToken.orEmpty(),
+            refreshToken = response?.refreshToken.orEmpty(),
             type = AccessTokenType.Member,
         )
     }

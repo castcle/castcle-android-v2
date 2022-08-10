@@ -1,6 +1,7 @@
 package com.castcle.android.domain.user
 
 import com.castcle.android.data.user.entity.CreateQuoteCastRequest
+import com.castcle.android.data.user.entity.ReportRequest
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -16,6 +17,8 @@ interface UserRepository {
     suspend fun likeComment(comment: CommentEntity)
     suspend fun recastContent(contentId: String, userId: String)
     suspend fun replyComment(commentId: String, message: String)
+    suspend fun reportContent(body: ReportRequest)
+    suspend fun reportUser(body: ReportRequest)
     suspend fun unfollowUser(targetUser: UserEntity)
     suspend fun unlikeCasts(content: CastEntity)
     suspend fun unlikeComment(comment: CommentEntity)

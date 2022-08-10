@@ -11,7 +11,7 @@ class FollowingFollowersMapper {
 
     fun apply(item: FollowingFollowersWithResultEntity): CastcleViewEntity {
         return SearchPeopleViewEntity(
-            uniqueId = item.user?.id ?: "",
+            uniqueId = item.user?.id.orEmpty(),
             user = item.user ?: UserEntity(),
         )
     }

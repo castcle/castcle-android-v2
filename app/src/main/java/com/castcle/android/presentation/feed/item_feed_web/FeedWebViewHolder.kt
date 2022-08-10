@@ -1,6 +1,7 @@
 package com.castcle.android.presentation.feed.item_feed_web
 
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
@@ -66,6 +67,7 @@ class FeedWebViewHolder(
         binding.participateBar.isGone =
             displayType is FeedDisplayType.QuoteCast || displayType is FeedDisplayType.NewCast
         binding.participateBar.bind(item.cast, this)
+        binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, displayType !is FeedDisplayType.NewCast)
         binding.castcleTextView.onClearMessage()
         if (item.cast.type is CastType.Long) {

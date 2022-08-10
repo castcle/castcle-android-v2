@@ -20,6 +20,7 @@ import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRender
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.feed.item_feed_who_to_follow.FeedWhoToFollowViewRenderer
@@ -107,9 +108,9 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
 
     override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
         val optionType = if (cast.isOwner) {
-            OptionDialogType.DeleteContent(contentId = cast.id)
+            OptionDialogType.MyContentOption(contentId = cast.id)
         } else {
-            OptionDialogType.ReportContent(contentId = cast.id)
+            OptionDialogType.OtherContentOption(contentId = cast.id)
         }
         HomeFragmentDirections.toOptionDialogFragment(optionType).navigate()
     }
@@ -146,6 +147,10 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
         HomeFragmentDirections.toProfileFragment(user).navigate()
     }
 
+    override fun onViewReportingClicked(contentId: List<String>) {
+        shareViewModel.showReportingContent(contentId = contentId)
+    }
+
     override fun onWhoToFollowClicked() {
         HomeFragmentDirections.toWhoToFollowFragment().navigate()
     }
@@ -174,6 +179,7 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
             registerRenderer(FeedNewCastViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
+            registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
             registerRenderer(FeedWhoToFollowViewRenderer())

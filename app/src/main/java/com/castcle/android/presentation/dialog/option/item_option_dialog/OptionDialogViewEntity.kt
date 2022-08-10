@@ -1,15 +1,15 @@
 package com.castcle.android.presentation.dialog.option.item_option_dialog
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
 
 data class OptionDialogViewEntity(
+    val eventType: Int = 0,
     @DrawableRes val icon: Int = R.drawable.ic_recast,
-    @StringRes val title: Int = R.string.recast,
-    override val uniqueId: String = "$title"
+    val title: Any = "",
+    override val uniqueId: String = title.toString()
 ) : CastcleViewEntity {
 
     override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {

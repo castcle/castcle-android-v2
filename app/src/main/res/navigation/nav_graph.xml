@@ -26,6 +26,10 @@
             android:name="type"
             app:argType="com.castcle.android.presentation.dialog.option.OptionDialogType" />
 
+        <action
+            android:id="@+id/toReportSubjectFragment"
+            app:destination="@id/reportSubjectFragment" />
+
     </dialog>
 
     <fragment
@@ -173,6 +177,62 @@
         <action
             android:id="@+id/toRecastDialogFragment"
             app:destination="@id/recastDialogFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="com.castcle.android.presentation.report.report_detail.ReportDetailFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="subject"
+            app:argType="com.castcle.android.domain.metadata.entity.ReportSubjectEntity" />
+
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/toReportSuccessFragment"
+            app:destination="@id/reportSuccessFragment"
+            app:popUpTo="@+id/reportSubjectFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportSubjectFragment"
+        android:name="com.castcle.android.presentation.report.report_subject.ReportSubjectFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/toReportDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportSuccessFragment"
+        android:name="com.castcle.android.presentation.report.report_success.ReportSuccessFragment">
+
+        <argument
+            android:name="isReportContent"
+            app:argType="boolean" />
 
     </fragment>
 

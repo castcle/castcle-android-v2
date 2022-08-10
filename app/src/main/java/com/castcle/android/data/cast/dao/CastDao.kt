@@ -24,6 +24,15 @@ interface CastDao {
     @Query("SELECT * FROM $TABLE_CAST WHERE casts_referenceCastId = :referenceCastId AND casts_type = :type AND casts_authorId = :userId")
     suspend fun get(referenceCastId: String, type: CastType, userId: String): CastEntity?
 
+    @Query("UPDATE $TABLE_CAST SET casts_commentCount = casts_commentCount + 1 WHERE casts_id = :castId")
+    suspend fun increaseCommentCount(castId: String)
+
+    @Query("UPDATE $TABLE_CAST SET casts_quoteCount = casts_quoteCount + 1 WHERE casts_id = :castId")
+    suspend fun increaseQuoteCastCount(castId: String)
+
+    @Query("UPDATE $TABLE_CAST SET casts_recastCount = casts_recastCount + 1 WHERE casts_id = :castId")
+    suspend fun increaseRecastCount(castId: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: CastEntity)
 
@@ -36,13 +45,15 @@ interface CastDao {
     @Query("UPDATE $TABLE_CAST SET casts_recasted = :recasted WHERE casts_id = :castId")
     suspend fun updateRecasted(castId: String, recasted: Boolean)
 
-    @Query("UPDATE $TABLE_CAST SET casts_commentCount = casts_commentCount + 1 WHERE casts_id = :castId")
-    suspend fun increaseCommentCount(castId: String)
+    @Query("UPDATE $TABLE_CAST SET casts_reported = :reported WHERE casts_id = :castId")
+    suspend fun updateReported(castId: String, reported: Boolean)
 
-    @Query("UPDATE $TABLE_CAST SET casts_quoteCount = casts_quoteCount + 1 WHERE casts_id = :castId")
-    suspend fun increaseQuoteCastCount(castId: String)
+    @Query("UPDATE $TABLE_CAST SET casts_reporting = :reporting WHERE casts_id = :castId")
+    suspend fun updateReporting(castId: String, reporting: Boolean)
 
-    @Query("UPDATE $TABLE_CAST SET casts_recastCount = casts_recastCount + 1 WHERE casts_id = :castId")
-    suspend fun increaseRecastCount(castId: String)
+    @Transaction
+    suspend fun updateReporting(castId: List<String>, reporting: Boolean) {
+        castId.forEach { updateReporting(it, reporting) }
+    }
 
 }

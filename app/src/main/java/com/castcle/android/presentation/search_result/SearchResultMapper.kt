@@ -10,6 +10,7 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEntity
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
 import com.castcle.android.presentation.search_result.item_search_people.SearchPeopleViewEntity
@@ -21,7 +22,7 @@ class SearchResultMapper {
     fun apply(item: SearchWithResultEntity, type: SearchType): CastcleViewEntity {
         return if (type is SearchType.People) {
             SearchPeopleViewEntity(
-                uniqueId = item.originalUser?.id ?: "",
+                uniqueId = item.originalUser?.id.orEmpty(),
                 user = item.originalUser ?: UserEntity(),
             )
         } else {
@@ -30,6 +31,12 @@ class SearchResultMapper {
     }
 
     private fun mapContentItem(item: SearchWithResultEntity): CastcleViewEntity {
+        if (item.originalCast?.reporting == true || item.referenceCast?.reporting == true) {
+            return FeedReportingViewEntity(
+                reportingContentId = item.originalCast?.id,
+                reportingReferenceContentId = item.referenceCast?.id,
+            )
+        }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
                 cast = item.originalCast,
@@ -65,7 +72,7 @@ class SearchResultMapper {
                         .map { it }
                         .plus(ImageEntity.map(item.originalCast?.linkPreview))
                         .filterNotNull(),
-                    uniqueId = item.originalCast?.id ?: "",
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkUrl?.isNotBlank() == true -> FeedWebViewEntity(
@@ -75,7 +82,7 @@ class SearchResultMapper {
                 )
                 else -> FeedTextViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    uniqueId = item.originalCast?.id ?: "",
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
             }

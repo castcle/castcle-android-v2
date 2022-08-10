@@ -30,6 +30,7 @@ data class CastEntity(
     @ColumnInfo(name = "${TABLE_CAST}_recasted") val recasted: Boolean = false,
     @ColumnInfo(name = "${TABLE_CAST}_referenceCastId") val referenceCastId: String? = null,
     @ColumnInfo(name = "${TABLE_CAST}_reported") val reported: Boolean = false,
+    @ColumnInfo(name = "${TABLE_CAST}_reporting") val reporting: Boolean = false,
     @ColumnInfo(name = "${TABLE_CAST}_type") val type: CastType = CastType.Short,
     @ColumnInfo(name = "${TABLE_CAST}_updatedAt") val updatedAt: String = "",
 ) {
@@ -43,23 +44,23 @@ data class CastEntity(
             .toMutableList()
 
         fun map(ownerUserId: List<String?>?, response: CastResponse?) = CastEntity(
-            authorId = response?.authorId ?: "",
+            authorId = response?.authorId.orEmpty(),
             commentCount = response?.metrics?.commentCount ?: 0,
             commented = response?.participate?.commented ?: false,
-            createdAt = response?.createdAt ?: "",
+            createdAt = response?.createdAt.orEmpty(),
             farmCount = response?.metrics?.farmCount ?: 0,
             farming = response?.participate?.farming ?: false,
-            id = response?.id ?: "",
+            id = response?.id.orEmpty(),
             image = response?.photo?.contents.orEmpty().mapNotNull { ImageEntity.map(it) },
             isOwner = ownerUserId.orEmpty()
                 .filterNotNullOrBlank()
                 .contains(response?.authorId),
             likeCount = response?.metrics?.likeCount ?: 0,
             liked = response?.participate?.liked ?: false,
-            linkPreview = response?.link?.firstOrNull()?.imagePreview ?: "",
-            linkType = response?.link?.firstOrNull()?.type ?: "",
-            linkUrl = response?.link?.firstOrNull()?.url ?: "",
-            message = response?.message ?: "",
+            linkPreview = response?.link?.firstOrNull()?.imagePreview.orEmpty(),
+            linkType = response?.link?.firstOrNull()?.type.orEmpty(),
+            linkUrl = response?.link?.firstOrNull()?.url.orEmpty(),
+            message = response?.message.orEmpty(),
             quoteCount = response?.metrics?.quoteCount ?: 0,
             quoted = response?.participate?.quoted ?: false,
             recastCount = response?.metrics?.recastCount ?: 0,
@@ -67,7 +68,7 @@ data class CastEntity(
             referenceCastId = response?.referencedCasts?.id,
             reported = response?.participate?.reported ?: false,
             type = CastType.getFromId(response?.referencedCasts?.type ?: response?.type),
-            updatedAt = response?.updatedAt ?: "",
+            updatedAt = response?.updatedAt.orEmpty(),
         )
     }
 
