@@ -238,7 +238,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.castcle.android.presentation.search.SearchFragment">
+        android:name="com.castcle.android.presentation.search.search.SearchFragment">
 
         <argument
             android:name="keyword"
@@ -268,7 +268,7 @@
 
     <fragment
         android:id="@+id/searchSuggestionFragment"
-        android:name="com.castcle.android.presentation.search_suggestion.SearchSuggestionFragment">
+        android:name="com.castcle.android.presentation.search.search_suggestion.SearchSuggestionFragment">
 
         <action
             android:id="@+id/toProfileFragment"

@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_suggestion.item_keyword
+package com.castcle.android.presentation.search.search_suggestion.item_keyword
 
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity

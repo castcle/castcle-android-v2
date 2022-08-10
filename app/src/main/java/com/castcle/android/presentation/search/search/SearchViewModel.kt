@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search
+package com.castcle.android.presentation.search.search
 
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.storage.database.CastcleDatabase

@@ -1,11 +1,11 @@
-package com.castcle.android.presentation.search_suggestion
+package com.castcle.android.presentation.search.search_suggestion
 
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.search.entity.RecentSearchEntity
 import com.castcle.android.domain.search.entity.SearchSuggestionEntity
-import com.castcle.android.presentation.search_suggestion.item_keyword.SearchSuggestionKeywordViewEntity
-import com.castcle.android.presentation.search_suggestion.item_title.SearchSuggestionTitleViewEntity
-import com.castcle.android.presentation.search_suggestion.item_user.SearchSuggestionUserViewEntity
+import com.castcle.android.presentation.search.search_suggestion.item_keyword.SearchSuggestionKeywordViewEntity
+import com.castcle.android.presentation.search.search_suggestion.item_title.SearchSuggestionTitleViewEntity
+import com.castcle.android.presentation.search.search_suggestion.item_user.SearchSuggestionUserViewEntity
 import org.koin.core.annotation.Factory
 
 @Factory

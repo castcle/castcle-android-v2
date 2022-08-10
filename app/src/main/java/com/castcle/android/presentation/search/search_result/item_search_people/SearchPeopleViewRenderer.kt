@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_result.item_search_people
+package com.castcle.android.presentation.search.search_result.item_search_people
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

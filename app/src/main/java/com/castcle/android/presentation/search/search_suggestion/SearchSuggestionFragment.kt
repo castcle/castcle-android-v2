@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_suggestion
+package com.castcle.android.presentation.search.search_suggestion
 
 import android.os.Bundle
 import android.view.*
@@ -10,10 +10,10 @@ import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewR
 import com.castcle.android.core.extensions.hideKeyboard
 import com.castcle.android.databinding.FragmentSearchSuggestionBinding
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.search_suggestion.item_keyword.SearchSuggestionKeywordViewRenderer
-import com.castcle.android.presentation.search_suggestion.item_title.SearchSuggestionTitleViewEntity
-import com.castcle.android.presentation.search_suggestion.item_title.SearchSuggestionTitleViewRenderer
-import com.castcle.android.presentation.search_suggestion.item_user.SearchSuggestionUserViewRenderer
+import com.castcle.android.presentation.search.search_suggestion.item_keyword.SearchSuggestionKeywordViewRenderer
+import com.castcle.android.presentation.search.search_suggestion.item_title.SearchSuggestionTitleViewEntity
+import com.castcle.android.presentation.search.search_suggestion.item_title.SearchSuggestionTitleViewRenderer
+import com.castcle.android.presentation.search.search_suggestion.item_user.SearchSuggestionUserViewRenderer
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 class SearchSuggestionFragment : BaseFragment(), SearchSuggestionListener {

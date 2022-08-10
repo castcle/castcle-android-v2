@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_result
+package com.castcle.android.presentation.search.search_result
 
 import android.os.Bundle
 import android.view.*
@@ -25,8 +25,8 @@ import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingVi
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
-import com.castcle.android.presentation.search.SearchFragmentDirections
-import com.castcle.android.presentation.search_result.item_search_people.SearchPeopleViewRenderer
+import com.castcle.android.presentation.search.search.SearchFragmentDirections
+import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewRenderer
 import com.castcle.android.presentation.who_to_follow.WhoToFollowListener
 import com.castcle.android.presentation.who_to_follow.item_who_to_follow.WhoToFollowViewRenderer
 import kotlinx.coroutines.*
