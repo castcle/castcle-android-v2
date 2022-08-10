@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_suggestion
+package com.castcle.android.presentation.search.search_suggestion
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle

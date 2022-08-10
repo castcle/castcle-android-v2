@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_result
+package com.castcle.android.presentation.search.search_result
 
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.cast.entity.CastEntity
@@ -13,7 +13,7 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEnti
 import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
-import com.castcle.android.presentation.search_result.item_search_people.SearchPeopleViewEntity
+import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewEntity
 import org.koin.core.annotation.Factory
 
 @Factory

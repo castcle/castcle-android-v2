@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search
+package com.castcle.android.presentation.search.search
 
 import android.os.Bundle
 import android.view.*
@@ -10,7 +10,7 @@ import com.castcle.android.core.extensions.hideKeyboard
 import com.castcle.android.databinding.FragmentSearchBinding
 import com.castcle.android.domain.search.type.SearchType
 import com.castcle.android.domain.search.type.SearchType.*
-import com.castcle.android.presentation.search_result.SearchResultFragment
+import com.castcle.android.presentation.search.search_result.SearchResultFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf

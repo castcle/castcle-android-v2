@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.search_result
+package com.castcle.android.presentation.search.search_result
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope

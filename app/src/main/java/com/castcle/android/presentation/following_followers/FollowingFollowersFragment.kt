@@ -16,7 +16,7 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.profile.ProfileFragmentDirections
-import com.castcle.android.presentation.search_result.item_search_people.SearchPeopleViewRenderer
+import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewRenderer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
