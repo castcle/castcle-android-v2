@@ -11,6 +11,7 @@ import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEntity
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
 import com.castcle.android.presentation.feed.item_feed_who_to_follow.FeedWhoToFollowViewEntity
@@ -34,6 +35,12 @@ class FeedMapper {
     }
 
     private fun mapContentItem(item: FeedWithResultEntity): CastcleViewEntity {
+        if (item.originalCast?.reporting == true || item.referenceCast?.reporting == true) {
+            return FeedReportingViewEntity(
+                reportingContentId = item.originalCast?.id,
+                reportingReferenceContentId = item.referenceCast?.id,
+            )
+        }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
                 cast = item.originalCast,

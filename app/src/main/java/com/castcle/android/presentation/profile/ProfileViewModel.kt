@@ -21,13 +21,13 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class ProfileViewModel(
     private val api: UserApi,
-    private val castcleId: String,
     private val database: CastcleDatabase,
     private val glidePreloader: GlidePreloader,
     private val profileMapper: ProfileMapper,
     private val repository: UserRepository,
     private val state: SavedStateHandle,
     private val profileResponseMapper: ProfileResponseMapper,
+    private val userId: String,
 ) : BaseViewModel() {
 
     private val sessionId = System.currentTimeMillis()
@@ -69,7 +69,7 @@ class ProfileViewModel(
             loadState.value = RetryException.loadState(it) { getUser() }
         }) {
             loadState.value = LoadState.Loading
-            currentUser.value = repository.getUser(castcleId)
+            currentUser.value = repository.getUser(userId)
         }
     }
 

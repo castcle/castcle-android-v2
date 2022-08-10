@@ -43,7 +43,7 @@ class CommentRemoteMediator(
             }
 
             val response = api.getComment(
-                contentId = content.originalCastId ?: "",
+                contentId = content.originalCastId.orEmpty(),
                 maxResults = state.config.pageSize,
                 untilId = loadKey,
             )

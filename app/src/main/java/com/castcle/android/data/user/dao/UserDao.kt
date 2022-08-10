@@ -14,6 +14,12 @@ interface UserDao {
     @Query("UPDATE $TABLE_USER SET user_casts = case when user_casts IS NOT NULL then user_casts - 1 else NULL end  WHERE user_id = :userId")
     suspend fun decreaseCastCount(userId: String)
 
+    @Query("UPDATE $TABLE_USER SET user_followers = case when user_followers IS NOT NULL then user_followers - 1 else NULL end  WHERE user_id = :userId")
+    suspend fun decreaseFollowers(userId: String)
+
+    @Query("UPDATE $TABLE_USER SET user_following = case when user_following IS NOT NULL then user_following - 1 else NULL end  WHERE user_id = :userId")
+    suspend fun decreaseFollowing(userId: String)
+
     @Query("DELETE FROM $TABLE_USER")
     suspend fun delete()
 
@@ -28,6 +34,12 @@ interface UserDao {
 
     @Query("UPDATE $TABLE_USER SET user_casts = case when user_casts IS NOT NULL then user_casts + 1 else NULL end  WHERE user_id = :userId")
     suspend fun increaseCastCount(userId: String)
+
+    @Query("UPDATE $TABLE_USER SET user_followers = case when user_followers IS NOT NULL then user_followers + 1 else NULL end  WHERE user_id = :userId")
+    suspend fun increaseFollowers(userId: String)
+
+    @Query("UPDATE $TABLE_USER SET user_following = case when user_following IS NOT NULL then user_following + 1 else NULL end  WHERE user_id = :userId")
+    suspend fun increaseFollowing(userId: String)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(items: List<UserEntity>): List<Long>

@@ -15,6 +15,7 @@ import com.castcle.android.domain.content.type.ContentType
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.ProfileType
+import com.castcle.android.domain.user.type.UserType
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -73,7 +74,7 @@ class UserRepositoryImpl(
             )
         }
         database.withTransaction {
-            database.cast().increaseQuoteCastCount(body.contentId ?: "")
+            database.cast().increaseQuoteCastCount(body.contentId.orEmpty())
             database.cast().insert(content)
             database.profile().insert(newProfile)
             database.user().increaseCastCount(userId)
@@ -81,7 +82,12 @@ class UserRepositoryImpl(
     }
 
     override suspend fun followUser(targetUser: UserEntity) {
-        database.user().update(item = targetUser.copy(followed = true))
+        database.withTransaction {
+            val currentUserId = database.user().get(UserType.People).firstOrNull()?.id.orEmpty()
+            database.user().update(item = targetUser.copy(followed = true))
+            database.user().increaseFollowers(userId = targetUser.id)
+            database.user().increaseFollowing(userId = currentUserId)
+        }
         apiCall { api.followUser(FollowUserRequest(targetCastcleId = targetUser.castcleId)) }
     }
 
@@ -188,8 +194,23 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun reportContent(body: ReportRequest) {
+        apiCall { api.reportContent(body = body) }
+        database.cast().updateReported(castId = body.targetContentId.orEmpty(), reported = true)
+        database.cast().updateReporting(castId = body.targetContentId.orEmpty(), reporting = true)
+    }
+
+    override suspend fun reportUser(body: ReportRequest) {
+        apiCall { api.reportUser(body = body) }
+    }
+
     override suspend fun unfollowUser(targetUser: UserEntity) {
-        database.user().update(item = targetUser.copy(followed = false))
+        database.withTransaction {
+            val currentUserId = database.user().get(UserType.People).firstOrNull()?.id.orEmpty()
+            database.user().update(item = targetUser.copy(followed = false))
+            database.user().decreaseFollowers(userId = targetUser.id)
+            database.user().decreaseFollowing(userId = currentUserId)
+        }
         apiCall { api.unfollowUser(targetCastcleId = targetUser.castcleId) }
     }
 

@@ -90,6 +90,16 @@ interface UserApi {
         @Body body: CommentRequest,
     ): Response<BaseResponse<CommentResponse>>
 
+    @POST("v2/users/me/reporting/content")
+    suspend fun reportContent(
+        @Body body: ReportRequest,
+    ): Response<Unit>
+
+    @POST("v2/users/me/reporting/user")
+    suspend fun reportUser(
+        @Body body: ReportRequest,
+    ): Response<Unit>
+
     @DELETE("v2/users/me/following/{targetCastcleId}")
     suspend fun unfollowUser(
         @Path("targetCastcleId") targetCastcleId: String,

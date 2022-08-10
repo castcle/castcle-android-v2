@@ -13,7 +13,7 @@ data class WhoToFollowEntity(
     companion object {
         fun map(response: List<UserResponse>?): List<WhoToFollowEntity> {
             return response.orEmpty().map {
-                WhoToFollowEntity(userId = it.id ?: "")
+                WhoToFollowEntity(userId = it.id.orEmpty())
             }
         }
     }

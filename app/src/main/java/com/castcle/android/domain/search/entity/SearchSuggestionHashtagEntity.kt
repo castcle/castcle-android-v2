@@ -13,9 +13,9 @@ data class SearchSuggestionHashtagEntity(
         fun map(response: List<HashtagsResponse>?) = response.orEmpty().map {
             SearchSuggestionHashtagEntity(
                 count = it.count ?: 0,
-                name = it.name ?: "",
+                name = it.name.orEmpty(),
                 rank = it.rank ?: 0,
-                slug = it.slug ?: "",
+                slug = it.slug.orEmpty(),
             )
         }
     }

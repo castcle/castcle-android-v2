@@ -75,7 +75,7 @@ class MentionArrayAdapter(
         with(viewBinding) {
             ivAvatar.loadAvatarImage(itemMention.user.avatar.thumbnail)
             tvName.text = itemMention.user.displayName
-            tvCastcleId.text = "@${itemMention.user.castcleId}"
+            tvCastcleId.text = itemMention.user.castcleId
             tvFollowed.isVisible = itemMention.user.followed
             ivFollowed.isVisible = itemMention.user.followed
         }

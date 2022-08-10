@@ -75,6 +75,7 @@ class FeedImageViewHolder(
         binding.participateBar.isGone =
             displayType is FeedDisplayType.QuoteCast || displayType is FeedDisplayType.NewCast
         binding.participateBar.bind(item.cast, this)
+        binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, displayType !is FeedDisplayType.NewCast)
         binding.castcleTextView.onClearMessage()
         binding.castcleTextView.isVisible = item.cast.message.isNotBlank()

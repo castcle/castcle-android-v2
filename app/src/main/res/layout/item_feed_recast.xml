@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivRecast"
-        android:layout_width="@dimen/_16sdp"
-        android:layout_height="@dimen/_16sdp"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="@dimen/_12sdp"
         android:layout_margin="@dimen/_12sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

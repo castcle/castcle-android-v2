@@ -18,13 +18,17 @@ class OptionDialogViewHolder(
 
     init {
         compositeDisposable += binding.root.onClick {
-            listener.onOptionClicked(item.title)
+            listener.onOptionClicked(item.eventType)
         }
     }
 
     override fun bind(bindItem: OptionDialogViewEntity) {
         binding.ivIcon.setImageResource(item.icon)
-        binding.tvTitle.text = string(item.title)
+        binding.tvTitle.text = when (val title = item.title) {
+            is Int -> string(title)
+            is String -> title
+            else -> ""
+        }
         binding.root.background = if (bindingAdapterPosition == 0) {
             drawable(R.drawable.bg_corner_top_16dp)
         } else {

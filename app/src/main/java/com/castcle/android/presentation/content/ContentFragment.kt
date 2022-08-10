@@ -25,6 +25,7 @@ import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
@@ -150,9 +151,9 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
         val optionType = if (cast.isOwner) {
-            OptionDialogType.DeleteContent(contentId = cast.id)
+            OptionDialogType.MyContentOption(contentId = cast.id)
         } else {
-            OptionDialogType.ReportContent(contentId = cast.id)
+            OptionDialogType.OtherContentOption(contentId = cast.id)
         }
         ContentFragmentDirections.toOptionDialogFragment(optionType).navigate()
     }
@@ -187,6 +188,10 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         ContentFragmentDirections.toProfileFragment(user).navigate()
     }
 
+    override fun onViewReportingClicked(contentId: List<String>) {
+        shareViewModel.showReportingContent(contentId = contentId)
+    }
+
     override fun onStop() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
         changeSoftInputMode(false)
@@ -206,6 +211,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
             registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
+            registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)

@@ -46,7 +46,7 @@ class SearchRemoteMediator(
             }
 
             val keyword = database.withTransaction {
-                database.searchKeyword().get(keywordSessionId).firstOrNull()?.keyword ?: ""
+                database.searchKeyword().get(keywordSessionId).firstOrNull()?.keyword.orEmpty()
             }
 
             val response = when (type) {

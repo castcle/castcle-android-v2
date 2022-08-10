@@ -12,6 +12,7 @@ import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEntity
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
 import com.castcle.android.presentation.profile.item_profile_page.ProfilePageViewEntity
@@ -36,6 +37,12 @@ class ProfileMapper {
     }
 
     private fun mapContentItem(item: ProfileWithResultEntity): CastcleViewEntity {
+        if (item.originalCast?.reporting == true || item.referenceCast?.reporting == true) {
+            return FeedReportingViewEntity(
+                reportingContentId = item.originalCast?.id,
+                reportingReferenceContentId = item.referenceCast?.id,
+            )
+        }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
                 cast = item.originalCast,
@@ -71,7 +78,7 @@ class ProfileMapper {
                         .map { it }
                         .plus(ImageEntity.map(item.originalCast?.linkPreview))
                         .filterNotNull(),
-                    uniqueId = item.originalCast?.id ?: "",
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkUrl?.isNotBlank() == true -> FeedWebViewEntity(
@@ -81,7 +88,7 @@ class ProfileMapper {
                 )
                 else -> FeedTextViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    uniqueId = item.originalCast?.id ?: "",
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
             }

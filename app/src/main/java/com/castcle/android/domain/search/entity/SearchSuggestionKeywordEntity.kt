@@ -8,7 +8,7 @@ data class SearchSuggestionKeywordEntity(
 
     companion object {
         fun map(response: List<SearchSuggestionResponse.Keyword>?) = response.orEmpty().map {
-            SearchSuggestionKeywordEntity(text = it.text ?: "")
+            SearchSuggestionKeywordEntity(text = it.text.orEmpty())
         }
     }
 

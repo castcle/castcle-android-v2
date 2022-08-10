@@ -121,12 +121,14 @@ class RecastDialogViewModel(
             user = this,
         )
         val recastItem = OptionDialogViewEntity(
+            eventType = if (isRecasted) R.string.unrecast else R.string.recast,
             icon = R.drawable.ic_recast,
-            title = if (isRecasted) R.string.unrecast else R.string.recast
+            title = if (isRecasted) R.string.unrecast else R.string.recast,
         )
         val quoteCastItem = OptionDialogViewEntity(
+            eventType = R.string.quote_cast,
             icon = R.drawable.ic_discord,
-            title = R.string.quote_cast
+            title = R.string.quote_cast,
         )
         return listOf(selectedUserItem, recastItem, quoteCastItem)
     }

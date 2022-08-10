@@ -4,33 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseBottomSheetDialogFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.DialogOptionBinding
-import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewEntity
 import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_recast_title.RecastTitleViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_select_recast_user.SelectRecastUserViewRenderer
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.core.parameter.parametersOf
 
 class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListener {
 
-    private val viewModel by stateViewModel<OptionDialogViewModel>()
+    private val viewModel by stateViewModel<OptionDialogViewModel> { parametersOf(args.type) }
 
     private val args by navArgs<OptionDialogFragmentArgs>()
 
     override fun initViewProperties() {
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
-        adapter.submitList(getOptionItems())
     }
 
     override fun initObserver() {
+        viewModel.getOptionItems(requireContext())
         viewModel.onError.observe(viewLifecycleOwner) {
             dismissLoading()
             toast(it.message)
@@ -39,30 +37,43 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
             dismissLoading()
             backPress()
         }
-    }
-
-    override fun onOptionClicked(titleId: Int) = when (val type = args.type) {
-        is OptionDialogType.DeleteContent -> {
-            showLoading()
-            viewModel.deleteContent(type.contentId)
+        viewModel.views.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
-        is OptionDialogType.ReportContent -> toast("report content")
     }
 
-    private fun getOptionItems(): List<CastcleViewEntity> = when (args.type) {
-        is OptionDialogType.DeleteContent -> listOf(
-            OptionDialogViewEntity(icon = R.drawable.ic_delete, title = R.string.delete)
-        )
-        is OptionDialogType.ReportContent -> listOf(
-            OptionDialogViewEntity(icon = R.drawable.ic_report, title = R.string.report_cast)
-        )
+    override fun onOptionClicked(eventType: Int) {
+        when (val type = args.type) {
+            is OptionDialogType.MyContentOption -> {
+                showLoading()
+                viewModel.deleteContent(type.contentId)
+            }
+            is OptionDialogType.MyPageOption -> when (eventType) {
+                type.deletePage -> {}
+                type.syncSocialMedia -> {}
+            }
+            is OptionDialogType.MyUserOption -> {}
+            is OptionDialogType.OtherContentOption -> {
+                OptionDialogFragmentDirections
+                    .toReportSubjectFragment(contentId = type.contentId, userId = null)
+                    .navigate()
+            }
+            is OptionDialogType.OtherUserOption -> when (eventType) {
+                type.blockUser -> {}
+                type.reportUser -> {
+                    OptionDialogFragmentDirections
+                        .toReportSubjectFragment(contentId = null, userId = type.userId)
+                        .navigate()
+                }
+            }
+        }
     }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(ErrorStateViewRenderer())
-            registerRenderer(OptionDialogViewRenderer())
             registerRenderer(LoadingViewRenderer())
+            registerRenderer(OptionDialogViewRenderer())
             registerRenderer(RecastTitleViewRenderer())
             registerRenderer(SelectRecastUserViewRenderer())
         }

@@ -36,7 +36,7 @@ class SearchResultViewModel(
     }
 
     val keyword = database.searchKeyword().retrieve(sessionId)
-        .map { it.firstOrNull()?.keyword ?: "" }
+        .map { it.firstOrNull()?.keyword.orEmpty() }
         .distinctUntilChanged()
         .drop(1)
 

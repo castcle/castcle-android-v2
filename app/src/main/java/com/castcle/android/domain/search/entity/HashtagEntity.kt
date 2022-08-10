@@ -9,10 +9,7 @@ data class HashtagEntity(
 
     companion object {
         fun map(response: List<HashtagsResponse>?) = response.orEmpty().map {
-            HashtagEntity(
-                name = it.name ?: "",
-                slug = it.slug ?: "",
-            )
+            HashtagEntity(name = it.name.orEmpty(), slug = it.slug.orEmpty())
         }
     }
 

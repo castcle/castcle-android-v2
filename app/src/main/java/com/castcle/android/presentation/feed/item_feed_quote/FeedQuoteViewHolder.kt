@@ -1,5 +1,6 @@
 package com.castcle.android.presentation.feed.item_feed_quote
 
+import androidx.core.view.isVisible
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.custom_view.CastcleTextView
@@ -55,6 +56,7 @@ class FeedQuoteViewHolder(
     override fun bind(bindItem: FeedQuoteViewEntity) {
         adapter.submitList(item.reference)
         binding.participateBar.bind(item.cast, this)
+        binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, true)
         binding.castcleTextView.onClearMessage()
         if (item.cast.type is CastType.Long) {

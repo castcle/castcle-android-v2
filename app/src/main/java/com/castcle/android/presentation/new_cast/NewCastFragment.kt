@@ -71,7 +71,7 @@ class NewCastFragment : BaseFragment(), FeedListener {
             hideKeyboard()
             if (args.quoteCastId != null) {
                 viewModel.createQuoteCast(
-                    contentId = args.quoteCastId ?: "",
+                    contentId = args.quoteCastId.orEmpty(),
                     message = binding.etMessage.text.toString(),
                 )
             } else {
