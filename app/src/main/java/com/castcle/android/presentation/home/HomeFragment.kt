@@ -6,7 +6,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseBottomNavigationFragment
 import com.castcle.android.core.extensions.cast
 import com.castcle.android.presentation.feed.FeedFragment
-import com.castcle.android.presentation.top_trends.TopTrendsFragment
+import com.castcle.android.presentation.search.top_trends.TopTrendsFragment
 import com.google.android.material.navigation.NavigationBarView
 
 class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemReselectedListener {
