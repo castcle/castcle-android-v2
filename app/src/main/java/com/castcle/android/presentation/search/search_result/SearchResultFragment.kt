@@ -24,6 +24,7 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRend
 import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.search.search.SearchFragmentDirections
 import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewRenderer
@@ -155,6 +156,7 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
             registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
+            registerRenderer(FeedWebImageViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), type !is SearchType.People)
             registerRenderer(LoadingStateUserViewRenderer(), type is SearchType.People)
             registerRenderer(SearchPeopleViewRenderer())

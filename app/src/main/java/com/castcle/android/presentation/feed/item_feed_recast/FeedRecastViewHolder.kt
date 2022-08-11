@@ -12,6 +12,7 @@ import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import io.reactivex.disposables.CompositeDisposable
 
 class FeedRecastViewHolder(
@@ -27,6 +28,7 @@ class FeedRecastViewHolder(
             registerRenderer(FeedImageViewRenderer(FeedDisplayType.Recast))
             registerRenderer(FeedTextViewRenderer(FeedDisplayType.Recast))
             registerRenderer(FeedWebViewRenderer(FeedDisplayType.Recast))
+            registerRenderer(FeedWebImageViewRenderer(FeedDisplayType.Recast))
         }
     }
 

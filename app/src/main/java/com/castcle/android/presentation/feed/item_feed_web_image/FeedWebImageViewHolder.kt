@@ -1,46 +1,41 @@
-package com.castcle.android.presentation.feed.item_feed_image
+package com.castcle.android.presentation.feed.item_feed_web_image
 
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.custom_view.CastcleTextView
 import com.castcle.android.core.custom_view.LinkedType
 import com.castcle.android.core.custom_view.participate_bar.ParticipateBarListener
 import com.castcle.android.core.custom_view.user_bar.UserBarListener
 import com.castcle.android.core.extensions.*
-import com.castcle.android.databinding.ItemFeedImageBinding
+import com.castcle.android.databinding.ItemFeedWebImageBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
-import com.castcle.android.presentation.feed.item_feed_image_item.FeedImageItemViewEntity
-import com.castcle.android.presentation.feed.item_feed_image_item.FeedImageItemViewRenderer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
-class FeedImageViewHolder(
-    private val binding: ItemFeedImageBinding,
+class FeedWebImageViewHolder(
+    private val binding: ItemFeedWebImageBinding,
     private val compositeDisposable: CompositeDisposable,
     private val listener: FeedListener,
     private val displayType: FeedDisplayType,
-) : CastcleViewHolder<FeedImageViewEntity>(binding.root), UserBarListener, ParticipateBarListener {
+) : CastcleViewHolder<FeedWebImageViewEntity>(binding.root), UserBarListener,
+    ParticipateBarListener {
 
-    override var item = FeedImageViewEntity()
-
-    private val adapter by lazy {
-        CastcleAdapter(listener, compositeDisposable).apply {
-            registerRenderer(FeedImageItemViewRenderer())
-        }
-    }
+    override var item = FeedWebImageViewEntity()
 
     init {
-        binding.recyclerView.itemAnimator = null
-        binding.recyclerView.adapter = adapter
+        compositeDisposable += binding.castcleTextView.onClick {
+            binding.castcleTextView.toggle()
+        }
+        compositeDisposable += binding.clWeb.onClick {
+            listener.onLinkClicked(item.cast.linkUrl)
+        }
         binding.castcleTextView.setLinkClickListener(object : CastcleTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
                 if (linkType == LinkedType.URL) {
@@ -50,12 +45,9 @@ class FeedImageViewHolder(
                 }
             }
         })
-        compositeDisposable += binding.castcleTextView.onClick {
-            binding.castcleTextView.toggle()
-        }
     }
 
-    override fun bind(bindItem: FeedImageViewEntity) {
+    override fun bind(bindItem: FeedWebImageViewEntity) {
         val marginBottom = if (
             displayType is FeedDisplayType.QuoteCast || displayType is FeedDisplayType.Recast
         ) {
@@ -78,27 +70,24 @@ class FeedImageViewHolder(
         binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, displayType !is FeedDisplayType.NewCast)
         binding.castcleTextView.onClearMessage()
-        binding.castcleTextView.isVisible = item.cast.message.isNotBlank()
         if (item.cast.type is CastType.Long) {
             binding.castcleTextView.setCollapseText(item.cast.message)
         } else {
             binding.castcleTextView.appendLinkText(item.cast.message)
         }
-        adapter.submitList(item.cast.image.take(4).mapIndexed { index, it ->
-            FeedImageItemViewEntity(
-                image = it,
-                itemCount = item.cast.image.size,
-                uniqueId = index.toString(),
-            )
-        })
-        binding.recyclerView.layoutManager = GridLayoutManager(context(), 2).apply {
-            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int) = when (position) {
-                    0, 2 -> if (item.cast.image.size == position + 1) 2 else 1
-                    else -> 1
-                }
-            }
-        }
+        binding.tvTitle.isVisible = item.cast.linkTitle.isNotBlank()
+        binding.tvTitle.text = item.cast.linkTitle
+        binding.tvDescription.text = item.cast.linkDescription.ifBlank { item.cast.message }
+        binding.ivImage.loadScaleCenterCropWithRoundedCorners(
+            cornersSizeId = com.intuit.sdp.R.dimen._15sdp,
+            thumbnailUrl = item.cast.linkPreview,
+            url = item.cast.linkPreview,
+            scaleHeight = 9,
+            scaleWidth = 16,
+            viewSizeDp = screenWidthPx().minus(dimenPx(com.intuit.sdp.R.dimen._24sdp)),
+            enableBottomLeft = false,
+            enableBottomRight = false,
+        )
     }
 
     override fun onCommentClicked(cast: CastEntity) {

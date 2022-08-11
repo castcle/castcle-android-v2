@@ -19,7 +19,6 @@ data class FeedWebViewEntity(
         target?.cast<FeedWebViewEntity>() == this
     }
 
-
     override fun viewType() = R.layout.item_feed_web
 
 }

@@ -52,6 +52,8 @@ class ContentRepositoryImpl(
         apiCall { api.deleteContent(contentId = contentId) }
         database.withTransaction {
             database.cast().delete(contentId)
+            database.feed().deleteByOriginalCast(contentId)
+            database.feed().deleteByReferenceCast(contentId)
             database.profile().deleteByOriginalCast(contentId)
             database.profile().deleteByReferenceCast(contentId)
             database.search().deleteByOriginalCast(contentId)

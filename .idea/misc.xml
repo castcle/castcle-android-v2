@@ -109,7 +109,8 @@
         <entry key="app/src/main/res/layout/item_feed_reporting.xml" value="0.4330910645575032" />
         <entry key="app/src/main/res/layout/item_feed_suggestion_follow.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_text.xml" value="0.5276041666666667" />
-        <entry key="app/src/main/res/layout/item_feed_web.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_feed_web.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_feed_web_image.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_feed_who_to_follow.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_load_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.5286458333333334" />

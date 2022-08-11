@@ -23,6 +23,7 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRend
 import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_who_to_follow.FeedWhoToFollowViewRenderer
 import com.castcle.android.presentation.home.HomeFragmentDirections
 import com.castcle.android.presentation.home.HomeViewModel
@@ -182,6 +183,7 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
             registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
+            registerRenderer(FeedWebImageViewRenderer())
             registerRenderer(FeedWhoToFollowViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)
         }

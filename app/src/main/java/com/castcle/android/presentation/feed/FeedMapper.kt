@@ -3,7 +3,6 @@ package com.castcle.android.presentation.feed
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
-import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.feed.entity.FeedWithResultEntity
 import com.castcle.android.domain.feed.type.FeedType
 import com.castcle.android.domain.user.entity.UserEntity
@@ -14,6 +13,7 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEnti
 import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_who_to_follow.FeedWhoToFollowViewEntity
 import org.koin.core.annotation.Factory
 
@@ -72,18 +72,20 @@ class FeedMapper {
                 user = item.originalUser ?: UserEntity(),
             )
             else -> when {
-                !item.originalCast?.image.isNullOrEmpty() || item.originalCast?.linkPreview?.isNotBlank() == true -> FeedImageViewEntity(
+                item.originalCast?.image.orEmpty().isNotEmpty() -> FeedImageViewEntity(
                     cast = item.originalCast ?: CastEntity(),
                     feedId = item.feed.id,
-                    imageItems = item.originalCast?.image.orEmpty()
-                        .map { it }
-                        .plus(ImageEntity.map(item.originalCast?.linkPreview))
-                        .filterNotNull(),
                     uniqueId = item.feed.id,
                     user = item.originalUser ?: UserEntity(),
                 )
-                item.originalCast?.linkUrl?.isNotBlank() == true -> FeedWebViewEntity(
-                    cast = item.originalCast,
+                item.originalCast?.linkPreview.orEmpty().isNotBlank() -> FeedWebImageViewEntity(
+                    cast = item.originalCast ?: CastEntity(),
+                    feedId = item.feed.id,
+                    uniqueId = item.feed.id,
+                    user = item.originalUser ?: UserEntity(),
+                )
+                item.originalCast?.linkUrl.orEmpty().isNotBlank() -> FeedWebViewEntity(
+                    cast = item.originalCast ?: CastEntity(),
                     feedId = item.feed.id,
                     uniqueId = item.feed.id,
                     user = item.originalUser ?: UserEntity(),
