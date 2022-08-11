@@ -139,14 +139,15 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
         shareViewModel.showReportingContent(contentId = contentId)
     }
 
-    override fun onPause() {
+    override fun onStop() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
-        super.onPause()
+        super.onStop()
     }
 
-    override fun onResume() {
+    override fun onStart() {
+        super.onStart()
+        viewModel.fetchUser()
         binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
-        super.onResume()
     }
 
     private val adapter by lazy {
