@@ -10,7 +10,6 @@ import com.castcle.android.data.user.mapper.FollowingFollowersResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.user.entity.FollowingFollowersWithResultEntity
-import com.castcle.android.domain.user.type.UserType
 
 @ExperimentalPagingApi
 class FollowingFollowersRemoteMediator(
@@ -58,7 +57,7 @@ class FollowingFollowersRemoteMediator(
             }
 
             val ownerUserId = database.withTransaction {
-                database.user().get().filter { it.type is UserType.People }.map { it.id }
+                database.user().get().map { it.id }
             }
 
             val items = if (response.isSuccessful && response.body() != null) {

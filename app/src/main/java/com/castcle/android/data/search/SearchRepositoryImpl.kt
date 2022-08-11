@@ -34,12 +34,14 @@ class SearchRepositoryImpl(
 
     override suspend fun getTopTrends(): List<SearchSuggestionHashtagEntity> {
         val response = apiCall { api.getTopTrends() }
-        return searchSuggestionResponseMapper.apply(response).hashtag
+        val ownerUserId = database.user().get().map { it.id }
+        return searchSuggestionResponseMapper.apply(ownerUserId, response).hashtag
     }
 
     override suspend fun searchByKeyword(keyword: String): SearchSuggestionEntity {
         val response = apiCall { api.searchByKeyword(keyword) }
-        val result = searchSuggestionResponseMapper.apply(response)
+        val ownerUserId = database.user().get().map { it.id }
+        val result = searchSuggestionResponseMapper.apply(ownerUserId, response)
         glidePreloader.loadUser(result.user)
         return result
     }

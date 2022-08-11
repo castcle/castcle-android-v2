@@ -8,10 +8,11 @@ import org.koin.core.annotation.Factory
 @Factory
 class SearchSuggestionResponseMapper {
 
-    fun apply(response: SearchSuggestionResponse?) = SearchSuggestionEntity(
-        hashtag = SearchSuggestionHashtagEntity.map(response?.hashtags).sortedBy { it.rank },
-        keyword = SearchSuggestionKeywordEntity.map(response?.keyword),
-        user = UserEntity.map(listOf(), response?.users),
-    )
+    fun apply(ownerUserId: List<String>, response: SearchSuggestionResponse?) =
+        SearchSuggestionEntity(
+            hashtag = SearchSuggestionHashtagEntity.map(response?.hashtags).sortedBy { it.rank },
+            keyword = SearchSuggestionKeywordEntity.map(response?.keyword),
+            user = UserEntity.map(ownerUserId, response?.users),
+        )
 
 }
