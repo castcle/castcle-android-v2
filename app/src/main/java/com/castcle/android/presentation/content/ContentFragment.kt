@@ -28,6 +28,7 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRend
 import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.*
@@ -215,6 +216,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
             registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
+            registerRenderer(FeedWebImageViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)
             registerRenderer(ReplyViewRenderer())
         }

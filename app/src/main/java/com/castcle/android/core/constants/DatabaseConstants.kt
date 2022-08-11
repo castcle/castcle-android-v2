@@ -1,7 +1,7 @@
 package com.castcle.android.core.constants
 
 const val DATABASE_NAME = "CastcleDatabase"
-const val DATABASE_VERSION = 8
+const val DATABASE_VERSION = 9
 const val TABLE_ACCESS_TOKEN = "accessToken"
 const val TABLE_CAST = "casts"
 const val TABLE_COMMENT = "comment"

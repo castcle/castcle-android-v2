@@ -19,6 +19,7 @@ import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRender
 import com.castcle.android.presentation.feed.item_feed_image_item.FeedImageItemViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -192,6 +193,7 @@ class NewCastFragment : BaseFragment(), FeedListener {
             registerRenderer(FeedImageItemViewRenderer())
             registerRenderer(FeedTextViewRenderer(FeedDisplayType.NewCast))
             registerRenderer(FeedWebViewRenderer(FeedDisplayType.NewCast))
+            registerRenderer(FeedWebImageViewRenderer(FeedDisplayType.NewCast))
         }
     }
 

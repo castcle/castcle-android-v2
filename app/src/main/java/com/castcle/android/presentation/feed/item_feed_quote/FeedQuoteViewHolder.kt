@@ -17,6 +17,7 @@ import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
@@ -33,6 +34,7 @@ class FeedQuoteViewHolder(
             registerRenderer(FeedImageViewRenderer(FeedDisplayType.QuoteCast))
             registerRenderer(FeedTextViewRenderer(FeedDisplayType.QuoteCast))
             registerRenderer(FeedWebViewRenderer(FeedDisplayType.QuoteCast))
+            registerRenderer(FeedWebImageViewRenderer(FeedDisplayType.QuoteCast))
         }
     }
 

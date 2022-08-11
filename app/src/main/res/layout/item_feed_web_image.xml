@@ -44,6 +44,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"
+        android:foreground="@drawable/bg_outline_corner_16dp"
+        android:foregroundTint="@color/gray_1"
         app:layout_constraintBottom_toTopOf="@+id/participateBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,41 +53,54 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivImage"
-            android:layout_width="@dimen/_72sdp"
-            android:layout_height="@dimen/_72sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/viewDivider"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivImage" />
+
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/AppTextSarabunLight.Small"
-            android:id="@+id/tvMessage"
+            style="@style/AppTextSarabunLight.xxSmall"
+            android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:ellipsize="end"
-            android:lineSpacingMultiplier="1.5"
             android:maxLines="2"
+            android:paddingTop="@dimen/_4sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewDivider"
+            tools:text="Prakan Sornbootnark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.xSmall"
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingTop="@dimen/_4sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivImage"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:text="Prakan Sornbootnark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/viewWeb"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_outline_corner_16dp"
-        android:backgroundTint="@color/gray_1"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/clWeb"
-        app:layout_constraintEnd_toEndOf="@+id/clWeb"
-        app:layout_constraintStart_toStartOf="@+id/clWeb"
-        app:layout_constraintTop_toTopOf="@+id/clWeb" />
 
     <com.castcle.android.core.custom_view.participate_bar.ParticipateBarView
         android:id="@+id/participateBar"

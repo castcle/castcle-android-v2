@@ -24,6 +24,7 @@ import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRend
 import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.profile.item_profile_page.ProfilePageViewRenderer
 import com.castcle.android.presentation.profile.item_profile_user.ProfileUserViewRenderer
@@ -159,6 +160,7 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
             registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
+            registerRenderer(FeedWebImageViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)
             registerRenderer(ProfilePageViewRenderer())
             registerRenderer(ProfileUserViewRenderer())

@@ -112,8 +112,11 @@ fun ImageView.loadCenterCropWithRoundedCorners(
 }
 
 fun ImageView.loadScaleCenterCropWithRoundedCorners(
-    uri: Uri?,
-    url: String?,
+    @DimenRes cornersSizeId: Int = com.intuit.sdp.R.dimen._16sdp,
+    uri: Uri? = null,
+    url: String? = null,
+    scaleHeight: Int = 9,
+    scaleWidth: Int = 18,
     thumbnailUrl: String?,
     viewSizeDp: Int,
     enableTopLeft: Boolean = true,
@@ -121,9 +124,10 @@ fun ImageView.loadScaleCenterCropWithRoundedCorners(
     enableBottomLeft: Boolean = true,
     enableBottomRight: Boolean = true,
 ) {
-    val centerCrop = ScaleCenterCrop(18, 9)
+    val centerCrop = ScaleCenterCrop(scaleWidth, scaleHeight)
     val roundedCorners = DpRoundedCorners(
         context = context,
+        cornersSizeId = cornersSizeId,
         viewSizePx = viewSizeDp,
         enableTopLeft = enableTopLeft,
         enableTopRight = enableTopRight,

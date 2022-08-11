@@ -43,7 +43,7 @@ class ProfileRemoteMediator(
             }
 
             val response = api.getUserCast(
-                id = user.castcleId,
+                id = user.id,
                 maxResults = state.config.pageSize,
                 untilId = loadKey,
             )
