@@ -82,7 +82,6 @@
         android:layout_marginTop="@dimen/_minus4sdp"
         android:layout_marginEnd="@dimen/_minus8sdp"
         android:layout_marginBottom="@dimen/_minus4sdp"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
         app:layout_constraintBottom_toBottomOf="@+id/tvFollower"
         app:layout_constraintEnd_toEndOf="@+id/tvFollower"
         app:layout_constraintStart_toStartOf="@+id/tvFollower"

@@ -127,7 +127,7 @@ class RecastDialogViewModel(
         )
         val quoteCastItem = OptionDialogViewEntity(
             eventType = R.string.quote_cast,
-            icon = R.drawable.ic_discord,
+            icon = R.drawable.ic_quote_cast,
             title = R.string.quote_cast,
         )
         return listOf(selectedUserItem, recastItem, quoteCastItem)

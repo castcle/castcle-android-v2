@@ -58,8 +58,6 @@ data class UserEntity(
             return response.orEmpty().map { map(ownerUserId, it) }.toMutableList()
         }
 
-        fun map(ownerUserId: String?, response: UserResponse?) = map(listOf(ownerUserId), response)
-
         fun map(ownerUserId: List<String?>?, response: UserResponse?) = UserEntity(
             avatar = ImageEntity.map(response?.images?.avatar ?: response?.avatar) ?: ImageEntity(),
             blocked = response?.blocked ?: false,

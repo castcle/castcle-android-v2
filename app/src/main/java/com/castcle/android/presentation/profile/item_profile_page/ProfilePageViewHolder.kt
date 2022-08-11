@@ -34,7 +34,7 @@ class ProfilePageViewHolder(
 
         }
         compositeDisposable += binding.viewFollowers.onClick {
-
+            listener.onFollowingFollowersClicked(isFollowing = false, user = item.user)
         }
         compositeDisposable += binding.tvViewProfile.onClick {
 
