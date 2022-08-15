@@ -31,6 +31,8 @@ class FollowingFollowersFragment : BaseFragment(), FeedListener, LoadStateListen
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
+    private val directions = FollowingFollowersFragmentDirections
+
     private val args by navArgs<FollowingFollowersFragmentArgs>()
 
     @FlowPreview
@@ -76,7 +78,10 @@ class FollowingFollowersFragment : BaseFragment(), FeedListener, LoadStateListen
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onRefreshClicked() {

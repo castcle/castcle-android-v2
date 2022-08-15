@@ -44,6 +44,10 @@ data class UserEntity(
     @ColumnInfo(name = "${TABLE_USER}_verifiedSocial") val verifiedSocial: Boolean = false,
 ) : Parcelable {
 
+    fun isNotVerified(): Boolean {
+        return !verifiedEmail && !verifiedMobile && !verifiedOfficial && !verifiedSocial
+    }
+
     companion object {
         fun mapOwner(response: UserResponse?) = map(listOf(), response).copy(isOwner = true)
 

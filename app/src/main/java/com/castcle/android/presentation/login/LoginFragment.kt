@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.findNavController
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
@@ -48,7 +49,7 @@ class LoginFragment : BaseFragment(), LoginListener {
     override fun initObserver() {
         viewModel.loginComplete.observe(viewLifecycleOwner) {
             dismissLoading()
-            backPress()
+            findNavController().popBackStack(R.id.homeFragment, false)
         }
         viewModel.loginError.observe(viewLifecycleOwner) {
             dismissLoading()

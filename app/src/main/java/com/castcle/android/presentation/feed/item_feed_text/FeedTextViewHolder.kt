@@ -14,6 +14,7 @@ import com.castcle.android.databinding.ItemFeedTextBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
 import io.reactivex.disposables.CompositeDisposable
@@ -82,11 +83,17 @@ class FeedTextViewHolder(
     }
 
     override fun onLikeClicked(cast: CastEntity) {
+        context().vibrate(time = 50)
         listener.onLikeClicked(cast)
     }
 
     override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-        listener.onContentOptionClicked(cast, user)
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.MyContentOption(contentId = cast.id)
+        } else {
+            OptionDialogType.OtherContentOption(contentId = cast.id)
+        }
+        listener.onOptionClicked(optionType)
     }
 
     override fun onRecastClicked(cast: CastEntity) {

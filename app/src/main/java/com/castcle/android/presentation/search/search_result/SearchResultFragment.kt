@@ -42,6 +42,8 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
+    private val directions = SearchFragmentDirections
+
     @FlowPreview
     override fun initViewProperties() {
         binding.actionBar.gone()
@@ -85,11 +87,18 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
     }
 
     override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
-        SearchFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toContentFragment(cast.id, user.displayName).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onHashtagClicked(keyword: String) {
@@ -101,29 +110,35 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
     }
 
     override fun onLikeClicked(cast: CastEntity) {
-        shareViewModel.likeCasts(targetCasts = cast)
+        shareViewModel.likeCast(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+            targetCast = cast,
+        )
     }
 
     override fun onLinkClicked(url: String) {
         openUrl(url)
     }
 
-    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
-        val optionType = if (cast.isOwner) {
-            OptionDialogType.MyContentOption(contentId = cast.id)
-        } else {
-            OptionDialogType.OtherContentOption(contentId = cast.id)
-        }
-        SearchFragmentDirections.toOptionDialogFragment(optionType).navigate()
+    override fun onOptionClicked(type: OptionDialogType) {
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toOptionDialogFragment(type).navigate() },
+        )
     }
 
     override fun onRecastClicked(cast: CastEntity) {
-        SearchFragmentDirections.toRecastDialogFragment(cast.id).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toRecastDialogFragment(contentId = cast.id).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onUserClicked(user: UserEntity) {
         hideKeyboard()
-        SearchFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
     }
 
     override fun onRefreshClicked() {

@@ -43,6 +43,8 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
+    private val directions = ContentFragmentDirections
+
     private val args by navArgs<ContentFragmentArgs>()
 
     override fun initViewProperties() {
@@ -151,17 +153,19 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         binding.etComment.showKeyboard()
     }
 
-    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
-        val optionType = if (cast.isOwner) {
-            OptionDialogType.MyContentOption(contentId = cast.id)
-        } else {
-            OptionDialogType.OtherContentOption(contentId = cast.id)
-        }
-        ContentFragmentDirections.toOptionDialogFragment(optionType).navigate()
+    override fun onFollowClicked(user: UserEntity) {
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onLikeClicked(cast: CastEntity) {
-        shareViewModel.likeCasts(cast)
+        shareViewModel.likeCast(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+            targetCast = cast,
+        )
     }
 
     override fun onLikeCommentClicked(comment: CommentEntity) {
@@ -170,10 +174,21 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) = Unit
 
+    override fun onOptionClicked(type: OptionDialogType) {
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toOptionDialogFragment(type).navigate() },
+        )
+    }
+
     override fun onQuoteCastCountClicked(contentId: String) = Unit
 
     override fun onRecastClicked(cast: CastEntity) {
-        ContentFragmentDirections.toRecastDialogFragment(cast.id).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toRecastDialogFragment(contentId = cast.id).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onRecastCountClicked(contentId: String, hasLike: Boolean) = Unit
@@ -187,7 +202,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun onUserClicked(user: UserEntity) {
-        ContentFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
     }
 
     override fun onViewReportingClicked(contentId: List<String>) {
