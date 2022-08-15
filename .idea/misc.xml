@@ -169,6 +169,7 @@
         <entry key="app/src/main/res/menu/menu_copy_message.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1565" />
         <entry key="app/src/main/res/mipmap/ic_launcher.xml" value="0.1565" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.21889696451474988" />
         <entry key="app/src/production/res/mipmap/ic_launcher.xml" value="0.1565" />
         <entry key="app/src/staging/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1565" />
         <entry key="app/src/staging/res/mipmap/ic_launcher.xml" value="0.1565" />

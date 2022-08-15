@@ -24,10 +24,10 @@ data class AccessTokenEntity(
             type = AccessTokenType.Guest,
         )
 
-        fun map(response: LoginResponse?) = AccessTokenEntity(
+        fun map(response: LoginResponse?, type: AccessTokenType? = null) = AccessTokenEntity(
             accessToken = response?.accessToken.orEmpty(),
             refreshToken = response?.refreshToken.orEmpty(),
-            type = AccessTokenType.Member,
+            type = type ?: AccessTokenType.Member,
         )
     }
 

@@ -9,7 +9,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_SMALL_ITEM
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.search.data_source.SearchRemoteMediator
 import com.castcle.android.data.search.mapper.SearchResponseMapper
 import com.castcle.android.domain.search.type.SearchType

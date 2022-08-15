@@ -8,8 +8,8 @@ import androidx.room.withTransaction
 import com.castcle.android.core.api.FeedApi
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
 import com.castcle.android.data.feed.data_source.FeedRemoteMediator
 import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.type.LoadKeyType

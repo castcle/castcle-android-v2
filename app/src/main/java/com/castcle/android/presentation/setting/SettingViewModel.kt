@@ -2,7 +2,7 @@ package com.castcle.android.presentation.setting
 
 import androidx.lifecycle.MutableLiveData
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.notification.NotificationRepository
 import com.castcle.android.domain.user.UserRepository
@@ -53,6 +53,7 @@ class SettingViewModel(
 
     fun logout() {
         launch(onError = logoutError::postValue) {
+            authenticationRepository.unregisterFirebaseMessagingToken()
             authenticationRepository.loginOut()
             logoutComplete.postValue(Unit)
         }

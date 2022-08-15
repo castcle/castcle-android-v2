@@ -1,7 +1,7 @@
 package com.castcle.android.presentation.search.search
 
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.search.entity.RecentSearchEntity
 import com.castcle.android.domain.search.entity.SearchKeywordEntity
 import org.koin.android.annotation.KoinViewModel

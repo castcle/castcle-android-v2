@@ -43,6 +43,7 @@ class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemRes
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.new_cast) {
+            HomeFragmentDirections.toNewCastFragment(quoteCastId = null, userId = null).navigate()
             false
         } else {
             super.onNavigationItemSelected(item)

@@ -7,7 +7,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.search.SearchRepository
 import com.castcle.android.presentation.search.top_trends.item_top_trends_item.TopTrendsItemViewEntity
 import com.castcle.android.presentation.search.top_trends.item_top_trends_search.TopTrendsSearchViewEntity
