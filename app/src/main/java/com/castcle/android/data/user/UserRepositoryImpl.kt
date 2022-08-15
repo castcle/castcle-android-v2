@@ -5,7 +5,7 @@ import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType

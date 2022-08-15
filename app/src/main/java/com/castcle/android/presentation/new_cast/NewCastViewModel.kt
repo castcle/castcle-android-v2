@@ -10,12 +10,13 @@ import android.util.Base64
 import androidx.lifecycle.MutableLiveData
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.content.entity.CreateContentRequest
 import com.castcle.android.data.user.entity.CreateQuoteCastRequest
 import com.castcle.android.domain.content.ContentRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.feed.item_feed_image_item.FeedImageItemViewEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,7 @@ class NewCastViewModel(
     private val contentRepository: ContentRepository,
     val database: CastcleDatabase,
     val mapper: NewCastMapper,
-    val userId: String,
+    val userId: String?,
     val userRepository: UserRepository,
 ) : BaseViewModel() {
 
@@ -59,7 +60,11 @@ class NewCastViewModel(
 
     private fun getCurrentUser() {
         launch {
-            currentUser.value = database.user().get(userId).firstOrNull()
+            currentUser.value = if (userId != null) {
+                database.user().get(userId).firstOrNull()
+            } else {
+                database.user().get(UserType.People).firstOrNull()
+            }
         }
     }
 
@@ -84,7 +89,7 @@ class NewCastViewModel(
                     ),
                 ),
             )
-            contentRepository.createContent(body = body, userId = userId)
+            contentRepository.createContent(body = body, userId = currentUser.value?.id.orEmpty())
             createContentSuccess.postValue(Unit)
         }
     }
@@ -95,7 +100,7 @@ class NewCastViewModel(
                 contentId = contentId,
                 message = message,
             )
-            userRepository.createQuoteCast(body = body, userId = userId)
+            userRepository.createQuoteCast(body = body, userId = currentUser.value?.id.orEmpty())
             createContentSuccess.postValue(Unit)
         }
     }

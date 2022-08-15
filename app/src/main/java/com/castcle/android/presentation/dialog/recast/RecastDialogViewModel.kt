@@ -6,7 +6,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.extensions.error
 import com.castcle.android.core.extensions.loading
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.content.ContentRepository
 import com.castcle.android.domain.content.entity.ParticipateEntity
 import com.castcle.android.domain.user.UserRepository

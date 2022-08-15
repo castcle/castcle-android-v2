@@ -141,7 +141,8 @@
 
         <argument
             android:name="userId"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
 
     </fragment>
 

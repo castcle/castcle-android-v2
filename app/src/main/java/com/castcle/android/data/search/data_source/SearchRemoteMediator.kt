@@ -6,13 +6,12 @@ import com.castcle.android.core.api.SearchApi
 import com.castcle.android.core.constants.PARAMETER_CONTENT_TYPE_PHOTO
 import com.castcle.android.core.error.ApiException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.search.mapper.SearchResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.search.entity.SearchWithResultEntity
 import com.castcle.android.domain.search.type.SearchType
-import com.castcle.android.domain.user.type.UserType
 
 @ExperimentalPagingApi
 class SearchRemoteMediator(

@@ -8,7 +8,8 @@ import com.castcle.android.domain.feed.type.FeedType
 data class FeedEntity(
     @ColumnInfo(name = "${TABLE_FEED}_campaignMessage") val campaignMessage: String? = null,
     @ColumnInfo(name = "${TABLE_FEED}_campaignName") val campaignName: String? = null,
-    @ColumnInfo(name = "${TABLE_FEED}_id") @PrimaryKey val id: String = "",
+    @ColumnInfo(name = "${TABLE_FEED}_feedId") val feedId: String = "",
+    @ColumnInfo(name = "${TABLE_FEED}_id") @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     @ColumnInfo(name = "${TABLE_FEED}_originalCastId") val originalCastId: String? = null,
     @ColumnInfo(name = "${TABLE_FEED}_originalUserId") val originalUserId: String? = null,
     @ColumnInfo(name = "${TABLE_FEED}_referenceCastId") val referenceCastId: String? = null,

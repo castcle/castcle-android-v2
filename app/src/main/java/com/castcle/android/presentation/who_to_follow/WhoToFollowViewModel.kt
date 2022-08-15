@@ -5,7 +5,7 @@ import androidx.paging.*
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.data_source.WhoToFollowRemoteMediator
 import com.castcle.android.presentation.who_to_follow.item_who_to_follow.WhoToFollowViewEntity
 import kotlinx.coroutines.ExperimentalCoroutinesApi

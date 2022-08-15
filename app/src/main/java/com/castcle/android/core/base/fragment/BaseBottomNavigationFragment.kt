@@ -1,5 +1,6 @@
 package com.castcle.android.core.base.fragment
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -70,6 +71,7 @@ abstract class BaseBottomNavigationFragment : BaseFragment(),
         return true
     }
 
+    @SuppressLint("RestrictedApi")
     fun setIconSize(index: Int, @DimenRes dimenId: Int) {
         binding.bottomNavigation.getChildAt(0)
             ?.cast<BottomNavigationMenuView>()

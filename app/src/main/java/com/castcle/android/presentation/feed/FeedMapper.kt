@@ -26,7 +26,7 @@ class FeedMapper {
                 user = item.originalUser ?: UserEntity(),
             )
             FeedType.WhoToFollow -> FeedWhoToFollowViewEntity(
-                feedId = item.feed.id,
+                feedId = item.feed.feedId,
                 user1 = item.originalUser,
                 user2 = item.referenceUser ?: item.originalUser,
             )
@@ -44,7 +44,7 @@ class FeedMapper {
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
                 cast = item.originalCast,
-                feedId = item.feed.id,
+                feedId = item.feed.feedId,
                 reference = mapContentItem(
                     item.copy(
                         originalCast = item.referenceCast,
@@ -54,12 +54,12 @@ class FeedMapper {
                     )
                 ),
                 referenceCast = item.referenceCast,
-                uniqueId = item.feed.id,
+                uniqueId = item.feed.id.toString(),
                 user = item.originalUser ?: UserEntity(),
             )
             CastType.Recast -> FeedRecastViewEntity(
                 cast = item.originalCast,
-                feedId = item.feed.id,
+                feedId = item.feed.feedId,
                 reference = mapContentItem(
                     item.copy(
                         originalCast = item.referenceCast,
@@ -68,32 +68,32 @@ class FeedMapper {
                         referenceUser = null,
                     )
                 ),
-                uniqueId = item.feed.id,
+                uniqueId = item.feed.id.toString(),
                 user = item.originalUser ?: UserEntity(),
             )
             else -> when {
                 item.originalCast?.image.orEmpty().isNotEmpty() -> FeedImageViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    feedId = item.feed.id,
-                    uniqueId = item.feed.id,
+                    feedId = item.feed.feedId,
+                    uniqueId = item.feed.id.toString(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkPreview.orEmpty().isNotBlank() -> FeedWebImageViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    feedId = item.feed.id,
-                    uniqueId = item.feed.id,
+                    feedId = item.feed.feedId,
+                    uniqueId = item.feed.id.toString(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkUrl.orEmpty().isNotBlank() -> FeedWebViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    feedId = item.feed.id,
-                    uniqueId = item.feed.id,
+                    feedId = item.feed.feedId,
+                    uniqueId = item.feed.id.toString(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 else -> FeedTextViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    feedId = item.feed.id,
-                    uniqueId = item.feed.id,
+                    feedId = item.feed.feedId,
+                    uniqueId = item.feed.id.toString(),
                     user = item.originalUser ?: UserEntity(),
                 )
             }

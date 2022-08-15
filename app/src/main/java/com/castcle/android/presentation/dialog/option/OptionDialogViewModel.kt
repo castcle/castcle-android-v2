@@ -6,7 +6,7 @@ import androidx.room.withTransaction
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.content.ContentRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewEntity

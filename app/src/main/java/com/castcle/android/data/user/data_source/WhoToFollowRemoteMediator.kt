@@ -4,7 +4,7 @@ import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.error.ApiException
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.user.entity.*

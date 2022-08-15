@@ -7,7 +7,7 @@ import com.castcle.android.core.constants.PARAMETER_CIRCLE_SLUG_FOR_YOU
 import com.castcle.android.core.constants.PARAMETER_FEATURE_SLUG_FEED
 import com.castcle.android.core.error.ApiException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType

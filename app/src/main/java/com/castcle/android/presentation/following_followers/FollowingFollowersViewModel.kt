@@ -8,7 +8,7 @@ import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_SMALL_ITEM
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.data_source.FollowingFollowersRemoteMediator
 import com.castcle.android.data.user.mapper.FollowingFollowersResponseMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi

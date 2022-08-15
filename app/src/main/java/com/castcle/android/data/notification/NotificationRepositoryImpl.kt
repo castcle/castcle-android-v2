@@ -2,7 +2,7 @@ package com.castcle.android.data.notification
 
 import com.castcle.android.core.api.NotificationApi
 import com.castcle.android.core.extensions.apiCall
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.notification.NotificationRepository
 import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
 import org.koin.core.annotation.Factory

@@ -3,7 +3,7 @@ package com.castcle.android.data.search
 import com.castcle.android.core.api.SearchApi
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.search.mapper.SearchSuggestionResponseMapper
 import com.castcle.android.domain.search.SearchRepository
 import com.castcle.android.domain.search.entity.*
