@@ -7,5 +7,5 @@ import com.castcle.android.presentation.dialog.option.OptionDialogType
 interface ProfileListener : CastcleListener {
     fun onFollowClicked(user: UserEntity) = Unit
     fun onFollowingFollowersClicked(isFollowing: Boolean, user: UserEntity) = Unit
-    fun onOptionClicked(type: OptionDialogType)
+    fun onOptionClicked(type: OptionDialogType) = Unit
 }

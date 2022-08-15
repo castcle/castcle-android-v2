@@ -40,6 +40,8 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
+    private val directions = ProfileFragmentDirections
+
     private val args by navArgs<ProfileFragmentArgs>()
 
     @FlowPreview
@@ -88,40 +90,53 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
     }
 
     override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
-        ProfileFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
-    }
-
-    override fun onContentOptionClicked(cast: CastEntity, user: UserEntity) {
-        val optionType = if (cast.isOwner) {
-            OptionDialogType.MyContentOption(contentId = cast.id)
-        } else {
-            OptionDialogType.OtherContentOption(contentId = cast.id)
-        }
-        ProfileFragmentDirections.toOptionDialogFragment(optionType).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toContentFragment(cast.id, user.displayName).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onFollowingFollowersClicked(isFollowing: Boolean, user: UserEntity) {
-        ProfileFragmentDirections.toFollowingFollowersFragment(isFollowing, user.id).navigate()
+        directions.toFollowingFollowersFragment(isFollowing, user.id).navigate()
     }
 
     override fun onLikeClicked(cast: CastEntity) {
-        shareViewModel.likeCasts(targetCasts = cast)
+        shareViewModel.likeCast(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+            targetCast = cast,
+        )
     }
 
     override fun onNewCastClicked(userId: String) {
-        ProfileFragmentDirections.toNewCastFragment(quoteCastId = null, userId = userId).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toNewCastFragment(null, userId).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onOptionClicked(type: OptionDialogType) {
-        ProfileFragmentDirections.toOptionDialogFragment(type).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toOptionDialogFragment(type).navigate() },
+        )
     }
 
     override fun onRecastClicked(cast: CastEntity) {
-        ProfileFragmentDirections.toRecastDialogFragment(contentId = cast.id).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toRecastDialogFragment(contentId = cast.id).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onRefreshClicked() {
@@ -133,7 +148,7 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
     }
 
     override fun onUserClicked(user: UserEntity) {
-        ProfileFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
     }
 
     override fun onViewReportingClicked(contentId: List<String>) {

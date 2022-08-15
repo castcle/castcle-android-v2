@@ -3,6 +3,7 @@ package com.castcle.android.core.extensions
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.Context
+import android.os.*
 import android.provider.Settings
 import android.view.View
 import android.widget.TextView
@@ -201,6 +202,18 @@ fun String.toBearer(url: HttpUrl? = null): String {
 
 fun Boolean.toInt(): Int {
     return if (this) 1 else 0
+}
+
+@Suppress("DEPRECATION")
+fun Context.vibrate(time: Int = 50) {
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        getSystemService(Context.VIBRATOR_MANAGER_SERVICE).cast<VibratorManager>()?.defaultVibrator
+    } else {
+        getSystemService(Context.VIBRATOR_SERVICE).cast<Vibrator>()
+    }
+    vibrator?.vibrate(
+        VibrationEffect.createOneShot(time.toLong(), VibrationEffect.DEFAULT_AMPLITUDE)
+    )
 }
 
 fun View.visible() {

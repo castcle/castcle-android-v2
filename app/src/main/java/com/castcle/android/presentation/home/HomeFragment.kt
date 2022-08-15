@@ -8,8 +8,13 @@ import com.castcle.android.core.extensions.cast
 import com.castcle.android.presentation.feed.FeedFragment
 import com.castcle.android.presentation.search.top_trends.TopTrendsFragment
 import com.google.android.material.navigation.NavigationBarView
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemReselectedListener {
+
+    private val shareViewModel by sharedViewModel<HomeViewModel>()
+
+    private val directions = HomeFragmentDirections
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +48,11 @@ class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemRes
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.new_cast) {
-            HomeFragmentDirections.toNewCastFragment(quoteCastId = null, userId = null).navigate()
+            shareViewModel.isUserCanEngagement(
+                isGuestAction = { directions.toLoginFragment().navigate() },
+                isMemberAction = { directions.toNewCastFragment(null, null).navigate() },
+                isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+            )
             false
         } else {
             super.onNavigationItemSelected(item)
