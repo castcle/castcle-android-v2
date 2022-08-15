@@ -10,13 +10,9 @@ import com.castcle.android.core.base.activity.BaseActivity
 import com.castcle.android.core.extensions.findFragmentInNavHost
 import com.castcle.android.databinding.ActivityHomeBinding
 import com.castcle.android.presentation.login.LoginFragment
-import com.castcle.android.presentation.profile.ProfileViewModel
 import com.twitter.sdk.android.core.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : BaseActivity() {
-
-    private val viewModel by viewModel<ProfileViewModel>()
 
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
