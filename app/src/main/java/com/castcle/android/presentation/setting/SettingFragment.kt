@@ -34,10 +34,6 @@ class SettingFragment : BaseFragment(), SettingListener {
         )
     }
 
-    override fun initListener() {
-
-    }
-
     override fun initObserver() {
         viewModel.logoutError.observe(viewLifecycleOwner) {
             dismissLoading()
