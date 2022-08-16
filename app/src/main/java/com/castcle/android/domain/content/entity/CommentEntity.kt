@@ -22,15 +22,15 @@ data class CommentEntity(
             response.orEmpty().map { map(ownerUserId, it) }.toMutableList()
 
         fun map(ownerUserId: List<String?>?, response: CommentResponse?) = CommentEntity(
-            authorId = response?.authorId ?: response?.author ?: "",
-            createdAt = response?.createdAt.toMilliSecond(),
-            id = response?.id ?: "",
+            authorId = response?.authorId ?: response?.author.orEmpty(),
+            createdAt = response?.createdAt?.toMilliSecond() ?: 0L,
+            id = response?.id.orEmpty(),
             isOwner = ownerUserId.orEmpty()
                 .filterNotNullOrBlank()
                 .contains(response?.authorId ?: response?.author),
             liked = response?.participate?.liked ?: false,
             likeCount = response?.metrics?.likeCount ?: 0,
-            message = response?.message ?: "",
+            message = response?.message.orEmpty(),
         )
     }
 

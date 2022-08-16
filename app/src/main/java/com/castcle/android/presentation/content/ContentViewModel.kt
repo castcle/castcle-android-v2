@@ -8,7 +8,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_SMALL_ITEM
 import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.content.data_source.CommentRemoteMediator
 import com.castcle.android.data.content.mapper.CommentResponseMapper
 import com.castcle.android.domain.content.ContentRepository
@@ -87,6 +87,12 @@ class ContentViewModel(
                 pagingData.map { contentMapper.apply(it) }
             }
         }.cachedIn(viewModelScope)
+
+    fun fetchContent() {
+        launch {
+            contentRepository.getContent(contentId = contentId, sessionId = sessionId)
+        }
+    }
 
     private fun getContent() {
         launch({

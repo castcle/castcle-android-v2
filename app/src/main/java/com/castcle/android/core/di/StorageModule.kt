@@ -2,7 +2,7 @@ package com.castcle.android.core.di
 
 import androidx.room.Room
 import com.castcle.android.core.constants.DATABASE_NAME
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import org.koin.dsl.module
 
 val storageModule = module {

@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
+
+    <dialog
+        android:id="@+id/recastDialogFragment"
+        android:name="com.castcle.android.presentation.dialog.recast.RecastDialogFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toNewCastFragment"
+            app:destination="@id/newCastFragment" />
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/optionDialogFragment"
+        android:name="com.castcle.android.presentation.dialog.option.OptionDialogFragment">
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.presentation.dialog.option.OptionDialogType" />
+
+        <action
+            android:id="@+id/toReportSubjectFragment"
+            app:destination="@id/reportSubjectFragment" />
+
+    </dialog>
 
     <fragment
         android:id="@+id/contentFragment"
@@ -18,8 +45,24 @@
             app:nullable="true" />
 
         <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
     </fragment>
 
@@ -34,6 +77,10 @@
         <argument
             android:name="userId"
             app:argType="string" />
+
+        <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
@@ -54,8 +101,24 @@
             app:destination="@id/loginFragment" />
 
         <action
+            android:id="@+id/toNewCastFragment"
+            app:destination="@id/newCastFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
         <action
             android:id="@+id/toSearchFragment"
@@ -84,6 +147,22 @@
         android:name="com.castcle.android.presentation.login.LoginFragment" />
 
     <fragment
+        android:id="@+id/newCastFragment"
+        android:name="com.castcle.android.presentation.new_cast.NewCastFragment">
+
+        <argument
+            android:name="quoteCastId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.castcle.android.presentation.profile.ProfileFragment">
 
@@ -100,14 +179,94 @@
             app:destination="@id/followingFollowersFragment" />
 
         <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/toNewCastFragment"
+            app:destination="@id/newCastFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
     </fragment>
 
     <fragment
+        android:id="@+id/reportDetailFragment"
+        android:name="com.castcle.android.presentation.report.report_detail.ReportDetailFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="subject"
+            app:argType="com.castcle.android.domain.metadata.entity.ReportSubjectEntity" />
+
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/toReportSuccessFragment"
+            app:destination="@id/reportSuccessFragment"
+            app:popUpTo="@+id/reportSubjectFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportSubjectFragment"
+        android:name="com.castcle.android.presentation.report.report_subject.ReportSubjectFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/toReportDetailFragment"
+            app:destination="@id/reportDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reportSuccessFragment"
+        android:name="com.castcle.android.presentation.report.report_success.ReportSuccessFragment">
+
+        <argument
+            android:name="isReportContent"
+            app:argType="boolean" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/resentVerifyEmailFragment"
+        android:name="com.castcle.android.presentation.resent_verify_email.ResentVerifyEmailFragment" />
+
+    <fragment
         android:id="@+id/searchFragment"
-        android:name="com.castcle.android.presentation.search.SearchFragment">
+        android:name="com.castcle.android.presentation.search.search.SearchFragment">
 
         <argument
             android:name="keyword"
@@ -118,8 +277,24 @@
             app:destination="@id/contentFragment" />
 
         <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
         <action
             android:id="@+id/toSearchFragment"
@@ -129,7 +304,7 @@
 
     <fragment
         android:id="@+id/searchSuggestionFragment"
-        android:name="com.castcle.android.presentation.search_suggestion.SearchSuggestionFragment">
+        android:name="com.castcle.android.presentation.search.search_suggestion.SearchSuggestionFragment">
 
         <action
             android:id="@+id/toProfileFragment"
@@ -138,6 +313,8 @@
         <action
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment"
+            app:enterAnim="@null"
+            app:exitAnim="@null"
             app:popUpTo="@+id/searchSuggestionFragment"
             app:popUpToInclusive="true" />
 
@@ -155,7 +332,11 @@
 
     <fragment
         android:id="@+id/whoToFollowFragment"
-        android:name="com.castcle.android.presentation.content.WhoToFollowFragment">
+        android:name="com.castcle.android.presentation.who_to_follow.WhoToFollowFragment">
+
+        <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
 
         <action
             android:id="@+id/toProfileFragment"

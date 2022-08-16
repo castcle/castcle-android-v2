@@ -1,7 +1,6 @@
 package com.castcle.android.presentation.content
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.lifecycleScope
@@ -21,15 +20,15 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.content.item_comment.CommentViewRenderer
 import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewRenderer
 import com.castcle.android.presentation.content.item_reply.ReplyViewRenderer
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedListener
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewRenderer
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.*
@@ -43,6 +42,8 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     private val viewModel by stateViewModel<ContentViewModel> { parametersOf(args.contentId) }
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
+
+    private val directions = ContentFragmentDirections
 
     private val args by navArgs<ContentFragmentArgs>()
 
@@ -85,15 +86,9 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         }
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
+            viewModel.fetchContent()
             adapter.refresh()
             clearComment()
-        }
-        binding.root.setOnApplyWindowInsetsListener { _, windowInsets ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                val imeHeight = windowInsets.getInsets(WindowInsets.Type.ime()).bottom
-                binding.root.setPadding(0, 0, 0, imeHeight)
-            }
-            windowInsets
         }
         binding.etComment.setMentionEnabled(true)
         binding.etComment.setMentionTextChangedListener(object : MentionView.OnChangedListener {
@@ -158,29 +153,45 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         binding.etComment.showKeyboard()
     }
 
+    override fun onFollowClicked(user: UserEntity) {
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
+    }
+
     override fun onLikeClicked(cast: CastEntity) {
-        shareViewModel.likeCasts(cast)
+        shareViewModel.likeCast(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+            targetCast = cast,
+        )
     }
 
     override fun onLikeCommentClicked(comment: CommentEntity) {
         viewModel.likeComment(comment)
     }
 
-    override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) {
+    override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) = Unit
 
+    override fun onOptionClicked(type: OptionDialogType) {
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toOptionDialogFragment(type).navigate() },
+        )
     }
 
-    override fun onQuoteCastCountClicked(contentId: String) {
-
-    }
+    override fun onQuoteCastCountClicked(contentId: String) = Unit
 
     override fun onRecastClicked(cast: CastEntity) {
-
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toRecastDialogFragment(contentId = cast.id).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
-    override fun onRecastCountClicked(contentId: String, hasLike: Boolean) {
-
-    }
+    override fun onRecastCountClicked(contentId: String, hasLike: Boolean) = Unit
 
     @SuppressLint("SetTextI18n")
     override fun onReplyClicked(castcleId: String, commentId: String) {
@@ -191,46 +202,36 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun onUserClicked(user: UserEntity) {
-        ContentFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
     }
 
-    override fun onPause() {
+    override fun onViewReportingClicked(contentId: List<String>) {
+        shareViewModel.showReportingContent(contentId = contentId)
+    }
+
+    override fun onStop() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
         changeSoftInputMode(false)
-        super.onPause()
+        super.onStop()
     }
 
-    override fun onResume() {
+    override fun onStart() {
+        super.onStart()
         binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
         changeSoftInputMode(true)
-        super.onResume()
-    }
-
-    @Suppress("DEPRECATION")
-    private fun changeSoftInputMode(isResize: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            activity?.window?.setDecorFitsSystemWindows(!isResize)
-        } else {
-            if (isResize) {
-                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-            } else {
-                activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-            }
-        }
     }
 
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
             registerRenderer(CommentViewRenderer())
             registerRenderer(ContentMetricsViewRenderer())
-            registerRenderer(FeedImage1ViewRenderer())
-            registerRenderer(FeedImage2ViewRenderer())
-            registerRenderer(FeedImage3ViewRenderer())
-            registerRenderer(FeedImage4ViewRenderer())
+            registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
+            registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
+            registerRenderer(FeedWebImageViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)
             registerRenderer(ReplyViewRenderer())
         }

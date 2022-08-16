@@ -20,26 +20,39 @@
         <entry key="app/src/main/res/drawable/bg_corner_16dp.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/bg_corner_24dp.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/bg_corner_8dp.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/bg_corner_top_16dp.xml" value="0.1895" />
         <entry key="app/src/main/res/drawable/bg_corner_top_24dp.xml" value="0.3555" />
+        <entry key="app/src/main/res/drawable/bg_corner_top_8dp.xml" value="0.127" />
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.3555" />
         <entry key="app/src/main/res/drawable/bg_outline.xml" value="0.2845" />
         <entry key="app/src/main/res/drawable/bg_outline_circle.xml" value="0.3555" />
         <entry key="app/src/main/res/drawable/bg_outline_corner_16dp.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/bg_outline_corner_8dp.xml" value="0.127" />
+        <entry key="app/src/main/res/drawable/bg_rectangle.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/bg_ripple_circle.xml" value="0.2845" />
+        <entry key="app/src/main/res/drawable/bg_ripple_rectangle.xml" value="0.3945" />
+        <entry key="app/src/main/res/drawable/bg_ripple_rectangle_bottom_corner_16dp.xml" value="0.127" />
         <entry key="app/src/main/res/drawable/bg_ripple_rectangle_corner_12dp.xml" value="0.3245" />
         <entry key="app/src/main/res/drawable/bg_ripple_rectangle_corner_24dp.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_ad.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_arrow_end.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.2845" />
         <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_block.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_castcle.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.373" />
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_content_farming.xml" value="0.371" />
+        <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_discord.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_drop_down.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_empty_search.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.394" />
         <entry key="app/src/main/res/drawable/ic_feed.xml" value="0.2845" />
         <entry key="app/src/main/res/drawable/ic_github.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_google.xml" value="0.394" />
         <entry key="app/src/main/res/drawable/ic_image.xml" value="0.20393066406250002" />
         <entry key="app/src/main/res/drawable/ic_info.xml" value="0.3475" />
@@ -55,9 +68,12 @@
         <entry key="app/src/main/res/drawable/ic_public.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_recast.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_report.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.373" />
+        <entry key="app/src/main/res/drawable/ic_select_image.xml" value="0.4335" />
         <entry key="app/src/main/res/drawable/ic_sent_comment.xml" value="0.3405" />
         <entry key="app/src/main/res/drawable/ic_signal.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_sync_social_media.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_telegram.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_top_trends.xml" value="0.316" />
         <entry key="app/src/main/res/drawable/ic_twitter.xml" value="0.394" />
@@ -67,28 +83,39 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.5" />
         <entry key="app/src/main/res/layout/dialog_loading.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/dialog_option.xml" value="0.21889696451474988" />
+        <entry key="app/src/main/res/layout/dialog_recast.xml" value="0.21889696451474988" />
         <entry key="app/src/main/res/layout/fragment_content.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/fragment_new_cast.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_report_detail.xml" value="0.3891871165644172" />
+        <entry key="app/src/main/res/layout/fragment_report_success.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.47719298245614034" />
         <entry key="app/src/main/res/layout/fragment_search_suggestion.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_comment.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_content_metrics.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_current_recast_user.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_dialog_option.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_empty_state.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_empty_state_feed.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_empty_state_search.xml" value="0.24739583333333334" />
         <entry key="app/src/main/res/layout/item_error_state.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_feed_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_feed_image_1.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_image_2.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/item_feed_image_3.xml" value="0.5479166666666667" />
+        <entry key="app/src/main/res/layout/item_feed_image_3.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_feed_image_4.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_feed_image_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.75" />
         <entry key="app/src/main/res/layout/item_feed_quote.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_recast.xml" value="0.5519379844961241" />
+        <entry key="app/src/main/res/layout/item_feed_reporting.xml" value="0.4330910645575032" />
         <entry key="app/src/main/res/layout/item_feed_suggestion_follow.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_text.xml" value="0.5276041666666667" />
-        <entry key="app/src/main/res/layout/item_feed_web.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_feed_web.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_feed_web_image.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_feed_who_to_follow.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_load_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.5286458333333334" />
@@ -100,13 +127,19 @@
         <entry key="app/src/main/res/layout/item_login.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_mention_hashtag.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_mention_user.xml" value="0.5276041666666667" />
-        <entry key="app/src/main/res/layout/item_profile_page.xml" value="0.6001821493624773" />
-        <entry key="app/src/main/res/layout/item_profile_user.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/item_option_dialog.xml" value="0.44976485677640016" />
+        <entry key="app/src/main/res/layout/item_profile_page.xml" value="0.5061728395061729" />
+        <entry key="app/src/main/res/layout/item_profile_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_recast_title.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_reply.xml" value="0.5479166666666667" />
-        <entry key="app/src/main/res/layout/item_search_people.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_report_subject_footer.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_report_subject_header.xml" value="0.4330910645575032" />
+        <entry key="app/src/main/res/layout/item_report_subject_item.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_search_people.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_search_suggestion_keyword.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_search_suggestion_title.xml" value="0.5183861082737488" />
         <entry key="app/src/main/res/layout/item_search_suggestion_user.xml" value="0.5479166666666667" />
+        <entry key="app/src/main/res/layout/item_select_recast_user.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_setting_add_page.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_setting_logout.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_setting_menu.xml" value="0.5479166666666667" />
@@ -117,10 +150,11 @@
         <entry key="app/src/main/res/layout/item_top_trends.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_top_trends_search.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_top_trends_title.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/item_who_to_follow.xml" value="0.34894398530762166" />
+        <entry key="app/src/main/res/layout/item_who_to_follow.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_action_bar.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_bottom_navigation.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/layout_castcle_action_bar.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/layout_content_reported.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/layout_load_state_append.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/layout_load_state_refresh.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/layout_load_state_refresh_item.xml" value="0.67" />
@@ -137,6 +171,7 @@
         <entry key="app/src/main/res/menu/menu_copy_message.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1565" />
         <entry key="app/src/main/res/mipmap/ic_launcher.xml" value="0.1565" />
+        <entry key="app/src/main/res/xml/network_security_config.xml" value="0.21889696451474988" />
         <entry key="app/src/production/res/mipmap/ic_launcher.xml" value="0.1565" />
         <entry key="app/src/staging/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1565" />
         <entry key="app/src/staging/res/mipmap/ic_launcher.xml" value="0.1565" />

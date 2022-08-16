@@ -12,6 +12,12 @@ interface FeedDao {
     @Query("DELETE FROM $TABLE_FEED")
     suspend fun delete()
 
+    @Query("DELETE FROM $TABLE_FEED WHERE feed_originalCastId = :castId")
+    suspend fun deleteByOriginalCast(castId: String)
+
+    @Query("DELETE FROM $TABLE_FEED WHERE feed_referenceCastId = :castId")
+    suspend fun deleteByReferenceCast(castId: String)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<FeedEntity>)
 

@@ -15,6 +15,12 @@ interface UserApi {
         @Body body: CommentRequest,
     ): Response<BaseResponse<CommentResponse>>
 
+    @POST("v2/users/{$PARAMETER_ID}/quotecasts")
+    suspend fun createQuoteCast(
+        @Path(PARAMETER_ID) id: String,
+        @Body body: CreateQuoteCastRequest,
+    ): Response<BaseResponse<CastResponse>>
+
     @POST("v2/users/me/following")
     suspend fun followUser(
         @Body body: FollowUserRequest,
@@ -72,11 +78,27 @@ interface UserApi {
         @Body body: LikeCommentRequest,
     ): Response<Unit>
 
+    @POST("v2/users/{$PARAMETER_ID}/recasts")
+    suspend fun recastContent(
+        @Path(PARAMETER_ID) id: String,
+        @Body body: RecastContentRequest,
+    ): Response<BaseResponse<CastResponse>>
+
     @POST("v2/users/me/comments/{commentId}/reply")
     suspend fun replyComment(
         @Path("commentId") commentId: String,
         @Body body: CommentRequest,
     ): Response<BaseResponse<CommentResponse>>
+
+    @POST("v2/users/me/reporting/content")
+    suspend fun reportContent(
+        @Body body: ReportRequest,
+    ): Response<Unit>
+
+    @POST("v2/users/me/reporting/user")
+    suspend fun reportUser(
+        @Body body: ReportRequest,
+    ): Response<Unit>
 
     @DELETE("v2/users/me/following/{targetCastcleId}")
     suspend fun unfollowUser(
@@ -91,6 +113,12 @@ interface UserApi {
     @DELETE("v2/users/me/likes-comments/{commentId}")
     suspend fun unlikeComment(
         @Path("commentId") commentId: String,
+    ): Response<Unit>
+
+    @DELETE("v2/users/{$PARAMETER_ID}/recasts/{${PARAMETER_CONTENT_ID}}")
+    suspend fun unrecastContent(
+        @Path(PARAMETER_ID) id: String,
+        @Path(PARAMETER_CONTENT_ID) contentId: String,
     ): Response<Unit>
 
 }

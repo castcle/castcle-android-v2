@@ -11,7 +11,6 @@ import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.extensions.setRefreshColor
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.content.WhoToFollowFragmentDirections
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.who_to_follow.item_who_to_follow.WhoToFollowViewRenderer
 import kotlinx.coroutines.*
@@ -24,6 +23,8 @@ class WhoToFollowFragment : BaseFragment(), WhoToFollowListener, LoadStateListen
     private val viewModel by viewModel<WhoToFollowViewModel>()
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
+
+    private val directions = WhoToFollowFragmentDirections
 
     @FlowPreview
     override fun initViewProperties() {
@@ -64,11 +65,14 @@ class WhoToFollowFragment : BaseFragment(), WhoToFollowListener, LoadStateListen
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onUserClicked(user: UserEntity) {
-        WhoToFollowFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
     }
 
     override fun onRefreshClicked() {

@@ -5,7 +5,7 @@ import androidx.room.withTransaction
 import com.castcle.android.core.api.ContentApi
 import com.castcle.android.core.error.ApiException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.content.mapper.CommentResponseMapper
 import com.castcle.android.domain.content.entity.ContentEntity
 import com.castcle.android.domain.content.entity.ContentWithResultEntity
@@ -43,7 +43,7 @@ class CommentRemoteMediator(
             }
 
             val response = api.getComment(
-                contentId = content.originalCastId ?: "",
+                contentId = content.originalCastId.orEmpty(),
                 maxResults = state.config.pageSize,
                 untilId = loadKey,
             )

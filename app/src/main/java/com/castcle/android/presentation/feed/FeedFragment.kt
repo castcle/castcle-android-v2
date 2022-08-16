@@ -15,15 +15,15 @@ import com.castcle.android.databinding.FragmentFeedBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewRenderer
+import com.castcle.android.presentation.dialog.option.OptionDialogType
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_who_to_follow.FeedWhoToFollowViewRenderer
 import com.castcle.android.presentation.home.HomeFragmentDirections
 import com.castcle.android.presentation.home.HomeViewModel
@@ -37,6 +37,8 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
     private val viewModel by stateViewModel<FeedViewModel>()
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
+
+    private val directions = HomeFragmentDirections
 
     @FlowPreview
     override fun initViewProperties() {
@@ -61,7 +63,7 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                     binding.actionBar.bind(
                         leftButtonIcon = R.drawable.ic_castcle,
                         leftButtonAction = { scrollToTop() },
-                        rightButtonAction = { HomeFragmentDirections.toLoginFragment().navigate() },
+                        rightButtonAction = { directions.toLoginFragment().navigate() },
                         rightButtonIcon = R.drawable.ic_user,
                         title = R.string.for_you,
                         titleColor = R.color.blue,
@@ -70,9 +72,7 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                     binding.actionBar.bind(
                         leftButtonIcon = R.drawable.ic_castcle,
                         leftButtonAction = { scrollToTop() },
-                        rightButtonAction = {
-                            HomeFragmentDirections.toSettingFragment().navigate()
-                        },
+                        rightButtonAction = { directions.toSettingFragment().navigate() },
                         rightButtonIcon = R.drawable.ic_hamburger,
                         rightSecondButtonAction = {},
                         rightSecondButtonIcon = R.drawable.ic_wallet,
@@ -104,11 +104,18 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
     }
 
     override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
-        HomeFragmentDirections.toContentFragment(cast.id, user.displayName).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toContentFragment(cast.id, user.displayName).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onHashtagClicked(keyword: String) {
@@ -120,31 +127,50 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
     }
 
     override fun onLikeClicked(cast: CastEntity) {
-        shareViewModel.likeCasts(targetCasts = cast)
+        shareViewModel.likeCast(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+            targetCast = cast,
+        )
     }
 
     override fun onLinkClicked(url: String) {
         openUrl(url)
     }
 
-    override fun onNewCastClicked() {
-
+    override fun onNewCastClicked(userId: String) {
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toNewCastFragment(null, userId).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
-    override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-
+    override fun onOptionClicked(type: OptionDialogType) {
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toOptionDialogFragment(type).navigate() },
+        )
     }
 
     override fun onRecastClicked(cast: CastEntity) {
-
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toRecastDialogFragment(contentId = cast.id).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onUserClicked(user: UserEntity) {
-        HomeFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
+    }
+
+    override fun onViewReportingClicked(contentId: List<String>) {
+        shareViewModel.showReportingContent(contentId = contentId)
     }
 
     override fun onWhoToFollowClicked() {
-        HomeFragmentDirections.toWhoToFollowFragment().navigate()
+        directions.toWhoToFollowFragment().navigate()
     }
 
     override fun onRefreshClicked() {
@@ -167,15 +193,14 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
 
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
-            registerRenderer(FeedImage1ViewRenderer())
-            registerRenderer(FeedImage2ViewRenderer())
-            registerRenderer(FeedImage3ViewRenderer())
-            registerRenderer(FeedImage4ViewRenderer())
+            registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedNewCastViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
+            registerRenderer(FeedReportingViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
+            registerRenderer(FeedWebImageViewRenderer())
             registerRenderer(FeedWhoToFollowViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)
         }

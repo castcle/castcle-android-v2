@@ -16,7 +16,7 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.profile.ProfileFragmentDirections
-import com.castcle.android.presentation.search_result.item_search_people.SearchPeopleViewRenderer
+import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewRenderer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -30,6 +30,8 @@ class FollowingFollowersFragment : BaseFragment(), FeedListener, LoadStateListen
     }
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
+
+    private val directions = FollowingFollowersFragmentDirections
 
     private val args by navArgs<FollowingFollowersFragmentArgs>()
 
@@ -76,7 +78,10 @@ class FollowingFollowersFragment : BaseFragment(), FeedListener, LoadStateListen
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onRefreshClicked() {

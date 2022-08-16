@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_background_2">
+    tools:background="@color/black_background_2">
 
     <FrameLayout
         android:id="@+id/flAvatar"
@@ -13,7 +13,6 @@
         android:layout_margin="@dimen/_12sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/white"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_1sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +57,6 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         android:ellipsize="end"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
         android:maxLines="1"
         android:padding="@dimen/_4sdp"
         app:layout_constrainedWidth="true"

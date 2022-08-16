@@ -2,7 +2,7 @@ package com.castcle.android.core.base.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import com.castcle.android.databinding.DialogLoadingBinding
-import com.castcle.android.presentation.dialog.LoadingDialog
+import com.castcle.android.presentation.dialog.loading.LoadingDialog
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity : AppCompatActivity() {

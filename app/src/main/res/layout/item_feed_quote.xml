@@ -7,13 +7,20 @@
     android:layout_marginBottom="@dimen/_4sdp"
     android:background="@color/black_background_2">
 
+    <include
+        android:id="@+id/reported"
+        layout="@layout/layout_content_reported"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.castcle.android.core.custom_view.user_bar.UserBarView
         android:id="@+id/userBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/reported" />
 
     <com.castcle.android.core.custom_view.CastcleTextView
         android:id="@+id/castcleTextView"
@@ -39,7 +46,6 @@
         android:layout_margin="@dimen/_12sdp"
         android:foreground="@drawable/bg_outline_corner_16dp"
         android:foregroundTint="@color/gray_1"
-        android:paddingBottom="@dimen/_12sdp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

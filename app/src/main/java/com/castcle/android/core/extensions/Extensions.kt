@@ -3,6 +3,7 @@ package com.castcle.android.core.extensions
 import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.Context
+import android.os.*
 import android.provider.Settings
 import android.view.View
 import android.widget.TextView
@@ -11,7 +12,10 @@ import androidx.annotation.DimenRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.castcle.android.BuildConfig
 import com.castcle.android.R
+import com.castcle.android.core.constants.AUTHORIZATION_PREFIX
+import com.castcle.android.core.constants.HEADER_AUTHORIZATION
 import com.castcle.android.core.error.ApiException
 import com.google.gson.Gson
 import com.jakewharton.rxbinding2.view.RxView
@@ -19,6 +23,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import okhttp3.HttpUrl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import retrofit2.Response
@@ -185,6 +190,29 @@ fun View.setPadding(
         top?.let { resources.getDimensionPixelSize(it) } ?: paddingTop,
         end?.let { resources.getDimensionPixelSize(it) } ?: paddingRight,
         bottom?.let { resources.getDimensionPixelSize(it) } ?: paddingBottom,
+    )
+}
+
+fun String.toBearer(url: HttpUrl? = null): String {
+    if (BuildConfig.DEBUG && url != null) {
+        Timber.d("$HEADER_AUTHORIZATION($url) : $AUTHORIZATION_PREFIX$this")
+    }
+    return "$AUTHORIZATION_PREFIX$this"
+}
+
+fun Boolean.toInt(): Int {
+    return if (this) 1 else 0
+}
+
+@Suppress("DEPRECATION")
+fun Context.vibrate(time: Int = 50) {
+    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        getSystemService(Context.VIBRATOR_MANAGER_SERVICE).cast<VibratorManager>()?.defaultVibrator
+    } else {
+        getSystemService(Context.VIBRATOR_SERVICE).cast<Vibrator>()
+    }
+    vibrator?.vibrate(
+        VibrationEffect.createOneShot(time.toLong(), VibrationEffect.DEFAULT_AMPLITUDE)
     )
 }
 

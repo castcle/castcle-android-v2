@@ -5,6 +5,8 @@ import com.castcle.android.domain.user.entity.UserEntity
 
 interface SettingListener : CastcleListener {
     fun onAccountClick()
+    fun onAdManagerClick()
+    fun onContentFarmingClick()
     fun onLogoutClick()
     fun onNewPageClick()
     fun onNotificationClicked()

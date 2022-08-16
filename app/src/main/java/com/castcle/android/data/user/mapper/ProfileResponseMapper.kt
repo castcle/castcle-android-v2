@@ -2,6 +2,7 @@ package com.castcle.android.data.user.mapper
 
 import androidx.paging.LoadType
 import com.castcle.android.core.base.response.BaseResponse
+import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.data.cast.entity.CastResponse
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.ProfileEntity
@@ -27,6 +28,7 @@ class ProfileResponseMapper {
     ): ProfileResponseResult {
         val profileItem = if (loadType == LoadType.REFRESH) {
             val item = ProfileEntity(
+                createdAt = Long.MAX_VALUE,
                 originalUserId = currentUser.id,
                 sessionId = sessionId,
                 type = ProfileType.Profile,
@@ -37,6 +39,7 @@ class ProfileResponseMapper {
         }
         val newCastItems = if (loadType == LoadType.REFRESH && currentUser.isOwner) {
             val item = ProfileEntity(
+                createdAt = Long.MAX_VALUE.minus(1),
                 originalUserId = currentUser.id,
                 sessionId = sessionId,
                 type = ProfileType.NewCast,
@@ -59,6 +62,7 @@ class ProfileResponseMapper {
             val cast = CastEntity.map(ownerUserId, response).also(castItems::add)
             val referencedCast = castItems.find { it.id == response.referencedCasts?.id }
             ProfileEntity(
+                createdAt = cast.createdAt.toMilliSecond() ?: 0L,
                 originalCastId = cast.id,
                 originalUserId = cast.authorId,
                 referenceCastId = referencedCast?.id,

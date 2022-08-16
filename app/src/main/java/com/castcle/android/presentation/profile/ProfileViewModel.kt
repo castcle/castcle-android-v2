@@ -9,7 +9,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
 import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.data_source.ProfileRemoteMediator
 import com.castcle.android.data.user.mapper.ProfileResponseMapper
 import com.castcle.android.domain.user.UserRepository
@@ -21,13 +21,13 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class ProfileViewModel(
     private val api: UserApi,
-    private val castcleId: String,
     private val database: CastcleDatabase,
     private val glidePreloader: GlidePreloader,
     private val profileMapper: ProfileMapper,
     private val repository: UserRepository,
     private val state: SavedStateHandle,
     private val profileResponseMapper: ProfileResponseMapper,
+    private val userId: String,
 ) : BaseViewModel() {
 
     private val sessionId = System.currentTimeMillis()
@@ -64,12 +64,18 @@ class ProfileViewModel(
             }
         }.cachedIn(viewModelScope)
 
+    fun fetchUser() {
+        launch {
+            repository.getUser(userId)
+        }
+    }
+
     private fun getUser() {
         launch({
             loadState.value = RetryException.loadState(it) { getUser() }
         }) {
             loadState.value = LoadState.Loading
-            currentUser.value = repository.getUser(castcleId)
+            currentUser.value = repository.getUser(userId)
         }
     }
 

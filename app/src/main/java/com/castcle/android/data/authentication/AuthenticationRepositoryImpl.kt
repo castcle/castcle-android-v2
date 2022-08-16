@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.core.os.bundleOf
 import androidx.room.withTransaction
 import com.castcle.android.core.api.AuthenticationApi
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.*
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
 import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
 import com.castcle.android.domain.authentication.AuthenticationRepository
@@ -36,7 +36,7 @@ class AuthenticationRepositoryImpl(
 ) : AuthenticationRepository {
 
     override suspend fun getAccessToken(): AccessTokenEntity {
-        return database.accessToken().get().firstOrNull() ?: AccessTokenEntity()
+        return database.accessToken().get() ?: AccessTokenEntity()
     }
 
     override suspend fun getFirebaseMessagingToken(): String {
@@ -153,12 +153,12 @@ class AuthenticationRepositoryImpl(
     }
 
     override suspend fun loginOut() {
-        unregisterFirebaseMessagingToken()
         database.withTransaction {
             fetchGuestAccessToken()
             database.cast().delete()
             database.notificationBadges().delete()
             database.profile().delete()
+            database.recursiveRefreshToken().delete()
             database.syncSocial().delete()
             database.user().delete()
         }

@@ -11,6 +11,7 @@ data class FeedQuoteViewEntity(
     val cast: CastEntity = CastEntity(),
     val feedId: String = "",
     val reference: CastcleViewEntity = FeedTextViewEntity(),
+    val referenceCast: CastEntity? = null,
     override val uniqueId: String = "",
     val user: UserEntity = UserEntity(),
 ) : CastcleViewEntity {

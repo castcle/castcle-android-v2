@@ -5,7 +5,7 @@ import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.error.ApiException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.mapper.ProfileResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
@@ -43,7 +43,7 @@ class ProfileRemoteMediator(
             }
 
             val response = api.getUserCast(
-                id = user.castcleId,
+                id = user.id,
                 maxResults = state.config.pageSize,
                 untilId = loadKey,
             )

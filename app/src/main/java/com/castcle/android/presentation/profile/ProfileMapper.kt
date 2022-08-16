@@ -7,15 +7,14 @@ import com.castcle.android.domain.user.entity.ProfileWithResultEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.ProfileType
 import com.castcle.android.domain.user.type.UserType
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewEntity
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewEntity
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewEntity
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewEntity
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEntity
+import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewEntity
 import com.castcle.android.presentation.profile.item_profile_page.ProfilePageViewEntity
 import com.castcle.android.presentation.profile.item_profile_user.ProfileUserViewEntity
 import org.koin.core.annotation.Factory
@@ -38,6 +37,12 @@ class ProfileMapper {
     }
 
     private fun mapContentItem(item: ProfileWithResultEntity): CastcleViewEntity {
+        if (item.originalCast?.reporting == true || item.referenceCast?.reporting == true) {
+            return FeedReportingViewEntity(
+                reportingContentId = item.originalCast?.id,
+                reportingReferenceContentId = item.referenceCast?.id,
+            )
+        }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
                 cast = item.originalCast,
@@ -49,6 +54,7 @@ class ProfileMapper {
                         referenceUser = null,
                     )
                 ),
+                referenceCast = item.referenceCast,
                 uniqueId = item.originalCast.id,
                 user = item.originalUser ?: UserEntity(),
             )
@@ -65,62 +71,25 @@ class ProfileMapper {
                 uniqueId = item.originalCast.id,
                 user = item.originalUser ?: UserEntity(),
             )
-            CastType.Image -> when (item.originalCast.image.size) {
-                0 -> FeedTextViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                1 -> FeedImage1ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                2 -> FeedImage2ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                3 -> FeedImage3ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                else -> FeedImage4ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-            }
             else -> when {
-                item.originalCast?.image?.size == 1 || item.originalCast?.linkPreview?.isNotBlank() == true -> FeedImage1ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                item.originalCast?.image?.size == 2 -> FeedImage1ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                item.originalCast?.image?.size == 3 -> FeedImage2ViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
-                    user = item.originalUser ?: UserEntity(),
-                )
-                (item.originalCast?.image?.size ?: 0) >= 4 -> FeedImage4ViewEntity(
+                item.originalCast?.image.orEmpty().isNotEmpty() -> FeedImageViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    uniqueId = item.originalCast?.id ?: "",
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
-                item.originalCast?.linkUrl?.isNotBlank() == true -> FeedWebViewEntity(
-                    cast = item.originalCast,
-                    uniqueId = item.originalCast.id,
+                item.originalCast?.linkPreview.orEmpty().isNotBlank() -> FeedWebImageViewEntity(
+                    cast = item.originalCast ?: CastEntity(),
+                    uniqueId = item.originalCast?.id.orEmpty(),
+                    user = item.originalUser ?: UserEntity(),
+                )
+                item.originalCast?.linkUrl.orEmpty().isNotBlank() -> FeedWebViewEntity(
+                    cast = item.originalCast ?: CastEntity(),
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 else -> FeedTextViewEntity(
                     cast = item.originalCast ?: CastEntity(),
-                    uniqueId = item.originalCast?.id ?: "",
+                    uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
             }

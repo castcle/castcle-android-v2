@@ -40,9 +40,9 @@ class SettingMapper {
             userWithSocial = userProfile,
             uniqueId = userProfile.user.id
         )
-        val pageItems = pageProfile.map {
-            SettingProfileViewEntity(userWithSocial = it, uniqueId = it.user.id)
-        }
+        val pageItems = pageProfile
+            .sortedBy { it.user.createdAt }
+            .map { SettingProfileViewEntity(userWithSocial = it, uniqueId = it.user.id) }
         val profileItems = SettingProfileSectionViewEntity(
             items = listOf(userItems).plus(pageItems)
         )
@@ -52,6 +52,18 @@ class SettingMapper {
                 menu = R.string.account,
                 menuIcon = R.drawable.ic_user,
                 uniqueId = "${R.string.account}",
+            ),
+            SettingMenuViewEntity(
+                action = { it.onAdManagerClick() },
+                menu = R.string.ad_manager,
+                menuIcon = R.drawable.ic_ad,
+                uniqueId = "${R.string.ad_manager}",
+            ),
+            SettingMenuViewEntity(
+                action = { it.onContentFarmingClick() },
+                menu = R.string.content_farming,
+                menuIcon = R.drawable.ic_content_farming,
+                uniqueId = "${R.string.content_farming}",
             ),
             SettingMenuViewEntity(
                 action = { it.onUrlClicked(URL_ABOUT_US) },

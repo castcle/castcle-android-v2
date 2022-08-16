@@ -80,7 +80,7 @@ class MentionHelper(context: Context, textView: TextView, attrs: AttributeSet?) 
     private var initialMovementMethod: MovementMethod? = null
 
     init {
-        initMentionHelper(context, textView, attrs)
+        initMentionHelper(context, textView)
     }
 
     private val textWatcher: TextWatcher
@@ -158,10 +158,10 @@ class MentionHelper(context: Context, textView: TextView, attrs: AttributeSet?) 
                 }
             }
 
-            override fun afterTextChanged(s: Editable) {}
+            override fun afterTextChanged(s: Editable) = Unit
         }
 
-    private fun initMentionHelper(context: Context, textView: TextView, attrs: AttributeSet?) {
+    private fun initMentionHelper(context: Context, textView: TextView) {
         this.textView = textView
         initialMovementMethod = textView.movementMethod
         mentionColors = context.getColor(R.color.blue)
@@ -228,17 +228,11 @@ class MentionHelper(context: Context, textView: TextView, attrs: AttributeSet?) 
 
     override fun getHyperlinkColors() = hyperlinkColors
 
-    override fun setHashtagColors(colors: Int) {
+    override fun setHashtagColors(colors: Int) = Unit
 
-    }
+    override fun setMentionColors(colors: Int) = Unit
 
-    override fun setMentionColors(colors: Int) {
-
-    }
-
-    override fun setHyperlinkColors(colors: Int) {
-
-    }
+    override fun setHyperlinkColors(colors: Int) = Unit
 
     override fun setOnHashtagClickListener(listener: MentionView.OnClickListener) {
         hashtagClickListener = listener
@@ -331,16 +325,6 @@ class MentionHelper(context: Context, textView: TextView, attrs: AttributeSet?) 
                 span.text = spannable.subSequence(start, end)
             }
         }
-    }
-
-
-    private fun indexOfNextNonLetterDigit(text: CharSequence, start: Int): Int {
-        for (i in start + 1 until text.length) {
-            if (!Character.isLetterOrDigit(text[i])) {
-                return i
-            }
-        }
-        return text.length
     }
 
     private fun indexOfPreviousNonLetterDigit(text: CharSequence, start: Int, end: Int): Int {
