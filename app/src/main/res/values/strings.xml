@@ -2,6 +2,7 @@
     <string name="about_us">About Us</string>
     <string name="account">Account</string>
     <string name="account_settings">Account Settings</string>
+    <string name="ad_manager">Ad Manager</string>
     <string name="advertised">Advertised</string>
     <string name="app_name">Castcle V2</string>
     <string name="block_user">Block %s</string>
@@ -10,6 +11,7 @@
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
     <string name="copy_message">Copy message</string>
+    <string name="content_farming">Content Farming</string>
     <string name="docs">Docs</string>
     <string name="done">Done</string>
     <string name="edit_page">Edit Page</string>
