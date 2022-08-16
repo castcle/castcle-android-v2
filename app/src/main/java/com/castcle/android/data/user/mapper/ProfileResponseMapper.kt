@@ -62,7 +62,7 @@ class ProfileResponseMapper {
             val cast = CastEntity.map(ownerUserId, response).also(castItems::add)
             val referencedCast = castItems.find { it.id == response.referencedCasts?.id }
             ProfileEntity(
-                createdAt = cast.createdAt.toMilliSecond(),
+                createdAt = cast.createdAt.toMilliSecond() ?: 0L,
                 originalCastId = cast.id,
                 originalUserId = cast.authorId,
                 referenceCastId = referencedCast?.id,

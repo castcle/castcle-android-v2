@@ -59,6 +59,7 @@ interface UserDao {
             "user_castcleId = :castcleId, " +
             "user_casts = case when :casts IS NOT NULL then :casts else user_casts end, " +
             "user_cover = case when :cover IS NOT NULL then :cover else user_cover end, " +
+            "user_createdAt = case when :createdAt IS NOT NULL then :createdAt else user_createdAt end, " +
             "user_displayName = :displayName, " +
             "user_dob = case when :dob IS NOT NULL then :dob else user_dob end, " +
             "user_email = case when :email IS NOT NULL then :email else user_email end, " +
@@ -91,6 +92,7 @@ interface UserDao {
         castcleId: String,
         casts: Int?,
         cover: ImageEntity?,
+        createdAt: Long?,
         displayName: String,
         dob: String?,
         email: String?,
@@ -126,6 +128,7 @@ interface UserDao {
             castcleId = item.castcleId,
             casts = item.casts,
             cover = item.cover,
+            createdAt = item.createdAt,
             displayName = item.displayName,
             dob = item.dob,
             email = item.email,

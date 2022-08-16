@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_USER
 import com.castcle.android.core.extensions.filterNotNullOrBlank
+import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.data.user.entity.UserResponse
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.type.UserType
@@ -19,6 +20,7 @@ data class UserEntity(
     @ColumnInfo(name = "${TABLE_USER}_castcleId") val castcleId: String = "",
     @ColumnInfo(name = "${TABLE_USER}_casts") val casts: Int? = null,
     @ColumnInfo(name = "${TABLE_USER}_cover") val cover: ImageEntity? = null,
+    @ColumnInfo(name = "${TABLE_USER}_createdAt") val createdAt: Long? = null,
     @ColumnInfo(name = "${TABLE_USER}_displayName") val displayName: String = "",
     @ColumnInfo(name = "${TABLE_USER}_dob") val dob: String? = null,
     @ColumnInfo(name = "${TABLE_USER}_email") val email: String? = null,
@@ -70,6 +72,7 @@ data class UserEntity(
             castcleId = response?.castcleId.orEmpty(),
             casts = response?.casts,
             cover = ImageEntity.map(response?.images?.cover),
+            createdAt = response?.createdAt?.toMilliSecond(),
             displayName = response?.displayName.orEmpty(),
             dob = response?.dob,
             email = response?.email,

@@ -2,10 +2,10 @@ package com.castcle.android.data.content
 
 import androidx.room.withTransaction
 import com.castcle.android.core.api.ContentApi
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.content.entity.CreateContentRequest
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.ContentRepository
@@ -34,7 +34,7 @@ class ContentRepositoryImpl(
         )
         val newProfile = sessionId.map {
             ProfileEntity(
-                createdAt = content.createdAt.toMilliSecond(),
+                createdAt = content.createdAt.toMilliSecond() ?: 0L,
                 originalCastId = content.id,
                 originalUserId = content.authorId,
                 sessionId = it,
