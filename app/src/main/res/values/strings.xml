@@ -26,7 +26,7 @@
     <string name="followed">Followed</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
-    <string name="for_you">For you</string>
+    <string name="for_you">For You</string>
     <string name="delete">Delete</string>
     <string name="delete_page">Delete page</string>
     <string name="dialog_recast_title">Choose Page or User</string>
@@ -87,7 +87,7 @@
     <string name="warning_permission_required">Permission required for this feature to be available.</string>
     <string name="whats_new_today">What\'s new today\?</string>
     <string name="whats_on_your_mind">What\'s on your mind\?</string>
-    <string name="who_to_follow">Who to follow</string>
+    <string name="who_to_follow">Who To Follow</string>
     <string name="whitepaper">Whitepaper</string>
     <string name="world_trends_search">World trends search</string>
     <string name="world_trends_title">Top 10 World Trends</string>
