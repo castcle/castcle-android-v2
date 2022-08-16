@@ -51,30 +51,20 @@ class SettingFragment : BaseFragment(), SettingListener {
         }
     }
 
-    override fun onAccountClick() {
+    override fun onAccountClick() = Unit
 
-    }
+    override fun onAdManagerClick() = Unit
 
-    override fun onAdManagerClick() {
-
-    }
-
-    override fun onContentFarmingClick() {
-
-    }
+    override fun onContentFarmingClick() = Unit
 
     override fun onLogoutClick() {
         showLoading()
         viewModel.logout()
     }
 
-    override fun onNewPageClick() {
+    override fun onNewPageClick() = Unit
 
-    }
-
-    override fun onNotificationClicked() {
-
-    }
+    override fun onNotificationClicked() = Unit
 
     override fun onUrlClicked(url: String) {
         openUrl(url)
@@ -84,9 +74,7 @@ class SettingFragment : BaseFragment(), SettingListener {
         SettingFragmentDirections.toProfileFragment(user).navigate()
     }
 
-    override fun onVerifyEmailClicked() {
-
-    }
+    override fun onVerifyEmailClicked() = Unit
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
