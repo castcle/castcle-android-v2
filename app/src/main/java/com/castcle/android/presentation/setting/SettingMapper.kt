@@ -54,6 +54,18 @@ class SettingMapper {
                 uniqueId = "${R.string.account}",
             ),
             SettingMenuViewEntity(
+                action = { it.onAdManagerClick() },
+                menu = R.string.ad_manager,
+                menuIcon = R.drawable.ic_ad,
+                uniqueId = "${R.string.ad_manager}",
+            ),
+            SettingMenuViewEntity(
+                action = { it.onContentFarmingClick() },
+                menu = R.string.content_farming,
+                menuIcon = R.drawable.ic_content_farming,
+                uniqueId = "${R.string.content_farming}",
+            ),
+            SettingMenuViewEntity(
                 action = { it.onUrlClicked(URL_ABOUT_US) },
                 menu = R.string.about_us,
                 menuIcon = R.drawable.ic_info,

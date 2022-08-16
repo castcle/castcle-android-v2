@@ -55,6 +55,14 @@ class SettingFragment : BaseFragment(), SettingListener {
 
     }
 
+    override fun onAdManagerClick() {
+
+    }
+
+    override fun onContentFarmingClick() {
+
+    }
+
     override fun onLogoutClick() {
         showLoading()
         viewModel.logout()

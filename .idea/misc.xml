@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/drawable/bg_ripple_rectangle_bottom_corner_16dp.xml" value="0.127" />
         <entry key="app/src/main/res/drawable/bg_ripple_rectangle_corner_12dp.xml" value="0.3245" />
         <entry key="app/src/main/res/drawable/bg_ripple_rectangle_corner_24dp.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_ad.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_arrow_end.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.2845" />
@@ -43,6 +44,7 @@
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.373" />
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_content_farming.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_discord.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_drop_down.xml" value="0.3945" />
