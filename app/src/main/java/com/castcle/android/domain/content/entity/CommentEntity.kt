@@ -23,7 +23,7 @@ data class CommentEntity(
 
         fun map(ownerUserId: List<String?>?, response: CommentResponse?) = CommentEntity(
             authorId = response?.authorId ?: response?.author.orEmpty(),
-            createdAt = response?.createdAt.toMilliSecond(),
+            createdAt = response?.createdAt?.toMilliSecond() ?: 0L,
             id = response?.id.orEmpty(),
             isOwner = ownerUserId.orEmpty()
                 .filterNotNullOrBlank()

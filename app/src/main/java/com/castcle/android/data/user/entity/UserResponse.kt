@@ -15,6 +15,7 @@ data class UserResponse(
     @SerializedName("castcleId") val castcleId: String? = null,
     @SerializedName("casts") val casts: Int? = null,
     @SerializedName("contact") val contact: UserContactResponse? = null,
+    @SerializedName("createdAt") val createdAt: String? = null,
     @SerializedName("displayName") val displayName: String? = null,
     @SerializedName("dob") val dob: String? = null,
     @SerializedName("email") val email: String? = null,

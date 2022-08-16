@@ -64,7 +64,7 @@ class UserRepositoryImpl(
         )
         val newProfile = sessionId.map {
             ProfileEntity(
-                createdAt = content.createdAt.toMilliSecond(),
+                createdAt = content.createdAt.toMilliSecond() ?: 0L,
                 originalCastId = content.id,
                 originalUserId = content.authorId,
                 referenceCastId = quoteCast?.id,
@@ -150,7 +150,7 @@ class UserRepositoryImpl(
         )
         val newProfile = sessionId.map {
             ProfileEntity(
-                createdAt = content.createdAt.toMilliSecond(),
+                createdAt = content.createdAt.toMilliSecond() ?: 0L,
                 originalCastId = content.id,
                 originalUserId = content.authorId,
                 referenceCastId = referenceCast?.id,
