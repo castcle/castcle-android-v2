@@ -29,7 +29,6 @@ import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.search.search.SearchFragmentDirections
 import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewRenderer
 import com.castcle.android.presentation.who_to_follow.WhoToFollowListener
-import com.castcle.android.presentation.who_to_follow.item_who_to_follow.WhoToFollowViewRenderer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -175,7 +174,6 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
             registerRenderer(LoadingStateCastViewRenderer(), type !is SearchType.People)
             registerRenderer(LoadingStateUserViewRenderer(), type is SearchType.People)
             registerRenderer(SearchPeopleViewRenderer())
-            registerRenderer(WhoToFollowViewRenderer())
         }
     }
 

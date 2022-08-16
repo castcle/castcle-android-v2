@@ -36,7 +36,6 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:background="@drawable/bg_outline_corner_16dp"
         android:backgroundTint="@color/blue"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:gravity="center"
         android:text="@string/follow"
         android:textColor="@color/blue"

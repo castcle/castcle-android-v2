@@ -203,9 +203,9 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 loading = LoadingStateUserViewEntity.create(10),
             )
             WHO_TO_FOLLOW -> StateItems(
-                empty = ErrorStateViewEntity.create(1),
+                empty = EmptyStateSearchViewEntity.create(1),
                 error = ErrorStateViewEntity.create(1),
-                loading = LoadingStateCastViewEntity.create(3),
+                loading = LoadingStateUserViewEntity.create(10),
             )
         }
     }

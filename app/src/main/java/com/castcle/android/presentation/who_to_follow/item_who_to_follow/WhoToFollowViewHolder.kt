@@ -19,7 +19,7 @@ class WhoToFollowViewHolder(
         compositeDisposable += binding.root.onClick {
             listener.onUserClicked(item.user)
         }
-        compositeDisposable += binding.root.onClick {
+        compositeDisposable += binding.tvFollow.onClick {
             listener.onFollowClicked(item.user)
         }
     }
