@@ -3,7 +3,6 @@ package com.castcle.android.data.feed.dao
 import androidx.paging.PagingSource
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_FEED
-import com.castcle.android.core.constants.TABLE_PROFILE
 import com.castcle.android.domain.feed.entity.FeedEntity
 import com.castcle.android.domain.feed.entity.FeedWithResultEntity
 

@@ -49,17 +49,17 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
                 viewModel.deleteContent(type.contentId)
             }
             is OptionDialogType.MyPageOption -> when (eventType) {
-                type.deletePage -> {}
-                type.syncSocialMedia -> {}
+                type.deletePage -> Unit
+                type.syncSocialMedia -> Unit
             }
-            is OptionDialogType.MyUserOption -> {}
+            is OptionDialogType.MyUserOption -> Unit
             is OptionDialogType.OtherContentOption -> {
                 OptionDialogFragmentDirections
                     .toReportSubjectFragment(contentId = type.contentId, userId = null)
                     .navigate()
             }
             is OptionDialogType.OtherUserOption -> when (eventType) {
-                type.blockUser -> {}
+                type.blockUser -> Unit
                 type.reportUser -> {
                     OptionDialogFragmentDirections
                         .toReportSubjectFragment(contentId = null, userId = type.userId)

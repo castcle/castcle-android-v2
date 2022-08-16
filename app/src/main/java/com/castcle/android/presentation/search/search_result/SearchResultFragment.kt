@@ -100,10 +100,6 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
         )
     }
 
-    override fun onHashtagClicked(keyword: String) {
-
-    }
-
     override fun onImageClicked(photo: ImageEntity) {
         openUrl(photo.original)
     }
