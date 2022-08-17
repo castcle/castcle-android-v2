@@ -34,6 +34,10 @@ class HomeFragment : BaseBottomNavigationFragment(), NavigationBarView.OnItemRes
         setIconSize(index = 1, dimenId = com.intuit.sdp.R.dimen._30sdp)
     }
 
+    fun isFeedVisible(): Boolean {
+        return binding.bottomNavigation.selectedItemId == R.id.feed
+    }
+
     override fun onNavigationItemReselected(item: MenuItem) {
         if (item.itemId == R.id.feed) {
             childFragmentManager.fragments.find { it is FeedFragment }
