@@ -196,7 +196,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     @SuppressLint("SetTextI18n")
     override fun onReplyClicked(castcleId: String, commentId: String) {
         viewModel.targetCommentId.value = commentId
-        binding.etComment.setText("@$castcleId ")
+        binding.etComment.setText("$castcleId ")
         binding.etComment.setSelection(binding.etComment.length())
         binding.etComment.showKeyboard()
     }
