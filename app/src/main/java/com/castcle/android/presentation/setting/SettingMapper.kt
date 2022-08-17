@@ -40,9 +40,12 @@ class SettingMapper {
             userWithSocial = userProfile,
             uniqueId = userProfile.user.id
         )
-        val pageItems = pageProfile
-            .sortedBy { it.user.createdAt }
-            .map { SettingProfileViewEntity(userWithSocial = it, uniqueId = it.user.id) }
+        val pageItems = pageProfile.map {
+            SettingProfileViewEntity(
+                userWithSocial = it,
+                uniqueId = it.user.id,
+            )
+        }
         val profileItems = SettingProfileSectionViewEntity(
             items = listOf(userItems).plus(pageItems)
         )
