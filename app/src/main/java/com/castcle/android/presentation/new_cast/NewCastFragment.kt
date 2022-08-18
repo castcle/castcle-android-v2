@@ -161,7 +161,7 @@ class NewCastFragment : BaseFragment(), FeedListener {
             if (isCanCast) {
                 color(R.color.white)
             } else {
-                color(R.color.gray_9)
+                color(R.color.gray_5)
             }
         )
         binding.ivSelectedImage.imageTintList = if (checkImageIsNotEmpty) {
