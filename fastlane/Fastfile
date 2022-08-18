@@ -63,21 +63,21 @@ end
 
 desc "Responsible for uploading .aab to Firebase app distribution."
 private_lane :distribute_to_firebase do
-  firebase_app_distribution(
-    app: FIREBASE_APP_ID,
-    release_notes: "Uploaded from CI/CD",
-    android_artifact_type: "AAB",
-    android_artifact_path: BUNDLE_FILE_PATH,
-    service_credentials_file: FIREBASE_KEY_PATH,
-    groups: "qa-tester-castcle"
-  )
   # firebase_app_distribution(
   #   app: FIREBASE_APP_ID,
-  #   firebase_cli_token: FIREBASE_CLI_TOKEN,
-  #   groups: "qa-tester-castcle",
-  #   release_notes: "Castcle Android Version 2!",
-  #   android_artifact_type: "AAB"
+  #   release_notes: "Uploaded from CI/CD",
+  #   android_artifact_type: "AAB",
+  #   android_artifact_path: BUNDLE_FILE_PATH,
+  #   service_credentials_file: FIREBASE_KEY_PATH,
+  #   groups: "qa-tester-castcle"
   # )
+  firebase_app_distribution(
+    app: FIREBASE_APP_ID,
+    firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
+    groups: "qa-tester-castcle",
+    release_notes: "Castcle Android Version 2!",
+    android_artifact_type: "AAB"
+  )
 
 end
 
