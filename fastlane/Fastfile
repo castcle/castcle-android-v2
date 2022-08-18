@@ -7,7 +7,6 @@ FIREBASE_KEY_PATH = nil
 PLAYSTORE_KEY_PATH = nil
 BUNDLE_FILE_PATH = nil
 UPDATED_VERSION_CODE = nil
-FIREBASE_CLI_TOKEN = "1//0gASOBKzRGFFtCgYIARAAGBASNwF-L9Irn-L3Z4T1ubDW7OLSHqaXNsF3p_7UuclblWeaHnZNk7GscH6cHJmzXAVAPMHYjfKoVjQ"
 
 before_all do
   Dotenv.overload ".env.secret"
@@ -64,21 +63,21 @@ end
 
 desc "Responsible for uploading .aab to Firebase app distribution."
 private_lane :distribute_to_firebase do
-  firebase_app_distribution(
-    app: FIREBASE_APP_ID,
-    release_notes: "Uploaded from CI/CD",
-    android_artifact_type: "AAB",
-    android_artifact_path: BUNDLE_FILE_PATH,
-    service_credentials_file: FIREBASE_KEY_PATH,
-    groups: "qa-tester-castcle"
-  )
   # firebase_app_distribution(
   #   app: FIREBASE_APP_ID,
-  #   firebase_cli_token: FIREBASE_CLI_TOKEN,
-  #   groups: "qa-tester-castcle",
-  #   release_notes: "Castcle Android Version 2!",
-  #   android_artifact_type: "AAB"
+  #   release_notes: "Uploaded from CI/CD",
+  #   android_artifact_type: "AAB",
+  #   android_artifact_path: BUNDLE_FILE_PATH,
+  #   service_credentials_file: FIREBASE_KEY_PATH,
+  #   groups: "qa-tester-castcle"
   # )
+  firebase_app_distribution(
+    app: FIREBASE_APP_ID,
+    firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
+    groups: "qa-tester-castcle",
+    release_notes: "Castcle Android Version 2!",
+    android_artifact_type: "AAB"
+  )
 
 end
 
