@@ -124,7 +124,7 @@
         <entry key="app/src/main/res/layout/item_loading_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_profile.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_loading_state_user.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/item_login.xml" value="0.5276041666666667" />
+        <entry key="app/src/main/res/layout/item_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_mention_hashtag.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_mention_user.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_option_dialog.xml" value="0.44976485677640016" />
