@@ -1,38 +1,109 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
+fastlane_require "dotenv"
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+PACKAGE_NAME = "com.castcle.android.dev.v2"
+FIREBASE_APP_ID = "1:946784514991:android:f2129eab31d7ae761ef55a"
+KEYSTORE_PATH = nil
+FIREBASE_KEY_PATH = nil
+PLAYSTORE_KEY_PATH = nil
+BUNDLE_FILE_PATH = nil
+UPDATED_VERSION_CODE = nil
+FIREBASE_CLI_TOKEN = "1//0gASOBKzRGFFtCgYIARAAGBASNwF-L9Irn-L3Z4T1ubDW7OLSHqaXNsF3p_7UuclblWeaHnZNk7GscH6cHJmzXAVAPMHYjfKoVjQ"
 
-default_platform(:android)
-
-platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Submit a new Beta Build to GooglePlay Beta"
-  lane :beta do
-    gradle(task: "clean bundleDevelopmentRelease")
-    upload_to_play_store(track: 'beta')
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
+before_all do
+  Dotenv.overload ".env.secret"
+  KEYSTORE_PATH = Dir.pwd + "/../certificates/CastcleKeyStore.jks"
+  FIREBASE_KEY_PATH = Dir.pwd + "/../certificates/firebase-app-distribution-key.json"
+  PLAYSTORE_KEY_PATH = Dir.pwd + "/../certificates/playstore-app-distribution-key.json"
+  BUNDLE_FILE_PATH = Dir.pwd + "/../app/build/outputs/bundle/developmentRelease/app-development-release.aab"
 end
+
+lane :build_and_distribute do
+  increment_version_code_in_project_gradle()
+  #run_unit_tests()
+  build()
+  distribute_to_firebase()
+  #distribute_playstore()
+end
+
+desc "Responsible for fetching version code from play console and incrementing version code."
+private_lane :increment_version_code_in_project_gradle do
+  version_code_from_play_store_strings = google_play_track_version_codes(
+    package_name: PACKAGE_NAME,   # PACKAGE_NAME is a global variable defined earlier
+    track: "beta",            # this can be alpha, beta etc.
+    json_key: PLAYSTORE_KEY_PATH,
+  )
+  version_code_from_play_store = version_code_from_play_store_strings[0].to_i
+  incremented_version_code = version_code_from_play_store + 1
+  increment_version_code(
+    gradle_file_path: Dir.pwd + "/../app/build.gradle",
+    version_code: incremented_version_code.to_i
+  )
+end
+
+desc "Run unit tests."
+private_lane :run_unit_tests do
+  gradle(
+    task: "test"
+  )
+end
+
+desc "Build the .aab file"
+private_lane :build do
+  gradle(
+    task: "bundle",
+    flavor: "Development",
+    build_type: "Release",
+    properties: {
+      "android.injected.signing.store.file" => KEYSTORE_PATH,
+      "android.injected.signing.store.password" => ENV['KEYSTORE_PASSWORD'],
+      "android.injected.signing.key.alias" => ENV['KEYSTORE_ALIAS'],
+      "android.injected.signing.key.password" => ENV['KEYSTORE_PASSWORD']
+    }
+  )
+end
+
+desc "Responsible for uploading .aab to Firebase app distribution."
+private_lane :distribute_to_firebase do
+  firebase_app_distribution(
+    app: FIREBASE_APP_ID,
+    release_notes: "Uploaded from CI/CD",
+    android_artifact_type: "AAB",
+    android_artifact_path: BUNDLE_FILE_PATH,
+    service_credentials_file: FIREBASE_KEY_PATH,
+    groups: "qa-tester-castcle"
+  )
+  # firebase_app_distribution(
+  #   app: FIREBASE_APP_ID,
+  #   firebase_cli_token: FIREBASE_CLI_TOKEN,
+  #   groups: "qa-tester-castcle",
+  #   release_notes: "Castcle Android Version 2!",
+  #   android_artifact_type: "AAB"
+  # )
+
+end
+
+desc "Responsible for uploading aab to playstore"
+private_lane :distribute_playstore do
+  upload_to_play_store(
+    track: production,
+    aab: BUNDLE_FILE_PATH,
+    json_key: PLAYSTORE_KEY_PATH,
+    package_name: PACKAGE_NAME
+  )
+end
+
+# desc "After successful execution of all task, this block is called"
+# after_all do
+#   git_add(path: "*")
+#   git_commit(
+#     path: "*",
+#     message: "#" + UPDATED_VERSION_CODE + " released"
+#   )
+  
+#   push_to_git_remote(
+#     local_branch: buildConfigs.key(options[:buildConfig]),
+#     remote: "origin",
+#     remote_branch: buildConfigs.key(options[:buildConfig]),
+#     tags: true,
+#   )
+# end
