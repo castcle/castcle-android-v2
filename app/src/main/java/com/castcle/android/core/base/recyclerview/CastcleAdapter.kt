@@ -4,6 +4,7 @@ import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.castcle.android.core.error.MissingViewRendererException
 import io.reactivex.disposables.CompositeDisposable
 
 class CastcleAdapter(
@@ -24,7 +25,14 @@ class CastcleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return viewRenderers[viewType].internalCreateViewHolder(parent, listener, disposable)
+        return try {
+            viewRenderers[viewType].internalCreateViewHolder(parent, listener, disposable)
+        } catch (exception: Exception) {
+            throw MissingViewRendererException(
+                viewId = viewType,
+                viewResourceName = parent.context.resources.getResourceEntryName(viewType),
+            )
+        }
     }
 
     fun registerRenderer(

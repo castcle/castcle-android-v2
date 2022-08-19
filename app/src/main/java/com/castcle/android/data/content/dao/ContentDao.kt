@@ -47,4 +47,7 @@ interface ContentDao {
         sessionId.forEach { updateLastComment(it) }
     }
 
+    @Query("UPDATE $TABLE_CONTENT SET profile_ignoreReportContentId = :ignoreReportContentId WHERE content_id = :id")
+    suspend fun updateIgnoreReportContentId(id: String, ignoreReportContentId: List<String>)
+
 }

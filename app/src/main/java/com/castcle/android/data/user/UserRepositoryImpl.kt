@@ -197,7 +197,6 @@ class UserRepositoryImpl(
     override suspend fun reportContent(body: ReportRequest) {
         apiCall { api.reportContent(body = body) }
         database.cast().updateReported(castId = body.targetContentId.orEmpty(), reported = true)
-        database.cast().updateReporting(castId = body.targetContentId.orEmpty(), reporting = true)
     }
 
     override suspend fun reportUser(body: ReportRequest) {
