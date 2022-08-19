@@ -33,6 +33,11 @@ class FeedTextViewHolder(
         compositeDisposable += binding.castcleTextView.onClick {
             binding.castcleTextView.toggle()
         }
+        compositeDisposable += binding.root.onClick {
+            if (displayType is FeedDisplayType.QuoteCast) {
+                listener.onCommentClicked(item.cast, item.user)
+            }
+        }
         binding.castcleTextView.setLinkClickListener(object : CastcleTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
                 if (linkType == LinkedType.URL) {
