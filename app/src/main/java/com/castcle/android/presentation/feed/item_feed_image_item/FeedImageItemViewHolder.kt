@@ -22,6 +22,11 @@ class FeedImageItemViewHolder(
         compositeDisposable += binding.ivDelete.onClick {
             listener.onDeleteImageClicked(bindingAdapterPosition)
         }
+        compositeDisposable += binding.ivImage.onClick {
+            if (item.uri == null) {
+                listener.onLinkClicked(item.image.original)
+            }
+        }
     }
 
     override fun bind(bindItem: FeedImageItemViewEntity) {
