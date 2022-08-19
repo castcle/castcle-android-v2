@@ -25,7 +25,7 @@ import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewRenderer
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
-import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewRenderer
+import com.castcle.android.presentation.feed.item_feed_report.FeedReportViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
@@ -205,8 +205,8 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         directions.toProfileFragment(user).navigate()
     }
 
-    override fun onViewReportingClicked(contentId: List<String>) {
-        shareViewModel.showReportingContent(contentId = contentId)
+    override fun onViewReportClicked(id: String, ignoreReportContentId: List<String>) {
+        viewModel.showReportingContent(id = id, ignoreReportContentId = ignoreReportContentId)
     }
 
     override fun onStop() {
@@ -228,7 +228,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
             registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
-            registerRenderer(FeedReportingViewRenderer())
+            registerRenderer(FeedReportViewRenderer())
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
             registerRenderer(FeedWebImageViewRenderer())

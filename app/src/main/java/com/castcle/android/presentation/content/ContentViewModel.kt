@@ -150,6 +150,12 @@ class ContentViewModel(
         }
     }
 
+    fun showReportingContent(id: String, ignoreReportContentId: List<String>) {
+        launch {
+            database.content().updateIgnoreReportContentId(id, ignoreReportContentId)
+        }
+    }
+
     fun saveItemsState(layoutManager: RecyclerView.LayoutManager) {
         state[SAVE_STATE_RECYCLER_VIEW] = layoutManager.onSaveInstanceState()
     }

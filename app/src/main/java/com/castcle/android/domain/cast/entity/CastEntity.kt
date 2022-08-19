@@ -32,7 +32,6 @@ data class CastEntity(
     @ColumnInfo(name = "${TABLE_CAST}_recasted") val recasted: Boolean = false,
     @ColumnInfo(name = "${TABLE_CAST}_referenceCastId") val referenceCastId: String? = null,
     @ColumnInfo(name = "${TABLE_CAST}_reported") val reported: Boolean = false,
-    @ColumnInfo(name = "${TABLE_CAST}_reporting") val reporting: Boolean = false,
     @ColumnInfo(name = "${TABLE_CAST}_type") val type: CastType = CastType.Short,
     @ColumnInfo(name = "${TABLE_CAST}_updatedAt") val updatedAt: String = "",
 ) {

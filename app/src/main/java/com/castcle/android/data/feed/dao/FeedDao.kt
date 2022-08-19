@@ -25,4 +25,7 @@ interface FeedDao {
     @Transaction
     fun pagingSource(): PagingSource<Int, FeedWithResultEntity>
 
+    @Query("UPDATE $TABLE_FEED SET profile_ignoreReportContentId = :ignoreReportContentId WHERE feed_id = :id")
+    suspend fun updateIgnoreReportContentId(id: String, ignoreReportContentId: List<String>)
+
 }

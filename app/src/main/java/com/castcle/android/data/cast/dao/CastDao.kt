@@ -48,12 +48,4 @@ interface CastDao {
     @Query("UPDATE $TABLE_CAST SET casts_reported = :reported WHERE casts_id = :castId")
     suspend fun updateReported(castId: String, reported: Boolean)
 
-    @Query("UPDATE $TABLE_CAST SET casts_reporting = :reporting WHERE casts_id = :castId")
-    suspend fun updateReporting(castId: String, reporting: Boolean)
-
-    @Transaction
-    suspend fun updateReporting(castId: List<String>, reporting: Boolean) {
-        castId.forEach { updateReporting(it, reporting) }
-    }
-
 }

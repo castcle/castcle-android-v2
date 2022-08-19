@@ -71,6 +71,12 @@ class FeedViewModel(
         }
     }
 
+    fun showReportingContent(id: String, ignoreReportContentId: List<String>) {
+        launch {
+            database.feed().updateIgnoreReportContentId(id, ignoreReportContentId)
+        }
+    }
+
     fun saveItemsState(layoutManager: RecyclerView.LayoutManager) {
         state[SAVE_STATE_RECYCLER_VIEW] = layoutManager.onSaveInstanceState()
     }
