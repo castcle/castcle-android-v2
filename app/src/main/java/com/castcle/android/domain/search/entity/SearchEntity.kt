@@ -1,14 +1,13 @@
 package com.castcle.android.domain.search.entity
 
 import androidx.room.*
-import com.castcle.android.core.constants.TABLE_PROFILE
 import com.castcle.android.core.constants.TABLE_SEARCH
 
 @Entity(tableName = TABLE_SEARCH)
 data class SearchEntity(
     @ColumnInfo(name = "${TABLE_SEARCH}_id", defaultValue = "0") @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    @ColumnInfo(name = "${TABLE_PROFILE}_ignoreReportContentId", defaultValue = "[]")
+    @ColumnInfo(name = "${TABLE_SEARCH}_ignoreReportContentId", defaultValue = "[]")
     val ignoreReportContentId: List<String> = listOf(),
     @ColumnInfo(name = "${TABLE_SEARCH}_originalCastId", defaultValue = "NULL")
     val originalCastId: String? = null,

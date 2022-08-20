@@ -13,7 +13,6 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/white"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_1sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -43,7 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_8sdp"
         android:ellipsize="end"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
         android:maxLines="1"
         android:padding="@dimen/_4sdp"
         app:layout_constrainedWidth="true"

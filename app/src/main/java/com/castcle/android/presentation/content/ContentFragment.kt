@@ -2,7 +2,9 @@ package com.castcle.android.presentation.content
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.*
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.ExperimentalPagingApi
@@ -37,6 +39,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 
+@SuppressLint("SetTextI18n")
 class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, ContentListener {
 
     private val viewModel by stateViewModel<ContentViewModel> { parametersOf(args.contentId) }
@@ -106,6 +109,20 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
                 }
             }
         })
+        setFragmentResultListener(REPLY_RESULT) { key, bundle ->
+            if (key == REPLY_RESULT) {
+                when (val result = bundle.getParcelable<Parcelable>(REPLY_RESULT)) {
+                    is OptionDialogType.MyCommentOption -> onReplyClicked(
+                        castcleId = result.castcleId,
+                        commentId = result.commentId,
+                    )
+                    is OptionDialogType.OtherCommentOption -> onReplyClicked(
+                        castcleId = result.castcleId,
+                        commentId = result.commentId,
+                    )
+                }
+            }
+        }
     }
 
     override fun initObserver() {
@@ -193,12 +210,16 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     override fun onRecastCountClicked(contentId: String, hasLike: Boolean) = Unit
 
-    @SuppressLint("SetTextI18n")
     override fun onReplyClicked(castcleId: String, commentId: String) {
         viewModel.targetCommentId.value = commentId
         binding.etComment.setText("$castcleId ")
         binding.etComment.setSelection(binding.etComment.length())
-        binding.etComment.showKeyboard()
+        lifecycleScope.launch {
+            while (!isKeyboardVisible(binding)) {
+                binding.etComment.showKeyboard()
+                delay(50)
+            }
+        }
     }
 
     override fun onUserClicked(user: UserEntity) {
@@ -239,6 +260,10 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     private val binding by lazy {
         FragmentContentBinding.inflate(layoutInflater)
+    }
+
+    companion object {
+        const val REPLY_RESULT = "REPLY_RESULT"
     }
 
     override fun onCreateView(

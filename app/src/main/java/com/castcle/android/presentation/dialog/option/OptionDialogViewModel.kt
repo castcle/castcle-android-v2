@@ -26,6 +26,15 @@ class OptionDialogViewModel(
 
     val views = MutableLiveData<List<CastcleViewEntity>>()
 
+    fun deleteComment(commentId: String) {
+        launch(
+            onError = { onError.postValue(it) },
+            onSuccess = { onSuccess.postValue(Unit) },
+        ) {
+            userRepository.deleteComment(commentId = commentId)
+        }
+    }
+
     fun deleteContent(contentId: String) {
         launch(
             onError = { onError.postValue(it) },
@@ -39,8 +48,30 @@ class OptionDialogViewModel(
         }
     }
 
+    fun deleteReply(replyCommentId: String) {
+        launch(
+            onError = { onError.postValue(it) },
+            onSuccess = { onSuccess.postValue(Unit) },
+        ) {
+            userRepository.deleteReplyComment(replyCommentId = replyCommentId)
+        }
+    }
+
     fun getOptionItems(context: Context) = launch {
         val items = when (type) {
+            is OptionDialogType.MyCommentOption -> {
+                val replyContentItem = OptionDialogViewEntity(
+                    eventType = type.replyComment,
+                    icon = R.drawable.ic_rerply,
+                    title = context.getString(R.string.reply)
+                )
+                val deleteContentItem = OptionDialogViewEntity(
+                    eventType = type.deleteComment,
+                    icon = R.drawable.ic_delete,
+                    title = context.getString(R.string.delete)
+                )
+                listOf(replyContentItem, deleteContentItem)
+            }
             is OptionDialogType.MyContentOption -> {
                 val deleteContentItem = OptionDialogViewEntity(
                     eventType = type.deleteContent,
@@ -70,6 +101,14 @@ class OptionDialogViewModel(
                 )
                 listOf(syncSocialMediaItem)
             }
+            is OptionDialogType.OtherCommentOption -> {
+                val replyContentItem = OptionDialogViewEntity(
+                    eventType = type.replyComment,
+                    icon = R.drawable.ic_rerply,
+                    title = context.getString(R.string.reply)
+                )
+                listOf(replyContentItem)
+            }
             is OptionDialogType.OtherContentOption -> {
                 val reportContentItem = OptionDialogViewEntity(
                     eventType = type.reportContent,
@@ -91,6 +130,14 @@ class OptionDialogViewModel(
                     title = context.getString(R.string.report_user, castcleId)
                 )
                 listOf(blockUserItem, reportUserItem)
+            }
+            is OptionDialogType.ReplyOption -> {
+                val deleteReplyItem = OptionDialogViewEntity(
+                    eventType = type.deleteReply,
+                    icon = R.drawable.ic_delete,
+                    title = context.getString(R.string.delete)
+                )
+                listOf(deleteReplyItem)
             }
         }
         views.postValue(items)
