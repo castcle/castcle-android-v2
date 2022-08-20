@@ -9,6 +9,8 @@ import com.castcle.android.domain.user.entity.UserEntity
 interface UserRepository {
     suspend fun commentCast(contentId: String, message: String)
     suspend fun createQuoteCast(body: CreateQuoteCastRequest, userId: String)
+    suspend fun deleteComment(commentId: String)
+    suspend fun deleteReplyComment(replyCommentId: String)
     suspend fun followUser(targetUser: UserEntity)
     suspend fun fetchUserPage(): List<UserEntity>
     suspend fun fetchUserProfile(): UserEntity

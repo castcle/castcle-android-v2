@@ -9,6 +9,9 @@ import com.castcle.android.domain.cast.type.CastType
 @Dao
 interface CastDao {
 
+    @Query("UPDATE $TABLE_CAST SET casts_commentCount = casts_commentCount - 1 WHERE casts_id = :castId")
+    suspend fun decreaseCommentCount(castId: String)
+
     @Query("UPDATE $TABLE_CAST SET casts_recastCount = casts_recastCount - 1 WHERE casts_id = :castId")
     suspend fun decreaseRecastCount(castId: String)
 
@@ -24,7 +27,7 @@ interface CastDao {
     @Query("SELECT * FROM $TABLE_CAST WHERE casts_referenceCastId = :referenceCastId AND casts_type = :type AND casts_authorId = :userId")
     suspend fun get(referenceCastId: String, type: CastType, userId: String): CastEntity?
 
-    @Query("UPDATE $TABLE_CAST SET casts_commentCount = casts_commentCount + 1 WHERE casts_id = :castId")
+    @Query("UPDATE $TABLE_CAST SET casts_commentCount = casts_commentCount + 1, casts_commented = 1 WHERE casts_id = :castId")
     suspend fun increaseCommentCount(castId: String)
 
     @Query("UPDATE $TABLE_CAST SET casts_quoteCount = casts_quoteCount + 1 WHERE casts_id = :castId")

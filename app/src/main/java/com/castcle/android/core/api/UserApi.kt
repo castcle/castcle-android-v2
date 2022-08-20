@@ -21,6 +21,17 @@ interface UserApi {
         @Body body: CreateQuoteCastRequest,
     ): Response<BaseResponse<CastResponse>>
 
+    @DELETE("/v2/users/me/comments/{commentId}")
+    suspend fun deleteComment(
+        @Path("commentId") commentId: String,
+    ): Response<Unit>
+
+    @DELETE("/v2/users/me/comments/{commentId}/reply/{replyCommentId}")
+    suspend fun deleteReplyComment(
+        @Path("commentId") commentId: String,
+        @Path("replyCommentId") replyCommentId: String,
+    ): Response<Unit>
+
     @POST("v2/users/me/following")
     suspend fun followUser(
         @Body body: FollowUserRequest,

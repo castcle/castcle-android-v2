@@ -28,7 +28,7 @@ interface SearchDao {
     @Transaction
     fun pagingSource(sessionId: Long): PagingSource<Int, SearchWithResultEntity>
 
-    @Query("UPDATE $TABLE_SEARCH SET profile_ignoreReportContentId = :ignoreReportContentId WHERE search_id = :id")
+    @Query("UPDATE $TABLE_SEARCH SET search_ignoreReportContentId = :ignoreReportContentId WHERE search_id = :id")
     suspend fun updateIgnoreReportContentId(id: String, ignoreReportContentId: List<String>)
 
 }

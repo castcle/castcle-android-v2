@@ -2,7 +2,6 @@ package com.castcle.android.domain.content.entity
 
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_CONTENT
-import com.castcle.android.core.constants.TABLE_PROFILE
 import com.castcle.android.domain.content.type.ContentType
 
 @Entity(tableName = TABLE_CONTENT)
@@ -15,7 +14,7 @@ data class ContentEntity(
     val createdAt: Long = Long.MAX_VALUE,
     @ColumnInfo(name = "${TABLE_CONTENT}_id", defaultValue = "0") @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    @ColumnInfo(name = "${TABLE_PROFILE}_ignoreReportContentId", defaultValue = "[]")
+    @ColumnInfo(name = "${TABLE_CONTENT}_ignoreReportContentId", defaultValue = "[]")
     val ignoreReportContentId: List<String> = listOf(),
     @ColumnInfo(name = "${TABLE_CONTENT}_isLastComment", defaultValue = "0")
     val isLastComment: Boolean = false,

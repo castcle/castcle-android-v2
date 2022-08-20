@@ -2,10 +2,10 @@ package com.castcle.android.data.user
 
 import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
@@ -79,6 +79,32 @@ class UserRepositoryImpl(
             database.profile().insert(newProfile)
             database.user().increaseCastCount(userId)
         }
+    }
+
+    override suspend fun deleteComment(commentId: String) {
+        apiCall { api.deleteComment(commentId = commentId) }
+        database.withTransaction {
+            val comment = database.content().get(commentId = commentId)
+            val content = database.content()
+                .get(sessionId = comment?.sessionId ?: 0L, type = ContentType.Content)
+                .firstOrNull()
+            database.cast().decreaseCommentCount(content?.originalCastId.orEmpty())
+            database.content().deleteByCreatedAt(createdAt = comment?.createdAt ?: 0L)
+        }
+    }
+
+    override suspend fun deleteReplyComment(replyCommentId: String) {
+        val replyComment = database.content().get(commentId = replyCommentId)
+        val comment = database.content()
+            .getByCreatedAt(createdAt = replyComment?.createdAt ?: 0L, type = ContentType.Comment)
+            .firstOrNull()
+        apiCall {
+            api.deleteReplyComment(
+                commentId = comment?.commentId.orEmpty(),
+                replyCommentId = replyCommentId,
+            )
+        }
+        database.content().deleteByCommentId(commentId = replyComment?.commentId.orEmpty())
     }
 
     override suspend fun followUser(targetUser: UserEntity) {

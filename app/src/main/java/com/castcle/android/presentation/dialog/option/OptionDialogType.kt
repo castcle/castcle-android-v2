@@ -7,6 +7,12 @@ import kotlinx.parcelize.Parcelize
 sealed class OptionDialogType : Parcelable {
 
     @Parcelize
+    data class MyCommentOption(val castcleId: String, val commentId: String) : OptionDialogType() {
+        @IgnoredOnParcel val deleteComment = 0
+        @IgnoredOnParcel val replyComment = 1
+    }
+
+    @Parcelize
     data class MyContentOption(val contentId: String) : OptionDialogType() {
         @IgnoredOnParcel val deleteContent = 0
     }
@@ -23,6 +29,11 @@ sealed class OptionDialogType : Parcelable {
     }
 
     @Parcelize
+    data class OtherCommentOption(val castcleId: String, val commentId: String) : OptionDialogType() {
+        @IgnoredOnParcel val replyComment = 0
+    }
+
+    @Parcelize
     data class OtherContentOption(val contentId: String) : OptionDialogType() {
         @IgnoredOnParcel val reportContent = 0
     }
@@ -31,6 +42,11 @@ sealed class OptionDialogType : Parcelable {
     data class OtherUserOption(val userId: String) : OptionDialogType() {
         @IgnoredOnParcel val blockUser = 0
         @IgnoredOnParcel val reportUser = 1
+    }
+
+    @Parcelize
+    data class ReplyOption(val replyCommentId: String) : OptionDialogType() {
+        @IgnoredOnParcel val deleteReply = 0
     }
 
 }

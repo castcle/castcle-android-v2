@@ -2,7 +2,6 @@ package com.castcle.android.domain.feed.entity
 
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_FEED
-import com.castcle.android.core.constants.TABLE_PROFILE
 import com.castcle.android.domain.feed.type.FeedType
 
 @Entity(tableName = TABLE_FEED)
@@ -15,7 +14,7 @@ data class FeedEntity(
     val feedId: String = "",
     @ColumnInfo(name = "${TABLE_FEED}_id", defaultValue = "0") @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    @ColumnInfo(name = "${TABLE_PROFILE}_ignoreReportContentId", defaultValue = "[]")
+    @ColumnInfo(name = "${TABLE_FEED}_ignoreReportContentId", defaultValue = "[]")
     val ignoreReportContentId: List<String> = listOf(),
     @ColumnInfo(name = "${TABLE_FEED}_originalCastId", defaultValue = "NULL")
     val originalCastId: String? = null,
