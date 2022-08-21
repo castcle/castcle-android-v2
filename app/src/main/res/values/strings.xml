@@ -17,9 +17,14 @@
     <string name="edit_page">Edit Page</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
+    <string name="empty_state_content_title">Sorry, this cast isn\'t available</string>
+    <string name="empty_state_content_description">This link you followed may be broken, or the cast may have been removed.</string>
     <string name="empty_feed_title">Trouble Loading News Feed</string>
+    <string name="empty_state_profile_title">Sorry, this page or user isn\'t available</string>
+    <string name="empty_state_profile_description">This link you followed may be broken, or the page/user may have been removed.</string>
     <string name="empty_search_title">We didn\'t find any results</string>
     <string name="empty_search_description">Make sure everything is spelled correctly or try different keywords.</string>
+    <string name="error">Error</string>
     <string name="error_base">Something went wrong. Please try again later.</string>
     <string name="feed">Feed</string>
     <string name="follow">Follow</string>

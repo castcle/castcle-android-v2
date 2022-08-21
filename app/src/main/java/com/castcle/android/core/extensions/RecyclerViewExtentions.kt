@@ -46,14 +46,14 @@ fun RecyclerView.ViewHolder.drawable(@DrawableRes id: Int?): Drawable? =
     )
 
 fun MutableLiveData<List<CastcleViewEntity>>.error(error: Throwable?, retryAction: () -> Unit) {
-    postValue(listOf(ErrorStateViewEntity(error = error, retryAction = retryAction)))
+    postValue(listOf(ErrorStateViewEntity(action = retryAction, error = error)))
 }
 
 fun MutableStateFlow<List<CastcleViewEntity>?>.error(
     error: Throwable?,
     retryAction: () -> Unit
 ) {
-    value = listOf(ErrorStateViewEntity(error = error, retryAction = retryAction))
+    value = listOf(ErrorStateViewEntity(action = retryAction, error = error))
 }
 
 fun RecyclerView.firstVisibleItemPosition(): Int {

@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.base.recyclerview.*
 import com.castcle.android.core.custom_view.load_state.LoadStateRefreshItemsType.*
+import com.castcle.android.core.custom_view.load_state.item_empty_state_content.EmptyStateContentViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_empty_state_feed.EmptyStateFeedViewEntity
 import com.castcle.android.core.custom_view.load_state.item_empty_state_feed.EmptyStateFeedViewRenderer
+import com.castcle.android.core.custom_view.load_state.item_empty_state_profile.EmptyStateProfileViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_empty_state_search.EmptyStateSearchViewEntity
 import com.castcle.android.core.custom_view.load_state.item_empty_state_search.EmptyStateSearchViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
@@ -24,6 +26,7 @@ import com.castcle.android.core.custom_view.load_state.item_loading_state_profil
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewRenderer
+import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutLoadStateRefreshBinding
 import io.reactivex.disposables.CompositeDisposable
@@ -36,7 +39,9 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
+            registerRenderer(EmptyStateContentViewRenderer())
             registerRenderer(EmptyStateFeedViewRenderer())
+            registerRenderer(EmptyStateProfileViewRenderer())
             registerRenderer(EmptyStateSearchViewRenderer())
             registerRenderer(ErrorStateViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer())
@@ -87,10 +92,9 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                         emptyItems = stateItems.empty,
                     )
                     it.isErrorState() -> setErrorState(
-                        error = it.refresh.cast<LoadState.Error>()?.error,
-                        errorItems = stateItems.error,
-                        refreshAction = { pagingAdapter.refresh() },
-                        retryAction = { pagingAdapter.retry() },
+                        baseAction = { pagingAdapter.refresh() },
+                        baseError = it.refresh.cast<LoadState.Error>()?.error,
+                        baseErrorItems = stateItems.error,
                     )
                     it.isIdleState(itemCount) -> setIdleState(
                         pagingRecyclerView = pagingRecyclerView,
@@ -138,19 +142,19 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
     }
 
     private fun setErrorState(
-        error: Throwable?,
-        errorItems: List<CastcleViewEntity>,
-        refreshAction: () -> Unit,
-        retryAction: () -> Unit,
+        baseAction: () -> Unit,
+        baseError: Throwable?,
+        baseErrorItems: List<CastcleViewEntity>,
     ) {
+        val retryException = baseError?.cast<RetryException>()
+        val action = retryException?.action ?: baseAction
+        val error = retryException?.error ?: baseError
+        val errorItems = retryException?.errorItems ?: baseErrorItems
+        val errorItemsWithAction = errorItems
+            .filterIsInstance<LoadStateRefreshViewEntity>()
+            .onEach { it.updateItem(updateAction = action, updateError = error) }
+        binding.recyclerView.adapter?.cast<CastcleAdapter>()?.submitList(errorItemsWithAction)
         isRefreshing = false
-        binding.recyclerView.adapter
-            ?.cast<CastcleAdapter>()
-            ?.submitList(
-                errorItems
-                    .filterIsInstance<LoadStateRefreshViewEntity>()
-                    .onEach { it.error(refreshAction, retryAction, error) }
-            )
         visible()
     }
 

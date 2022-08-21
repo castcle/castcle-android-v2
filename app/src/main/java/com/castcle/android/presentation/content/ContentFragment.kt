@@ -238,8 +238,9 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     override fun onStart() {
         super.onStart()
-        binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
+        viewModel.fetchContent()
         changeSoftInputMode(true)
+        binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
     }
 
     private val adapter by lazy {

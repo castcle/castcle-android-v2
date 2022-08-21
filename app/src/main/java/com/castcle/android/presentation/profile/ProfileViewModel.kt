@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_MEDIUM_ITEM
-import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_SMALL_ITEM
+import com.castcle.android.core.custom_view.load_state.item_empty_state_profile.EmptyStateProfileViewEntity
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.ApiException
 import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.user.data_source.ProfileRemoteMediator
@@ -72,11 +73,28 @@ class ProfileViewModel(
     }
 
     private fun getUser() {
-        launch({
-            loadState.value = RetryException.loadState(it) { getUser() }
-        }) {
-            loadState.value = LoadState.Loading
-            currentUser.value = repository.getUser(userId)
+        launch(
+            onError = {
+                if (it is ApiException && it.statusCode == 404) {
+                    loadState.value = RetryException.loadState(
+                        error = it,
+                        errorItems = EmptyStateProfileViewEntity.create(1),
+                        retryAction = { getUser() },
+                    )
+                } else {
+                    loadState.value = RetryException.loadState(it) { getUser() }
+                }
+            },
+            onLaunch = {
+                loadState.value = LoadState.Loading
+            },
+        ) {
+            val userInDatabase = database.user().get(userId).firstOrNull()
+            if (userInDatabase != null) {
+                currentUser.value = userInDatabase
+            } else {
+                currentUser.value = repository.getUser(userId)
+            }
         }
     }
 

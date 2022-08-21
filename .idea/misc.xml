@@ -48,6 +48,7 @@
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_discord.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_drop_down.xml" value="0.3945" />
+        <entry key="app/src/main/res/drawable/ic_empty_profile.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_empty_search.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.394" />
         <entry key="app/src/main/res/drawable/ic_feed.xml" value="0.2845" />
@@ -100,7 +101,9 @@
         <entry key="app/src/main/res/layout/item_current_recast_user.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_dialog_option.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_empty_state.xml" value="0.5479166666666667" />
-        <entry key="app/src/main/res/layout/item_empty_state_feed.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_empty_state_content.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_empty_state_feed.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_empty_state_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_empty_state_search.xml" value="0.24739583333333334" />
         <entry key="app/src/main/res/layout/item_error_state.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_image.xml" value="0.25" />
