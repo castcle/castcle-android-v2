@@ -18,7 +18,7 @@ class ErrorStateViewHolder(
 
     init {
         compositeDisposable += binding.retry.onClick {
-            item.action?.invoke() ?: item.retryAction.invoke()
+            item.action()
         }
     }
 

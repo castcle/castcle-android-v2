@@ -6,14 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.api.ContentApi
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_SMALL_ITEM
+import com.castcle.android.core.custom_view.load_state.item_empty_state_content.EmptyStateContentViewEntity
+import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.ApiException
 import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.content.data_source.CommentRemoteMediator
 import com.castcle.android.data.content.mapper.CommentResponseMapper
 import com.castcle.android.domain.content.ContentRepository
 import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.content.entity.ContentEntity
+import com.castcle.android.domain.content.type.ContentType
 import com.castcle.android.domain.search.SearchRepository
 import com.castcle.android.domain.search.entity.HashtagEntity
 import com.castcle.android.domain.user.UserRepository
@@ -95,14 +98,41 @@ class ContentViewModel(
     }
 
     private fun getContent() {
-        launch({
-            loadState.value = RetryException.loadState(it) { getContent() }
-        }) {
-            loadState.value = LoadState.Loading
-            content.value = contentRepository.getContent(
-                contentId = contentId,
-                sessionId = sessionId,
-            )
+        launch(
+            onError = {
+                if (it is ApiException && it.statusCode == 404) {
+                    loadState.value = RetryException.loadState(
+                        error = it,
+                        errorItems = EmptyStateContentViewEntity.create(1),
+                        retryAction = { getContent() },
+                    )
+                } else {
+                    loadState.value = RetryException.loadState(it) { getContent() }
+                }
+            },
+            onLaunch = {
+                loadState.value = LoadState.Loading
+            },
+        ) {
+            val castInDatabase = database.cast().get(contentId)
+            val referenceCastInDatabase = castInDatabase?.cast?.referenceCastId?.let {
+                database.cast().get(it)
+            }
+            if (castInDatabase != null) {
+                content.value = ContentEntity(
+                    originalCastId = castInDatabase.cast.id,
+                    originalUserId = castInDatabase.cast.authorId,
+                    referenceCastId = referenceCastInDatabase?.cast?.id,
+                    referenceUserId = referenceCastInDatabase?.cast?.authorId,
+                    sessionId = sessionId,
+                    type = ContentType.Content,
+                )
+            } else {
+                content.value = contentRepository.getContent(
+                    contentId = contentId,
+                    sessionId = sessionId,
+                )
+            }
         }
     }
 
