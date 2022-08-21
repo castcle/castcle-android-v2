@@ -4,10 +4,10 @@ import androidx.paging.LoadState
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 
 class RetryException(
-    val action: () -> Unit = {},
+    val action: (() -> Unit)? = null,
     val error: Throwable? = null,
     val errorItems: List<CastcleViewEntity>? = null,
-) : Throwable(error) {
+) : Throwable(error?.message) {
 
     companion object {
         fun loadState(

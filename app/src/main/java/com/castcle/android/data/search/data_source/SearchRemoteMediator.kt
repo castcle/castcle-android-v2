@@ -4,9 +4,9 @@ import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.SearchApi
 import com.castcle.android.core.constants.PARAMETER_CONTENT_TYPE_PHOTO
-import com.castcle.android.core.error.ApiException
-import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.ErrorMapper
+import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.search.mapper.SearchResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
@@ -79,7 +79,7 @@ class SearchRemoteMediator(
             val items = if (response.isSuccessful && response.body() != null) {
                 mapper.apply(response.body(), ownerUserId, sessionId)
             } else {
-                return MediatorResult.Error(ApiException.map(response.errorBody()))
+                return MediatorResult.Error(ErrorMapper().map(response.errorBody()))
             }
 
             with(glidePreloader) {
@@ -102,7 +102,7 @@ class SearchRemoteMediator(
 
             MediatorResult.Success(endOfPaginationReached = nextLoadKey.loadKey == null)
         } catch (exception: Exception) {
-            MediatorResult.Error(exception)
+            MediatorResult.Error(ErrorMapper().map(exception))
         }
     }
 

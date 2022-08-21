@@ -24,7 +24,7 @@ class ErrorStateViewHolder(
 
     override fun bind(bindItem: ErrorStateViewEntity) {
         binding.tvError.text = if (BuildConfig.DEBUG && item.error != null) {
-            item.error.toString()
+            item.error?.message ?: string(R.string.error_base)
         } else {
             string(R.string.error_base)
         }

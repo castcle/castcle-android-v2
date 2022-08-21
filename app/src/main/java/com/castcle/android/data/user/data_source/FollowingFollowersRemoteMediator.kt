@@ -3,9 +3,9 @@ package com.castcle.android.data.user.data_source
 import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
-import com.castcle.android.core.error.ApiException
-import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.ErrorMapper
+import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.user.mapper.FollowingFollowersResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
@@ -63,7 +63,7 @@ class FollowingFollowersRemoteMediator(
             val items = if (response.isSuccessful && response.body() != null) {
                 mapper.apply(ownerUserId, response.body(), sessionId)
             } else {
-                return MediatorResult.Error(ApiException.map(response.errorBody()))
+                return MediatorResult.Error(ErrorMapper().map(response.errorBody()))
             }
 
             with(glidePreloader) {
@@ -84,7 +84,7 @@ class FollowingFollowersRemoteMediator(
 
             MediatorResult.Success(endOfPaginationReached = false)
         } catch (exception: Exception) {
-            MediatorResult.Error(exception)
+            MediatorResult.Error(ErrorMapper().map(exception))
         }
     }
 
