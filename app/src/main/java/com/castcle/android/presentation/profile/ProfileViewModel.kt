@@ -9,7 +9,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_MEDIUM_ITEM
 import com.castcle.android.core.custom_view.load_state.item_empty_state_profile.EmptyStateProfileViewEntity
 import com.castcle.android.core.database.CastcleDatabase
-import com.castcle.android.core.error.ApiException
+import com.castcle.android.core.error.CastcleException
 import com.castcle.android.core.error.RetryException
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.user.data_source.ProfileRemoteMediator
@@ -75,7 +75,7 @@ class ProfileViewModel(
     private fun getUser() {
         launch(
             onError = {
-                if (it is ApiException && it.statusCode == 404) {
+                if (it is CastcleException.UserNotFoundException) {
                     loadState.value = RetryException.loadState(
                         error = it,
                         errorItems = EmptyStateProfileViewEntity.create(1),

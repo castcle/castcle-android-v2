@@ -24,7 +24,7 @@ class EmptyStateFeedViewHolder(
 
     override fun bind(bindItem: EmptyStateFeedViewEntity) {
         binding.tvDescription.text = if (BuildConfig.DEBUG && item.error != null) {
-            "${item.error?.message}"
+            item.error?.message ?: string(R.string.retry)
         } else {
             string(R.string.retry)
         }

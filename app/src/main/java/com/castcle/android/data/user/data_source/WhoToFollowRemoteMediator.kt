@@ -4,7 +4,7 @@ import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.database.CastcleDatabase
-import com.castcle.android.core.error.ApiException
+import com.castcle.android.core.error.ErrorMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.user.entity.*
@@ -50,7 +50,7 @@ class WhoToFollowRemoteMediator(
                 UserEntity.map(ownerUserId, response.body()?.payload) to
                     WhoToFollowEntity.map(response.body()?.payload)
             } else {
-                return MediatorResult.Error(ApiException.map(response.errorBody()))
+                return MediatorResult.Error(ErrorMapper().map(response.errorBody()))
             }
 
             val nextLoadKey = LoadKeyEntity(
@@ -67,7 +67,7 @@ class WhoToFollowRemoteMediator(
 
             MediatorResult.Success(endOfPaginationReached = false)
         } catch (exception: Exception) {
-            MediatorResult.Error(exception)
+            MediatorResult.Error(ErrorMapper().map(exception))
         }
     }
 

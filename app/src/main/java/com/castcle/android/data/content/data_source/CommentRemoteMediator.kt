@@ -3,9 +3,10 @@ package com.castcle.android.data.content.data_source
 import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.ContentApi
-import com.castcle.android.core.error.ApiException
-import com.castcle.android.core.glide.GlidePreloader
+import com.castcle.android.core.custom_view.load_state.item_empty_state_content.EmptyStateContentViewEntity
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.*
+import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.content.mapper.CommentResponseMapper
 import com.castcle.android.domain.content.entity.ContentEntity
 import com.castcle.android.domain.content.entity.ContentWithResultEntity
@@ -55,7 +56,14 @@ class CommentRemoteMediator(
             val items = if (response.isSuccessful && response.body() != null) {
                 mapper.apply(content, loadType, ownerUserId, response.body(), sessionId)
             } else {
-                return MediatorResult.Error(ApiException.map(response.errorBody()))
+                val error = when (val exception = ErrorMapper().map(response.errorBody())) {
+                    is CastcleException.ContentNotFoundException -> RetryException(
+                        error = exception,
+                        errorItems = EmptyStateContentViewEntity.create(1),
+                    )
+                    else -> exception
+                }
+                return MediatorResult.Error(error)
             }
 
             glidePreloader.loadUser(items = items.user)
@@ -76,7 +84,7 @@ class CommentRemoteMediator(
 
             MediatorResult.Success(endOfPaginationReached = false)
         } catch (exception: Exception) {
-            MediatorResult.Error(exception)
+            MediatorResult.Error(ErrorMapper().map(exception))
         }
     }
 
