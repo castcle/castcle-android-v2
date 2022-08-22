@@ -6,10 +6,9 @@ import androidx.paging.*
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.api.SearchApi
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
-import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_SMALL_ITEM
-import com.castcle.android.core.glide.GlidePreloader
+import com.castcle.android.core.constants.*
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.search.data_source.SearchRemoteMediator
 import com.castcle.android.data.search.mapper.SearchResponseMapper
 import com.castcle.android.domain.search.type.SearchType
@@ -32,7 +31,7 @@ class SearchResultViewModel(
     private val pageSize = if (type is SearchType.People) {
         PARAMETER_MAX_RESULTS_SMALL_ITEM
     } else {
-        PARAMETER_MAX_RESULTS_LARGE_ITEM
+        PARAMETER_MAX_RESULTS_MEDIUM_ITEM
     }
 
     val keyword = database.searchKeyword().retrieve(sessionId)
@@ -60,6 +59,12 @@ class SearchResultViewModel(
     ).flow.map { pagingData ->
         pagingData.map { searchResultMapper.apply(it, type) }
     }.cachedIn(viewModelScope)
+
+    fun showReportingContent(id: String, ignoreReportContentId: List<String>) {
+        launch {
+            database.search().updateIgnoreReportContentId(id, ignoreReportContentId)
+        }
+    }
 
     fun saveItemsState(layoutManager: RecyclerView.LayoutManager) {
         state[SAVE_STATE_RECYCLER_VIEW] = layoutManager.onSaveInstanceState()

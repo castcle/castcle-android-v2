@@ -17,22 +17,16 @@ class EmptyStateFeedViewHolder(
     override var item = EmptyStateFeedViewEntity()
 
     init {
-        compositeDisposable += binding.tvRetry.onClick {
-            item.action?.invoke() ?: if (item.error == null) {
-                item.refreshAction.invoke()
-            } else {
-                item.retryAction.invoke()
-            }
+        compositeDisposable += binding.tvDescription.onClick {
+            item.action()
         }
     }
 
     override fun bind(bindItem: EmptyStateFeedViewEntity) {
-        if (BuildConfig.DEBUG) {
-            binding.tvRetry.text = if (item.error == null) {
-                string(R.string.retry)
-            } else {
-                "${item.error?.message}"
-            }
+        binding.tvDescription.text = if (BuildConfig.DEBUG && item.error != null) {
+            item.error?.message ?: string(R.string.retry)
+        } else {
+            string(R.string.retry)
         }
     }
 

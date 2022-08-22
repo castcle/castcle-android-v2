@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
+import com.castcle.android.core.error.MissingViewRendererException
 import io.reactivex.disposables.CompositeDisposable
 
 class CastclePagingDataAdapter(
@@ -30,7 +31,14 @@ class CastclePagingDataAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return viewRenderers[viewType].internalCreateViewHolder(parent, listener, disposable)
+        return try {
+            viewRenderers[viewType].internalCreateViewHolder(parent, listener, disposable)
+        } catch (exception: Exception) {
+            throw MissingViewRendererException(
+                viewId = viewType,
+                viewResourceName = parent.context.resources.getResourceEntryName(viewType),
+            )
+        }
     }
 
     fun registerRenderer(

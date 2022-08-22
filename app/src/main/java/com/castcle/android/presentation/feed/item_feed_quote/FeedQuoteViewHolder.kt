@@ -16,6 +16,7 @@ import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
+import com.castcle.android.presentation.feed.item_feed_report.FeedReportViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
@@ -33,6 +34,7 @@ class FeedQuoteViewHolder(
     private val adapter by lazy {
         CastcleAdapter(listener, compositeDisposable).apply {
             registerRenderer(FeedImageViewRenderer(FeedDisplayType.QuoteCast))
+            registerRenderer(FeedReportViewRenderer(FeedDisplayType.QuoteCast))
             registerRenderer(FeedTextViewRenderer(FeedDisplayType.QuoteCast))
             registerRenderer(FeedWebViewRenderer(FeedDisplayType.QuoteCast))
             registerRenderer(FeedWebImageViewRenderer(FeedDisplayType.QuoteCast))

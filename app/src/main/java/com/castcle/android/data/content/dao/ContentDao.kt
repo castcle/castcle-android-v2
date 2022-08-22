@@ -16,6 +16,21 @@ interface ContentDao {
     @Query("DELETE FROM $TABLE_CONTENT WHERE content_sessionId = :sessionId")
     suspend fun delete(sessionId: Long)
 
+    @Query("DELETE FROM $TABLE_CONTENT WHERE content_commentId = :commentId")
+    suspend fun deleteByCommentId(commentId: String)
+
+    @Query("DELETE FROM $TABLE_CONTENT WHERE content_createdAt = :createdAt")
+    suspend fun deleteByCreatedAt(createdAt: Long)
+
+    @Query("SELECT * FROM $TABLE_CONTENT WHERE content_commentId = :commentId")
+    suspend fun get(commentId: String): ContentEntity?
+
+    @Query("SELECT * FROM $TABLE_CONTENT WHERE content_sessionId = :sessionId AND content_type = :type")
+    suspend fun get(sessionId: Long, type: ContentType): List<ContentEntity>
+
+    @Query("SELECT * FROM $TABLE_CONTENT WHERE content_createdAt = :createdAt AND content_type = :type")
+    suspend fun getByCreatedAt(createdAt: Long, type: ContentType): List<ContentEntity>
+
     @Query("SELECT DISTINCT content_sessionId FROM $TABLE_CONTENT WHERE content_originalCastId = :castId AND content_type = :type")
     suspend fun getExistSessionIdByCastId(
         castId: String,
@@ -46,5 +61,8 @@ interface ContentDao {
     suspend fun updateLastComment(sessionId: List<Long>) {
         sessionId.forEach { updateLastComment(it) }
     }
+
+    @Query("UPDATE $TABLE_CONTENT SET content_ignoreReportContentId = :ignoreReportContentId WHERE content_id = :id")
+    suspend fun updateIgnoreReportContentId(id: String, ignoreReportContentId: List<String>)
 
 }

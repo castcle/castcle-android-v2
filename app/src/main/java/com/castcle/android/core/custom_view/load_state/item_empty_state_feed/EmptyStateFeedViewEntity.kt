@@ -5,10 +5,8 @@ import com.castcle.android.core.custom_view.load_state.LoadStateRefreshViewEntit
 import com.castcle.android.core.extensions.cast
 
 data class EmptyStateFeedViewEntity(
-    override var action: (() -> Unit)? = null,
+    override var action: () -> Unit = {},
     override var error: Throwable? = null,
-    override var refreshAction: () -> Unit = {},
-    override var retryAction: () -> Unit = {},
     override val uniqueId: String = "${R.layout.item_empty_state_feed}",
 ) : LoadStateRefreshViewEntity {
 

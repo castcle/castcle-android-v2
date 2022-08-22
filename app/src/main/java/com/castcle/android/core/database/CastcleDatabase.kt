@@ -2,6 +2,7 @@ package com.castcle.android.core.database
 
 import androidx.room.*
 import com.castcle.android.core.constants.DATABASE_VERSION
+import com.castcle.android.core.database.type_converters.StringListConverter
 import com.castcle.android.data.authentication.dao.AccessTokenDao
 import com.castcle.android.data.authentication.dao.RecursiveRefreshTokenDao
 import com.castcle.android.data.cast.dao.CastDao
@@ -31,12 +32,12 @@ import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.*
 
 @Database(
-//    autoMigrations = [
-//        AutoMigration(
-//            from = DATABASE_VERSION.minus(1),
-//            to = DATABASE_VERSION,
-//        )
-//    ],
+    autoMigrations = [
+        AutoMigration(
+            from = DATABASE_VERSION.minus(1),
+            to = DATABASE_VERSION,
+        )
+    ],
     entities = [
         AccessTokenEntity::class,
         CastEntity::class,
@@ -67,6 +68,7 @@ import com.castcle.android.domain.user.type.*
     LoadKeyType.Converter::class,
     ProfileType.Converter::class,
     SocialType.Converter::class,
+    StringListConverter::class,
     UserType.Converter::class,
 )
 abstract class CastcleDatabase : RoomDatabase() {

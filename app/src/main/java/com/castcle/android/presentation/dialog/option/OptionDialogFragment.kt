@@ -3,6 +3,8 @@ package com.castcle.android.presentation.dialog.option
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import com.castcle.android.core.base.fragment.BaseBottomSheetDialogFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
@@ -10,6 +12,7 @@ import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorSta
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.DialogOptionBinding
+import com.castcle.android.presentation.content.ContentFragment.Companion.REPLY_RESULT
 import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_recast_title.RecastTitleViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_select_recast_user.SelectRecastUserViewRenderer
@@ -44,6 +47,16 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
 
     override fun onOptionClicked(eventType: Int) {
         when (val type = args.type) {
+            is OptionDialogType.MyCommentOption -> when (eventType) {
+                type.deleteComment -> {
+                    showLoading()
+                    viewModel.deleteComment(type.commentId)
+                }
+                type.replyComment -> {
+                    setFragmentResult(REPLY_RESULT, bundleOf(REPLY_RESULT to type))
+                    backPress()
+                }
+            }
             is OptionDialogType.MyContentOption -> {
                 showLoading()
                 viewModel.deleteContent(type.contentId)
@@ -53,6 +66,10 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
                 type.syncSocialMedia -> Unit
             }
             is OptionDialogType.MyUserOption -> Unit
+            is OptionDialogType.OtherCommentOption -> {
+                setFragmentResult(REPLY_RESULT, bundleOf(REPLY_RESULT to type))
+                backPress()
+            }
             is OptionDialogType.OtherContentOption -> {
                 OptionDialogFragmentDirections
                     .toReportSubjectFragment(contentId = type.contentId, userId = null)
@@ -65,6 +82,10 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
                         .toReportSubjectFragment(contentId = null, userId = type.userId)
                         .navigate()
                 }
+            }
+            is OptionDialogType.ReplyOption -> {
+                showLoading()
+                viewModel.deleteReply(type.replyCommentId)
             }
         }
     }

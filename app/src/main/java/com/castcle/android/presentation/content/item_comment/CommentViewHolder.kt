@@ -7,6 +7,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemCommentBinding
 import com.castcle.android.presentation.content.ContentListener
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import java.util.*
@@ -32,6 +33,15 @@ class CommentViewHolder(
         }
         compositeDisposable += binding.tvLike.onClick {
             listener.onLikeCommentClicked(item.comment)
+        }
+        binding.root.setOnLongClickListener {
+            val type = if (item.comment.isOwner) {
+                OptionDialogType.MyCommentOption(item.user.castcleId, item.comment.id)
+            } else {
+                OptionDialogType.OtherCommentOption(item.user.castcleId, item.comment.id)
+            }
+            listener.onOptionClicked(type)
+            true
         }
     }
 
