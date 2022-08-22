@@ -1,7 +1,7 @@
 fastlane_require "dotenv"
 
-PACKAGE_NAME = "com.castcle.android.dev.v2"
-FIREBASE_APP_ID = "1:946784514991:android:f2129eab31d7ae761ef55a"
+PACKAGE_NAME = $PACKAGE_NAME
+FIREBASE_APP_ID = $FIREBASE_APP_ID
 KEYSTORE_PATH = nil
 FIREBASE_KEY_PATH = nil
 PLAYSTORE_KEY_PATH = nil
@@ -18,10 +18,9 @@ end
 
 lane :build_and_distribute do
   increment_version_code_in_project_gradle()
-  #run_unit_tests()
   build()
+  distribute_playstore()
   distribute_to_firebase()
-  #distribute_playstore()
 end
 
 desc "Responsible for fetching version code from play console and incrementing version code."
@@ -63,21 +62,21 @@ end
 
 desc "Responsible for uploading .aab to Firebase app distribution."
 private_lane :distribute_to_firebase do
-  # firebase_app_distribution(
-  #   app: FIREBASE_APP_ID,
-  #   release_notes: "Uploaded from CI/CD",
-  #   android_artifact_type: "AAB",
-  #   android_artifact_path: BUNDLE_FILE_PATH,
-  #   service_credentials_file: FIREBASE_KEY_PATH,
-  #   groups: "qa-tester-castcle"
-  # )
   firebase_app_distribution(
     app: FIREBASE_APP_ID,
-    firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
-    groups: "qa-tester-castcle",
-    release_notes: "Castcle Android Version 2!",
-    android_artifact_type: "AAB"
+    release_notes: "Uploaded from CI/CD",
+    android_artifact_type: "AAB",
+    android_artifact_path: BUNDLE_FILE_PATH,
+    service_credentials_file: FIREBASE_KEY_PATH,
+    groups: "qa-tester-castcle"
   )
+  # firebase_app_distribution(
+  #   app: FIREBASE_APP_ID,
+  #   firebase_cli_token: ENV['FIREBASE_CLI_TOKEN'],
+  #   groups: "qa-tester-castcle",
+  #   release_notes: "Castcle Android Version 2!",
+  #   android_artifact_type: "AAB"
+  # )
 
 end
 
