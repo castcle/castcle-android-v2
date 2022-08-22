@@ -84,6 +84,10 @@ class FeedTextViewHolder(
         listener.onCommentClicked(cast, item.user)
     }
 
+    override fun onContentFarmingClicked(cast: CastEntity) {
+        listener.onContentFarmingClicked(cast)
+    }
+
     override fun onFollowClicked(user: UserEntity) {
         listener.onFollowClicked(user)
     }

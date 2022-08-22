@@ -5,6 +5,7 @@ import com.castcle.android.domain.cast.entity.CastEntity
 
 interface ParticipateBarListener : CastcleListener {
     fun onCommentClicked(cast: CastEntity)
+    fun onContentFarmingClicked(cast: CastEntity)
     fun onLikeClicked(cast: CastEntity)
     fun onRecastClicked(cast: CastEntity)
 }

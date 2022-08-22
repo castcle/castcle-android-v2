@@ -34,6 +34,9 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
         compositeDisposable += binding.clRecast.onClick {
             listener.onRecastClicked(cast)
         }
+        compositeDisposable += binding.clContentFarming.onClick {
+            listener.onContentFarmingClicked(cast)
+        }
 
         val likeColor = getParticipateColor(cast.liked)
         binding.ivLike.imageTintList = ColorStateList.valueOf(likeColor)
@@ -52,6 +55,12 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
         binding.tvRecast.text = cast.recastCount.toMetrics()
         binding.tvRecast.isVisible = cast.recastCount > 0
         binding.tvRecast.setTextColor(recastColor)
+
+        val contentFarmingColor = getParticipateColor(cast.farming)
+        binding.ivContentFarming.imageTintList = ColorStateList.valueOf(contentFarmingColor)
+        binding.tvContentFarming.text = cast.farmCount.toMetrics()
+        binding.tvContentFarming.isVisible = cast.farmCount > 0
+        binding.tvContentFarming.setTextColor(contentFarmingColor)
     }
 
     private fun getParticipateColor(isParticipate: Boolean): Int {
