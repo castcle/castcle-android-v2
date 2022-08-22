@@ -83,7 +83,7 @@ end
 desc "Responsible for uploading aab to playstore"
 private_lane :distribute_playstore do
   upload_to_play_store(
-    track: production,
+    track: beta,
     aab: BUNDLE_FILE_PATH,
     json_key: PLAYSTORE_KEY_PATH,
     package_name: PACKAGE_NAME
