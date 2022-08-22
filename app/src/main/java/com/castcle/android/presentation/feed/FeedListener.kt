@@ -14,6 +14,7 @@ interface FeedListener : CastcleListener {
     fun onImageClicked(photo: ImageEntity) = Unit
     fun onLikeClicked(cast: CastEntity) = Unit
     fun onLinkClicked(url: String) = Unit
+    fun onMentionClicked(castcleId: String) = Unit
     fun onNewCastClicked(userId: String) = Unit
     fun onOptionClicked(type: OptionDialogType) = Unit
     fun onRecastClicked(cast: CastEntity) = Unit
