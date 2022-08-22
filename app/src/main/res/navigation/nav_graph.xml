@@ -64,6 +64,10 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
     </fragment>
 
     <fragment
@@ -201,6 +205,10 @@
         <action
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
+
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
 
     </fragment>
 
