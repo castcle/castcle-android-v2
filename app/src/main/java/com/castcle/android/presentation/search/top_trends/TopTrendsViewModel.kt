@@ -37,7 +37,7 @@ class TopTrendsViewModel(
 
     private fun getTopTrends() {
         launch(onError = {
-            val errorItems = ErrorStateViewEntity(error = it, retryAction = { getTopTrends() })
+            val errorItems = ErrorStateViewEntity(action = { getTopTrends() }, error = it)
             views.postValue(listOf(errorItems))
         }) {
             val loadingItems = LoadingViewEntity()

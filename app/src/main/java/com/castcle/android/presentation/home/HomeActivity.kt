@@ -3,6 +3,7 @@ package com.castcle.android.presentation.home
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.addCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.castcle.android.BuildConfig
@@ -11,6 +12,7 @@ import com.castcle.android.core.base.activity.BaseActivity
 import com.castcle.android.core.extensions.findFragmentInNavHost
 import com.castcle.android.core.extensions.hideKeyboard
 import com.castcle.android.databinding.ActivityHomeBinding
+import com.castcle.android.presentation.feed.FeedFragment
 import com.castcle.android.presentation.login.LoginFragment
 import com.twitter.sdk.android.core.*
 import kotlinx.coroutines.flow.collectLatest
@@ -28,6 +30,16 @@ class HomeActivity : BaseActivity() {
                     onLaunchAction = { showLoading() },
                     onSuccessAction = { popToHomeFragment() },
                 )
+            }
+        }
+    }
+
+    override fun initListener() {
+        onBackPressedDispatcher.addCallback {
+            if (findFragmentInNavHost<HomeFragment>()?.isFeedVisible() == false) {
+                findFragmentInNavHost<HomeFragment>()?.navigateByFragment<FeedFragment>()
+            } else {
+                finish()
             }
         }
     }

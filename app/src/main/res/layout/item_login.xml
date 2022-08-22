@@ -130,7 +130,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_4sdp"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:paddingStart="@dimen/_12sdp"
         android:paddingTop="@dimen/_4sdp"
         android:paddingEnd="@dimen/_12sdp"
@@ -150,7 +149,6 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="@drawable/bg_corner_24dp"
         android:backgroundTint="@color/blue"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_24dp"
         android:padding="@dimen/_8sdp"
         android:text="@string/fragment_login_title_6"
         android:textAllCaps="false"
@@ -193,13 +191,6 @@
         app:layout_constraintStart_toEndOf="@+id/tvOr"
         app:layout_constraintTop_toTopOf="@+id/tvOr" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".5" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTwitter"
         android:layout_width="@dimen/_28sdp"
@@ -207,10 +198,9 @@
         android:layout_marginTop="@dimen/_24sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/blue_twitter"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_6sdp"
-        app:layout_constraintEnd_toEndOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/btLogin"
+        app:layout_constraintStart_toStartOf="@+id/btLogin"
         app:layout_constraintTop_toBottomOf="@+id/tvOr"
         app:srcCompat="@drawable/ic_twitter" />
 
@@ -221,7 +211,6 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/blue_facebook"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
         app:layout_constraintDimensionRatio="1:1"
@@ -236,7 +225,6 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/white"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
         app:layout_constraintDimensionRatio="1:1"
@@ -250,7 +238,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:paddingStart="@dimen/_16sdp"
         android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_16sdp"

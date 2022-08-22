@@ -17,6 +17,7 @@ import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_image_item.FeedImageItemViewRenderer
+import com.castcle.android.presentation.feed.item_feed_report.FeedReportViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
@@ -161,7 +162,7 @@ class NewCastFragment : BaseFragment(), FeedListener {
             if (isCanCast) {
                 color(R.color.white)
             } else {
-                color(R.color.gray_9)
+                color(R.color.gray_5)
             }
         )
         binding.ivSelectedImage.imageTintList = if (checkImageIsNotEmpty) {
@@ -191,6 +192,7 @@ class NewCastFragment : BaseFragment(), FeedListener {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(FeedImageViewRenderer(FeedDisplayType.NewCast))
             registerRenderer(FeedImageItemViewRenderer())
+            registerRenderer(FeedReportViewRenderer(FeedDisplayType.NewCast))
             registerRenderer(FeedTextViewRenderer(FeedDisplayType.NewCast))
             registerRenderer(FeedWebViewRenderer(FeedDisplayType.NewCast))
             registerRenderer(FeedWebImageViewRenderer(FeedDisplayType.NewCast))

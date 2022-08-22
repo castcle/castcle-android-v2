@@ -38,4 +38,7 @@ interface ProfileDao {
         insert(items)
     }
 
+    @Query("UPDATE $TABLE_PROFILE SET profile_ignoreReportContentId = :ignoreReportContentId WHERE profile_id = :id")
+    suspend fun updateIgnoreReportContentId(id: String, ignoreReportContentId: List<String>)
+
 }

@@ -16,7 +16,7 @@ import com.castcle.android.BuildConfig
 import com.castcle.android.R
 import com.castcle.android.core.constants.AUTHORIZATION_PREFIX
 import com.castcle.android.core.constants.HEADER_AUTHORIZATION
-import com.castcle.android.core.error.ApiException
+import com.castcle.android.core.error.ErrorMapper
 import com.google.gson.Gson
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -39,10 +39,10 @@ suspend fun <T> apiCall(apiCall: suspend () -> Response<T>): T? {
         if (response.isSuccessful) {
             return responseBody
         } else {
-            throw ApiException.map(response.errorBody())
+            throw ErrorMapper().map(response.errorBody())
         }
     } catch (exception: Exception) {
-        throw exception
+        throw ErrorMapper().map(exception)
     }
 }
 

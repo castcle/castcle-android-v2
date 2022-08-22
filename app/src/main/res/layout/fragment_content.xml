@@ -83,6 +83,7 @@
             android:hint="@string/whats_on_your_mind"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
+            android:maxLength="280"
             android:maxLines="4"
             android:minHeight="@dimen/_28sdp"
             android:paddingStart="@dimen/_12sdp"

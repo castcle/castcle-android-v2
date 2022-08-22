@@ -104,10 +104,4 @@ class HomeViewModel(
         }
     }
 
-    fun showReportingContent(contentId: List<String>) {
-        launch {
-            database.cast().updateReporting(contentId, false)
-        }
-    }
-
 }

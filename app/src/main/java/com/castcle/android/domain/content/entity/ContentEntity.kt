@@ -6,18 +6,32 @@ import com.castcle.android.domain.content.type.ContentType
 
 @Entity(tableName = TABLE_CONTENT)
 data class ContentEntity(
-    @ColumnInfo(name = "${TABLE_CONTENT}_commentId") val commentId: String? = null,
-    @ColumnInfo(name = "${TABLE_CONTENT}_commentUserId") val commentUserId: String? = null,
-    @ColumnInfo(name = "${TABLE_CONTENT}_createdAt") val createdAt: Long = Long.MAX_VALUE,
-    @ColumnInfo(name = "${TABLE_CONTENT}_id") @PrimaryKey(autoGenerate = true) val id: Long = 0L,
-    @ColumnInfo(name = "${TABLE_CONTENT}_isLastComment") val isLastComment: Boolean = false,
-    @ColumnInfo(name = "${TABLE_CONTENT}_originalCastId") val originalCastId: String? = null,
-    @ColumnInfo(name = "${TABLE_CONTENT}_originalUserId") val originalUserId: String? = null,
-    @ColumnInfo(name = "${TABLE_CONTENT}_referenceCastId") val referenceCastId: String? = null,
-    @ColumnInfo(name = "${TABLE_CONTENT}_referenceUserId") val referenceUserId: String? = null,
-    @ColumnInfo(name = "${TABLE_CONTENT}_replyAt") val replyAt: Long = Long.MIN_VALUE,
-    @ColumnInfo(name = "${TABLE_CONTENT}_sessionId") val sessionId: Long = 0L,
-    @ColumnInfo(name = "${TABLE_CONTENT}_type") val type: ContentType = ContentType.Content,
+    @ColumnInfo(name = "${TABLE_CONTENT}_commentId", defaultValue = "NULL")
+    val commentId: String? = null,
+    @ColumnInfo(name = "${TABLE_CONTENT}_commentUserId", defaultValue = "NULL")
+    val commentUserId: String? = null,
+    @ColumnInfo(name = "${TABLE_CONTENT}_createdAt", defaultValue = "0")
+    val createdAt: Long = Long.MAX_VALUE,
+    @ColumnInfo(name = "${TABLE_CONTENT}_id", defaultValue = "0") @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L,
+    @ColumnInfo(name = "${TABLE_CONTENT}_ignoreReportContentId", defaultValue = "[]")
+    val ignoreReportContentId: List<String> = listOf(),
+    @ColumnInfo(name = "${TABLE_CONTENT}_isLastComment", defaultValue = "0")
+    val isLastComment: Boolean = false,
+    @ColumnInfo(name = "${TABLE_CONTENT}_originalCastId", defaultValue = "NULL")
+    val originalCastId: String? = null,
+    @ColumnInfo(name = "${TABLE_CONTENT}_originalUserId", defaultValue = "NULL")
+    val originalUserId: String? = null,
+    @ColumnInfo(name = "${TABLE_CONTENT}_referenceCastId", defaultValue = "NULL")
+    val referenceCastId: String? = null,
+    @ColumnInfo(name = "${TABLE_CONTENT}_referenceUserId", defaultValue = "NULL")
+    val referenceUserId: String? = null,
+    @ColumnInfo(name = "${TABLE_CONTENT}_replyAt", defaultValue = "0")
+    val replyAt: Long = Long.MIN_VALUE,
+    @ColumnInfo(name = "${TABLE_CONTENT}_sessionId", defaultValue = "0")
+    val sessionId: Long = 0L,
+    @ColumnInfo(name = "${TABLE_CONTENT}_type", defaultValue = "")
+    val type: ContentType = ContentType.Content,
 ) {
 
     fun toMetricsItem() = copy(

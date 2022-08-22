@@ -51,6 +51,11 @@ class FeedImageViewHolder(
                 }
             }
         })
+        compositeDisposable += binding.root.onClick {
+            if (displayType is FeedDisplayType.QuoteCast) {
+                listener.onCommentClicked(item.cast, item.user)
+            }
+        }
         compositeDisposable += binding.castcleTextView.onClick {
             binding.castcleTextView.toggle()
         }

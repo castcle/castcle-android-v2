@@ -21,6 +21,7 @@ const val PARAMETER_ID = "id"
 const val PARAMETER_KEYWORD = "keyword"
 const val PARAMETER_MAX_RESULTS = "maxResults"
 const val PARAMETER_MAX_RESULTS_LARGE_ITEM = 10
+const val PARAMETER_MAX_RESULTS_MEDIUM_ITEM = 15
 const val PARAMETER_MAX_RESULTS_SMALL_ITEM = 20
 const val PARAMETER_UNTIL_ID = "untilId"
 const val PARAMETER_USER_FIELDS = "userFields"

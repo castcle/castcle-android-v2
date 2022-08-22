@@ -9,7 +9,7 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEntity
-import com.castcle.android.presentation.feed.item_feed_reporting.FeedReportingViewEntity
+import com.castcle.android.presentation.feed.item_feed_report.FeedReportViewEntity
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
 import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewEntity
@@ -31,11 +31,22 @@ class SearchResultMapper {
     }
 
     private fun mapContentItem(item: SearchWithResultEntity): CastcleViewEntity {
-        if (item.originalCast?.reporting == true || item.referenceCast?.reporting == true) {
-            return FeedReportingViewEntity(
-                reportingContentId = item.originalCast?.id,
-                reportingReferenceContentId = item.referenceCast?.id,
-            )
+        when {
+            item.originalCast?.reported == true &&
+                !item.search.ignoreReportContentId.contains(item.originalCast.id) -> {
+                return FeedReportViewEntity(
+                    ignoreReportContentId = item.search.ignoreReportContentId.plus(item.originalCast.id),
+                    uniqueId = item.search.id.toString(),
+                )
+            }
+            item.referenceCast?.reported == true &&
+                item.originalCast?.type is CastType.Recast &&
+                !item.search.ignoreReportContentId.contains(item.referenceCast.id) -> {
+                return FeedReportViewEntity(
+                    ignoreReportContentId = item.search.ignoreReportContentId.plus(item.referenceCast.id),
+                    uniqueId = item.search.id.toString(),
+                )
+            }
         }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
