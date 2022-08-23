@@ -5,7 +5,6 @@ import com.castcle.android.data.core.entity.ApiErrorResponse
 import com.google.gson.*
 import okhttp3.ResponseBody
 import retrofit2.HttpException
-import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -13,7 +12,6 @@ class ErrorMapper {
 
     fun map(throwable: Throwable?) = when (throwable) {
         is HttpException,
-        is IOException,
         is SocketTimeoutException,
         is UnknownHostException -> NetworkException()
         is ApiException -> when (throwable.errorCode) {

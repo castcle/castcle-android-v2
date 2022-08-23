@@ -9,6 +9,7 @@ import com.castcle.android.domain.authentication.entity.RecursiveRefreshTokenEnt
 import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import org.koin.core.annotation.Singleton
+import java.util.concurrent.atomic.*
 
 @Singleton
 class AuthenticationInterceptor(
@@ -16,28 +17,18 @@ class AuthenticationInterceptor(
     private val database: CastcleDatabase,
 ) : Authenticator {
 
-    private val recursiveThreshold = 2000
-
-    private val refreshTimestamp = mutableListOf<Long>()
+    private val refreshing = AtomicBoolean(false)
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        return if (isRecursiveRefreshToken()) {
-            triggerRecursiveRefreshToken()
-        } else {
-            requestNewAccessToken(response)
+        return when {
+            refreshing.get() -> null
+            response.retryCount() > 0 -> triggerRecursiveRefreshToken()
+            else -> requestNewAccessToken(response)
         }
-    }
-
-    private fun isRecursiveRefreshToken(): Boolean {
-        if (refreshTimestamp.size > 1) {
-            val last = refreshTimestamp.removeLast()
-            val first = refreshTimestamp.removeFirst()
-            return last.minus(first) <= recursiveThreshold
-        }
-        return false
     }
 
     private fun requestNewAccessToken(response: Response): Request {
+        refreshing.set(true)
         val api = apiHolder.api ?: return response.toNewRequest()
         val token = runBlocking { database.accessToken().get() } ?: return response.toNewRequest()
         val refreshTokenResponse = runBlocking { api.refreshToken(token.refreshToken.toBearer()) }
@@ -48,8 +39,12 @@ class AuthenticationInterceptor(
         }
     }
 
+    private fun Response.retryCount(count: Int = 0): Int {
+        return priorResponse?.retryCount(count + 1) ?: count
+    }
+
     private fun Response.toNewRequest(token: AccessTokenEntity? = null): Request {
-        refreshTimestamp.add(System.currentTimeMillis())
+        refreshing.set(false)
         val accessTokenWithPrefix = token?.accessToken
             ?.ifBlank { null }
             ?.toBearer()

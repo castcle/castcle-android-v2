@@ -32,6 +32,10 @@
     </dialog>
 
     <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.castcle.android.presentation.setting.account.AccountFragment"/>
+
+    <fragment
         android:id="@+id/contentFragment"
         android:name="com.castcle.android.presentation.content.ContentFragment">
 
@@ -330,7 +334,11 @@
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.castcle.android.presentation.setting.SettingFragment">
+        android:name="com.castcle.android.presentation.setting.setting.SettingFragment">
+
+        <action
+            android:id="@+id/toAccountFragment"
+            app:destination="@id/accountFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
