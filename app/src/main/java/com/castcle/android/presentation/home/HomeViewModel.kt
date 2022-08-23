@@ -92,14 +92,8 @@ class HomeViewModel(
         }
     }
 
-    fun logout(
-        onLaunchAction: () -> Unit,
-        onSuccessAction: () -> Unit,
-    ) {
-        launch(
-            onLaunch = { onLaunchAction() },
-            onSuccess = { onSuccessAction() },
-        ) {
+    fun logout(onSuccessAction: () -> Unit) {
+        launch(onSuccess = { onSuccessAction() }) {
             authenticationRepository.loginOut()
         }
     }

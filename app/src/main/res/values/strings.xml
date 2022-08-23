@@ -35,6 +35,9 @@
     <string name="delete">Delete</string>
     <string name="delete_page">Delete page</string>
     <string name="dialog_recast_title">Choose Page or User</string>
+    <string name="fragment_account_title_1">Account Setting</string>
+    <string name="fragment_account_title_2">Link Social Media Account</string>
+    <string name="fragment_account_title_3">Account Control</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
     <string name="fragment_login_title_3">Enter your email address</string>

@@ -26,10 +26,8 @@ class HomeActivity : BaseActivity() {
     override fun initObserver() {
         lifecycleScope.launch {
             viewModel.recursiveRefreshToken.collectLatest {
-                viewModel.logout(
-                    onLaunchAction = { showLoading() },
-                    onSuccessAction = { popToHomeFragment() },
-                )
+                showLoading()
+                viewModel.logout { popToHomeFragment() }
             }
         }
     }
