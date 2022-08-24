@@ -12,8 +12,7 @@ import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
-import com.castcle.android.domain.user.entity.SyncSocialEntity
-import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
 import com.facebook.*
 import com.google.android.gms.auth.GoogleAuthUtil
@@ -114,13 +113,19 @@ class AuthenticationRepositoryImpl(
     private suspend fun updateWhenLoginSuccess(response: LoginResponse?) {
         val user = UserEntity.mapOwner(response?.profile)
         val page = UserEntity.mapOwner(response?.pages)
+        val linkSocial = LinkSocialEntity.map(response?.profile)
         val syncSocialUser = SyncSocialEntity.map(response?.profile)
         val syncSocialPage = SyncSocialEntity.map(response?.pages)
         val accessToken = AccessTokenEntity.map(response)
         glidePreloader.loadUser(page.plus(user))
-        database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
-        database.user().upsert(page.plus(user))
-        database.accessToken().insert(accessToken)
+        database.withTransaction {
+            database.linkSocial().delete()
+            database.linkSocial().insert(linkSocial)
+            database.syncSocial().delete()
+            database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
+            database.user().upsert(page.plus(user))
+            database.accessToken().insert(accessToken)
+        }
         registerFirebaseMessagingToken()
     }
 
@@ -156,6 +161,7 @@ class AuthenticationRepositoryImpl(
         database.withTransaction {
             fetchGuestAccessToken()
             database.cast().delete()
+            database.linkSocial().delete()
             database.notificationBadges().delete()
             database.profile().delete()
             database.recursiveRefreshToken().delete()

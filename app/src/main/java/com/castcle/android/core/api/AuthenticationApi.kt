@@ -27,7 +27,7 @@ interface AuthenticationApi {
         @Header(HEADER_AUTHORIZATION) refreshToken: String,
     ): Response<LoginResponse>
 
-    @POST("authentications/register-token")
+    @POST("v2/authentications/register/notification")
     suspend fun registerFirebaseMessagingToken(
         @Body body: RegisterFirebaseMessagingTokenRequest
     ): Response<Unit>

@@ -48,7 +48,7 @@ class HomeViewModel(
     private fun isGuestUpdater() {
         launch {
             database.accessToken().retrieve()
-                .mapNotNull { it.firstOrNull() }
+                .filterNotNull()
                 .collectLatest { isGuest.value = it.isGuest() }
         }
     }
