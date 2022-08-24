@@ -12,6 +12,11 @@ interface AuthenticationApi {
         @Body body: GetGuestAccessTokenRequest,
     ): Response<GetGuestAccessTokenResponse>
 
+    @POST("v2/authentications/connect-with-social")
+    suspend fun linkWithSocial(
+        @Body body: LoginWithSocialRequest,
+    ): Response<LoginResponse>
+
     @POST("v2/authentications/login-with-email")
     suspend fun loginWithEmail(
         @Body body: LoginWithEmailRequest,

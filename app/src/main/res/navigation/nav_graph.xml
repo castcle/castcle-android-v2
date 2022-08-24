@@ -33,7 +33,13 @@
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.castcle.android.presentation.setting.account.AccountFragment"/>
+        android:name="com.castcle.android.presentation.setting.account.AccountFragment">
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/contentFragment"

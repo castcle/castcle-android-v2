@@ -30,9 +30,9 @@ class LoginFragment : BaseFragment(), LoginListener {
 
     private val googleSignInClient by inject<GoogleSignInClient>()
 
-    val twitterAuthClient by inject<TwitterAuthClient>()
+    private val callbackManager = CallbackManager.Factory.create()
 
-    private val callbackManager: CallbackManager = CallbackManager.Factory.create()
+    val twitterAuthClient by inject<TwitterAuthClient>()
 
     override fun initViewProperties() {
         binding.ivBackground.loadImage(R.drawable.bg_login)

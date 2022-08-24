@@ -38,30 +38,8 @@ class AuthenticationRepositoryImpl(
         return database.accessToken().get() ?: AccessTokenEntity()
     }
 
-    override suspend fun getFirebaseMessagingToken(): String {
+    private suspend fun getFacebookUserProfile(): LoginWithSocialRequest {
         return suspendCoroutine { coroutine ->
-            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-                if (task.isSuccessful && task.result != null) {
-                    coroutine.resume(task.result)
-                } else {
-                    coroutine.resume("")
-                }
-            }
-        }
-    }
-
-    override suspend fun fetchGuestAccessToken() {
-        val body = GetGuestAccessTokenRequest(context.getDeviceUniqueId())
-        val response = apiCall { api.getGuestAccessToken(body = body) }
-        database.accessToken().insert(AccessTokenEntity.map(response))
-    }
-
-    override suspend fun loginWithEmail(body: LoginWithEmailRequest) {
-        updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
-    }
-
-    override suspend fun loginWithFacebook() {
-        val body = suspendCoroutine<LoginWithSocialRequest> { coroutine ->
             GraphRequest(
                 accessToken = AccessToken.getCurrentAccessToken(),
                 graphPath = "me",
@@ -83,7 +61,71 @@ class AuthenticationRepositoryImpl(
                 }
             ).executeAsync()
         }
-        loginWithSocial(body)
+    }
+
+    override suspend fun getFirebaseMessagingToken(): String {
+        return suspendCoroutine { coroutine ->
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (task.isSuccessful && task.result != null) {
+                    coroutine.resume(task.result)
+                } else {
+                    coroutine.resume("")
+                }
+            }
+        }
+    }
+
+    private suspend fun getTwitterUserProfile(token: TwitterAuthToken?): LoginWithSocialRequest {
+        return suspendCoroutine { coroutine ->
+            TwitterCore.getInstance().apiClient.accountService
+                .verifyCredentials(false, true, true)
+                .enqueue(object : Callback<User>() {
+                    override fun failure(exception: TwitterException?) {
+                        coroutine.resumeWithException(Throwable(exception?.message))
+                    }
+
+                    override fun success(result: Result<User>?) {
+                        val body = LoginWithSocialRequest(
+                            authToken = "${token?.token}|${token?.secret}",
+                            avatar = result?.data?.getLargeProfileImageUrlHttps(),
+                            cover = result?.data?.profileBannerUrl,
+                            displayName = result?.data?.name,
+                            email = result?.data?.email,
+                            link = result?.data?.idStr?.let { "https://twitter.com/i/user/$it" },
+                            overview = result?.data?.description,
+                            provider = SocialType.Twitter.id,
+                            socialId = result?.data?.idStr,
+                        )
+                        coroutine.resume(body)
+                    }
+                })
+        }
+    }
+
+    override suspend fun fetchGuestAccessToken() {
+        val body = GetGuestAccessTokenRequest(context.getDeviceUniqueId())
+        val response = apiCall { api.getGuestAccessToken(body = body) }
+        database.accessToken().insert(AccessTokenEntity.map(response))
+    }
+
+    override suspend fun linkWithFacebook() {
+        linkWithSocial(getFacebookUserProfile())
+    }
+
+    override suspend fun linkWithSocial(body: LoginWithSocialRequest) {
+        updateWhenLoginSuccess(apiCall { api.linkWithSocial(body = body) })
+    }
+
+    override suspend fun linkWithTwitter(token: TwitterAuthToken?) {
+        linkWithSocial(getTwitterUserProfile(token))
+    }
+
+    override suspend fun loginWithEmail(body: LoginWithEmailRequest) {
+        updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
+    }
+
+    override suspend fun loginWithFacebook() {
+        loginWithSocial(getFacebookUserProfile())
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
@@ -110,51 +152,8 @@ class AuthenticationRepositoryImpl(
         updateWhenLoginSuccess(apiCall { api.loginWithSocial(body = body) })
     }
 
-    private suspend fun updateWhenLoginSuccess(response: LoginResponse?) {
-        val user = UserEntity.mapOwner(response?.profile)
-        val page = UserEntity.mapOwner(response?.pages)
-        val linkSocial = LinkSocialEntity.map(response?.profile)
-        val syncSocialUser = SyncSocialEntity.map(response?.profile)
-        val syncSocialPage = SyncSocialEntity.map(response?.pages)
-        val accessToken = AccessTokenEntity.map(response)
-        glidePreloader.loadUser(page.plus(user))
-        database.withTransaction {
-            database.linkSocial().delete()
-            database.linkSocial().insert(linkSocial)
-            database.syncSocial().delete()
-            database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
-            database.user().upsert(page.plus(user))
-            database.accessToken().insert(accessToken)
-        }
-        registerFirebaseMessagingToken()
-    }
-
     override suspend fun loginWithTwitter(token: TwitterAuthToken?) {
-        val body = suspendCoroutine<LoginWithSocialRequest> { coroutine ->
-            TwitterCore.getInstance().apiClient.accountService
-                .verifyCredentials(false, true, true)
-                .enqueue(object : Callback<User>() {
-                    override fun failure(exception: TwitterException?) {
-                        coroutine.resumeWithException(Throwable(exception?.message))
-                    }
-
-                    override fun success(result: Result<User>?) {
-                        val body = LoginWithSocialRequest(
-                            authToken = "${token?.token}|${token?.secret}",
-                            avatar = result?.data?.getLargeProfileImageUrlHttps(),
-                            cover = result?.data?.profileBannerUrl,
-                            displayName = result?.data?.name,
-                            email = result?.data?.email,
-                            link = result?.data?.idStr?.let { "https://twitter.com/i/user/$it" },
-                            overview = result?.data?.description,
-                            provider = SocialType.Twitter.id,
-                            socialId = result?.data?.idStr,
-                        )
-                        coroutine.resume(body)
-                    }
-                })
-        }
-        loginWithSocial(body)
+        loginWithSocial(getTwitterUserProfile(token))
     }
 
     override suspend fun loginOut() {
@@ -192,6 +191,25 @@ class AuthenticationRepositoryImpl(
         } catch (exception: Exception) {
             Timber.e(exception)
         }
+    }
+
+    private suspend fun updateWhenLoginSuccess(response: LoginResponse?) {
+        val user = UserEntity.mapOwner(response?.profile)
+        val page = UserEntity.mapOwner(response?.pages)
+        val linkSocial = LinkSocialEntity.map(response?.profile)
+        val syncSocialUser = SyncSocialEntity.map(response?.profile)
+        val syncSocialPage = SyncSocialEntity.map(response?.pages)
+        val accessToken = AccessTokenEntity.map(response)
+        glidePreloader.loadUser(page.plus(user))
+        database.withTransaction {
+            database.linkSocial().delete()
+            database.linkSocial().insert(linkSocial)
+            database.syncSocial().delete()
+            database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
+            database.user().upsert(page.plus(user))
+            database.accessToken().insert(accessToken)
+        }
+        registerFirebaseMessagingToken()
     }
 
 }
