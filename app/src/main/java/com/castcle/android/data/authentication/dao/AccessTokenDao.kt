@@ -15,6 +15,6 @@ interface AccessTokenDao {
     suspend fun insert(item: AccessTokenEntity)
 
     @Query("SELECT * FROM $TABLE_ACCESS_TOKEN")
-    fun retrieve(): Flow<List<AccessTokenEntity>>
+    fun retrieve(): Flow<AccessTokenEntity?>
 
 }

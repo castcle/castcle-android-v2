@@ -45,6 +45,7 @@ import com.castcle.android.domain.user.type.*
         ContentEntity::class,
         FeedEntity::class,
         FollowingFollowersEntity::class,
+        LinkSocialEntity::class,
         LoadKeyEntity::class,
         NotificationBadgesEntity::class,
         ProfileEntity::class,
@@ -78,6 +79,7 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun content(): ContentDao
     abstract fun feed(): FeedDao
     abstract fun followingFollowers(): FollowingFollowersDao
+    abstract fun linkSocial(): LinkSocialDao
     abstract fun loadKey(): LoadKeyDao
     abstract fun notificationBadges(): NotificationBadgesDao
     abstract fun profile(): ProfileDao

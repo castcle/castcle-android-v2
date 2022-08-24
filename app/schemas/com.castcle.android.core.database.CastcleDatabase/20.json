@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 6,
-    "identityHash": "a8bcd44fc61a294ce112ec0bc9b64c05",
+    "version": 20,
+    "identityHash": "bebcd834f463db2536b9acc259ed3531",
     "entities": [
       {
         "tableName": "accessToken",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "casts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`casts_authorId` TEXT NOT NULL, `casts_commentCount` INTEGER NOT NULL, `casts_commented` INTEGER NOT NULL, `casts_createdAt` TEXT NOT NULL, `casts_farmCount` INTEGER NOT NULL, `casts_farming` INTEGER NOT NULL, `casts_id` TEXT NOT NULL, `casts_image` TEXT NOT NULL, `casts_isOwner` INTEGER NOT NULL, `casts_likeCount` INTEGER NOT NULL, `casts_liked` INTEGER NOT NULL, `casts_linkPreview` TEXT NOT NULL, `casts_linkType` TEXT NOT NULL, `casts_linkUrl` TEXT NOT NULL, `casts_message` TEXT NOT NULL, `casts_quoteCount` INTEGER NOT NULL, `casts_quoted` INTEGER NOT NULL, `casts_recastCount` INTEGER NOT NULL, `casts_recasted` INTEGER NOT NULL, `casts_reported` INTEGER NOT NULL, `casts_type` TEXT NOT NULL, `casts_updatedAt` TEXT NOT NULL, PRIMARY KEY(`casts_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`casts_authorId` TEXT NOT NULL, `casts_commentCount` INTEGER NOT NULL, `casts_commented` INTEGER NOT NULL, `casts_createdAt` TEXT NOT NULL, `casts_farmCount` INTEGER NOT NULL, `casts_farming` INTEGER NOT NULL, `casts_id` TEXT NOT NULL, `casts_image` TEXT NOT NULL, `casts_isOwner` INTEGER NOT NULL, `casts_likeCount` INTEGER NOT NULL, `casts_liked` INTEGER NOT NULL, `casts_linkDescription` TEXT NOT NULL, `casts_linkPreview` TEXT NOT NULL, `casts_linkTitle` TEXT NOT NULL, `casts_linkType` TEXT NOT NULL, `casts_linkUrl` TEXT NOT NULL, `casts_message` TEXT NOT NULL, `casts_quoteCount` INTEGER NOT NULL, `casts_quoted` INTEGER NOT NULL, `casts_recastCount` INTEGER NOT NULL, `casts_recasted` INTEGER NOT NULL, `casts_referenceCastId` TEXT, `casts_reported` INTEGER NOT NULL, `casts_type` TEXT NOT NULL, `casts_updatedAt` TEXT NOT NULL, PRIMARY KEY(`casts_id`))",
         "fields": [
           {
             "fieldPath": "authorId",
@@ -113,8 +113,20 @@
             "notNull": true
           },
           {
+            "fieldPath": "linkDescription",
+            "columnName": "casts_linkDescription",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "linkPreview",
             "columnName": "casts_linkPreview",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "linkTitle",
+            "columnName": "casts_linkTitle",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -159,6 +171,12 @@
             "columnName": "casts_recasted",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "referenceCastId",
+            "columnName": "casts_referenceCastId",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "reported",
@@ -246,79 +264,98 @@
       },
       {
         "tableName": "content",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`content_commentId` TEXT, `content_commentUserId` TEXT, `content_createdAt` INTEGER NOT NULL, `content_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `content_isLastComment` INTEGER NOT NULL, `content_originalCastId` TEXT, `content_originalUserId` TEXT, `content_referenceCastId` TEXT, `content_referenceUserId` TEXT, `content_replyAt` INTEGER NOT NULL, `content_sessionId` INTEGER NOT NULL, `content_type` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`content_commentId` TEXT DEFAULT NULL, `content_commentUserId` TEXT DEFAULT NULL, `content_createdAt` INTEGER NOT NULL DEFAULT 0, `content_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0, `content_ignoreReportContentId` TEXT NOT NULL DEFAULT '[]', `content_isLastComment` INTEGER NOT NULL DEFAULT 0, `content_originalCastId` TEXT DEFAULT NULL, `content_originalUserId` TEXT DEFAULT NULL, `content_referenceCastId` TEXT DEFAULT NULL, `content_referenceUserId` TEXT DEFAULT NULL, `content_replyAt` INTEGER NOT NULL DEFAULT 0, `content_sessionId` INTEGER NOT NULL DEFAULT 0, `content_type` TEXT NOT NULL DEFAULT '')",
         "fields": [
           {
             "fieldPath": "commentId",
             "columnName": "content_commentId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "commentUserId",
             "columnName": "content_commentUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "createdAt",
             "columnName": "content_createdAt",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "id",
             "columnName": "content_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "ignoreReportContentId",
+            "columnName": "content_ignoreReportContentId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'[]'"
           },
           {
             "fieldPath": "isLastComment",
             "columnName": "content_isLastComment",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "originalCastId",
             "columnName": "content_originalCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "originalUserId",
             "columnName": "content_originalUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceCastId",
             "columnName": "content_referenceCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceUserId",
             "columnName": "content_referenceUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "replyAt",
             "columnName": "content_replyAt",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "sessionId",
             "columnName": "content_sessionId",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "type",
             "columnName": "content_type",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "''"
           }
         ],
         "primaryKey": {
@@ -332,62 +369,84 @@
       },
       {
         "tableName": "feed",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feed_campaignMessage` TEXT, `feed_campaignName` TEXT, `feed_id` TEXT NOT NULL, `feed_originalCastId` TEXT, `feed_originalUserId` TEXT, `feed_referenceCastId` TEXT, `feed_referenceUserId` TEXT, `feed_type` TEXT NOT NULL, PRIMARY KEY(`feed_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`feed_campaignMessage` TEXT DEFAULT NULL, `feed_campaignName` TEXT DEFAULT NULL, `feed_feedId` TEXT NOT NULL DEFAULT '', `feed_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0, `feed_ignoreReportContentId` TEXT NOT NULL DEFAULT '[]', `feed_originalCastId` TEXT DEFAULT NULL, `feed_originalUserId` TEXT DEFAULT NULL, `feed_referenceCastId` TEXT DEFAULT NULL, `feed_referenceUserId` TEXT DEFAULT NULL, `feed_type` TEXT NOT NULL DEFAULT '')",
         "fields": [
           {
             "fieldPath": "campaignMessage",
             "columnName": "feed_campaignMessage",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "campaignName",
             "columnName": "feed_campaignName",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
+          },
+          {
+            "fieldPath": "feedId",
+            "columnName": "feed_feedId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
           },
           {
             "fieldPath": "id",
             "columnName": "feed_id",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "ignoreReportContentId",
+            "columnName": "feed_ignoreReportContentId",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "'[]'"
           },
           {
             "fieldPath": "originalCastId",
             "columnName": "feed_originalCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "originalUserId",
             "columnName": "feed_originalUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceCastId",
             "columnName": "feed_referenceCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceUserId",
             "columnName": "feed_referenceUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "type",
             "columnName": "feed_type",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "''"
           }
         ],
         "primaryKey": {
           "columnNames": [
             "feed_id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -420,6 +479,41 @@
             "followingFollowers_id"
           ],
           "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "linkSocial",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`linkSocial_provider` TEXT NOT NULL DEFAULT '', `linkSocial_socialId` TEXT NOT NULL DEFAULT '', `linkSocial_userId` TEXT NOT NULL DEFAULT '', PRIMARY KEY(`linkSocial_provider`))",
+        "fields": [
+          {
+            "fieldPath": "provider",
+            "columnName": "linkSocial_provider",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "socialId",
+            "columnName": "linkSocial_socialId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "linkSocial_userId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "linkSocial_provider"
+          ],
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -496,55 +590,70 @@
       },
       {
         "tableName": "profile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profile_createdAt` INTEGER NOT NULL, `profile_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `profile_originalCastId` TEXT, `profile_originalUserId` TEXT, `profile_referenceCastId` TEXT, `profile_referenceUserId` TEXT, `profile_sessionId` INTEGER NOT NULL, `profile_type` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profile_createdAt` INTEGER NOT NULL DEFAULT 0, `profile_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0, `profile_ignoreReportContentId` TEXT NOT NULL DEFAULT '[]', `profile_originalCastId` TEXT DEFAULT NULL, `profile_originalUserId` TEXT DEFAULT NULL, `profile_referenceCastId` TEXT DEFAULT NULL, `profile_referenceUserId` TEXT DEFAULT NULL, `profile_sessionId` INTEGER NOT NULL DEFAULT 0, `profile_type` TEXT NOT NULL DEFAULT '')",
         "fields": [
           {
             "fieldPath": "createdAt",
             "columnName": "profile_createdAt",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "id",
             "columnName": "profile_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "ignoreReportContentId",
+            "columnName": "profile_ignoreReportContentId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'[]'"
           },
           {
             "fieldPath": "originalCastId",
             "columnName": "profile_originalCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "originalUserId",
             "columnName": "profile_originalUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceCastId",
             "columnName": "profile_referenceCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceUserId",
             "columnName": "profile_referenceUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "sessionId",
             "columnName": "profile_sessionId",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           },
           {
             "fieldPath": "type",
             "columnName": "profile_type",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "''"
           }
         ],
         "primaryKey": {
@@ -583,44 +692,77 @@
         "foreignKeys": []
       },
       {
+        "tableName": "recursiveRefreshToken",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
         "tableName": "search",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`search_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `search_originalCastId` TEXT, `search_originalUserId` TEXT, `search_referenceCastId` TEXT, `search_referenceUserId` TEXT, `search_sessionId` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`search_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0, `search_ignoreReportContentId` TEXT NOT NULL DEFAULT '[]', `search_originalCastId` TEXT DEFAULT NULL, `search_originalUserId` TEXT DEFAULT NULL, `search_referenceCastId` TEXT DEFAULT NULL, `search_referenceUserId` TEXT DEFAULT NULL, `search_sessionId` INTEGER NOT NULL DEFAULT 0)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "search_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "ignoreReportContentId",
+            "columnName": "search_ignoreReportContentId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'[]'"
           },
           {
             "fieldPath": "originalCastId",
             "columnName": "search_originalCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "originalUserId",
             "columnName": "search_originalUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceCastId",
             "columnName": "search_referenceCastId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "referenceUserId",
             "columnName": "search_referenceUserId",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": false,
+            "defaultValue": "NULL"
           },
           {
             "fieldPath": "sessionId",
             "columnName": "search_sessionId",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0"
           }
         ],
         "primaryKey": {
@@ -728,7 +870,7 @@
       },
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_avatar` TEXT NOT NULL, `user_blocked` INTEGER NOT NULL, `user_blocking` INTEGER NOT NULL, `user_canUpdateCastcleId` INTEGER, `user_castcleId` TEXT NOT NULL, `user_casts` INTEGER, `user_cover` TEXT, `user_displayName` TEXT NOT NULL, `user_dob` TEXT, `user_email` TEXT, `user_followed` INTEGER NOT NULL, `user_followers` INTEGER, `user_following` INTEGER, `user_id` TEXT NOT NULL, `user_isOwner` INTEGER NOT NULL, `user_linkFacebook` TEXT, `user_linkMedium` TEXT, `user_linkTwitter` TEXT, `user_linkWebsite` TEXT, `user_linkYoutube` TEXT, `user_mobileCountryCode` TEXT, `user_mobileNumber` TEXT, `user_overview` TEXT, `user_passwordNotSet` INTEGER, `user_pdpa` INTEGER, `user_type` TEXT NOT NULL, `user_verifiedEmail` INTEGER NOT NULL, `user_verifiedMobile` INTEGER NOT NULL, `user_verifiedOfficial` INTEGER NOT NULL, `user_verifiedSocial` INTEGER NOT NULL, PRIMARY KEY(`user_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_avatar` TEXT NOT NULL, `user_blocked` INTEGER NOT NULL, `user_blocking` INTEGER NOT NULL, `user_canUpdateCastcleId` INTEGER, `user_castcleId` TEXT NOT NULL, `user_casts` INTEGER, `user_cover` TEXT, `user_createdAt` INTEGER, `user_displayName` TEXT NOT NULL, `user_dob` TEXT, `user_email` TEXT, `user_followed` INTEGER NOT NULL, `user_followers` INTEGER, `user_following` INTEGER, `user_id` TEXT NOT NULL, `user_isOwner` INTEGER NOT NULL, `user_linkFacebook` TEXT, `user_linkMedium` TEXT, `user_linkTwitter` TEXT, `user_linkWebsite` TEXT, `user_linkYoutube` TEXT, `user_mobileCountryCode` TEXT, `user_mobileNumber` TEXT, `user_overview` TEXT, `user_passwordNotSet` INTEGER, `user_pdpa` INTEGER, `user_type` TEXT NOT NULL, `user_verifiedEmail` INTEGER NOT NULL, `user_verifiedMobile` INTEGER NOT NULL, `user_verifiedOfficial` INTEGER NOT NULL, `user_verifiedSocial` INTEGER NOT NULL, PRIMARY KEY(`user_id`))",
         "fields": [
           {
             "fieldPath": "avatar",
@@ -770,6 +912,12 @@
             "fieldPath": "cover",
             "columnName": "user_cover",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "user_createdAt",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -950,7 +1098,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a8bcd44fc61a294ce112ec0bc9b64c05')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bebcd834f463db2536b9acc259ed3531')"
     ]
   }
 }

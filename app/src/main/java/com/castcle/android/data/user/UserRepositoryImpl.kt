@@ -129,11 +129,17 @@ class UserRepositoryImpl(
 
     override suspend fun fetchUserProfile(): UserEntity {
         val response = apiCall { api.getUser(id = "me") }
+        val linkSocial = LinkSocialEntity.map(response)
         val syncSocial = SyncSocialEntity.map(response)
         val user = UserEntity.mapOwner(response)
         glidePreloader.loadUser(user)
-        database.syncSocial().insert(syncSocial)
-        database.user().upsert(user)
+        database.withTransaction {
+            database.linkSocial().delete()
+            database.linkSocial().insert(linkSocial)
+            database.syncSocial().delete()
+            database.syncSocial().insert(syncSocial)
+            database.user().upsert(user)
+        }
         return user
     }
 

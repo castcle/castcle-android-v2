@@ -6,36 +6,69 @@
     android:layout_height="wrap_content"
     tools:background="@color/black_background_1">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivImage"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/blue_facebook"
+        android:padding="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_facebook" />
+
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanit.Small"
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_6sdp"
-        android:layout_marginBottom="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
         android:text="@string/email"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvDescription"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvDetail"
+        app:layout_constraintStart_toEndOf="@+id/ivImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/AppTextKanit.Small"
+        style="@style/AppTextSarabunLight.Small"
+        android:id="@+id/tvDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textColor="@color/gray_1"
+        app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+        app:layout_constraintEnd_toStartOf="@+id/ivArrow"
+        app:layout_constraintStart_toEndOf="@+id/tvTitle"
+        app:layout_constraintTop_toTopOf="@+id/tvTitle"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="earth.prakan@gmail.com" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextSarabunLight.xxSmall"
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         android:ellipsize="end"
+        android:includeFontPadding="false"
         android:gravity="end"
         android:maxLines="1"
-        android:textColor="@color/gray_4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/red_3"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
         app:layout_constraintEnd_toStartOf="@+id/ivArrow"
         app:layout_constraintStart_toEndOf="@+id/tvTitle"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetail"
         tools:text="earth.prakan@gmail.com" />
 
     <androidx.appcompat.widget.AppCompatImageView
