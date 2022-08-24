@@ -15,8 +15,11 @@ class ErrorMapper {
         is SocketTimeoutException,
         is UnknownHostException -> NetworkException()
         is ApiException -> when (throwable.errorCode) {
-            4001 -> CastcleException.UserNotFoundException(throwable.message)
-            5003 -> CastcleException.ContentNotFoundException(throwable.message)
+            3002 -> CastcleException.IncorrectEmailOrPassword(throwable.errorMessage)
+            3003 -> CastcleException.IncorrectEmail(throwable.errorMessage)
+            3019 -> CastcleException.SocialMediaAlreadyConnected(throwable.errorMessage)
+            4001 -> CastcleException.UserNotFoundException(throwable.errorMessage)
+            5003 -> CastcleException.ContentNotFoundException(throwable.errorMessage)
             else -> throwable
         }
         null -> UnknownException()
