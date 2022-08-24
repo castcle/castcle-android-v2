@@ -18,6 +18,7 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentContentBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.content.item_comment.CommentViewRenderer
 import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewRenderer
@@ -177,6 +178,14 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         )
     }
 
+    override fun onHashtagClicked(keyword: String) {
+        directions.toSearchFragment(keyword).navigate()
+    }
+
+    override fun onImageClicked(photo: ImageEntity) {
+        openUrl(photo.original)
+    }
+
     override fun onLikeClicked(cast: CastEntity) {
         shareViewModel.likeCast(
             isGuestAction = { directions.toLoginFragment().navigate() },
@@ -190,6 +199,14 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) = Unit
+
+    override fun onLinkClicked(url: String) {
+        openUrl(url)
+    }
+
+    override fun onMentionClicked(castcleId: String) {
+        directions.toProfileFragment(UserEntity(id = castcleId)).navigate()
+    }
 
     override fun onOptionClicked(type: OptionDialogType) {
         shareViewModel.isUserCanEngagement(

@@ -10,6 +10,9 @@ interface AuthenticationRepository {
     suspend fun getAccessToken(): AccessTokenEntity
     suspend fun getFirebaseMessagingToken(): String
     suspend fun fetchGuestAccessToken()
+    suspend fun linkWithFacebook()
+    suspend fun linkWithSocial(body: LoginWithSocialRequest)
+    suspend fun linkWithTwitter(token: TwitterAuthToken?)
     suspend fun loginWithEmail(body: LoginWithEmailRequest)
     suspend fun loginWithFacebook()
     suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount)

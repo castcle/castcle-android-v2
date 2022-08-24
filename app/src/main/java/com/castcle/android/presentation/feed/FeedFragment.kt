@@ -119,7 +119,7 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
     }
 
     override fun onHashtagClicked(keyword: String) {
-
+        directions.toSearchFragment(keyword).navigate()
     }
 
     override fun onImageClicked(photo: ImageEntity) {
@@ -136,6 +136,10 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
 
     override fun onLinkClicked(url: String) {
         openUrl(url)
+    }
+
+    override fun onMentionClicked(castcleId: String) {
+        directions.toProfileFragment(UserEntity(id = castcleId)).navigate()
     }
 
     override fun onNewCastClicked(userId: String) {

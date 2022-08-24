@@ -100,6 +100,10 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
         )
     }
 
+    override fun onHashtagClicked(keyword: String) {
+        directions.toSearchFragment(keyword).navigate()
+    }
+
     override fun onImageClicked(photo: ImageEntity) {
         openUrl(photo.original)
     }
@@ -114,6 +118,10 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
 
     override fun onLinkClicked(url: String) {
         openUrl(url)
+    }
+
+    override fun onMentionClicked(castcleId: String) {
+        directions.toProfileFragment(UserEntity(id = castcleId)).navigate()
     }
 
     override fun onOptionClicked(type: OptionDialogType) {

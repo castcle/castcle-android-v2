@@ -62,11 +62,6 @@ class ProfilePageViewHolder(
         } else {
             string(R.string.view_page)
         }
-        binding.tvViewProfile.text = if (item.user.isOwner) {
-            string(R.string.edit_profile)
-        } else {
-            string(R.string.view_profile)
-        }
         with(binding.tvFollow) {
             isGone = item.user.isOwner
             text = if (item.user.followed) {

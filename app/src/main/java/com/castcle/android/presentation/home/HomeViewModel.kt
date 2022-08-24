@@ -48,7 +48,7 @@ class HomeViewModel(
     private fun isGuestUpdater() {
         launch {
             database.accessToken().retrieve()
-                .mapNotNull { it.firstOrNull() }
+                .filterNotNull()
                 .collectLatest { isGuest.value = it.isGuest() }
         }
     }
@@ -92,14 +92,8 @@ class HomeViewModel(
         }
     }
 
-    fun logout(
-        onLaunchAction: () -> Unit,
-        onSuccessAction: () -> Unit,
-    ) {
-        launch(
-            onLaunch = { onLaunchAction() },
-            onSuccess = { onSuccessAction() },
-        ) {
+    fun logout(onSuccessAction: () -> Unit) {
+        launch(onSuccess = { onSuccessAction() }) {
             authenticationRepository.loginOut()
         }
     }

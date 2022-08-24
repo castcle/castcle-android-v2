@@ -3,8 +3,7 @@ package com.castcle.android.data.user.dao
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_USER
 import com.castcle.android.domain.core.entity.ImageEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.user.entity.UserWithSyncSocialEntity
+import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.UserType
 import kotlinx.coroutines.flow.Flow
 
@@ -43,6 +42,10 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(items: List<UserEntity>): List<Long>
+
+    @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 AND user_type = :type")
+    @Transaction
+    fun retrieveWithLinkSocial(type: UserType): Flow<UserWithLinkSocialEntity?>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 ORDER BY user_createdAt ASC")
     @Transaction

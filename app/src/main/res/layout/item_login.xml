@@ -204,6 +204,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tvOr"
         app:srcCompat="@drawable/ic_twitter" />
 
+    <View
+        android:id="@+id/viewTwitter"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
+        app:layout_constraintEnd_toEndOf="@+id/ivTwitter"
+        app:layout_constraintStart_toStartOf="@+id/ivTwitter"
+        app:layout_constraintTop_toTopOf="@+id/ivTwitter" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFacebook"
         android:layout_width="0dp"
@@ -218,6 +228,16 @@
         app:layout_constraintTop_toTopOf="@+id/ivTwitter"
         app:srcCompat="@drawable/ic_facebook" />
 
+    <View
+        android:id="@+id/viewFacebook"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTwitter"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/viewTwitter"
+        app:layout_constraintTop_toTopOf="@+id/viewTwitter" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivGoogle"
         android:layout_width="0dp"
@@ -231,6 +251,16 @@
         app:layout_constraintStart_toEndOf="@+id/ivTwitter"
         app:layout_constraintTop_toTopOf="@+id/ivTwitter"
         app:srcCompat="@drawable/ic_google" />
+
+    <View
+        android:id="@+id/viewGoogle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTwitter"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@+id/viewTwitter"
+        app:layout_constraintTop_toTopOf="@+id/viewTwitter" />
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanitLight.Small"
