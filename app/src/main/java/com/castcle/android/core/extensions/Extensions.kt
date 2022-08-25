@@ -1,11 +1,15 @@
 package com.castcle.android.core.extensions
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ClipData
 import android.content.Context
+import android.graphics.Rect
 import android.os.*
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DimenRes
@@ -134,6 +138,26 @@ fun User.getLargeProfileImageUrlHttps(): String? {
     } else {
         profileImageUrlHttps
     }
+}
+
+@Suppress("DEPRECATION")
+fun getScreenHeight(activity: Activity): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = activity.windowManager.currentWindowMetrics
+        val insets =
+            windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+        windowMetrics.bounds.height() - insets.left - insets.right
+    } else {
+        val displayMetrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        displayMetrics.heightPixels
+    }
+}
+
+fun getStatusBarHeight(activity: Activity): Int {
+    val resourceId = activity.resources.getIdentifier("status_bar_height", "dimen", "android")
+    return if (resourceId > 0) activity.resources.getDimensionPixelSize(resourceId)
+    else Rect().apply { activity.window.decorView.getWindowVisibleDisplayFrame(this) }.top
 }
 
 fun View.invisible() {

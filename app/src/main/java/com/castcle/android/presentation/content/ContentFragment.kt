@@ -69,19 +69,12 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
                 binding.ivAvatar.loadAvatarImage(it.avatar.thumbnail)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.mentions.collectLatest {
-                binding.etComment.updateMentionsItems(it)
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.hashtags.collectLatest {
-                binding.etComment.updateHashtagItems(it)
-            }
-        }
     }
 
     override fun initListener() {
+        compositeDisposable += binding.clComment.onClick {
+            binding.etComment.showKeyboard()
+        }
         compositeDisposable += binding.ivSentComment.onClick {
             if (binding.etComment.text.isNotBlank()) {
                 showLoading()
@@ -97,17 +90,13 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         binding.etComment.setMentionEnabled(true)
         binding.etComment.setMentionTextChangedListener(object : MentionView.OnChangedListener {
             override fun onChanged(view: MentionView, text: CharSequence) {
-                if (text.isNotBlank() && text != "@") {
-                    viewModel.getMentions(text.toString())
-                }
+                viewModel.getMentions(text.toString())
             }
         })
         binding.etComment.setHashtagEnabled(true)
         binding.etComment.setHashtagTextChangedListener(object : MentionView.OnChangedListener {
             override fun onChanged(view: MentionView, text: CharSequence) {
-                if (text.isNotBlank() && text != "#") {
-                    viewModel.getHashtag(text.toString())
-                }
+                viewModel.getHashtag(text.toString())
             }
         })
         setFragmentResultListener(REPLY_RESULT) { key, bundle ->
@@ -127,6 +116,12 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun initObserver() {
+        viewModel.mentions.observe(viewLifecycleOwner) {
+            binding.etComment.updateMentionsItems(it)
+        }
+        viewModel.hashtags.observe(viewLifecycleOwner) {
+            binding.etComment.updateHashtagItems(it)
+        }
         viewModel.contentOwnerDisplayName.observe(viewLifecycleOwner) {
             binding.actionBar.bind(
                 leftButtonAction = { backPress() },

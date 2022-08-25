@@ -19,16 +19,15 @@
         android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/clCast"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_12sdp">
+            android:layout_height="wrap_content">
 
             <FrameLayout
                 android:id="@+id/flAvatar"
@@ -89,6 +88,23 @@
                 app:layout_constraintStart_toEndOf="@+id/ivPublic"
                 app:layout_constraintTop_toTopOf="@+id/ivPublic" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AppTextKanit.Small"
+                android:id="@+id/tvMessageCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/etMessage"
+                app:layout_constraintTop_toBottomOf="@+id/etMessage"
+                tools:text="280" />
+
+            <View
+                android:id="@+id/viewContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.castcle.android.core.custom_view.mention_view.MentionEditText
                 style="@style/AppTextSarabunLight.Small"
                 android:id="@+id/etMessage"
@@ -102,20 +118,11 @@
                 android:hint="@string/whats_on_your_mind"
                 android:inputType="textMultiLine"
                 android:lineSpacingMultiplier="1.25"
+                android:paddingBottom="@dimen/_12sdp"
                 android:textColorHint="@color/gray_1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/flAvatar" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/AppTextKanit.Small"
-                android:id="@+id/tvMessageCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_12sdp"
-                app:layout_constraintEnd_toEndOf="@+id/etMessage"
-                app:layout_constraintTop_toBottomOf="@+id/etMessage"
-                tools:text="280" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -124,6 +131,7 @@
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +148,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clCast"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_42sdp"
         android:background="@color/black_background_3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
