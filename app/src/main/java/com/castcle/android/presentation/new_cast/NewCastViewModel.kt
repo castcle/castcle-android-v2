@@ -14,6 +14,8 @@ import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.content.entity.CreateContentRequest
 import com.castcle.android.data.user.entity.CreateQuoteCastRequest
 import com.castcle.android.domain.content.ContentRepository
+import com.castcle.android.domain.search.SearchRepository
+import com.castcle.android.domain.search.entity.HashtagEntity
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.UserType
@@ -28,10 +30,11 @@ import java.io.File
 @KoinViewModel
 class NewCastViewModel(
     private val contentRepository: ContentRepository,
-    val database: CastcleDatabase,
-    val mapper: NewCastMapper,
-    val userId: String?,
-    val userRepository: UserRepository,
+    private val database: CastcleDatabase,
+    private val mapper: NewCastMapper,
+    private val searchRepository: SearchRepository,
+    private val userId: String?,
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
     val createContentError = MutableLiveData<Throwable>()
@@ -43,6 +46,10 @@ class NewCastViewModel(
     val imageUri = MutableStateFlow<List<Uri>>(listOf())
 
     val quoteCast = MutableStateFlow<List<CastcleViewEntity>?>(null)
+
+    val hashtags = MutableLiveData<List<HashtagEntity>>()
+
+    val mentions = MutableLiveData<List<UserEntity>>()
 
     val imageItems = imageUri.map { uri ->
         uri.mapIndexed { index, each ->
@@ -102,6 +109,18 @@ class NewCastViewModel(
             )
             userRepository.createQuoteCast(body = body, userId = currentUser.value?.id.orEmpty())
             createContentSuccess.postValue(Unit)
+        }
+    }
+
+    fun getHashtag(keyword: String) {
+        launch {
+            hashtags.postValue(searchRepository.getHashtags(keyword))
+        }
+    }
+
+    fun getMentions(keyword: String) {
+        launch {
+            mentions.postValue(searchRepository.getMentions(keyword))
         }
     }
 

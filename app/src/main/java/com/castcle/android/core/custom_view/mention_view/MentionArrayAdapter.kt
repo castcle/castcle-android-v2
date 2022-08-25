@@ -82,7 +82,7 @@ class MentionArrayAdapter(
     }
 
     data class MentionsItem(val user: UserEntity = UserEntity()) {
-        override fun toString() = user.castcleId
+        override fun toString() = user.castcleId.replace("@", "")
     }
 
 }
