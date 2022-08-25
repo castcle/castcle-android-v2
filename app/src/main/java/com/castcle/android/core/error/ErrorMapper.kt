@@ -49,7 +49,7 @@ class ErrorMapper {
                 .create()
                 .fromJson(responseBody?.string().orEmpty(), ApiErrorResponse::class.java)
             ApiException(
-                errorCode = response.code ?: -1,
+                errorCode = response.code ?: response.statusCode ?: -1,
                 errorMessage = response.message ?: "Something went wrong. Please try again later.",
                 statusCode = response.statusCode ?: -1,
             )
