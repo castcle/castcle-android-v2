@@ -141,6 +141,7 @@
         <entry key="app/src/main/res/layout/item_report_subject_footer.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_report_subject_header.xml" value="0.4330910645575032" />
         <entry key="app/src/main/res/layout/item_report_subject_item.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_resent_verify_email.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_search_people.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_search_suggestion_keyword.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_search_suggestion_title.xml" value="0.5183861082737488" />

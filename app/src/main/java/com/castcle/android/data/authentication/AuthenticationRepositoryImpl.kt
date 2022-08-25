@@ -181,6 +181,10 @@ class AuthenticationRepositoryImpl(
         }
     }
 
+    override suspend fun resentVerifyEmail() {
+        apiCall { api.resentVerifyEmail() }
+    }
+
     override suspend fun unregisterFirebaseMessagingToken() {
         try {
             val body = RegisterFirebaseMessagingTokenRequest(

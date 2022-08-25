@@ -31,7 +31,7 @@ class AccountViewModel(
                 AccountTitleViewEntity(titleId = R.string.fragment_account_title_1),
                 AccountMenuViewEntity(
                     action = {
-                        if (!result.user.verifiedEmail) {
+                        if (!result.user.email.isNullOrBlank() && !result.user.verifiedEmail) {
                             it.onResentVerifyEmailClicked()
                         }
                     },

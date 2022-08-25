@@ -58,10 +58,15 @@ class HomeViewModel(
         isUserNotVerifiedAction: (() -> Unit)? = null,
         isMemberAction: () -> Unit,
     ) {
-        when {
-            isGuestAction != null && isGuest.value -> isGuestAction()
-            isUserNotVerifiedAction != null && isUserNotVerified.value -> isUserNotVerifiedAction()
-            else -> isMemberAction()
+        launch {
+            if (!isGuest.value && isUserNotVerified.value) {
+                userRepository.fetchUserProfile()
+            }
+            when {
+                isGuestAction != null && isGuest.value -> isGuestAction()
+                isUserNotVerifiedAction != null && isUserNotVerified.value -> isUserNotVerifiedAction()
+                else -> isMemberAction()
+            }
         }
     }
 

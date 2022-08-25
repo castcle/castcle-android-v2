@@ -350,6 +350,10 @@
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
+
     </fragment>
 
     <fragment
