@@ -28,7 +28,9 @@ abstract class BaseFragment : Fragment() {
     open fun initViewProperties() = Unit
 
     fun NavDirections.navigate() {
-        findNavController().navigate(this)
+        activity?.runOnUiThread {
+            findNavController().navigate(this)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
