@@ -23,6 +23,8 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import okhttp3.HttpUrl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -191,6 +193,19 @@ fun View.setPadding(
         end?.let { resources.getDimensionPixelSize(it) } ?: paddingRight,
         bottom?.let { resources.getDimensionPixelSize(it) } ?: paddingBottom,
     )
+}
+
+suspend fun timer(
+    delay: Long = 1_000,
+    delayCount: Int? = null,
+    delayOnStart: Long? = null,
+) = flow {
+    delay(delayOnStart ?: delay)
+    var count = 0
+    while (delayCount?.let { count < it } != false) {
+        emit(++count)
+        delay(delay)
+    }
 }
 
 fun String.toBearer(url: HttpUrl? = null): String {

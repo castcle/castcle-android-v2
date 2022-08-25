@@ -4,6 +4,8 @@ sealed class CastcleException(override val message: String?) : Throwable(message
 
     class ContentNotFoundException(override val message: String?) : CastcleException(message)
 
+    class EmailHasBeenVerifiedException(override val message: String?) : CastcleException(message)
+
     class IncorrectEmail(override val message: String?) : CastcleException(message)
 
     class IncorrectEmailOrPassword(override val message: String?) : CastcleException(message)

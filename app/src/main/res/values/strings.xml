@@ -57,6 +57,12 @@
     <string name="fragment_report_success_title">Thank you for letting us know the issue.</string>
     <string name="fragment_report_success_description_cast">If this Cast violates Castcle Terms and Agreement, it will be removed.</string>
     <string name="fragment_report_success_description_user">If this User violates Castcle Terms and Agreement, it will be removed.</string>
+    <string name="fragment_resent_verify_email_title_1">Haven\'t receive email yet.</string>
+    <string name="fragment_resent_verify_email_title_2">Make sure that</string>
+    <string name="fragment_resent_verify_email_title_3">1. Your email <![CDATA[&quot;<font color="#01D2FF">%s</font>&quot;]]> is correct and can be reached from the internet.</string>
+    <string name="fragment_resent_verify_email_title_4">2. Please check your spam folder.</string>
+    <string name="fragment_resent_verify_email_title_5">3. Your inbox is not full. Otherwise, delete some of your emails from your inbox before clicking the resend button.</string>
+    <string name="fragment_resent_verify_email_title_6">Resend Email</string>
     <string name="fragment_setting_title_1">%s New notification</string>
     <string name="fragment_setting_title_2">Verify e-mail</string>
     <string name="fragment_setting_title_3">Please verify your e-mail</string>

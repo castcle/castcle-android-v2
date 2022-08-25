@@ -17,7 +17,7 @@ class SettingVerifyEmailViewHolder(
 
     init {
         compositeDisposable += binding.root.onClick {
-            listener.onVerifyEmailClicked()
+            listener.onResentVerifyEmailClicked()
         }
     }
 

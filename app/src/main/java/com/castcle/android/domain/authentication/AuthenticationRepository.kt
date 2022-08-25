@@ -20,5 +20,6 @@ interface AuthenticationRepository {
     suspend fun loginWithTwitter(token: TwitterAuthToken?)
     suspend fun loginOut()
     suspend fun registerFirebaseMessagingToken()
+    suspend fun resentVerifyEmail()
     suspend fun unregisterFirebaseMessagingToken()
 }

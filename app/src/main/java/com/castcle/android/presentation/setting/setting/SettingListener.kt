@@ -10,7 +10,7 @@ interface SettingListener : CastcleListener {
     fun onLogoutClick()
     fun onNewPageClick()
     fun onNotificationClicked()
+    fun onResentVerifyEmailClicked()
     fun onUrlClicked(url: String)
     fun onUserClicked(user: UserEntity)
-    fun onVerifyEmailClicked()
 }
