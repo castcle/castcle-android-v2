@@ -1,6 +1,7 @@
 package com.castcle.android.core.api
 
-import com.castcle.android.core.constants.HEADER_AUTHORIZATION
+import android.os.Build
+import com.castcle.android.core.constants.*
 import com.castcle.android.data.authentication.entity.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -10,6 +11,8 @@ interface AuthenticationApi {
     @POST("v2/authentications/guest")
     suspend fun getGuestAccessToken(
         @Body body: GetGuestAccessTokenRequest,
+        @Header(HEADER_DEVICE) device: String = Build.MODEL,
+        @Header(HEADER_PLATFORM) platform: String = "Android ${Build.VERSION.RELEASE}",
     ): Response<GetGuestAccessTokenResponse>
 
     @POST("v2/authentications/connect-with-social")
@@ -36,6 +39,11 @@ interface AuthenticationApi {
     suspend fun registerFirebaseMessagingToken(
         @Body body: RegisterFirebaseMessagingTokenRequest
     ): Response<Unit>
+
+    @POST("v2/authentications/request-otp/mobile")
+    suspend fun requestOtpMobile(
+        @Body body: RequestOtpMobileRequest,
+    ): Response<RequestOtpMobileResponse>
 
     @POST("v2/authentications/request-link/email")
     suspend fun resentVerifyEmail(): Response<Unit>

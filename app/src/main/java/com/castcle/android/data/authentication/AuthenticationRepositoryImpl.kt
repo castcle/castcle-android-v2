@@ -12,6 +12,7 @@ import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
+import com.castcle.android.domain.authentication.entity.RequestOtpMobileEntity
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
 import com.facebook.*
@@ -179,6 +180,11 @@ class AuthenticationRepositoryImpl(
         } catch (exception: Exception) {
             Timber.e(exception)
         }
+    }
+
+    override suspend fun requestOtpMobile(body: RequestOtpMobileRequest): RequestOtpMobileEntity {
+        val response = apiCall { api.requestOtpMobile(body = body) }
+        return RequestOtpMobileEntity.map(body, response)
     }
 
     override suspend fun resentVerifyEmail() {
