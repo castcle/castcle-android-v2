@@ -13,7 +13,7 @@ before_all do
   KEYSTORE_PATH = Dir.pwd + "/../certificates/CastcleKeyStore.jks"
   FIREBASE_KEY_PATH = Dir.pwd + "/../certificates/firebase-app-distribution-key.json"
   PLAYSTORE_KEY_PATH = Dir.pwd + "/../certificates/playstore-app-distribution-key.json"
-  BUNDLE_FILE_PATH = Dir.pwd + "/../app/build/outputs/bundle/developmentRelease/app-development-release.aab"
+  BUNDLE_FILE_PATH = Dir.pwd + "/../app/build/outputs/bundle/app-release.aab"
 end
 
 lane :build_and_distribute do
@@ -49,7 +49,7 @@ desc "Build the .aab file"
 private_lane :build do
   gradle(
     task: "bundle",
-    flavor: "Development",
+    flavor: ENV['ENV'],
     build_type: "Release",
     properties: {
       "android.injected.signing.store.file" => KEYSTORE_PATH,
