@@ -18,6 +18,7 @@ class ErrorMapper {
             3002 -> CastcleException.IncorrectEmailOrPassword(throwable.errorMessage)
             3003 -> CastcleException.IncorrectEmail(throwable.errorMessage)
             3019 -> CastcleException.SocialMediaAlreadyConnected(throwable.errorMessage)
+            3028 -> CastcleException.EmailHasBeenVerifiedException(throwable.errorMessage)
             4001 -> CastcleException.UserNotFoundException(throwable.errorMessage)
             5003 -> CastcleException.ContentNotFoundException(throwable.errorMessage)
             else -> throwable
@@ -48,7 +49,7 @@ class ErrorMapper {
                 .create()
                 .fromJson(responseBody?.string().orEmpty(), ApiErrorResponse::class.java)
             ApiException(
-                errorCode = response.code ?: -1,
+                errorCode = response.code ?: response.statusCode ?: -1,
                 errorMessage = response.message ?: "Something went wrong. Please try again later.",
                 statusCode = response.statusCode ?: -1,
             )

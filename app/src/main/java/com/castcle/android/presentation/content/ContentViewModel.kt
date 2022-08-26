@@ -46,11 +46,11 @@ class ContentViewModel(
 
     val contentOwnerDisplayName = MutableLiveData<String>()
 
-    val hashtags = MutableStateFlow<List<HashtagEntity>>(listOf())
+    val hashtags = MutableLiveData<List<HashtagEntity>>()
 
     val loadState = MutableStateFlow<LoadState>(LoadState.Loading)
 
-    val mentions = MutableStateFlow<List<UserEntity>>(listOf())
+    val mentions = MutableLiveData<List<UserEntity>>()
 
     val onCommentSuccess = MutableLiveData<Unit>()
 
@@ -147,13 +147,13 @@ class ContentViewModel(
 
     fun getHashtag(keyword: String) {
         launch {
-            hashtags.value = searchRepository.getHashtags(keyword)
+            hashtags.postValue(searchRepository.getHashtags(keyword))
         }
     }
 
     fun getMentions(keyword: String) {
         launch {
-            mentions.value = searchRepository.getMentions(keyword)
+            mentions.postValue(searchRepository.getMentions(keyword))
         }
     }
 

@@ -91,7 +91,7 @@
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/fragment_new_cast.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_new_cast.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_report_detail.xml" value="0.3891871165644172" />
         <entry key="app/src/main/res/layout/fragment_report_success.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.47719298245614034" />
@@ -114,7 +114,7 @@
         <entry key="app/src/main/res/layout/item_feed_image_3.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_feed_image_4.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_image_item.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/item_feed_new_cast.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_feed_quote.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_recast.xml" value="0.5519379844961241" />
         <entry key="app/src/main/res/layout/item_feed_reporting.xml" value="0.4330910645575032" />
@@ -141,6 +141,7 @@
         <entry key="app/src/main/res/layout/item_report_subject_footer.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_report_subject_header.xml" value="0.4330910645575032" />
         <entry key="app/src/main/res/layout/item_report_subject_item.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_resent_verify_email.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_search_people.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_search_suggestion_keyword.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_search_suggestion_title.xml" value="0.5183861082737488" />

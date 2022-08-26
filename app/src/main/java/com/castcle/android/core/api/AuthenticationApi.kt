@@ -37,6 +37,9 @@ interface AuthenticationApi {
         @Body body: RegisterFirebaseMessagingTokenRequest
     ): Response<Unit>
 
+    @POST("v2/authentications/request-link/email")
+    suspend fun resentVerifyEmail(): Response<Unit>
+
     @HTTP(method = "DELETE", path = "/v2/authentications/register/notification", hasBody = true)
     suspend fun unregisterFirebaseMessagingToken(
         @Body body: RegisterFirebaseMessagingTokenRequest

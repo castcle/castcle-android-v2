@@ -1,11 +1,15 @@
 package com.castcle.android.core.extensions
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ClipData
 import android.content.Context
+import android.graphics.Rect
 import android.os.*
 import android.provider.Settings
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowInsets
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DimenRes
@@ -23,6 +27,8 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import okhttp3.HttpUrl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -134,6 +140,26 @@ fun User.getLargeProfileImageUrlHttps(): String? {
     }
 }
 
+@Suppress("DEPRECATION")
+fun getScreenHeight(activity: Activity): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = activity.windowManager.currentWindowMetrics
+        val insets =
+            windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+        windowMetrics.bounds.height() - insets.left - insets.right
+    } else {
+        val displayMetrics = DisplayMetrics()
+        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        displayMetrics.heightPixels
+    }
+}
+
+fun getStatusBarHeight(activity: Activity): Int {
+    val resourceId = activity.resources.getIdentifier("status_bar_height", "dimen", "android")
+    return if (resourceId > 0) activity.resources.getDimensionPixelSize(resourceId)
+    else Rect().apply { activity.window.decorView.getWindowVisibleDisplayFrame(this) }.top
+}
+
 fun View.invisible() {
     visibility = View.INVISIBLE
 }
@@ -191,6 +217,19 @@ fun View.setPadding(
         end?.let { resources.getDimensionPixelSize(it) } ?: paddingRight,
         bottom?.let { resources.getDimensionPixelSize(it) } ?: paddingBottom,
     )
+}
+
+suspend fun timer(
+    delay: Long = 1_000,
+    delayCount: Int? = null,
+    delayOnStart: Long? = null,
+) = flow {
+    delay(delayOnStart ?: delay)
+    var count = 0
+    while (delayCount?.let { count < it } != false) {
+        emit(++count)
+        delay(delay)
+    }
 }
 
 fun String.toBearer(url: HttpUrl? = null): String {

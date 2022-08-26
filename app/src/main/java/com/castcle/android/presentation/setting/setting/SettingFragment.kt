@@ -78,7 +78,9 @@ class SettingFragment : BaseFragment(), SettingListener {
         directions.toProfileFragment(user).navigate()
     }
 
-    override fun onVerifyEmailClicked() = Unit
+    override fun onResentVerifyEmailClicked() {
+        directions.toResentVerifyEmailFragment().navigate()
+    }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
