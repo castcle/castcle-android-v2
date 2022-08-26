@@ -98,7 +98,9 @@ class AccountFragment : BaseFragment(), AccountListener {
         })
     }
 
-    override fun onMobileNumberClicked() = Unit
+    override fun onMobileNumberClicked() {
+        directions.toRegisterMobileFragment().navigate()
+    }
 
     override fun onPasswordClicked() = Unit
 
