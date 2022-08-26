@@ -10,6 +10,7 @@ import com.castcle.android.data.content.dao.CommentDao
 import com.castcle.android.data.content.dao.ContentDao
 import com.castcle.android.data.core.dao.LoadKeyDao
 import com.castcle.android.data.feed.dao.FeedDao
+import com.castcle.android.data.metadata.dao.CountryCodeDao
 import com.castcle.android.data.notification.dao.NotificationBadgesDao
 import com.castcle.android.data.search.dao.*
 import com.castcle.android.data.user.dao.*
@@ -26,6 +27,7 @@ import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.feed.entity.FeedEntity
 import com.castcle.android.domain.feed.type.FeedType
+import com.castcle.android.domain.metadata.entity.CountryCodeEntity
 import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
 import com.castcle.android.domain.search.entity.*
 import com.castcle.android.domain.user.entity.*
@@ -43,6 +45,7 @@ import com.castcle.android.domain.user.type.*
         CastEntity::class,
         CommentEntity::class,
         ContentEntity::class,
+        CountryCodeEntity::class,
         FeedEntity::class,
         FollowingFollowersEntity::class,
         LinkSocialEntity::class,
@@ -77,6 +80,7 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun cast(): CastDao
     abstract fun comment(): CommentDao
     abstract fun content(): ContentDao
+    abstract fun countryCode(): CountryCodeDao
     abstract fun feed(): FeedDao
     abstract fun followingFollowers(): FollowingFollowersDao
     abstract fun linkSocial(): LinkSocialDao

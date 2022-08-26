@@ -1,8 +1,8 @@
 package com.castcle.android.domain.authentication
 
-import com.castcle.android.data.authentication.entity.LoginWithEmailRequest
-import com.castcle.android.data.authentication.entity.LoginWithSocialRequest
+import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
+import com.castcle.android.domain.authentication.entity.RequestOtpMobileEntity
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.twitter.sdk.android.core.TwitterAuthToken
 
@@ -20,6 +20,7 @@ interface AuthenticationRepository {
     suspend fun loginWithTwitter(token: TwitterAuthToken?)
     suspend fun loginOut()
     suspend fun registerFirebaseMessagingToken()
+    suspend fun requestOtpMobile(body: RequestOtpMobileRequest): RequestOtpMobileEntity
     suspend fun resentVerifyEmail()
     suspend fun unregisterFirebaseMessagingToken()
 }

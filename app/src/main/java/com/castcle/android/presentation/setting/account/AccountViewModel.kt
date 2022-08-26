@@ -86,6 +86,7 @@ class AccountViewModel(
                     },
                     imageColor = R.color.blue_facebook,
                     imageIcon = R.drawable.ic_facebook,
+                    showArrow = result.linkSocial.find { find -> find.provider is SocialType.Facebook } == null,
                     titleId = R.string.facebook,
                 ),
                 AccountMenuViewEntity(
@@ -106,6 +107,7 @@ class AccountViewModel(
                     },
                     imageColor = R.color.blue_twitter,
                     imageIcon = R.drawable.ic_twitter,
+                    showArrow = result.linkSocial.find { find -> find.provider is SocialType.Twitter } == null,
                     titleId = R.string.twitter,
                 ),
                 AccountTitleViewEntity(titleId = R.string.fragment_account_title_3),

@@ -3,7 +3,6 @@ package com.castcle.android.core.constants
 const val AUTHORIZATION_PREFIX = "Bearer "
 
 const val HEADER_ACCEPT_LANGUAGE = "Accept-Language"
-const val HEADER_ACCEPT_VERSION = "Accept-Version"
 const val HEADER_API_META_DATA = "API-Metadata"
 const val HEADER_AUTHORIZATION = "Authorization"
 const val HEADER_CONTENT_TYPE = "Content-Type"
