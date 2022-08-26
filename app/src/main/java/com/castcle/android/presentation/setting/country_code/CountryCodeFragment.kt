@@ -11,8 +11,7 @@ import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
-import com.castcle.android.core.extensions.changeSoftInputMode
-import com.castcle.android.core.extensions.string
+import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutRecyclerViewWithSearchBinding
 import com.castcle.android.domain.metadata.entity.CountryCodeEntity
 import com.castcle.android.presentation.setting.country_code.item_country_code.CountryCodeViewRenderer
@@ -37,6 +36,10 @@ class CountryCodeFragment : BaseFragment(), CountryCodeListener {
     override fun initListener() {
         binding.searchBar.setTextChangeWithoutDebounceListener { keyword ->
             viewModel.searchKeyword.value = keyword
+        }
+        binding.searchBar.setSearchClickedListener {
+            hideKeyboard()
+            binding.searchBar.clearFocus()
         }
     }
 

@@ -1,5 +1,6 @@
 package com.castcle.android.presentation.setting.register_mobile
 
+import androidx.lifecycle.MutableLiveData
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.presentation.setting.register_mobile.item_register_mobile.RegisterMobileViewEntity
@@ -10,6 +11,6 @@ class RegisterMobileViewModel(
     private val database: CastcleDatabase
 ) : BaseViewModel() {
 
-    val views = listOf(RegisterMobileViewEntity())
+    val views = MutableLiveData(listOf(RegisterMobileViewEntity()))
 
 }
