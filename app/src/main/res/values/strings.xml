@@ -11,6 +11,7 @@
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
     <string name="copy_message">Copy message</string>
+    <string name="confirm">Confirm</string>
     <string name="content_farming">Content Farming</string>
     <string name="docs">Docs</string>
     <string name="done">Done</string>
@@ -40,6 +41,7 @@
     <string name="fragment_account_title_1">Account Setting</string>
     <string name="fragment_account_title_2">Link Social Media Account</string>
     <string name="fragment_account_title_3">Account Control</string>
+    <string name="fragment_country_code_title_1">Select Country Code</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
     <string name="fragment_login_title_3">Enter your email address</string>
@@ -48,6 +50,9 @@
     <string name="fragment_login_title_6">Login</string>
     <string name="fragment_login_title_7">Or continue with</string>
     <string name="fragment_login_title_8">Don’t have an account? <font color="#01D2FF">Sign up</font></string>
+    <string name="fragment_register_mobile_title_1">Register mobile number</string>
+    <string name="fragment_register_mobile_title_2">Please enter you country/mobile number to verify your account</string>
+    <string name="fragment_register_mobile_title_3">Your mobile number</string>
     <string name="fragment_report_detail_message_hint">Write you message here…</string>
     <string name="fragment_report_detail_cast_title">Are there any additional issues with this Cast you want to report? Tell us more.</string>
     <string name="fragment_report_detail_user_title">Are there any additional issues with this User you want to report? Tell us more.</string>
@@ -75,7 +80,7 @@
     <string name="linked">Linked</string>
     <string name="logout">Log out</string>
     <string name="message">Message</string>
-    <string name="mobile_number">Mobile number</string>
+    <string name="mobile_number">Mobile Number</string>
     <string name="more_image">+%d</string>
     <string name="new_cast">New Cast</string>
     <string name="not_verify">Not verify</string>
