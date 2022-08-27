@@ -84,7 +84,7 @@ desc "Responsible for uploading aab to playstore"
 private_lane :distribute_playstore do
   upload_to_play_store(
     track: "alpha",
-    aab: BUNDLE_FILE_PATH,
+    aab: GRADLE_AAB_OUTPUT_PATH,
     json_key: PLAYSTORE_KEY_PATH,
     package_name: PACKAGE_NAME
   )
