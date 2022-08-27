@@ -48,7 +48,7 @@ class HomeViewModel(
     private fun isGuestUpdater() {
         launch {
             database.accessToken().retrieve()
-                .mapNotNull { it.firstOrNull() }
+                .filterNotNull()
                 .collectLatest { isGuest.value = it.isGuest() }
         }
     }
@@ -58,10 +58,15 @@ class HomeViewModel(
         isUserNotVerifiedAction: (() -> Unit)? = null,
         isMemberAction: () -> Unit,
     ) {
-        when {
-            isGuestAction != null && isGuest.value -> isGuestAction()
-            isUserNotVerifiedAction != null && isUserNotVerified.value -> isUserNotVerifiedAction()
-            else -> isMemberAction()
+        launch {
+            if (!isGuest.value && isUserNotVerified.value) {
+                userRepository.fetchUserProfile()
+            }
+            when {
+                isGuestAction != null && isGuest.value -> isGuestAction()
+                isUserNotVerifiedAction != null && isUserNotVerified.value -> isUserNotVerifiedAction()
+                else -> isMemberAction()
+            }
         }
     }
 
@@ -92,14 +97,8 @@ class HomeViewModel(
         }
     }
 
-    fun logout(
-        onLaunchAction: () -> Unit,
-        onSuccessAction: () -> Unit,
-    ) {
-        launch(
-            onLaunch = { onLaunchAction() },
-            onSuccess = { onSuccessAction() },
-        ) {
+    fun logout(onSuccessAction: () -> Unit) {
+        launch(onSuccess = { onSuccessAction() }) {
             authenticationRepository.loginOut()
         }
     }

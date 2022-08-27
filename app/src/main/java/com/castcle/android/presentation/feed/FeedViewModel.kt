@@ -33,14 +33,15 @@ class FeedViewModel(
 
     val isGuest = database.accessToken()
         .retrieve()
-        .map { it.firstOrNull()?.isGuest() ?: true }
+        .map { it?.isGuest() ?: true }
         .distinctUntilChanged()
 
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
-    val views = isGuest
+    val views = database.accessToken()
+        .retrieve()
         .distinctUntilChanged()
-        .flatMapLatest { isGuest ->
+        .flatMapLatest { accessToken ->
             Pager(
                 config = PagingConfig(
                     initialLoadSize = PARAMETER_MAX_RESULTS_LARGE_ITEM,
@@ -51,7 +52,7 @@ class FeedViewModel(
                     api = api,
                     database = database,
                     glidePreloader = glidePreloader,
-                    isGuest = isGuest,
+                    isGuest = accessToken?.isGuest() ?: true,
                     mapper = feedResponseMapper,
                 )
             ).flow.map { pagingData ->

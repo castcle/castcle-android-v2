@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
+import com.castcle.android.core.custom_view.mention_view.MentionView
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentNewCastBinding
 import com.castcle.android.presentation.feed.FeedDisplayType
@@ -47,6 +48,9 @@ class NewCastFragment : BaseFragment(), FeedListener {
                 }
             }
         }
+        binding.viewContent.layoutParams.height = getScreenHeight(requireActivity())
+            .minus(dimenPx(com.intuit.sdp.R.dimen._84sdp))
+            .minus(getStatusBarHeight(requireActivity()))
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
             title = if (args.quoteCastId != null) {
@@ -58,11 +62,23 @@ class NewCastFragment : BaseFragment(), FeedListener {
     }
 
     override fun initListener() {
+        binding.etMessage.setMentionEnabled(true)
+        binding.etMessage.setMentionTextChangedListener(object : MentionView.OnChangedListener {
+            override fun onChanged(view: MentionView, text: CharSequence) {
+                viewModel.getMentions(text.toString())
+            }
+        })
+        binding.etMessage.setHashtagEnabled(true)
+        binding.etMessage.setHashtagTextChangedListener(object : MentionView.OnChangedListener {
+            override fun onChanged(view: MentionView, text: CharSequence) {
+                viewModel.getHashtag(text.toString())
+            }
+        })
         compositeDisposable += binding.etMessage.onTextChange {
             updateMessageCount()
             updateCastButton()
         }
-        compositeDisposable += binding.clContent.onClick {
+        compositeDisposable += binding.viewContent.onClick {
             binding.etMessage.showKeyboard()
         }
         compositeDisposable += binding.ivSelectedImage.onClick {
@@ -94,6 +110,12 @@ class NewCastFragment : BaseFragment(), FeedListener {
         viewModel.createContentSuccess.observe(viewLifecycleOwner) {
             dismissLoading()
             backPress()
+        }
+        viewModel.mentions.observe(viewLifecycleOwner) {
+            binding.etMessage.updateMentionsItems(it)
+        }
+        viewModel.hashtags.observe(viewLifecycleOwner) {
+            binding.etMessage.updateHashtagItems(it)
         }
     }
 

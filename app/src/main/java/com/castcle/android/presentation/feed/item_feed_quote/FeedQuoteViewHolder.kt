@@ -49,10 +49,11 @@ class FeedQuoteViewHolder(
         }
         binding.castcleTextView.setLinkClickListener(object : CastcleTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
-                if (linkType == LinkedType.URL) {
-                    listener.onLinkClicked(matchedText)
-                } else if (linkType == LinkedType.HASHTAG) {
-                    listener.onHashtagClicked(matchedText)
+                when (linkType) {
+                    LinkedType.URL -> listener.onLinkClicked(matchedText)
+                    LinkedType.HASHTAG -> listener.onHashtagClicked(matchedText)
+                    LinkedType.MENTION -> listener.onMentionClicked(matchedText)
+                    else -> Unit
                 }
             }
         })
@@ -73,6 +74,10 @@ class FeedQuoteViewHolder(
 
     override fun onCommentClicked(cast: CastEntity) {
         listener.onCommentClicked(cast, item.user)
+    }
+
+    override fun onContentFarmingClicked(cast: CastEntity) {
+        listener.onContentFarmingClicked(cast)
     }
 
     override fun onFollowClicked(user: UserEntity) {

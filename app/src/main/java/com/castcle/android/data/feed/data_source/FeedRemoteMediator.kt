@@ -3,8 +3,6 @@ package com.castcle.android.data.feed.data_source
 import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.FeedApi
-import com.castcle.android.core.constants.PARAMETER_CIRCLE_SLUG_FOR_YOU
-import com.castcle.android.core.constants.PARAMETER_FEATURE_SLUG_FEED
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.error.ErrorMapper
 import com.castcle.android.core.glide.GlidePreloader
@@ -44,19 +42,10 @@ class FeedRemoteMediator(
                 }
             }
 
-            val response = if (isGuest) {
-                api.getFeedGuest(
-                    maxResults = state.config.pageSize,
-                    untilId = loadKey,
-                )
-            } else {
-                api.getFeedMember(
-                    circleSlug = PARAMETER_CIRCLE_SLUG_FOR_YOU,
-                    featureSlug = PARAMETER_FEATURE_SLUG_FEED,
-                    maxResults = state.config.pageSize,
-                    untilId = loadKey,
-                )
-            }
+            val response = api.getFeed(
+                maxResults = state.config.pageSize,
+                nextToken = loadKey,
+            )
 
             val ownerUser = database.withTransaction {
                 database.user().get()
@@ -74,7 +63,11 @@ class FeedRemoteMediator(
             }
 
             val nextLoadKey = LoadKeyEntity(
-                loadKey = response.body()?.meta?.getNextLoadKey(currentLoadKey = loadKey),
+                loadKey = when {
+                    response.body()?.meta?.nextToken != null -> response.body()?.meta?.nextToken
+                    response.body()?.payload.isNullOrEmpty() -> null
+                    else -> "${System.currentTimeMillis()}"
+                },
                 loadType = LoadKeyType.Feed,
                 sessionId = sessionId,
             )

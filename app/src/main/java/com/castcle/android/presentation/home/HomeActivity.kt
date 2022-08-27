@@ -14,6 +14,7 @@ import com.castcle.android.core.extensions.hideKeyboard
 import com.castcle.android.databinding.ActivityHomeBinding
 import com.castcle.android.presentation.feed.FeedFragment
 import com.castcle.android.presentation.login.LoginFragment
+import com.castcle.android.presentation.setting.account.AccountFragment
 import com.twitter.sdk.android.core.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,10 +27,8 @@ class HomeActivity : BaseActivity() {
     override fun initObserver() {
         lifecycleScope.launch {
             viewModel.recursiveRefreshToken.collectLatest {
-                viewModel.logout(
-                    onLaunchAction = { showLoading() },
-                    onSuccessAction = { popToHomeFragment() },
-                )
+                showLoading()
+                viewModel.logout { popToHomeFragment() }
             }
         }
     }
@@ -58,24 +57,14 @@ class HomeActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
             when (findNavController(R.id.navHostContainer).currentDestination?.id) {
+                R.id.accountFragment -> findFragmentInNavHost<AccountFragment>()
+                    ?.twitterAuthClient
+                    ?.onActivityResult(requestCode, resultCode, data)
                 R.id.loginFragment -> findFragmentInNavHost<LoginFragment>()
                     ?.twitterAuthClient
                     ?.onActivityResult(requestCode, resultCode, data)
             }
         }
-    }
-
-    private val binding by lazy {
-        ActivityHomeBinding.inflate(layoutInflater)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        initViewProperties()
-        initListener()
-        initObserver()
-        initTwitter()
     }
 
     private fun initTwitter() {
@@ -89,6 +78,19 @@ class HomeActivity : BaseActivity() {
             .debug(BuildConfig.DEBUG)
             .build()
         Twitter.initialize(config)
+    }
+
+    private val binding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
+        initViewProperties()
+        initListener()
+        initObserver()
+        initTwitter()
     }
 
 }

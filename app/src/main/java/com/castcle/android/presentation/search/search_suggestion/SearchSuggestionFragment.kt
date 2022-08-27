@@ -8,7 +8,7 @@ import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.hideKeyboard
-import com.castcle.android.databinding.FragmentSearchSuggestionBinding
+import com.castcle.android.databinding.LayoutRecyclerViewWithSearchBinding
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.search.search_suggestion.item_keyword.SearchSuggestionKeywordViewRenderer
 import com.castcle.android.presentation.search.search_suggestion.item_title.SearchSuggestionTitleViewEntity
@@ -89,7 +89,7 @@ class SearchSuggestionFragment : BaseFragment(), SearchSuggestionListener {
     }
 
     private val binding by lazy {
-        FragmentSearchSuggestionBinding.inflate(layoutInflater)
+        LayoutRecyclerViewWithSearchBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(

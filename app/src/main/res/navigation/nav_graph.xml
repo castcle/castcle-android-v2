@@ -32,6 +32,20 @@
     </dialog>
 
     <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.castcle.android.presentation.setting.account.AccountFragment">
+
+        <action
+            android:id="@+id/toRegisterMobileFragment"
+            app:destination="@id/registerMobileFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/contentFragment"
         android:name="com.castcle.android.presentation.content.ContentFragment">
 
@@ -64,7 +78,15 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/countryCodeFragment"
+        android:name="com.castcle.android.presentation.setting.country_code.CountryCodeFragment" />
 
     <fragment
         android:id="@+id/followingFollowersFragment"
@@ -202,6 +224,20 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerMobileFragment"
+        android:name="com.castcle.android.presentation.setting.register_mobile.RegisterMobileFragment">
+
+        <action
+            android:id="@+id/toCountryCodeFragment"
+            app:destination="@id/countryCodeFragment" />
+
     </fragment>
 
     <fragment
@@ -322,11 +358,19 @@
 
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.castcle.android.presentation.setting.SettingFragment">
+        android:name="com.castcle.android.presentation.setting.setting.SettingFragment">
+
+        <action
+            android:id="@+id/toAccountFragment"
+            app:destination="@id/accountFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
     </fragment>
 

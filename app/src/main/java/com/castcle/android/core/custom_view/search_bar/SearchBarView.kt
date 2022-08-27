@@ -23,6 +23,8 @@ class SearchBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(co
 
     private var onTextChange: (String) -> Unit = {}
 
+    private var onTextChangeWithoutDebounce: (String) -> Unit = {}
+
     private var onSearchClicked: (String) -> Unit = {}
 
     init {
@@ -31,6 +33,7 @@ class SearchBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         }
         compositeDisposable += binding.etSearch.onTextChange {
             binding.ivClear.isVisible = it.isNotBlank()
+            onTextChangeWithoutDebounce(it)
         }
         compositeDisposable += binding.etSearch.onTextChange(500) {
             onTextChange(it)
@@ -48,6 +51,10 @@ class SearchBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(co
         onTextChange = listener
     }
 
+    fun setTextChangeWithoutDebounceListener(listener: (String) -> Unit = {}) {
+        onTextChangeWithoutDebounce = listener
+    }
+
     fun setSearchClickedListener(listener: (String) -> Unit = {}) {
         onSearchClicked = listener
     }
@@ -58,6 +65,10 @@ class SearchBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(co
 
     fun focus() {
         binding.etSearch.showKeyboard()
+    }
+
+    fun setHintText(hint: String) {
+        binding.etSearch.hint = hint
     }
 
     fun setText(text: String) {

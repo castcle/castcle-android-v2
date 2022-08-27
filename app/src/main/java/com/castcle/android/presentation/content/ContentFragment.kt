@@ -18,6 +18,7 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentContentBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.content.item_comment.CommentViewRenderer
 import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewRenderer
@@ -68,19 +69,12 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
                 binding.ivAvatar.loadAvatarImage(it.avatar.thumbnail)
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.mentions.collectLatest {
-                binding.etComment.updateMentionsItems(it)
-            }
-        }
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.hashtags.collectLatest {
-                binding.etComment.updateHashtagItems(it)
-            }
-        }
     }
 
     override fun initListener() {
+        compositeDisposable += binding.clComment.onClick {
+            binding.etComment.showKeyboard()
+        }
         compositeDisposable += binding.ivSentComment.onClick {
             if (binding.etComment.text.isNotBlank()) {
                 showLoading()
@@ -96,17 +90,13 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         binding.etComment.setMentionEnabled(true)
         binding.etComment.setMentionTextChangedListener(object : MentionView.OnChangedListener {
             override fun onChanged(view: MentionView, text: CharSequence) {
-                if (text.isNotBlank() && text != "@") {
-                    viewModel.getMentions(text.toString())
-                }
+                viewModel.getMentions(text.toString())
             }
         })
         binding.etComment.setHashtagEnabled(true)
         binding.etComment.setHashtagTextChangedListener(object : MentionView.OnChangedListener {
             override fun onChanged(view: MentionView, text: CharSequence) {
-                if (text.isNotBlank() && text != "#") {
-                    viewModel.getHashtag(text.toString())
-                }
+                viewModel.getHashtag(text.toString())
             }
         })
         setFragmentResultListener(REPLY_RESULT) { key, bundle ->
@@ -126,6 +116,12 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun initObserver() {
+        viewModel.mentions.observe(viewLifecycleOwner) {
+            binding.etComment.updateMentionsItems(it)
+        }
+        viewModel.hashtags.observe(viewLifecycleOwner) {
+            binding.etComment.updateHashtagItems(it)
+        }
         viewModel.contentOwnerDisplayName.observe(viewLifecycleOwner) {
             binding.actionBar.bind(
                 leftButtonAction = { backPress() },
@@ -177,6 +173,14 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         )
     }
 
+    override fun onHashtagClicked(keyword: String) {
+        directions.toSearchFragment(keyword).navigate()
+    }
+
+    override fun onImageClicked(photo: ImageEntity) {
+        openUrl(photo.original)
+    }
+
     override fun onLikeClicked(cast: CastEntity) {
         shareViewModel.likeCast(
             isGuestAction = { directions.toLoginFragment().navigate() },
@@ -190,6 +194,14 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
     }
 
     override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) = Unit
+
+    override fun onLinkClicked(url: String) {
+        openUrl(url)
+    }
+
+    override fun onMentionClicked(castcleId: String) {
+        directions.toProfileFragment(UserEntity(id = castcleId)).navigate()
+    }
 
     override fun onOptionClicked(type: OptionDialogType) {
         shareViewModel.isUserCanEngagement(

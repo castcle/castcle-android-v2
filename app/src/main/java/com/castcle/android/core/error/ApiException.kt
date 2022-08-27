@@ -10,6 +10,6 @@ class ApiException(
     if (BuildConfig.DEBUG) {
         "$statusCode, $errorCode, $errorMessage"
     } else {
-        "Something went wrong, Please try again later. [$errorCode]"
+        "$errorMessage [$errorCode]"
     }
 )
