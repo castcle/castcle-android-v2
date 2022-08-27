@@ -66,7 +66,7 @@ private_lane :distribute_to_firebase do
     app: FIREBASE_APP_ID,
     release_notes: "Uploaded from CI/CD",
     android_artifact_type: "AAB",
-    android_artifact_path: GRADLE_AAB_OUTPUT_PATH,
+    android_artifact_path: ENV['GRADLE_AAB_OUTPUT_PATH'],
     service_credentials_file: FIREBASE_KEY_PATH,
     groups: "qa-tester-castcle"
   )
@@ -84,7 +84,7 @@ desc "Responsible for uploading aab to playstore"
 private_lane :distribute_playstore do
   upload_to_play_store(
     track: "alpha",
-    aab: GRADLE_AAB_OUTPUT_PATH,
+    aab: ENV['GRADLE_AAB_OUTPUT_PATH'],
     json_key: PLAYSTORE_KEY_PATH,
     package_name: PACKAGE_NAME
   )
