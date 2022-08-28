@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.resent_verify_email
+package com.castcle.android.presentation.setting.resent_verify_email
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.presentation.resent_verify_email.item_resent_verify_email.ResentVerifyEmailViewRenderer
+import com.castcle.android.presentation.setting.resent_verify_email.item_resent_verify_email.ResentVerifyEmailViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
