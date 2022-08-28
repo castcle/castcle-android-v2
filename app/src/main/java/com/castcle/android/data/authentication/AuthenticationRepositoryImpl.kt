@@ -13,6 +13,7 @@ import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.OtpEntity
+import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
 import com.castcle.android.domain.user.type.UserType
@@ -35,6 +36,13 @@ class AuthenticationRepositoryImpl(
     private val context: Context,
     private val glidePreloader: GlidePreloader,
 ) : AuthenticationRepository {
+
+    override suspend fun changePassword(otp: OtpEntity) {
+        apiCall { api.changePassword(body = otp.toChangePasswordRequest()) }
+        database.user().get(UserType.People).firstOrNull()
+            ?.copy(passwordNotSet = false)
+            ?.also { database.user().update(it) }
+    }
 
     override suspend fun getAccessToken(): AccessTokenEntity {
         return database.accessToken().get() ?: AccessTokenEntity()
@@ -183,9 +191,12 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun requestOtpMobile(otp: OtpEntity): OtpEntity {
-        val response = apiCall { api.requestOtpMobile(body = otp.toRequestOtpMobile()) }
-        return otp.fromRequestOtpMobile(response)
+    override suspend fun requestOtp(otp: OtpEntity): OtpEntity {
+        val response = when (otp.type) {
+            is OtpType.Email -> apiCall { api.requestOtpEmail(body = otp.toRequestOtpRequest()) }
+            is OtpType.Mobile -> apiCall { api.requestOtpMobile(body = otp.toRequestOtpRequest()) }
+        }
+        return otp.fromRequestOtpResponse(response)
     }
 
     override suspend fun resentVerifyEmail() {
@@ -223,18 +234,26 @@ class AuthenticationRepositoryImpl(
         registerFirebaseMessagingToken()
     }
 
-    override suspend fun updateMobileNumber(otp: OtpEntity) {
-        val verifyResponse = apiCall { api.verifyOtpMobile(body = otp.toVerifyOtpMobile()) }
-        val updatedOtp = otp.fromVerifyOtpMobile(verifyResponse)
+    override suspend fun updateMobileNumber(otp: OtpEntity): OtpEntity {
+        val updatedOtp = verifyOtp(otp)
         val mobileNumber = if (otp.mobileNumber.startsWith("0")) {
             otp.mobileNumber.drop(1)
         } else {
             otp.mobileNumber
         }
-        apiCall { api.updateMobileNumber(body = updatedOtp.toUpdateMobileNumber()) }
+        apiCall { api.updateMobileNumber(body = updatedOtp.toUpdateMobileNumberRequest()) }
         database.user().get(UserType.People).firstOrNull()
             ?.copy(mobileCountryCode = otp.countryCode, mobileNumber = mobileNumber)
             ?.also { database.user().update(it) }
+        return updatedOtp
+    }
+
+    override suspend fun verifyOtp(otp: OtpEntity): OtpEntity {
+        val response = when (otp.type) {
+            OtpType.Email -> apiCall { api.verifyOtpEmail(body = otp.toVerifyOtpRequest()) }
+            OtpType.Mobile -> apiCall { api.verifyOtpMobile(body = otp.toVerifyOtpRequest()) }
+        }
+        return otp.fromVerifyOtpResponse(response)
     }
 
 }

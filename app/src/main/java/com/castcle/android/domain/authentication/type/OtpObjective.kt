@@ -6,13 +6,9 @@ import kotlinx.parcelize.Parcelize
 sealed class OtpObjective(val id: String) : Parcelable {
 
     @Parcelize
-    object VerifyMobile : OtpObjective(id = "verify_mobile")
+    object ChangePassword : OtpObjective(id = "change_password")
 
-    companion object {
-        fun getFromId(id: String?) = when (id) {
-            VerifyMobile.id -> VerifyMobile
-            else -> VerifyMobile
-        }
-    }
+    @Parcelize
+    object VerifyMobile : OtpObjective(id = "verify_mobile")
 
 }

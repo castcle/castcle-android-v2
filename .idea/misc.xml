@@ -42,7 +42,9 @@
         <entry key="app/src/main/res/drawable/ic_block.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_castcle.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_check_circle.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.373" />
+        <entry key="app/src/main/res/drawable/ic_close_2.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_content_farming.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3945" />
@@ -66,6 +68,9 @@
         <entry key="app/src/main/res/drawable/ic_notification.xml" value="0.3245" />
         <entry key="app/src/main/res/drawable/ic_official.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_option.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_password.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_password_invisibile.xml" value="0.325" />
+        <entry key="app/src/main/res/drawable/ic_password_visibie.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_privacy.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_public.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_recast.xml" value="0.3475" />
@@ -84,6 +89,7 @@
         <entry key="app/src/main/res/drawable/ic_update_profile_success.xml" value="0.1325" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_verify_otp.xml" value="0.3095" />
+        <entry key="app/src/main/res/drawable/ic_verify_otp_email.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_wallet.xml" value="0.394" />
         <entry key="app/src/main/res/drawable/ic_warning.xml" value="0.3245" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.33" />
@@ -102,6 +108,7 @@
         <entry key="app/src/main/res/layout/fragment_search_suggestion.xml" value="0.47368421052631576" />
         <entry key="app/src/main/res/layout/item_account_menu.xml" value="0.44976485677640016" />
         <entry key="app/src/main/res/layout/item_account_title.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_change_password.xml" value="0.4270088346655448" />
         <entry key="app/src/main/res/layout/item_comment.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_content_metrics.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_country_code.xml" value="0.20307823856348867" />
@@ -142,11 +149,13 @@
         <entry key="app/src/main/res/layout/item_profile_page.xml" value="0.5061728395061729" />
         <entry key="app/src/main/res/layout/item_profile_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_recast_title.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_register_mobile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_register_mobile.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/item_register_password.xml" value="0.4270088346655448" />
         <entry key="app/src/main/res/layout/item_reply.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_report_subject_footer.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_report_subject_header.xml" value="0.4330910645575032" />
         <entry key="app/src/main/res/layout/item_report_subject_item.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_request_otp_email.xml" value="0.44976485677640016" />
         <entry key="app/src/main/res/layout/item_resent_verify_email.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_search_people.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_search_suggestion_keyword.xml" value="0.5479166666666667" />

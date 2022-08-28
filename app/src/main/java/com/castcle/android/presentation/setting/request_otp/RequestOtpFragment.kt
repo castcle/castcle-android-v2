@@ -1,8 +1,9 @@
-package com.castcle.android.presentation.setting.verify_otp
+package com.castcle.android.presentation.setting.request_otp
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
@@ -10,22 +11,24 @@ import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.domain.authentication.entity.OtpEntity
-import com.castcle.android.domain.authentication.type.OtpObjective
 import com.castcle.android.domain.authentication.type.OtpType
-import com.castcle.android.presentation.setting.verify_otp.item_verify_otp.VerifyOtpViewRenderer
+import com.castcle.android.domain.metadata.entity.CountryCodeEntity
+import com.castcle.android.presentation.setting.country_code.CountryCodeFragment.Companion.SELECT_COUNTRY_CODE
+import com.castcle.android.presentation.setting.request_otp.item_request_otp_email.RequestOtpEmailViewRenderer
+import com.castcle.android.presentation.setting.request_otp.item_request_otp_mobile.RequestOtpMobileViewEntity
+import com.castcle.android.presentation.setting.request_otp.item_request_otp_mobile.RequestOtpMobileViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
+class RequestOtpFragment : BaseFragment(), RequestOtpListener {
 
-    private val viewModel by viewModel<VerifyOtpViewModel> { parametersOf(args.otp) }
+    private val viewModel by viewModel<RequestOtpViewModel> { parametersOf(args.type) }
 
-    private val args by navArgs<VerifyOtpFragmentArgs>()
+    private val args by navArgs<RequestOtpFragmentArgs>()
 
-    private val directions = VerifyOtpFragmentDirections
+    private val directions = RequestOtpFragmentDirections
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
@@ -33,11 +36,21 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
         binding.recyclerView.adapter = adapter
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            title = when (args.otp.type) {
+            title = when (args.type) {
                 is OtpType.Email -> R.string.password
                 is OtpType.Mobile -> R.string.mobile_number
             },
         )
+    }
+
+    override fun initListener() {
+        setFragmentResultListener(SELECT_COUNTRY_CODE) { _, bundle ->
+            val countryCode = bundle.getParcelable<CountryCodeEntity>(SELECT_COUNTRY_CODE)
+            val items = viewModel.views.value
+                ?.cast<RequestOtpMobileViewEntity>()
+                ?.let { it.copy(countryCode = countryCode ?: it.countryCode) }
+            viewModel.views.postValue(items)
+        }
     }
 
     override fun initObserver() {
@@ -48,8 +61,9 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
 
     override fun initConsumer() {
         lifecycleScope.launch {
-            viewModel.onResentOtpSuccess.collectLatest {
+            viewModel.onSuccess.collectLatest {
                 dismissLoading()
+                directions.toVerifyOtpFragment(it).navigate()
             }
         }
         lifecycleScope.launch {
@@ -58,35 +72,20 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
                 toast(it.message)
             }
         }
-        lifecycleScope.launch {
-            viewModel.onSuccess.collectLatest {
-                dismissLoading()
-                when (it.objective) {
-                    is OtpObjective.ChangePassword -> {
-                        directions
-                            .toChangePasswordFragment(it)
-                            .navigate(R.id.requestOtpFragment)
-                    }
-                    is OtpObjective.VerifyMobile -> {
-                        directions
-                            .toUpdateProfileSuccessFragment(it)
-                            .navigate(R.id.requestOtpFragment)
-                    }
-                }
-            }
-        }
     }
 
-    override fun onResentOtpClicked(otp: OtpEntity) {
-        showLoading()
-        hideKeyboard()
-        viewModel.requestOtp(otp)
+    override fun onMobileCountryCodeClicked() {
+        directions.toCountryCodeFragment().navigate()
     }
 
-    override fun onVerifyOtp(otp: OtpEntity) {
+    override fun onRequestOtp(countryCode: String, email: String, mobileNumber: String) {
         showLoading()
         hideKeyboard()
-        viewModel.verifyOtp(otp)
+        viewModel.requestOtp(
+            countryCode = countryCode,
+            email = email,
+            mobileNumber = mobileNumber,
+        )
     }
 
     override fun onStop() {
@@ -101,7 +100,8 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(VerifyOtpViewRenderer())
+            registerRenderer(RequestOtpEmailViewRenderer())
+            registerRenderer(RequestOtpMobileViewRenderer())
         }
     }
 

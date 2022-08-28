@@ -7,6 +7,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.twitter.sdk.android.core.TwitterAuthToken
 
 interface AuthenticationRepository {
+    suspend fun changePassword(otp: OtpEntity)
     suspend fun getAccessToken(): AccessTokenEntity
     suspend fun getFirebaseMessagingToken(): String
     suspend fun fetchGuestAccessToken()
@@ -20,8 +21,9 @@ interface AuthenticationRepository {
     suspend fun loginWithTwitter(token: TwitterAuthToken?)
     suspend fun loginOut()
     suspend fun registerFirebaseMessagingToken()
-    suspend fun requestOtpMobile(otp: OtpEntity): OtpEntity
+    suspend fun requestOtp(otp: OtpEntity): OtpEntity
     suspend fun resentVerifyEmail()
     suspend fun unregisterFirebaseMessagingToken()
-    suspend fun updateMobileNumber(otp: OtpEntity)
+    suspend fun updateMobileNumber(otp: OtpEntity): OtpEntity
+    suspend fun verifyOtp(otp: OtpEntity): OtpEntity
 }

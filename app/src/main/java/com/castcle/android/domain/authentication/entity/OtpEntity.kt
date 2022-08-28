@@ -4,60 +4,62 @@ import android.os.Parcelable
 import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.domain.authentication.type.OtpObjective
+import com.castcle.android.domain.authentication.type.OtpType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class OtpEntity(
+    val accessToken: String = "",
     val countryCode: String = "",
+    val email: String = "",
     val expiresTime: Long = 0L,
     val mobileNumber: String = "",
+    val password: String = "",
     val objective: OtpObjective = OtpObjective.VerifyMobile,
     val otp: String = "",
     val refCode: String = "",
+    val type: OtpType = OtpType.Email,
 ) : Parcelable {
 
-    fun toRequestOtpMobile() = RequestOtpMobileRequest(
-        countryCode = countryCode,
-        mobileNumber = mobileNumber,
+    fun toChangePasswordRequest() = ChangePasswordRequest(
+        email = email,
+        newPassword = password,
+        objective = objective.id,
+        refCode = refCode,
+    )
+
+    fun toRequestOtpRequest() = RequestOtpRequest(
+        countryCode = countryCode.ifBlank { null },
+        email = email.ifBlank { null },
+        mobileNumber = mobileNumber.ifBlank { null },
         objective = objective.id,
     )
 
-    fun toUpdateMobileNumber() = UpdateMobileNumberRequest(
+    fun toUpdateMobileNumberRequest() = UpdateMobileNumberRequest(
         countryCode = countryCode,
         mobileNumber = mobileNumber,
         objective = objective.id,
         refCode = refCode,
     )
 
-    fun toVerifyOtpMobile() = VerifyOtpMobileRequest(
-        countryCode = countryCode,
-        mobileNumber = mobileNumber,
+    fun toVerifyOtpRequest() = VerifyOtpRequest(
+        countryCode = countryCode.ifBlank { null },
+        email = email.ifBlank { null },
+        mobileNumber = mobileNumber.ifBlank { null },
         objective = objective.id,
         otp = otp,
         refCode = refCode,
     )
 
-    fun fromRequestOtpMobile(response: RequestOtpMobileResponse?) = copy(
+    fun fromRequestOtpResponse(response: RequestOtpResponse?) = copy(
         expiresTime = response?.expiresTime?.toMilliSecond() ?: 0L,
         refCode = response?.refCode.orEmpty(),
     )
 
-    fun fromVerifyOtpMobile(response: VerifyOtpMobileResponse?) = copy(
+    fun fromVerifyOtpResponse(response: VerifyOtpResponse?) = copy(
+        accessToken = response?.accessToken.orEmpty(),
         expiresTime = response?.expiresTime?.toMilliSecond() ?: 0L,
         refCode = response?.refCode.orEmpty(),
     )
-
-    companion object {
-        fun map(
-            request: RequestOtpMobileRequest,
-            response: RequestOtpMobileResponse? = null,
-        ) = OtpEntity(
-            countryCode = request.countryCode.orEmpty(),
-            expiresTime = response?.expiresTime?.toMilliSecond() ?: 0L,
-            mobileNumber = request.mobileNumber.orEmpty(),
-            objective = OtpObjective.getFromId(request.objective),
-            refCode = response?.refCode.orEmpty(),
-        )
-    }
 
 }

@@ -29,7 +29,7 @@
         android:layout_height="@dimen/_26sdp"
         android:layout_marginEnd="@dimen/_6sdp"
         android:foreground="@drawable/bg_ripple_circle"
-        android:padding="@dimen/_4sdp"
+        android:padding="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

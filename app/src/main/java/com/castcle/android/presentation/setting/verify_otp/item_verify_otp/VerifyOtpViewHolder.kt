@@ -8,6 +8,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemVerifyOtpBinding
+import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.presentation.setting.verify_otp.VerifyOtpListener
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -59,10 +60,26 @@ class VerifyOtpViewHolder(
         updateConfirmButton()
         updateCountdownTimer()
         binding.etOtp.setText(item.otpNumber)
-        binding.tvDescription.text = context().getString(
-            R.string.fragment_verify_otp_title_3,
-            item.otp.mobileNumber,
+        binding.ivIcon.setImageResource(
+            when (item.otp.type) {
+                is OtpType.Email -> R.drawable.ic_verify_otp_email
+                is OtpType.Mobile -> R.drawable.ic_verify_otp_mobile
+            }
         )
+        binding.tvTitle.text = when (item.otp.type) {
+            is OtpType.Email -> string(R.string.fragment_verify_otp_title_6)
+            is OtpType.Mobile -> string(R.string.fragment_verify_otp_title_4)
+        }
+        binding.tvDescription.text = when (item.otp.type) {
+            is OtpType.Email -> context().getString(
+                R.string.fragment_verify_otp_title_7,
+                item.otp.email,
+            )
+            is OtpType.Mobile -> context().getString(
+                R.string.fragment_verify_otp_title_5,
+                item.otp.mobileNumber,
+            )
+        }
     }
 
     private fun getCountdownTime(remaining: Long): String {
@@ -87,11 +104,11 @@ class VerifyOtpViewHolder(
             .div(1_000)
         val text = if (timeDifferent > 0) {
             context().getString(
-                R.string.fragment_verify_otp_title_5,
+                R.string.fragment_verify_otp_title_3,
                 getCountdownTime(timeDifferent),
             )
         } else {
-            context().getString(R.string.fragment_verify_otp_title_4)
+            context().getString(R.string.fragment_verify_otp_title_2)
         }
         binding.llResendOtp.isEnabled = timeDifferent <= 0
         binding.tvResendOtp.setText(
