@@ -8,6 +8,11 @@ import retrofit2.http.*
 
 interface AuthenticationApi {
 
+    @POST("v2/authentications/change-password")
+    suspend fun changePassword(
+        @Body body: ChangePasswordRequest,
+    ): Response<Unit>
+
     @POST("v2/authentications/guest")
     suspend fun getGuestAccessToken(
         @Body body: GetGuestAccessTokenRequest,
@@ -40,10 +45,15 @@ interface AuthenticationApi {
         @Body body: RegisterFirebaseMessagingTokenRequest
     ): Response<Unit>
 
+    @POST("v2/authentications/request-otp/email")
+    suspend fun requestOtpEmail(
+        @Body body: RequestOtpRequest,
+    ): Response<RequestOtpResponse>
+
     @POST("v2/authentications/request-otp/mobile")
     suspend fun requestOtpMobile(
-        @Body body: RequestOtpMobileRequest,
-    ): Response<RequestOtpMobileResponse>
+        @Body body: RequestOtpRequest,
+    ): Response<RequestOtpResponse>
 
     @POST("v2/authentications/request-link/email")
     suspend fun resentVerifyEmail(): Response<Unit>
@@ -58,9 +68,14 @@ interface AuthenticationApi {
         @Body body: UpdateMobileNumberRequest,
     ): Response<Unit>
 
+    @POST("v2/authentications/verify-otp/email")
+    suspend fun verifyOtpEmail(
+        @Body body: VerifyOtpRequest
+    ): Response<VerifyOtpResponse>
+
     @POST("v2/authentications/verify-otp/mobile")
     suspend fun verifyOtpMobile(
-        @Body body: VerifyOtpMobileRequest
-    ): Response<VerifyOtpMobileResponse>
+        @Body body: VerifyOtpRequest
+    ): Response<VerifyOtpResponse>
 
 }

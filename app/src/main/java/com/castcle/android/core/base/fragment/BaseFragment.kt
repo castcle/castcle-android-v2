@@ -3,8 +3,9 @@ package com.castcle.android.core.base.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavDirections
+import androidx.navigation.*
 import androidx.navigation.fragment.findNavController
+import com.castcle.android.R
 import com.castcle.android.core.base.activity.BaseActivity
 import com.castcle.android.core.extensions.cast
 import com.castcle.android.core.extensions.hideKeyboard
@@ -27,10 +28,25 @@ abstract class BaseFragment : Fragment() {
 
     open fun initViewProperties() = Unit
 
-    fun NavDirections.navigate() {
+    fun NavDirections.navigate(navOptions: NavOptions? = null) {
         activity?.runOnUiThread {
-            findNavController().navigate(this)
+            findNavController().navigate(this, navOptions)
         }
+    }
+
+    fun NavDirections.navigate(popUpTo: Int) {
+        val navOptions = navOptions {
+            anim {
+                enter = R.anim.slide_in_right
+                exit = R.anim.slide_out_left
+                popEnter = R.anim.slide_in_left
+                popExit = R.anim.slide_out_right
+            }
+            popUpTo(popUpTo) {
+                inclusive = true
+            }
+        }
+        navigate(navOptions)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

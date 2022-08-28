@@ -1,22 +1,22 @@
-package com.castcle.android.presentation.setting.register_mobile.item_register_mobile
+package com.castcle.android.presentation.setting.request_otp.item_request_otp_mobile
 
 import android.annotation.SuppressLint
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
-import com.castcle.android.databinding.ItemRegisterMobileBinding
-import com.castcle.android.presentation.setting.register_mobile.RegisterMobileListener
+import com.castcle.android.databinding.ItemRequestOtpMobileBinding
+import com.castcle.android.presentation.setting.request_otp.RequestOtpListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
 @SuppressLint("SetTextI18n")
-class RegisterMobileViewHolder(
-    private val binding: ItemRegisterMobileBinding,
+class RequestOtpMobileViewHolder(
+    private val binding: ItemRequestOtpMobileBinding,
     private val compositeDisposable: CompositeDisposable,
-    private val listener: RegisterMobileListener
-) : CastcleViewHolder<RegisterMobileViewEntity>(binding.root) {
+    private val listener: RequestOtpListener
+) : CastcleViewHolder<RequestOtpMobileViewEntity>(binding.root) {
 
-    override var item = RegisterMobileViewEntity()
+    override var item = RequestOtpMobileViewEntity()
 
     init {
         compositeDisposable += binding.tvCountryCode.onClick {
@@ -27,14 +27,15 @@ class RegisterMobileViewHolder(
             updateConfirmButton()
         }
         compositeDisposable += binding.tvConfirm.onClick {
-            listener.onConfirmClicked(
-                countryCode = item.countryCode,
+            listener.onRequestOtp(
+                countryCode = item.countryCode.dialCode,
+                email = "",
                 mobileNumber = item.mobileNumber,
             )
         }
     }
 
-    override fun bind(bindItem: RegisterMobileViewEntity) {
+    override fun bind(bindItem: RequestOtpMobileViewEntity) {
         updateConfirmButton()
         binding.etMobileNumber.setText(item.mobileNumber)
         binding.tvCountryCode.text = "${item.countryCode.dialCode} ${item.countryCode.code}"

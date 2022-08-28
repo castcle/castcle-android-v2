@@ -24,6 +24,7 @@ class UpdateProfileSuccessFragment : BaseFragment(), UpdateProfileSuccessListene
         binding.actionBar.bind(
             leftButtonIcon = null,
             title = when (args.otp.objective) {
+                is OtpObjective.ChangePassword -> R.string.password
                 is OtpObjective.VerifyMobile -> R.string.mobile_number
             },
         )
@@ -32,12 +33,15 @@ class UpdateProfileSuccessFragment : BaseFragment(), UpdateProfileSuccessListene
 
     private fun getItems() = UpdateProfileSuccessViewEntity(
         description = when (args.otp.objective) {
+            is OtpObjective.ChangePassword -> string(R.string.fragment_update_profile_success_title_4)
             is OtpObjective.VerifyMobile -> string(R.string.fragment_update_profile_success_title_2)
         },
         icon = when (args.otp.objective) {
+            is OtpObjective.ChangePassword -> R.drawable.ic_update_profile_success
             is OtpObjective.VerifyMobile -> R.drawable.ic_update_profile_success
         },
         title = when (args.otp.objective) {
+            is OtpObjective.ChangePassword -> string(R.string.fragment_update_profile_success_title_3)
             is OtpObjective.VerifyMobile -> string(R.string.fragment_update_profile_success_title_1)
         },
     )

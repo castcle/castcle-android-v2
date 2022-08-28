@@ -4,8 +4,9 @@ import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class VerifyOtpMobileRequest(
+data class VerifyOtpRequest(
     @SerializedName("countryCode") val countryCode: String? = null,
+    @SerializedName("email") val email: String? = null,
     @SerializedName("mobileNumber") val mobileNumber: String? = null,
     @SerializedName("objective") val objective: String? = null,
     @SerializedName("otp") val otp: String? = null,

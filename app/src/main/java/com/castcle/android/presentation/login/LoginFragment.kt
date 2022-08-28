@@ -120,6 +120,16 @@ class LoginFragment : BaseFragment(), LoginListener {
         openUrl(url)
     }
 
+    override fun onStop() {
+        changeSoftInputMode(false)
+        super.onStop()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        changeSoftInputMode(true)
+    }
+
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(LoginViewRenderer())
