@@ -302,7 +302,7 @@
 
     <fragment
         android:id="@+id/resentVerifyEmailFragment"
-        android:name="com.castcle.android.presentation.resent_verify_email.ResentVerifyEmailFragment" />
+        android:name="com.castcle.android.presentation.setting.resent_verify_email.ResentVerifyEmailFragment" />
 
     <fragment
         android:id="@+id/searchFragment"

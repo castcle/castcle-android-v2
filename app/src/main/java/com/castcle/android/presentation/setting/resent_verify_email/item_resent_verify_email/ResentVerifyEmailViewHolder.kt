@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.resent_verify_email.item_resent_verify_email
+package com.castcle.android.presentation.setting.resent_verify_email.item_resent_verify_email
 
 import android.text.Html
 import android.widget.TextView
@@ -7,7 +7,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.context
 import com.castcle.android.core.extensions.onClick
 import com.castcle.android.databinding.ItemResentVerifyEmailBinding
-import com.castcle.android.presentation.resent_verify_email.ResentVerifyEmailListener
+import com.castcle.android.presentation.setting.resent_verify_email.ResentVerifyEmailListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 

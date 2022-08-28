@@ -1,4 +1,4 @@
-package com.castcle.android.presentation.resent_verify_email.item_resent_verify_email
+package com.castcle.android.presentation.setting.resent_verify_email.item_resent_verify_email
 
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
