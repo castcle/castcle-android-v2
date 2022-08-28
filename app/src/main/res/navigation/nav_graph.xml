@@ -238,6 +238,10 @@
             android:id="@+id/toCountryCodeFragment"
             app:destination="@id/countryCodeFragment" />
 
+        <action
+            android:id="@+id/toVerifyOtpFragment"
+            app:destination="@id/verifyOtpFragment" />
+
     </fragment>
 
     <fragment
@@ -371,6 +375,32 @@
         <action
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateProfileSuccessFragment"
+        android:name="com.castcle.android.presentation.setting.update_profile_success.UpdateProfileSuccessFragment">
+
+        <argument
+            android:name="otp"
+            app:argType="com.castcle.android.domain.authentication.entity.OtpEntity" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/verifyOtpFragment"
+        android:name="com.castcle.android.presentation.setting.verify_otp.VerifyOtpFragment">
+
+        <argument
+            android:name="otp"
+            app:argType="com.castcle.android.domain.authentication.entity.OtpEntity" />
+
+        <action
+            android:id="@+id/toUpdateProfileSuccessFragment"
+            app:destination="@id/updateProfileSuccessFragment"
+            app:popUpTo="@+id/registerMobileFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

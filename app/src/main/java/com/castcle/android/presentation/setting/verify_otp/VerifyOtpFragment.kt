@@ -1,28 +1,29 @@
-package com.castcle.android.presentation.setting.register_mobile
+package com.castcle.android.presentation.setting.verify_otp
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.domain.metadata.entity.CountryCodeEntity
-import com.castcle.android.presentation.setting.country_code.CountryCodeFragment.Companion.SELECT_COUNTRY_CODE
-import com.castcle.android.presentation.setting.register_mobile.item_register_mobile.RegisterMobileViewEntity
-import com.castcle.android.presentation.setting.register_mobile.item_register_mobile.RegisterMobileViewRenderer
+import com.castcle.android.domain.authentication.entity.OtpEntity
+import com.castcle.android.presentation.setting.verify_otp.item_verify_otp.VerifyOtpViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class RegisterMobileFragment : BaseFragment(), RegisterMobileListener {
+class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
 
-    private val viewModel by viewModel<RegisterMobileViewModel>()
+    private val viewModel by viewModel<VerifyOtpViewModel> { parametersOf(args.otp) }
 
-    private val directions = RegisterMobileFragmentDirections
+    private val args by navArgs<VerifyOtpFragmentArgs>()
+
+    private val directions = VerifyOtpFragmentDirections
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
@@ -30,18 +31,8 @@ class RegisterMobileFragment : BaseFragment(), RegisterMobileListener {
         binding.recyclerView.adapter = adapter
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            title = R.string.mobile_number,
+            title = R.string.fragment_verify_otp_title_1,
         )
-    }
-
-    override fun initListener() {
-        setFragmentResultListener(SELECT_COUNTRY_CODE) { _, bundle ->
-            val countryCode = bundle.getParcelable<CountryCodeEntity>(SELECT_COUNTRY_CODE)
-            val items = viewModel.views.value
-                ?.map { it.copy(countryCode = countryCode ?: it.countryCode) }
-                ?: listOf(RegisterMobileViewEntity())
-            viewModel.views.postValue(items)
-        }
     }
 
     override fun initObserver() {
@@ -52,9 +43,14 @@ class RegisterMobileFragment : BaseFragment(), RegisterMobileListener {
 
     override fun initConsumer() {
         lifecycleScope.launch {
-            viewModel.onSuccess.collectLatest {
+            viewModel.onResentOtpSuccess.collectLatest {
                 dismissLoading()
-                directions.toVerifyOtpFragment(it).navigate()
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onUpdateMobileNumberSuccess.collectLatest {
+                dismissLoading()
+                directions.toUpdateProfileSuccessFragment(it).navigate()
             }
         }
         lifecycleScope.launch {
@@ -65,14 +61,16 @@ class RegisterMobileFragment : BaseFragment(), RegisterMobileListener {
         }
     }
 
-    override fun onConfirmClicked(countryCode: CountryCodeEntity, mobileNumber: String) {
+    override fun onResentOtpClicked(otp: OtpEntity) {
         showLoading()
         hideKeyboard()
-        viewModel.requestOtpMobile(countryCode.dialCode, mobileNumber)
+        viewModel.requestOtpMobile(otp)
     }
 
-    override fun onMobileCountryCodeClicked() {
-        directions.toCountryCodeFragment().navigate()
+    override fun onVerifyOtp(otp: OtpEntity) {
+        showLoading()
+        hideKeyboard()
+        viewModel.updateMobileNumber(otp)
     }
 
     override fun onStop() {
@@ -87,7 +85,7 @@ class RegisterMobileFragment : BaseFragment(), RegisterMobileListener {
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(RegisterMobileViewRenderer())
+            registerRenderer(VerifyOtpViewRenderer())
         }
     }
 

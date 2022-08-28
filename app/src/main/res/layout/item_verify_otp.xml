@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_register_mobile" />
+        app:srcCompat="@drawable/ic_verify_otp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanit.Regular"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"
         android:gravity="center"
-        android:text="@string/fragment_register_mobile_title_1"
+        android:text="@string/fragment_verify_otp_title_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivEmpty" />
@@ -35,51 +35,56 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"
         android:gravity="center"
-        android:text="@string/fragment_register_mobile_title_2"
+        android:text="@string/fragment_verify_otp_title_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/AppTextKanit.Small"
-        android:id="@+id/tvCountryCode"
-        android:layout_width="wrap_content"
+    <com.castcle.android.core.custom_view.otp_edit_text.OtpEditText
+        style="@style/AppTextKanit.Headline"
+        android:id="@+id/etOtp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:background="@drawable/bg_corner_16dp"
-        android:backgroundTint="@color/black_background_2"
-        android:drawableEnd="@drawable/ic_drop_down"
-        android:drawablePadding="@dimen/_6sdp"
-        android:paddingStart="@dimen/_12sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        app:drawableTint="@color/blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription"
-        tools:text="+66 TH" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        style="@style/AppTextKanit.Small"
-        android:id="@+id/etMobileNumber"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:background="@drawable/bg_corner_16dp"
-        android:backgroundTint="@color/black_background_2"
-        android:hint="@string/fragment_register_mobile_title_3"
-        android:imeOptions="actionDone"
-        android:inputType="phone"
-        android:maxLength="20"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:textColorHint="@color/gray_1"
-        app:layout_constraintBottom_toBottomOf="@+id/tvCountryCode"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingBottom="@dimen/_24sdp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvCountryCode"
-        app:layout_constraintTop_toTopOf="@+id/tvCountryCode" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llResendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etOtp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/tvResendOtpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:text="@string/fragment_verify_otp_title_6" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/tvResendOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:text="@string/fragment_verify_otp_title_5" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanit.Regular"
@@ -87,7 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_24sdp"
         android:background="@drawable/bg_corner_24dp"
@@ -99,6 +104,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etMobileNumber" />
+        app:layout_constraintTop_toBottomOf="@id/llResendOtp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,4 +53,14 @@ interface AuthenticationApi {
         @Body body: RegisterFirebaseMessagingTokenRequest
     ): Response<Unit>
 
+    @PUT("v2/users/me/mobile")
+    suspend fun updateMobileNumber(
+        @Body body: UpdateMobileNumberRequest,
+    ): Response<Unit>
+
+    @POST("v2/authentications/verify-otp/mobile")
+    suspend fun verifyOtpMobile(
+        @Body body: VerifyOtpMobileRequest
+    ): Response<VerifyOtpMobileResponse>
+
 }
