@@ -10,6 +10,7 @@
     <string name="cast">Cast</string>
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
+    <string name="close">Close</string>
     <string name="copy_message">Copy message</string>
     <string name="confirm">Confirm</string>
     <string name="content_farming">Content Farming</string>
@@ -73,6 +74,14 @@
     <string name="fragment_setting_title_3">Please verify your e-mail</string>
     <string name="fragment_setting_title_4">Go to</string>
     <string name="fragment_setting_title_5">+ New Page</string>
+    <string name="fragment_update_profile_success_title_1">Mobile number successfully verified</string>
+    <string name="fragment_update_profile_success_title_2">You have successfully verified your mobile number with Castcle</string>
+    <string name="fragment_verify_otp_title_1">Verify Mobile Number</string>
+    <string name="fragment_verify_otp_title_2">Verify your mobile number</string>
+    <string name="fragment_verify_otp_title_3">You will receive a 6 digit code to verify your mobile number. OTP code will be sent to %s</string>
+    <string name="fragment_verify_otp_title_4"><![CDATA[<font color="#01D2FF">Request code again.</font>]]></string>
+    <string name="fragment_verify_otp_title_5"><![CDATA[<font color="#707070">Request code again in %s.</font>]]></string>
+    <string name="fragment_verify_otp_title_6">Didn’t receive code?</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>

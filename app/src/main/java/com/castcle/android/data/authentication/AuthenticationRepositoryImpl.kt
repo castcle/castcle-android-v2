@@ -12,9 +12,10 @@ import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
-import com.castcle.android.domain.authentication.entity.RequestOtpMobileEntity
+import com.castcle.android.domain.authentication.entity.OtpEntity
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
+import com.castcle.android.domain.user.type.UserType
 import com.facebook.*
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -182,9 +183,9 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun requestOtpMobile(body: RequestOtpMobileRequest): RequestOtpMobileEntity {
-        val response = apiCall { api.requestOtpMobile(body = body) }
-        return RequestOtpMobileEntity.map(body, response)
+    override suspend fun requestOtpMobile(otp: OtpEntity): OtpEntity {
+        val response = apiCall { api.requestOtpMobile(body = otp.toRequestOtpMobile()) }
+        return otp.fromRequestOtpMobile(response)
     }
 
     override suspend fun resentVerifyEmail() {
@@ -220,6 +221,20 @@ class AuthenticationRepositoryImpl(
             database.accessToken().insert(accessToken)
         }
         registerFirebaseMessagingToken()
+    }
+
+    override suspend fun updateMobileNumber(otp: OtpEntity) {
+        val verifyResponse = apiCall { api.verifyOtpMobile(body = otp.toVerifyOtpMobile()) }
+        val updatedOtp = otp.fromVerifyOtpMobile(verifyResponse)
+        val mobileNumber = if (otp.mobileNumber.startsWith("0")) {
+            otp.mobileNumber.drop(1)
+        } else {
+            otp.mobileNumber
+        }
+        apiCall { api.updateMobileNumber(body = updatedOtp.toUpdateMobileNumber()) }
+        database.user().get(UserType.People).firstOrNull()
+            ?.copy(mobileCountryCode = otp.countryCode, mobileNumber = mobileNumber)
+            ?.also { database.user().update(it) }
     }
 
 }
