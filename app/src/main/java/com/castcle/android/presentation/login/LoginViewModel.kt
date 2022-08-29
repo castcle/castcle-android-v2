@@ -21,6 +21,10 @@ class LoginViewModel(
 
     val items = MutableLiveData<List<CastcleViewEntity>>(listOf(LoginViewEntity()))
 
+    init {
+        logoutFacebook()
+    }
+
     fun loginWithEmail(email: String, password: String) {
         launch(onError = loginError::postValue) {
             repository.loginWithEmail(LoginWithEmailRequest(email, password))
@@ -29,9 +33,14 @@ class LoginViewModel(
     }
 
     fun loginWithFacebook() {
-        launch(onError = loginError::postValue) {
-            repository.loginWithFacebook()
+        launch(onError = {
+            loginError.postValue(it)
+            logoutFacebook()
+        }, onSuccess = {
             loginComplete.postValue(Unit)
+            logoutFacebook()
+        }) {
+            repository.loginWithFacebook()
         }
     }
 
@@ -46,6 +55,12 @@ class LoginViewModel(
         launch(onError = loginError::postValue) {
             repository.loginWithTwitter(token)
             loginComplete.postValue(Unit)
+        }
+    }
+
+    fun logoutFacebook() {
+        launch {
+            repository.loginWithFacebook()
         }
     }
 
