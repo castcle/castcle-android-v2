@@ -93,6 +93,8 @@
     <string name="fragment_verify_otp_title_5">You will receive a 6 digit code to verify your mobile number. OTP code will be sent to %s</string>
     <string name="fragment_verify_otp_title_6">Verify your E-mail</string>
     <string name="fragment_verify_otp_title_7">You will receive a 6 digit code to verify your e-mail. OTP code will be sent to %s</string>
+    <string name="fragment_verify_password_title_1">Please enter your current password</string>
+    <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>

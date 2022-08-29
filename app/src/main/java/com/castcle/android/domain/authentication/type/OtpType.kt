@@ -11,4 +11,7 @@ sealed class OtpType(val id: String) : Parcelable {
     @Parcelize
     object Mobile : OtpType(id = "mobile")
 
+    @Parcelize
+    object Password : OtpType(id = "password")
+
 }

@@ -43,6 +43,10 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
+        <action
+            android:id="@+id/toVerifyPasswordFragment"
+            app:destination="@id/verifyPasswordFragment" />
+
     </fragment>
 
     <fragment
@@ -421,6 +425,16 @@
         <action
             android:id="@+id/toUpdateProfileSuccessFragment"
             app:destination="@id/updateProfileSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/verifyPasswordFragment"
+        android:name="com.castcle.android.presentation.setting.verify_password.VerifyPasswordFragment">
+
+        <action
+            android:id="@+id/toChangePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
 
     </fragment>
 

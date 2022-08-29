@@ -61,7 +61,9 @@ class AccountFragment : BaseFragment(), AccountListener {
         }
     }
 
-    override fun onChangePasswordClicked() = Unit
+    override fun onChangePasswordClicked() {
+        directions.toVerifyPasswordFragment().navigate()
+    }
 
     override fun onDeleteAccountClicked() = Unit
 

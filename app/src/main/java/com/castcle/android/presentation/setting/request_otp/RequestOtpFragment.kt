@@ -37,7 +37,7 @@ class RequestOtpFragment : BaseFragment(), RequestOtpListener {
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
             title = when (args.type) {
-                is OtpType.Email -> R.string.password
+                is OtpType.Email, is OtpType.Password -> R.string.password
                 is OtpType.Mobile -> R.string.mobile_number
             },
         )

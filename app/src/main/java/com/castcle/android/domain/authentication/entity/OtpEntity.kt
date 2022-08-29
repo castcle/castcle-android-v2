@@ -48,6 +48,7 @@ data class OtpEntity(
         mobileNumber = mobileNumber.ifBlank { null },
         objective = objective.id,
         otp = otp,
+        password = password.ifBlank { null },
         refCode = refCode,
     )
 
