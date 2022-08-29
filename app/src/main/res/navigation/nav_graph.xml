@@ -129,6 +129,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.castcle.android.presentation.setting.forgot_password.ForgotPasswordFragment">
+
+        <action
+            android:id="@+id/toVerifyOtpFragment"
+            app:destination="@id/verifyOtpFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.castcle.android.presentation.home.HomeFragment">
 
@@ -184,7 +194,13 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.castcle.android.presentation.login.LoginFragment" />
+        android:name="com.castcle.android.presentation.login.LoginFragment">
+
+        <action
+            android:id="@+id/toForgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/newCastFragment"

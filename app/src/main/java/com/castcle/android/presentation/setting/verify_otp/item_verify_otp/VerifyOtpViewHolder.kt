@@ -8,6 +8,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemVerifyOtpBinding
+import com.castcle.android.domain.authentication.type.OtpObjective
 import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.presentation.setting.verify_otp.VerifyOtpListener
 import io.reactivex.Observable
@@ -62,19 +63,31 @@ class VerifyOtpViewHolder(
         binding.etOtp.setText(item.otpNumber)
         binding.ivIcon.setImageResource(
             when (item.otp.type) {
-                is OtpType.Email, is OtpType.Password -> R.drawable.ic_verify_otp_email
+                is OtpType.Email, is OtpType.Password -> when (item.otp.objective) {
+                    is OtpObjective.ForgotPassword -> R.drawable.ic_verify_otp_forgot_password
+                    else -> R.drawable.ic_verify_otp_email
+                }
                 is OtpType.Mobile -> R.drawable.ic_verify_otp_mobile
             }
         )
         binding.tvTitle.text = when (item.otp.type) {
-            is OtpType.Email, is OtpType.Password -> string(R.string.fragment_verify_otp_title_6)
+            is OtpType.Email, is OtpType.Password -> when (item.otp.objective) {
+                is OtpObjective.ForgotPassword -> string(R.string.fragment_verify_otp_title_8)
+                else -> string(R.string.fragment_verify_otp_title_6)
+            }
             is OtpType.Mobile -> string(R.string.fragment_verify_otp_title_4)
         }
         binding.tvDescription.text = when (item.otp.type) {
-            is OtpType.Email, is OtpType.Password -> context().getString(
-                R.string.fragment_verify_otp_title_7,
-                item.otp.email,
-            )
+            is OtpType.Email, is OtpType.Password -> when (item.otp.objective) {
+                is OtpObjective.ForgotPassword -> context().getString(
+                    R.string.fragment_verify_otp_title_9,
+                    item.otp.email,
+                )
+                else -> context().getString(
+                    R.string.fragment_verify_otp_title_7,
+                    item.otp.email,
+                )
+            }
             is OtpType.Mobile -> context().getString(
                 R.string.fragment_verify_otp_title_5,
                 item.otp.mobileNumber,

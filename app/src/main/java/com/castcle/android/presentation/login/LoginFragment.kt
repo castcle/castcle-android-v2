@@ -26,6 +26,8 @@ class LoginFragment : BaseFragment(), LoginListener {
 
     private val viewModel by viewModel<LoginViewModel>()
 
+    private val directions = LoginFragmentDirections
+
     private val facebookLoginManager by inject<LoginManager>()
 
     private val googleSignInClient by inject<GoogleSignInClient>()
@@ -86,6 +88,10 @@ class LoginFragment : BaseFragment(), LoginListener {
                     toast(error.message)
                 }
             })
+    }
+
+    override fun onForgotPasswordClicked() {
+        directions.toForgotPasswordFragment().navigate()
     }
 
     override fun onGoogleLoginClicked() {

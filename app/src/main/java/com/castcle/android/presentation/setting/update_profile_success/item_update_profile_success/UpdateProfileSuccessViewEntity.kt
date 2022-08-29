@@ -6,6 +6,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
 
 data class UpdateProfileSuccessViewEntity(
+    val close: String = "",
     val description: String = "",
     @DrawableRes val icon: Int = R.drawable.ic_update_profile_success,
     val title: String = "",
