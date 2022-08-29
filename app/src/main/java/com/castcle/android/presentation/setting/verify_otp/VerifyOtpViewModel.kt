@@ -41,7 +41,8 @@ class VerifyOtpViewModel(
             onSuccess = { onSuccess.emitOnSuspend(it) }
         ) {
             when (otp.objective) {
-                is OtpObjective.ChangePassword -> repository.verifyOtp(otp)
+                is OtpObjective.ChangePassword,
+                is OtpObjective.ForgotPassword -> repository.verifyOtp(otp)
                 is OtpObjective.VerifyMobile -> repository.updateMobileNumber(otp)
             }
         }

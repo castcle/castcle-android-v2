@@ -23,6 +23,7 @@ class UpdateProfileSuccessViewHolder(
 
     override fun bind(bindItem: UpdateProfileSuccessViewEntity) {
         binding.ivIcon.setImageResource(item.icon)
+        binding.tvClose.text = item.close
         binding.tvTitle.text = item.title
         binding.tvDescription.text = item.description
     }

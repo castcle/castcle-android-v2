@@ -67,6 +67,11 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
                             .toChangePasswordFragment(it)
                             .navigate(R.id.requestOtpFragment)
                     }
+                    is OtpObjective.ForgotPassword -> {
+                        directions
+                            .toChangePasswordFragment(it)
+                            .navigate(R.id.forgotPasswordFragment)
+                    }
                     is OtpObjective.VerifyMobile -> {
                         directions
                             .toUpdateProfileSuccessFragment(it)

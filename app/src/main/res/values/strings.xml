@@ -49,11 +49,13 @@
     <string name="fragment_change_password_title_5">Use both lowercase and uppercase letters</string>
     <string name="fragment_change_password_title_6">Password did not match</string>
     <string name="fragment_country_code_title_1">Select Country Code</string>
+    <string name="fragment_forgot_password_title_1">Forgot password?</string>
+    <string name="fragment_forgot_password_title_2">Enter your registered email address. We will send a verification code to your inbox</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
     <string name="fragment_login_title_3">Enter your email address</string>
     <string name="fragment_login_title_4">Enter your password</string>
-    <string name="fragment_login_title_5">Forgot Password?</string>
+    <string name="fragment_login_title_5">Forgot password?</string>
     <string name="fragment_login_title_6">Login</string>
     <string name="fragment_login_title_7">Or continue with</string>
     <string name="fragment_login_title_8">Don’t have an account? <font color="#01D2FF">Sign up</font></string>
@@ -86,6 +88,7 @@
     <string name="fragment_update_profile_success_title_2">You have successfully verified your mobile number with Castcle</string>
     <string name="fragment_update_profile_success_title_3">Password successfully changed</string>
     <string name="fragment_update_profile_success_title_4">Congratulations, you have successfully changed your password</string>
+    <string name="fragment_update_profile_success_title_5">Login with Castcle</string>
     <string name="fragment_verify_otp_title_1">Didn’t receive code?</string>
     <string name="fragment_verify_otp_title_2"><![CDATA[<font color="#01D2FF">Request code again.</font>]]></string>
     <string name="fragment_verify_otp_title_3"><![CDATA[<font color="#707070">Request code again in %s.</font>]]></string>
@@ -93,6 +96,8 @@
     <string name="fragment_verify_otp_title_5">You will receive a 6 digit code to verify your mobile number. OTP code will be sent to %s</string>
     <string name="fragment_verify_otp_title_6">Verify your E-mail</string>
     <string name="fragment_verify_otp_title_7">You will receive a 6 digit code to verify your e-mail. OTP code will be sent to %s</string>
+    <string name="fragment_verify_otp_title_8">Enter verification code</string>
+    <string name="fragment_verify_otp_title_9">You will receive a 6 digit code to reset you password. Verification code will be sent to %s</string>
     <string name="fragment_verify_password_title_1">Please enter your current password</string>
     <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
     <string name="introduction">Introduction</string>
