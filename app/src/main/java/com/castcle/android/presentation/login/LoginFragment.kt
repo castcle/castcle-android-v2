@@ -22,6 +22,7 @@ import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class LoginFragment : BaseFragment(), LoginListener {
 
     private val viewModel by viewModel<LoginViewModel>()
@@ -66,7 +67,6 @@ class LoginFragment : BaseFragment(), LoginListener {
     }
 
     override fun onFacebookLoginClicked() {
-        facebookLoginManager.logOut()
         facebookLoginManager.logInWithReadPermissions(
             callbackManager = callbackManager,
             fragment = this,
@@ -80,11 +80,11 @@ class LoginFragment : BaseFragment(), LoginListener {
                 }
 
                 override fun onCancel() {
-                    facebookLoginManager.logOut()
+                    viewModel.logoutFacebook()
                 }
 
                 override fun onError(error: FacebookException) {
-                    facebookLoginManager.logOut()
+                    viewModel.logoutFacebook()
                     toast(error.message)
                 }
             })

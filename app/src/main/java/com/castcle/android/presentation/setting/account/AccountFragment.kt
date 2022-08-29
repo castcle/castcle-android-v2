@@ -68,7 +68,6 @@ class AccountFragment : BaseFragment(), AccountListener {
     override fun onDeleteAccountClicked() = Unit
 
     override fun onLinkFacebookClicked() {
-        facebookLoginManager.logOut()
         facebookLoginManager.logInWithReadPermissions(
             callbackManager = callbackManager,
             fragment = this,
@@ -82,11 +81,11 @@ class AccountFragment : BaseFragment(), AccountListener {
                 }
 
                 override fun onCancel() {
-                    facebookLoginManager.logOut()
+                    viewModel.logoutFacebook()
                 }
 
                 override fun onError(error: FacebookException) {
-                    facebookLoginManager.logOut()
+                    viewModel.logoutFacebook()
                     toast(error.message)
                 }
             })
