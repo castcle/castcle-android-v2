@@ -10,5 +10,6 @@ data class VerifyOtpRequest(
     @SerializedName("mobileNumber") val mobileNumber: String? = null,
     @SerializedName("objective") val objective: String? = null,
     @SerializedName("otp") val otp: String? = null,
+    @SerializedName("password") val password: String? = null,
     @SerializedName("refCode") val refCode: String? = null,
 )

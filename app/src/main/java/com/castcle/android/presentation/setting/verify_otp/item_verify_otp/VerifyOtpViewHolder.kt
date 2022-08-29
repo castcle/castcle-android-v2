@@ -62,16 +62,16 @@ class VerifyOtpViewHolder(
         binding.etOtp.setText(item.otpNumber)
         binding.ivIcon.setImageResource(
             when (item.otp.type) {
-                is OtpType.Email -> R.drawable.ic_verify_otp_email
+                is OtpType.Email, is OtpType.Password -> R.drawable.ic_verify_otp_email
                 is OtpType.Mobile -> R.drawable.ic_verify_otp_mobile
             }
         )
         binding.tvTitle.text = when (item.otp.type) {
-            is OtpType.Email -> string(R.string.fragment_verify_otp_title_6)
+            is OtpType.Email, is OtpType.Password -> string(R.string.fragment_verify_otp_title_6)
             is OtpType.Mobile -> string(R.string.fragment_verify_otp_title_4)
         }
         binding.tvDescription.text = when (item.otp.type) {
-            is OtpType.Email -> context().getString(
+            is OtpType.Email, is OtpType.Password -> context().getString(
                 R.string.fragment_verify_otp_title_7,
                 item.otp.email,
             )

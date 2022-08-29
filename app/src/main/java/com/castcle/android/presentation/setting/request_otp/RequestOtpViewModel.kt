@@ -37,7 +37,7 @@ class RequestOtpViewModel(
             onSuccess = { views.postValue(it) },
         ) {
             when (type) {
-                is OtpType.Email -> database.user().get(UserType.People)
+                is OtpType.Email, is OtpType.Password -> database.user().get(UserType.People)
                     .firstOrNull()
                     .let { RequestOtpEmailViewEntity(email = it?.email.orEmpty()) }
                 is OtpType.Mobile -> RequestOtpMobileViewEntity()
@@ -55,7 +55,7 @@ class RequestOtpViewModel(
                 email = email,
                 mobileNumber = mobileNumber,
                 objective = when (type) {
-                    is OtpType.Email -> OtpObjective.ChangePassword
+                    is OtpType.Email, is OtpType.Password -> OtpObjective.ChangePassword
                     is OtpType.Mobile -> OtpObjective.VerifyMobile
                 },
                 type = type,

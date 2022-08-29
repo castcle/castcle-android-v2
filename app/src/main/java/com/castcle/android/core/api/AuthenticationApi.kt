@@ -78,4 +78,9 @@ interface AuthenticationApi {
         @Body body: VerifyOtpRequest
     ): Response<VerifyOtpResponse>
 
+    @POST("v2/authentications/verify-password")
+    suspend fun verifyPassword(
+        @Body body: VerifyOtpRequest
+    ): Response<VerifyOtpResponse>
+
 }

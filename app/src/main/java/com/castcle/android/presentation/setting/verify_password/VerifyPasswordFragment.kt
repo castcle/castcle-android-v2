@@ -1,31 +1,24 @@
-package com.castcle.android.presentation.setting.verify_otp
+package com.castcle.android.presentation.setting.verify_password
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.domain.authentication.entity.OtpEntity
-import com.castcle.android.domain.authentication.type.OtpObjective
-import com.castcle.android.domain.authentication.type.OtpType
-import com.castcle.android.presentation.setting.verify_otp.item_verify_otp.VerifyOtpViewRenderer
+import com.castcle.android.presentation.setting.verify_password.item_verify_password.VerifyPasswordViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
-class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
+class VerifyPasswordFragment : BaseFragment(), VerifyPasswordListener {
 
-    private val viewModel by viewModel<VerifyOtpViewModel> { parametersOf(args.otp) }
+    private val viewModel by viewModel<VerifyPasswordViewModel>()
 
-    private val args by navArgs<VerifyOtpFragmentArgs>()
-
-    private val directions = VerifyOtpFragmentDirections
+    private val directions = VerifyPasswordFragmentDirections
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
@@ -33,10 +26,7 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
         binding.recyclerView.adapter = adapter
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            title = when (args.otp.type) {
-                is OtpType.Email, is OtpType.Password -> R.string.password
-                is OtpType.Mobile -> R.string.mobile_number
-            },
+            title = R.string.password,
         )
     }
 
@@ -48,11 +38,6 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
 
     override fun initConsumer() {
         lifecycleScope.launch {
-            viewModel.onResentOtpSuccess.collectLatest {
-                dismissLoading()
-            }
-        }
-        lifecycleScope.launch {
             viewModel.onError.collectLatest {
                 dismissLoading()
                 toast(it.message)
@@ -61,32 +46,15 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
         lifecycleScope.launch {
             viewModel.onSuccess.collectLatest {
                 dismissLoading()
-                when (it.objective) {
-                    is OtpObjective.ChangePassword -> {
-                        directions
-                            .toChangePasswordFragment(it)
-                            .navigate(R.id.requestOtpFragment)
-                    }
-                    is OtpObjective.VerifyMobile -> {
-                        directions
-                            .toUpdateProfileSuccessFragment(it)
-                            .navigate(R.id.requestOtpFragment)
-                    }
-                }
+                directions.toChangePasswordFragment(it).navigate(R.id.verifyPasswordFragment)
             }
         }
     }
 
-    override fun onResentOtpClicked(otp: OtpEntity) {
+    override fun onVerifyPasswordClicked(password: String) {
         showLoading()
         hideKeyboard()
-        viewModel.requestOtp(otp)
-    }
-
-    override fun onVerifyOtp(otp: OtpEntity) {
-        showLoading()
-        hideKeyboard()
-        viewModel.verifyOtp(otp)
+        viewModel.verifyPassword(password)
     }
 
     override fun onStop() {
@@ -101,7 +69,7 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(VerifyOtpViewRenderer())
+            registerRenderer(VerifyPasswordViewRenderer())
         }
     }
 

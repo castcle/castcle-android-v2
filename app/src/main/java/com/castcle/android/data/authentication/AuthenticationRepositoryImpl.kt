@@ -195,6 +195,7 @@ class AuthenticationRepositoryImpl(
         val response = when (otp.type) {
             is OtpType.Email -> apiCall { api.requestOtpEmail(body = otp.toRequestOtpRequest()) }
             is OtpType.Mobile -> apiCall { api.requestOtpMobile(body = otp.toRequestOtpRequest()) }
+            else -> null
         }
         return otp.fromRequestOtpResponse(response)
     }
@@ -252,6 +253,7 @@ class AuthenticationRepositoryImpl(
         val response = when (otp.type) {
             OtpType.Email -> apiCall { api.verifyOtpEmail(body = otp.toVerifyOtpRequest()) }
             OtpType.Mobile -> apiCall { api.verifyOtpMobile(body = otp.toVerifyOtpRequest()) }
+            OtpType.Password -> apiCall { api.verifyPassword(body = otp.toVerifyOtpRequest()) }
         }
         return otp.fromVerifyOtpResponse(response)
     }
