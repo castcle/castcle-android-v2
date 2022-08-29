@@ -26,6 +26,8 @@ class LoginFragment : BaseFragment(), LoginListener {
 
     private val viewModel by viewModel<LoginViewModel>()
 
+    private val directions = LoginFragmentDirections
+
     private val facebookLoginManager by inject<LoginManager>()
 
     private val googleSignInClient by inject<GoogleSignInClient>()
@@ -88,6 +90,10 @@ class LoginFragment : BaseFragment(), LoginListener {
             })
     }
 
+    override fun onForgotPasswordClicked() {
+        directions.toForgotPasswordFragment().navigate()
+    }
+
     override fun onGoogleLoginClicked() {
         googleSignInClient.signOut()
         googleSignInCallback.launch(googleSignInClient.signInIntent)
@@ -118,6 +124,16 @@ class LoginFragment : BaseFragment(), LoginListener {
 
     override fun onUrlClicked(url: String) {
         openUrl(url)
+    }
+
+    override fun onStop() {
+        changeSoftInputMode(false)
+        super.onStop()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        changeSoftInputMode(true)
     }
 
     private val adapter by lazy {

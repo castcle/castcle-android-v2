@@ -10,6 +10,7 @@
     <string name="cast">Cast</string>
     <string name="casts">Casts</string>
     <string name="cast_count">%s Cast</string>
+    <string name="close">Close</string>
     <string name="copy_message">Copy message</string>
     <string name="confirm">Confirm</string>
     <string name="content_farming">Content Farming</string>
@@ -41,18 +42,28 @@
     <string name="fragment_account_title_1">Account Setting</string>
     <string name="fragment_account_title_2">Link Social Media Account</string>
     <string name="fragment_account_title_3">Account Control</string>
+    <string name="fragment_change_password_title_1">Please enter your new password</string>
+    <string name="fragment_change_password_title_2">Confirm password</string>
+    <string name="fragment_change_password_title_3">Enter to confirm your password</string>
+    <string name="fragment_change_password_title_4">Use at least 6 characters</string>
+    <string name="fragment_change_password_title_5">Use both lowercase and uppercase letters</string>
+    <string name="fragment_change_password_title_6">Password did not match</string>
     <string name="fragment_country_code_title_1">Select Country Code</string>
+    <string name="fragment_forgot_password_title_1">Forgot password?</string>
+    <string name="fragment_forgot_password_title_2">Enter your registered email address. We will send a verification code to your inbox</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
     <string name="fragment_login_title_2">Login to continue</string>
     <string name="fragment_login_title_3">Enter your email address</string>
     <string name="fragment_login_title_4">Enter your password</string>
-    <string name="fragment_login_title_5">Forgot Password?</string>
+    <string name="fragment_login_title_5">Forgot password?</string>
     <string name="fragment_login_title_6">Login</string>
     <string name="fragment_login_title_7">Or continue with</string>
     <string name="fragment_login_title_8">Don’t have an account? <font color="#01D2FF">Sign up</font></string>
     <string name="fragment_register_mobile_title_1">Register mobile number</string>
     <string name="fragment_register_mobile_title_2">Please enter you country/mobile number to verify your account</string>
     <string name="fragment_register_mobile_title_3">Your mobile number</string>
+    <string name="fragment_register_password_title_1">Request e-mail</string>
+    <string name="fragment_register_password_title_2">Enter the e-mail associated with this account to request an OTP code</string>
     <string name="fragment_report_detail_message_hint">Write you message here…</string>
     <string name="fragment_report_detail_cast_title">Are there any additional issues with this Cast you want to report? Tell us more.</string>
     <string name="fragment_report_detail_user_title">Are there any additional issues with this User you want to report? Tell us more.</string>
@@ -73,6 +84,22 @@
     <string name="fragment_setting_title_3">Please verify your e-mail</string>
     <string name="fragment_setting_title_4">Go to</string>
     <string name="fragment_setting_title_5">+ New Page</string>
+    <string name="fragment_update_profile_success_title_1">Mobile number successfully verified</string>
+    <string name="fragment_update_profile_success_title_2">You have successfully verified your mobile number with Castcle</string>
+    <string name="fragment_update_profile_success_title_3">Password successfully changed</string>
+    <string name="fragment_update_profile_success_title_4">Congratulations, you have successfully changed your password</string>
+    <string name="fragment_update_profile_success_title_5">Login with Castcle</string>
+    <string name="fragment_verify_otp_title_1">Didn’t receive code?</string>
+    <string name="fragment_verify_otp_title_2"><![CDATA[<font color="#01D2FF">Request code again.</font>]]></string>
+    <string name="fragment_verify_otp_title_3"><![CDATA[<font color="#707070">Request code again in %s.</font>]]></string>
+    <string name="fragment_verify_otp_title_4">Verify your mobile number</string>
+    <string name="fragment_verify_otp_title_5">You will receive a 6 digit code to verify your mobile number. OTP code will be sent to %s</string>
+    <string name="fragment_verify_otp_title_6">Verify your E-mail</string>
+    <string name="fragment_verify_otp_title_7">You will receive a 6 digit code to verify your e-mail. OTP code will be sent to %s</string>
+    <string name="fragment_verify_otp_title_8">Enter verification code</string>
+    <string name="fragment_verify_otp_title_9">You will receive a 6 digit code to reset you password. Verification code will be sent to %s</string>
+    <string name="fragment_verify_password_title_1">Please enter your current password</string>
+    <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>

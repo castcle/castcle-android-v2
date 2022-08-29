@@ -28,15 +28,18 @@ class SettingViewModel(
     private var userUpdater: Job? = null
 
     init {
-        fetchNotificationBadges()
-        fetchUserPage()
-        fetchUserProfile()
         startUserUpdater()
     }
 
     val views = database.user().retrieveWithSyncSocial()
         .combine(database.notificationBadges().retrieve(), mapper::map)
         .distinctUntilChanged()
+
+    fun fetchData() {
+        fetchNotificationBadges()
+        fetchUserPage()
+        fetchUserProfile()
+    }
 
     private fun fetchNotificationBadges() {
         launch {

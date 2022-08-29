@@ -12,9 +12,11 @@ import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
-import com.castcle.android.domain.authentication.entity.RequestOtpMobileEntity
+import com.castcle.android.domain.authentication.entity.OtpEntity
+import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
+import com.castcle.android.domain.user.type.UserType
 import com.facebook.*
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -34,6 +36,13 @@ class AuthenticationRepositoryImpl(
     private val context: Context,
     private val glidePreloader: GlidePreloader,
 ) : AuthenticationRepository {
+
+    override suspend fun changePassword(otp: OtpEntity) {
+        apiCall { api.changePassword(body = otp.toChangePasswordRequest()) }
+        database.user().get(UserType.People).firstOrNull()
+            ?.copy(passwordNotSet = false)
+            ?.also { database.user().update(it) }
+    }
 
     override suspend fun getAccessToken(): AccessTokenEntity {
         return database.accessToken().get() ?: AccessTokenEntity()
@@ -182,9 +191,13 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    override suspend fun requestOtpMobile(body: RequestOtpMobileRequest): RequestOtpMobileEntity {
-        val response = apiCall { api.requestOtpMobile(body = body) }
-        return RequestOtpMobileEntity.map(body, response)
+    override suspend fun requestOtp(otp: OtpEntity): OtpEntity {
+        val response = when (otp.type) {
+            is OtpType.Email -> apiCall { api.requestOtpEmail(body = otp.toRequestOtpRequest()) }
+            is OtpType.Mobile -> apiCall { api.requestOtpMobile(body = otp.toRequestOtpRequest()) }
+            else -> null
+        }
+        return otp.fromRequestOtpResponse(response)
     }
 
     override suspend fun resentVerifyEmail() {
@@ -220,6 +233,29 @@ class AuthenticationRepositoryImpl(
             database.accessToken().insert(accessToken)
         }
         registerFirebaseMessagingToken()
+    }
+
+    override suspend fun updateMobileNumber(otp: OtpEntity): OtpEntity {
+        val updatedOtp = verifyOtp(otp)
+        val mobileNumber = if (otp.mobileNumber.startsWith("0")) {
+            otp.mobileNumber.drop(1)
+        } else {
+            otp.mobileNumber
+        }
+        apiCall { api.updateMobileNumber(body = updatedOtp.toUpdateMobileNumberRequest()) }
+        database.user().get(UserType.People).firstOrNull()
+            ?.copy(mobileCountryCode = otp.countryCode, mobileNumber = mobileNumber)
+            ?.also { database.user().update(it) }
+        return updatedOtp
+    }
+
+    override suspend fun verifyOtp(otp: OtpEntity): OtpEntity {
+        val response = when (otp.type) {
+            OtpType.Email -> apiCall { api.verifyOtpEmail(body = otp.toVerifyOtpRequest()) }
+            OtpType.Mobile -> apiCall { api.verifyOtpMobile(body = otp.toVerifyOtpRequest()) }
+            OtpType.Password -> apiCall { api.verifyPassword(body = otp.toVerifyOtpRequest()) }
+        }
+        return otp.fromVerifyOtpResponse(response)
     }
 
 }

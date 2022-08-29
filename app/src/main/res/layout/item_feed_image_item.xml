@@ -39,7 +39,7 @@
         android:layout_margin="@dimen/_6sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/black_transparent_2"
-        android:padding="@dimen/_4sdp"
+        android:padding="@dimen/_6sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_close" />

@@ -10,6 +10,7 @@ import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
+import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewRenderer
 import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewRenderer
 import com.facebook.*
@@ -60,6 +61,10 @@ class AccountFragment : BaseFragment(), AccountListener {
         }
     }
 
+    override fun onChangePasswordClicked() {
+        directions.toVerifyPasswordFragment().navigate()
+    }
+
     override fun onDeleteAccountClicked() = Unit
 
     override fun onLinkFacebookClicked() {
@@ -98,11 +103,9 @@ class AccountFragment : BaseFragment(), AccountListener {
         })
     }
 
-    override fun onMobileNumberClicked() {
-        directions.toRegisterMobileFragment().navigate()
+    override fun onRequestOtpClicked(type: OtpType) {
+        directions.toRequestOtpFragment(type).navigate()
     }
-
-    override fun onPasswordClicked() = Unit
 
     override fun onResentVerifyEmailClicked() {
         directions.toResentVerifyEmailFragment().navigate()
