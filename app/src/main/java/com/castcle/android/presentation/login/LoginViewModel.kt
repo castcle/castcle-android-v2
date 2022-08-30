@@ -60,7 +60,7 @@ class LoginViewModel(
 
     fun logoutFacebook() {
         launch {
-            repository.loginWithFacebook()
+            repository.loginOutFacebook()
         }
     }
 
