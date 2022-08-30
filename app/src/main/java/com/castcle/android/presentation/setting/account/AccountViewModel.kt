@@ -150,7 +150,7 @@ class AccountViewModel(
 
     fun logoutFacebook() {
         launch {
-            repository.loginOut()
+            repository.loginOutFacebook()
         }
     }
 
