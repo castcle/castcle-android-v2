@@ -1,5 +1,6 @@
 package com.castcle.android.presentation.feed.item_feed_quote
 
+import androidx.core.view.isVisible
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.custom_view.CastcleTextView
@@ -11,15 +12,14 @@ import com.castcle.android.databinding.ItemFeedQuoteBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.dialog.option.OptionDialogType
+import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
-import com.castcle.android.presentation.feed.item_feed_image_1.FeedImage1ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_2.FeedImage2ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_3.FeedImage3ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_image_4.FeedImage4ViewRenderer
-import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
-import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewRenderer
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
+import com.castcle.android.presentation.feed.item_feed_report.FeedReportViewRenderer
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
@@ -33,15 +33,11 @@ class FeedQuoteViewHolder(
 
     private val adapter by lazy {
         CastcleAdapter(listener, compositeDisposable).apply {
-            registerRenderer(FeedImage1ViewRenderer(CastType.Quote))
-            registerRenderer(FeedImage2ViewRenderer(CastType.Quote))
-            registerRenderer(FeedImage3ViewRenderer(CastType.Quote))
-            registerRenderer(FeedImage4ViewRenderer(CastType.Quote))
-            registerRenderer(FeedNewCastViewRenderer())
-            registerRenderer(FeedQuoteViewRenderer())
-            registerRenderer(FeedRecastViewRenderer())
-            registerRenderer(FeedTextViewRenderer(CastType.Quote))
-            registerRenderer(FeedWebViewRenderer(CastType.Quote))
+            registerRenderer(FeedImageViewRenderer(FeedDisplayType.QuoteCast))
+            registerRenderer(FeedReportViewRenderer(FeedDisplayType.QuoteCast))
+            registerRenderer(FeedTextViewRenderer(FeedDisplayType.QuoteCast))
+            registerRenderer(FeedWebViewRenderer(FeedDisplayType.QuoteCast))
+            registerRenderer(FeedWebImageViewRenderer(FeedDisplayType.QuoteCast))
         }
     }
 
@@ -53,10 +49,11 @@ class FeedQuoteViewHolder(
         }
         binding.castcleTextView.setLinkClickListener(object : CastcleTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
-                if (linkType == LinkedType.URL) {
-                    listener.onLinkClicked(matchedText)
-                } else if (linkType == LinkedType.HASHTAG) {
-                    listener.onHashtagClicked(matchedText)
+                when (linkType) {
+                    LinkedType.URL -> listener.onLinkClicked(matchedText)
+                    LinkedType.HASHTAG -> listener.onHashtagClicked(matchedText)
+                    LinkedType.MENTION -> listener.onMentionClicked(matchedText)
+                    else -> Unit
                 }
             }
         })
@@ -65,7 +62,8 @@ class FeedQuoteViewHolder(
     override fun bind(bindItem: FeedQuoteViewEntity) {
         adapter.submitList(item.reference)
         binding.participateBar.bind(item.cast, this)
-        binding.userBar.bind(item.cast, item.user, this)
+        binding.reported.root.isVisible = item.cast.reported
+        binding.userBar.bind(item.cast, item.user, this, true)
         binding.castcleTextView.onClearMessage()
         if (item.cast.type is CastType.Long) {
             binding.castcleTextView.setCollapseText(item.cast.message)
@@ -75,7 +73,11 @@ class FeedQuoteViewHolder(
     }
 
     override fun onCommentClicked(cast: CastEntity) {
-        listener.onCommentClicked(cast)
+        listener.onCommentClicked(cast, item.user)
+    }
+
+    override fun onContentFarmingClicked(cast: CastEntity) {
+        listener.onContentFarmingClicked(cast)
     }
 
     override fun onFollowClicked(user: UserEntity) {
@@ -87,11 +89,16 @@ class FeedQuoteViewHolder(
     }
 
     override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-        listener.onOptionClicked(cast, user)
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.MyContentOption(contentId = cast.id)
+        } else {
+            OptionDialogType.OtherContentOption(contentId = cast.id)
+        }
+        listener.onOptionClicked(optionType)
     }
 
     override fun onRecastClicked(cast: CastEntity) {
-        listener.onRecastClicked(cast)
+        listener.onRecastClicked(item.referenceCast ?: item.cast)
     }
 
     override fun onUserClicked(user: UserEntity) {

@@ -1,7 +1,9 @@
 package com.castcle.android.presentation.feed.item_feed_web
 
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.custom_view.CastcleTextView
 import com.castcle.android.core.custom_view.LinkedType
@@ -13,6 +15,8 @@ import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.cast.type.WebType
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.dialog.option.OptionDialogType
+import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -21,7 +25,7 @@ class FeedWebViewHolder(
     private val binding: ItemFeedWebBinding,
     private val compositeDisposable: CompositeDisposable,
     private val listener: FeedListener,
-    private val referenceType: CastType?,
+    private val displayType: FeedDisplayType,
 ) : CastcleViewHolder<FeedWebViewEntity>(binding.root), UserBarListener, ParticipateBarListener {
 
     override var item = FeedWebViewEntity()
@@ -33,12 +37,18 @@ class FeedWebViewHolder(
         compositeDisposable += binding.viewWeb.onClick {
             listener.onLinkClicked(item.cast.linkUrl)
         }
+        compositeDisposable += binding.root.onClick {
+            if (displayType is FeedDisplayType.QuoteCast) {
+                listener.onCommentClicked(item.cast, item.user)
+            }
+        }
         binding.castcleTextView.setLinkClickListener(object : CastcleTextView.LinkClickListener {
             override fun onLinkClicked(linkType: LinkedType, matchedText: String) {
-                if (linkType == LinkedType.URL) {
-                    listener.onLinkClicked(matchedText)
-                } else if (linkType == LinkedType.HASHTAG) {
-                    listener.onHashtagClicked(matchedText)
+                when (linkType) {
+                    LinkedType.URL -> listener.onLinkClicked(matchedText)
+                    LinkedType.HASHTAG -> listener.onHashtagClicked(matchedText)
+                    LinkedType.MENTION -> listener.onMentionClicked(matchedText)
+                    else -> Unit
                 }
             }
         })
@@ -46,7 +56,7 @@ class FeedWebViewHolder(
 
     override fun bind(bindItem: FeedWebViewEntity) {
         val marginBottom = if (
-            referenceType is CastType.Quote || referenceType is CastType.Recast
+            displayType is FeedDisplayType.QuoteCast || displayType is FeedDisplayType.Recast
         ) {
             0
         } else {
@@ -54,9 +64,18 @@ class FeedWebViewHolder(
         }
         binding.root.layoutParams = binding.root.layoutParams.cast<RecyclerView.LayoutParams>()
             ?.apply { setMargins(0, 0, 0, marginBottom) }
-        binding.participateBar.isGone = referenceType is CastType.Quote
+        if (displayType is FeedDisplayType.NewCast) {
+            binding.root.setBackgroundColor(color(R.color.transparent))
+            binding.root.background = drawable(R.drawable.bg_outline_corner_16dp)
+            binding.root.backgroundTintList = colorStateList(R.color.gray_1)
+        } else {
+            binding.root.setBackgroundColor(color(R.color.black_background_2))
+        }
+        binding.participateBar.isGone =
+            displayType is FeedDisplayType.QuoteCast || displayType is FeedDisplayType.NewCast
         binding.participateBar.bind(item.cast, this)
-        binding.userBar.bind(item.cast, item.user, this)
+        binding.reported.root.isVisible = item.cast.reported
+        binding.userBar.bind(item.cast, item.user, this, displayType !is FeedDisplayType.NewCast)
         binding.castcleTextView.onClearMessage()
         if (item.cast.type is CastType.Long) {
             binding.castcleTextView.setCollapseText(item.cast.message)
@@ -74,7 +93,11 @@ class FeedWebViewHolder(
     }
 
     override fun onCommentClicked(cast: CastEntity) {
-        listener.onCommentClicked(cast)
+        listener.onCommentClicked(cast, item.user)
+    }
+
+    override fun onContentFarmingClicked(cast: CastEntity) {
+        listener.onContentFarmingClicked(cast)
     }
 
     override fun onFollowClicked(user: UserEntity) {
@@ -86,7 +109,12 @@ class FeedWebViewHolder(
     }
 
     override fun onOptionClicked(cast: CastEntity, user: UserEntity) {
-        listener.onOptionClicked(cast, user)
+        val optionType = if (cast.isOwner) {
+            OptionDialogType.MyContentOption(contentId = cast.id)
+        } else {
+            OptionDialogType.OtherContentOption(contentId = cast.id)
+        }
+        listener.onOptionClicked(optionType)
     }
 
     override fun onRecastClicked(cast: CastEntity) {

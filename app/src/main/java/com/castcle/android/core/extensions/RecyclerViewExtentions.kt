@@ -16,6 +16,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
+import kotlinx.coroutines.flow.MutableStateFlow
 
 fun RecyclerView.ViewHolder.color(@ColorRes id: Int?) = if (id != null) {
     ContextCompat.getColor(itemView.context, id)
@@ -45,7 +46,14 @@ fun RecyclerView.ViewHolder.drawable(@DrawableRes id: Int?): Drawable? =
     )
 
 fun MutableLiveData<List<CastcleViewEntity>>.error(error: Throwable?, retryAction: () -> Unit) {
-    postValue(listOf(ErrorStateViewEntity(error = error, retryAction = retryAction)))
+    postValue(listOf(ErrorStateViewEntity(action = retryAction, error = error)))
+}
+
+fun MutableStateFlow<List<CastcleViewEntity>?>.error(
+    error: Throwable?,
+    retryAction: () -> Unit
+) {
+    value = listOf(ErrorStateViewEntity(action = retryAction, error = error))
 }
 
 fun RecyclerView.firstVisibleItemPosition(): Int {
@@ -57,6 +65,10 @@ fun RecyclerView.firstVisibleItemPosition(): Int {
 
 fun MutableLiveData<List<CastcleViewEntity>>.loading() {
     postValue(listOf(LoadingViewEntity()))
+}
+
+fun MutableStateFlow<List<CastcleViewEntity>?>.loading() {
+    value = listOf(LoadingViewEntity())
 }
 
 fun RecyclerView.ViewHolder.screenWidthPx(): Int {

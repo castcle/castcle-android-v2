@@ -17,11 +17,11 @@ class FeedNewCastViewHolder(
     override var item = FeedNewCastViewEntity()
 
     init {
-        compositeDisposable += binding.flAvatar.onClick {
+        compositeDisposable += binding.viewAvatar.onClick {
             listener.onUserClicked(item.user)
         }
-        compositeDisposable += binding.tvHint.onClick {
-            listener.onNewCastClicked()
+        compositeDisposable += binding.root.onClick {
+            listener.onNewCastClicked(item.user.id)
         }
     }
 

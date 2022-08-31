@@ -24,6 +24,8 @@ class WhoToFollowFragment : BaseFragment(), WhoToFollowListener, LoadStateListen
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
+    private val directions = WhoToFollowFragmentDirections
+
     @FlowPreview
     override fun initViewProperties() {
         binding.swipeRefresh.setRefreshColor(
@@ -63,11 +65,14 @@ class WhoToFollowFragment : BaseFragment(), WhoToFollowListener, LoadStateListen
     }
 
     override fun onFollowClicked(user: UserEntity) {
-        shareViewModel.followUser(targetUser = user)
+        shareViewModel.followUser(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            targetUser = user,
+        )
     }
 
     override fun onUserClicked(user: UserEntity) {
-        WhoToFollowFragmentDirections.toProfileFragment(user).navigate()
+        directions.toProfileFragment(user).navigate()
     }
 
     override fun onRefreshClicked() {

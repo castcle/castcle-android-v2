@@ -7,13 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.withTransaction
 import com.castcle.android.core.api.FeedApi
 import com.castcle.android.core.base.view_model.BaseViewModel
-import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_DEFAULT
+import com.castcle.android.core.constants.PARAMETER_MAX_RESULTS_LARGE_ITEM
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
 import com.castcle.android.data.feed.data_source.FeedRemoteMediator
 import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.type.LoadKeyType
-import com.castcle.android.domain.user.type.UserType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import org.koin.android.annotation.KoinViewModel
@@ -34,32 +33,27 @@ class FeedViewModel(
 
     val isGuest = database.accessToken()
         .retrieve()
-        .map { it.firstOrNull()?.isGuest() ?: true }
+        .map { it?.isGuest() ?: true }
         .distinctUntilChanged()
-
-    private val currentUser = database.user()
-        .retrieve(UserType.People)
-        .map { it.firstOrNull() }
-        .distinctUntilChangedBy { it?.id }
 
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
-    val views = isGuest.combine(currentUser) { isGuest, user -> isGuest to user }
+    val views = database.accessToken()
+        .retrieve()
         .distinctUntilChanged()
-        .flatMapLatest { (isGuest, user) ->
+        .flatMapLatest { accessToken ->
             Pager(
                 config = PagingConfig(
-                    initialLoadSize = PARAMETER_MAX_RESULTS_DEFAULT,
-                    pageSize = PARAMETER_MAX_RESULTS_DEFAULT,
+                    initialLoadSize = PARAMETER_MAX_RESULTS_LARGE_ITEM,
+                    pageSize = PARAMETER_MAX_RESULTS_LARGE_ITEM,
                 ), pagingSourceFactory = {
                     database.feed().pagingSource()
                 }, remoteMediator = FeedRemoteMediator(
                     api = api,
                     database = database,
                     glidePreloader = glidePreloader,
-                    isGuest = isGuest,
+                    isGuest = accessToken?.isGuest() ?: true,
                     mapper = feedResponseMapper,
-                    user = user,
                 )
             ).flow.map { pagingData ->
                 pagingData.map { feedMapper.apply(it) }
@@ -69,9 +63,18 @@ class FeedViewModel(
     private fun clearDatabase() {
         launch {
             database.withTransaction {
+                database.comment().delete()
+                database.content().delete()
+                database.followingFollowers().delete()
                 database.profile().delete()
                 database.loadKey().delete(LoadKeyType.Profile)
             }
+        }
+    }
+
+    fun showReportingContent(id: String, ignoreReportContentId: List<String>) {
+        launch {
+            database.feed().updateIgnoreReportContentId(id, ignoreReportContentId)
         }
     }
 

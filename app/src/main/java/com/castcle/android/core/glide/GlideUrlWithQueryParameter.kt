@@ -6,7 +6,7 @@ class GlideUrlWithQueryParameter(private val url: String?) : GlideUrl(url.safeUr
 
     override fun toString(): String = super.getCacheKey()
 
-    override fun getCacheKey(): String = url?.split("?")?.firstOrNull() ?: url ?: ""
+    override fun getCacheKey(): String = url?.split("?")?.firstOrNull() ?: url.orEmpty()
 
     companion object {
         private fun String?.safeUrl(): String {

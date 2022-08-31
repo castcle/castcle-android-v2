@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_background_2"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:background="@color/black_background_2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clLike"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
         android:paddingTop="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp">
 
@@ -33,7 +32,7 @@
             android:id="@+id/tvLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
         android:paddingTop="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp">
 
@@ -69,7 +67,7 @@
             android:id="@+id/tvComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +82,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_8dp"
         android:paddingTop="@dimen/_14sdp"
         android:paddingBottom="@dimen/_14sdp">
 
@@ -105,11 +102,47 @@
             android:id="@+id/tvRecast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:textColor="@color/blue"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivRecast"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="69" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContentFarming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="@dimen/_14sdp"
+        android:paddingBottom="@dimen/_14sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivContentFarming"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:padding="@dimen/_1sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvContentFarming"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_content_farming"
+            app:tint="@color/blue" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitExLight.xSmall"
+            android:id="@+id/tvContentFarming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:textColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivContentFarming"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="69" />
 

@@ -3,9 +3,10 @@ package com.castcle.android.data.user.data_source
 import androidx.paging.*
 import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
-import com.castcle.android.core.error.ApiException
+import com.castcle.android.core.custom_view.load_state.item_empty_state_profile.EmptyStateProfileViewEntity
+import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.*
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.core.storage.database.CastcleDatabase
 import com.castcle.android.data.user.mapper.ProfileResponseMapper
 import com.castcle.android.domain.core.entity.LoadKeyEntity
 import com.castcle.android.domain.core.type.LoadKeyType
@@ -43,7 +44,7 @@ class ProfileRemoteMediator(
             }
 
             val response = api.getUserCast(
-                id = user.castcleId,
+                id = user.id,
                 maxResults = state.config.pageSize,
                 untilId = loadKey,
             )
@@ -55,7 +56,14 @@ class ProfileRemoteMediator(
             val items = if (response.isSuccessful && response.body() != null) {
                 mapper.apply(user, sessionId, loadType, ownerUserId, response.body())
             } else {
-                return MediatorResult.Error(ApiException.map(response.errorBody()))
+                val error = when (val exception = ErrorMapper().map(response.errorBody())) {
+                    is CastcleException.UserNotFoundException -> RetryException(
+                        error = exception,
+                        errorItems = EmptyStateProfileViewEntity.create(1),
+                    )
+                    else -> exception
+                }
+                return MediatorResult.Error(error)
             }
 
             with(glidePreloader) {
@@ -78,7 +86,7 @@ class ProfileRemoteMediator(
 
             MediatorResult.Success(endOfPaginationReached = false)
         } catch (exception: Exception) {
-            MediatorResult.Error(exception)
+            MediatorResult.Error(ErrorMapper().map(exception))
         }
     }
 

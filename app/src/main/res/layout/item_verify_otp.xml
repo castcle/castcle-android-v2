@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_background_1">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_170sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_verify_otp_mobile" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Regular"
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
+        android:gravity="center"
+        android:text="@string/fragment_verify_otp_title_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivIcon" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
+        android:gravity="center"
+        android:text="@string/fragment_verify_otp_title_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <com.castcle.android.core.custom_view.otp_edit_text.OtpEditText
+        style="@style/AppTextKanit.Headline"
+        android:id="@+id/etOtp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingBottom="@dimen/_24sdp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llResendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etOtp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/tvResendOtpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:text="@string/fragment_verify_otp_title_1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/tvResendOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:text="@string/fragment_verify_otp_title_3" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Regular"
+        android:id="@+id/tvConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:background="@drawable/bg_corner_24dp"
+        android:backgroundTint="@color/blue"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="@string/confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llResendOtp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

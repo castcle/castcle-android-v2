@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_background_1"
-    android:foreground="@drawable/bg_ripple_rectangle">
+    android:background="@color/black_background_1">
 
     <FrameLayout
         android:id="@+id/flAvatar"
@@ -14,7 +13,6 @@
         android:layout_margin="@dimen/_12sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/white"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_1sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,11 +30,9 @@
         android:id="@+id/tvFollow"
         android:layout_width="@dimen/_76sdp"
         android:layout_height="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:background="@drawable/bg_outline_corner_16dp"
         android:backgroundTint="@color/blue"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:gravity="center"
         android:text="@string/follow"
         android:textColor="@color/blue"
@@ -50,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constrainedWidth="true"
@@ -66,7 +63,7 @@
         android:id="@+id/ivOfficial"
         android:layout_width="@dimen/_12sdp"
         android:layout_height="@dimen/_12sdp"
-        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginEnd="@dimen/_4sdp"
         app:layout_constraintBottom_toBottomOf="@id/tvUserName"
         app:layout_constraintEnd_toStartOf="@+id/tvFollow"
@@ -95,7 +92,7 @@
         android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:ellipsize="end"
         android:maxLines="2"
@@ -108,8 +105,8 @@
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/_1sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:background="@color/gray_8"
+        android:layout_marginTop="@dimen/_11sdp"
+        android:background="@color/gray_transparent_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

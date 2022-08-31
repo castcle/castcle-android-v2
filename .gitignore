@@ -11,8 +11,11 @@ app/build
 .DS_Store
 /build
 /captures
+/certificates
 .externalNativeBuild
 .cxx
 local.properties
+keystore.properties
 **/google-services.json
 **/secret_key.xml
+fastlane/*.env.*

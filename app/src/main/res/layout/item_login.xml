@@ -51,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="@null"
         app:endIconDrawable="@drawable/ic_close"
@@ -97,10 +97,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        app:endIconDrawable="@drawable/ic_password"
         app:endIconMode="password_toggle"
-        app:endIconTint="@color/white"
+        app:endIconTint="@color/transparent"
+        app:endIconTintMode="src_over"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,13 +130,8 @@
         android:id="@+id/tvForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_4sdp"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
-        android:paddingStart="@dimen/_12sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingEnd="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_4sdp"
+        android:padding="@dimen/_12sdp"
         android:text="@string/fragment_login_title_5"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,12 +142,9 @@
         android:id="@+id/btLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_margin="@dimen/_16sdp"
         android:background="@drawable/bg_corner_24dp"
         android:backgroundTint="@color/blue"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_24dp"
         android:padding="@dimen/_8sdp"
         android:text="@string/fragment_login_title_6"
         android:textAllCaps="false"
@@ -193,13 +187,6 @@
         app:layout_constraintStart_toEndOf="@+id/tvOr"
         app:layout_constraintTop_toTopOf="@+id/tvOr" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".5" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTwitter"
         android:layout_width="@dimen/_28sdp"
@@ -207,12 +194,21 @@
         android:layout_marginTop="@dimen/_24sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/blue_twitter"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_6sdp"
-        app:layout_constraintEnd_toEndOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/btLogin"
+        app:layout_constraintStart_toStartOf="@+id/btLogin"
         app:layout_constraintTop_toBottomOf="@+id/tvOr"
         app:srcCompat="@drawable/ic_twitter" />
+
+    <View
+        android:id="@+id/viewTwitter"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
+        app:layout_constraintEnd_toEndOf="@+id/ivTwitter"
+        app:layout_constraintStart_toStartOf="@+id/ivTwitter"
+        app:layout_constraintTop_toTopOf="@+id/ivTwitter" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFacebook"
@@ -221,13 +217,22 @@
         android:layout_marginEnd="@dimen/_16sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/blue_facebook"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/ivTwitter"
         app:layout_constraintTop_toTopOf="@+id/ivTwitter"
         app:srcCompat="@drawable/ic_facebook" />
+
+    <View
+        android:id="@+id/viewFacebook"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTwitter"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/viewTwitter"
+        app:layout_constraintTop_toTopOf="@+id/viewTwitter" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivGoogle"
@@ -236,7 +241,6 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:background="@drawable/bg_circle"
         android:backgroundTint="@color/white"
-        android:foreground="@drawable/bg_ripple_circle"
         android:padding="@dimen/_6sdp"
         app:layout_constraintBottom_toBottomOf="@+id/ivTwitter"
         app:layout_constraintDimensionRatio="1:1"
@@ -244,13 +248,22 @@
         app:layout_constraintTop_toTopOf="@+id/ivTwitter"
         app:srcCompat="@drawable/ic_google" />
 
+    <View
+        android:id="@+id/viewGoogle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTwitter"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toEndOf="@+id/viewTwitter"
+        app:layout_constraintTop_toTopOf="@+id/viewTwitter" />
+
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanitLight.Small"
         android:id="@+id/tvSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_16dp"
         android:paddingStart="@dimen/_16sdp"
         android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_16sdp"

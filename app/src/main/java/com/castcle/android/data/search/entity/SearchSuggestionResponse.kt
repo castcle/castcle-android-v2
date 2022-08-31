@@ -6,17 +6,10 @@ import com.google.gson.annotations.SerializedName
 
 @Keep
 data class SearchSuggestionResponse(
-    @SerializedName("hashtags") val hashtags: List<Hashtags>? = null,
+    @SerializedName("hashtags") val hashtags: List<HashtagsResponse>? = null,
     @SerializedName("keyword") val keyword: List<Keyword>? = null,
     @SerializedName("users") val users: List<UserResponse>? = null,
 ) {
-
-    data class Hashtags(
-        @SerializedName("count") val count: Int? = null,
-        @SerializedName("name") val name: String? = null,
-        @SerializedName("rank") val rank: Int? = null,
-        @SerializedName("slug") val slug: String? = null,
-    )
 
     data class Keyword(
         @SerializedName("text") val text: String? = null,

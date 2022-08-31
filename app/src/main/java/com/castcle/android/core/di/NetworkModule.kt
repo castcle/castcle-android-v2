@@ -4,6 +4,7 @@ import android.content.Context
 import com.castcle.android.BuildConfig
 import com.castcle.android.R
 import com.castcle.android.core.constants.NETWORK_TIMEOUT
+import com.castcle.android.core.interceptor.AuthenticationInterceptor
 import com.castcle.android.core.interceptor.NetworkInterceptor
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -16,30 +17,32 @@ import java.util.concurrent.*
 
 val networkModule = module {
     single {
-        val logging = HttpLoggingInterceptor().apply {
+        GsonConverterFactory.create(GsonBuilder().serializeNulls().setLenient().create())
+    }
+    single {
+        HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BODY
             } else {
                 HttpLoggingInterceptor.Level.NONE
             }
         }
+    }
+    single {
         OkHttpClient.Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
+            .addInterceptor(get<NetworkInterceptor>())
+            .authenticator(get<AuthenticationInterceptor>())
             .connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
-            .addInterceptor(logging)
-            .addInterceptor(get<NetworkInterceptor>())
             .build()
     }
     single {
-        val gsonBuilder = GsonBuilder()
-            .serializeNulls()
-            .setLenient()
-            .create()
         Retrofit.Builder()
             .baseUrl(get<Context>().getString(R.string.base_url))
             .client(get())
-            .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
+            .addConverterFactory(get<GsonConverterFactory>())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }

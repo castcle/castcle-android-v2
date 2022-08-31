@@ -59,7 +59,7 @@ class LoginViewHolder(
             listener.onUrlClicked(URL_PRIVACY_POLICY)
         }
         compositeDisposable += binding.tvForgotPassword.onClick {
-
+            listener.onForgotPasswordClicked()
         }
         compositeDisposable += binding.tvSignUp.onClick {
 
@@ -67,13 +67,13 @@ class LoginViewHolder(
         compositeDisposable += binding.btLogin.onClick {
             listener.onEmailLoginClicked(item.email, item.password)
         }
-        compositeDisposable += binding.ivTwitter.onClick {
+        compositeDisposable += binding.viewTwitter.onClick {
             listener.onTwitterLoginClicked()
         }
-        compositeDisposable += binding.ivFacebook.onClick {
+        compositeDisposable += binding.viewFacebook.onClick {
             listener.onFacebookLoginClicked()
         }
-        compositeDisposable += binding.ivGoogle.onClick {
+        compositeDisposable += binding.viewGoogle.onClick {
             listener.onGoogleLoginClicked()
         }
         compositeDisposable += binding.etEmail.onTextChange {

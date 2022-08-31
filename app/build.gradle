@@ -2,6 +2,7 @@ plugins {
     id "com.android.application"
     id "com.google.devtools.ksp"
     id "com.google.gms.google-services"
+    id "com.google.firebase.crashlytics"
     id "kotlin-android"
     id "kotlin-kapt"
     id "kotlin-parcelize"
@@ -31,7 +32,7 @@ android {
             applicationId "com.castcle.android.dev.v2"
         }
         production {
-            applicationId "com.castcle.android"
+            applicationId "com.castcle.android.v2"
         }
         staging {
             applicationId "com.castcle.android.stg.v2"
@@ -40,10 +41,21 @@ android {
     buildFeatures {
         viewBinding true
     }
+    def keystoreProperties = new Properties()
+    keystoreProperties.load(new FileInputStream(rootProject.file("keystore.properties")))
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties["keyAlias"]
+            keyPassword keystoreProperties["keyPassword"]
+            storeFile file(keystoreProperties["storeFile"])
+            storePassword keystoreProperties["storePassword"]
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -63,25 +75,28 @@ android {
 dependencies {
 
     // Android
-    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "androidx.appcompat:appcompat:1.5.0"
     implementation "androidx.core:core-ktx:1.8.0"
-    implementation "androidx.fragment:fragment-ktx:1.5.0"
+    implementation "androidx.fragment:fragment-ktx:1.5.2"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+    implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
 
     // Dimension Resource
-    implementation "com.intuit.sdp:sdp-android:1.0.6"
+    implementation "com.intuit.sdp:sdp-android:1.1.0"
 
     // Facebook
-    implementation "com.facebook.android:facebook-android-sdk:13.1.0"
+    implementation "com.facebook.android:facebook-android-sdk:14.1.0"
 
     // Firebase
+    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation "com.google.firebase:firebase-messaging-ktx"
-    implementation platform("com.google.firebase:firebase-bom:30.1.0")
+    implementation platform("com.google.firebase:firebase-bom:30.3.2")
 
     // Glide
-    implementation "com.github.bumptech.glide:glide:4.13.1"
-    kapt "com.github.bumptech.glide:compiler:4.13.1"
+    implementation "com.github.bumptech.glide:glide:4.13.2"
+    kapt "com.github.bumptech.glide:compiler:4.13.2"
 
     // Google
     implementation "com.google.android.gms:play-services-auth:20.2.0"
@@ -89,12 +104,12 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:3.2.0"
-    implementation "io.insert-koin:koin-annotations:1.0.0-beta-2"
-    ksp "io.insert-koin:koin-ksp-compiler:1.0.0-beta-2"
+    implementation "io.insert-koin:koin-annotations:1.0.1"
+    ksp "io.insert-koin:koin-ksp-compiler:1.0.1"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.1"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.1"
 
     // Network
     implementation "com.squareup.okhttp3:logging-interceptor"
@@ -111,10 +126,10 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
     // Room
-    implementation "androidx.room:room-ktx:2.4.2"
-    implementation "androidx.room:room-paging:2.4.2"
-    implementation "androidx.room:room-rxjava2:2.4.2"
-    kapt "androidx.room:room-compiler:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.3"
+    implementation "androidx.room:room-paging:2.4.3"
+    implementation "androidx.room:room-rxjava2:2.4.3"
+    kapt "androidx.room:room-compiler:2.4.3"
 
     // Shimmer Effect
     implementation "com.facebook.shimmer:shimmer:0.5.0"
@@ -126,7 +141,7 @@ dependencies {
     implementation "com.github.perfomer:blitz:1.0.10"
 
     // Twitter
-    implementation ("com.twitter.sdk.android:twitter:3.3.0") {
+    implementation("com.twitter.sdk.android:twitter:3.3.0") {
         exclude group: "com.android.support"
     }
 

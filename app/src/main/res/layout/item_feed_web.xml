@@ -7,13 +7,20 @@
     android:layout_marginBottom="@dimen/_4sdp"
     android:background="@color/black_background_2">
 
+    <include
+        android:id="@+id/reported"
+        layout="@layout/layout_content_reported"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.castcle.android.core.custom_view.user_bar.UserBarView
         android:id="@+id/userBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/reported" />
 
     <com.castcle.android.core.custom_view.CastcleTextView
         android:id="@+id/castcleTextView"
@@ -37,6 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@+id/participateBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/castcleTextView">
@@ -57,7 +65,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:ellipsize="end"
-            android:lineSpacingMultiplier="1.25"
+            android:lineSpacingMultiplier="1.5"
             android:maxLines="2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +91,6 @@
         android:id="@+id/participateBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

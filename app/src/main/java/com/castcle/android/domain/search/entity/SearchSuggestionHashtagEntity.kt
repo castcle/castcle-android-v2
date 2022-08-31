@@ -1,6 +1,6 @@
 package com.castcle.android.domain.search.entity
 
-import com.castcle.android.data.search.entity.SearchSuggestionResponse
+import com.castcle.android.data.search.entity.HashtagsResponse
 
 data class SearchSuggestionHashtagEntity(
     val count: Int = 0,
@@ -10,12 +10,12 @@ data class SearchSuggestionHashtagEntity(
 ) {
 
     companion object {
-        fun map(response: List<SearchSuggestionResponse.Hashtags>?) = response.orEmpty().map {
+        fun map(response: List<HashtagsResponse>?) = response.orEmpty().map {
             SearchSuggestionHashtagEntity(
                 count = it.count ?: 0,
-                name = it.name ?: "",
+                name = it.name.orEmpty(),
                 rank = it.rank ?: 0,
-                slug = it.slug ?: "",
+                slug = it.slug.orEmpty(),
             )
         }
     }

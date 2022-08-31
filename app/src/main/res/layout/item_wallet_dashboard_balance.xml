@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_background_1">
+
+    <FrameLayout
+        android:id="@+id/flAvatar"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_margin="@dimen/_12sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_avatar" />
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDisplayName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/tvUserType"
+        app:layout_constraintEnd_toStartOf="@+id/ivSelectUser"
+        app:layout_constraintStart_toEndOf="@id/flAvatar"
+        app:layout_constraintTop_toTopOf="@+id/flAvatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Prakan Sornbootnark" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvUserType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
+        app:layout_constraintEnd_toStartOf="@+id/ivSelectUser"
+        app:layout_constraintStart_toEndOf="@id/flAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/tvDisplayName"
+        tools:text="@string/profile" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSelectUser"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flAvatar"
+        app:srcCompat="@drawable/ic_drop_down" />
+
+    <View
+        android:id="@+id/viewSelectUser"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_6sdp"
+        app:layout_constraintBottom_toTopOf="@+id/liBalance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        style="Widget.MaterialComponents.LinearProgressIndicator"
+        android:id="@+id/liBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:progress="50"
+        app:indicatorColor="@color/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/flAvatar"
+        app:trackColor="@color/blue_2"
+        app:trackThickness="@dimen/_12sdp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvTotalBalanceTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:text="@string/fragment_wallet_dashboard_title_1"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalBalance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalBalance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvTotalBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvTotalBalanceTitle"
+        app:layout_constraintTop_toBottomOf="@+id/liBalance"
+        tools:text="1000 CAST" />
+
+    <View
+        android:id="@+id/viewFarmBalance"
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:background="@color/blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFarmBalance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvFarmBalance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvFarmBalanceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_9sdp"
+        android:text="@string/fragment_wallet_dashboard_title_2"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFarmBalance"
+        app:layout_constraintStart_toEndOf="@+id/viewFarmBalance"
+        app:layout_constraintTop_toTopOf="@+id/tvFarmBalance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvFarmBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvFarmBalanceTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalBalance"
+        tools:text="1000 CAST" />
+
+    <View
+        android:id="@+id/viewAvailableBalance"
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:background="@color/blue_2"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAvailableBalance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvAvailableBalance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvAvailableBalanceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_9sdp"
+        android:text="@string/fragment_wallet_dashboard_title_3"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAvailableBalance"
+        app:layout_constraintStart_toEndOf="@+id/viewAvailableBalance"
+        app:layout_constraintTop_toTopOf="@+id/tvAvailableBalance" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvAvailableBalance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvAvailableBalanceTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvFarmBalance"
+        tools:text="1000 CAST" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSend"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:background="@drawable/bg_corner_8dp"
+        android:backgroundTint="@color/blue"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAvailableBalance"
+        app:srcCompat="@drawable/ic_send" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/send"
+        app:layout_constraintEnd_toEndOf="@+id/ivSend"
+        app:layout_constraintStart_toStartOf="@+id/ivSend"
+        app:layout_constraintTop_toBottomOf="@+id/ivSend" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDeposit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_corner_8dp"
+        android:backgroundTint="@color/blue"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSend"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/ivSend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivSend"
+        app:srcCompat="@drawable/ic_deposit" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvDeposit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/deposit"
+        app:layout_constraintEnd_toEndOf="@+id/ivDeposit"
+        app:layout_constraintStart_toStartOf="@+id/ivDeposit"
+        app:layout_constraintTop_toBottomOf="@+id/ivDeposit" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivBuy"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_corner_8dp"
+        android:backgroundTint="@color/blue"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSend"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivSend"
+        app:layout_constraintTop_toTopOf="@+id/ivSend"
+        app:srcCompat="@drawable/ic_buy" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/buy"
+        app:layout_constraintEnd_toEndOf="@+id/ivBuy"
+        app:layout_constraintStart_toStartOf="@+id/ivBuy"
+        app:layout_constraintTop_toBottomOf="@+id/ivBuy" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAirdrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintDimensionRatio="4.4:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSend"
+        app:srcCompat="@drawable/bg_airdrop" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Regular"
+        android:id="@+id/tvFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAirdrop"
+        tools:text="Wallet Balance" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivFilter"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFilter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvFilter"
+        app:srcCompat="@drawable/ic_filter" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

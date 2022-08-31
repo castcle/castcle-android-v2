@@ -28,13 +28,13 @@ data class SyncSocialEntity(
                 SyncSocialEntity(
                     active = map.active ?: false,
                     autoPost = map.autoPost ?: false,
-                    avatar = map.avatar ?: "",
-                    displayName = map.displayName ?: "",
-                    id = map.id ?: "",
+                    avatar = map.avatar.orEmpty(),
+                    displayName = map.displayName.orEmpty(),
+                    id = map.id.orEmpty(),
                     provider = SocialType.getFromId(map.provider),
-                    socialId = map.socialId ?: "",
-                    userId = response?.id ?: "",
-                    userName = map.userName ?: "",
+                    socialId = map.socialId.orEmpty(),
+                    userId = response?.id.orEmpty(),
+                    userName = map.userName.orEmpty(),
                 )
             }
         }

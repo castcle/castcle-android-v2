@@ -3,7 +3,6 @@ package com.castcle.android.core.glide
 import android.graphics.Bitmap
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
-import java.nio.charset.Charset
 import java.security.MessageDigest
 
 class ScaleCenterCrop(
@@ -35,12 +34,12 @@ class ScaleCenterCrop(
         return false
     }
 
-    private val id = ScaleCenterCrop::class.java.simpleName
-
-    override fun hashCode() = id.hashCode()
+    override fun hashCode() = ScaleCenterCrop::class.java.simpleName.hashCode() +
+        (scaleWidth * 123) +
+        (scaleHeight * 234)
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
-        messageDigest.update(id.toByteArray(Charset.forName("UTF-8")))
+        messageDigest.update(hashCode().toByte())
     }
 
 }

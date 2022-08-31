@@ -1,14 +1,17 @@
 package com.castcle.android.presentation.profile.item_profile_page
 
+import android.annotation.SuppressLint
 import androidx.core.view.isGone
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemProfilePageBinding
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.profile.ProfileListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
+@SuppressLint("SetTextI18n")
 class ProfilePageViewHolder(
     private val binding: ItemProfilePageBinding,
     private val compositeDisposable: CompositeDisposable,
@@ -20,13 +23,18 @@ class ProfilePageViewHolder(
 
     init {
         compositeDisposable += binding.ivOption.onClick {
-
+            val type = if (item.user.isOwner) {
+                OptionDialogType.MyPageOption(userId = item.user.id)
+            } else {
+                OptionDialogType.OtherUserOption(userId = item.user.id)
+            }
+            listener.onOptionClicked(type)
         }
         compositeDisposable += binding.ivAvatar.onClick {
 
         }
         compositeDisposable += binding.viewFollowers.onClick {
-
+            listener.onFollowingFollowersClicked(isFollowing = false, user = item.user)
         }
         compositeDisposable += binding.tvViewProfile.onClick {
 
@@ -42,7 +50,7 @@ class ProfilePageViewHolder(
         binding.tvOverview.isGone = item.user.overview.isNullOrBlank()
         binding.tvOverview.text = item.user.overview?.trim()
         binding.tvDisplayName.text = item.user.displayName
-        binding.tvCastcleId.text = "@${item.user.castcleId}"
+        binding.tvCastcleId.text = item.user.castcleId
         binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
         binding.ivCover.loadScaleCenterCrop(
             scale = 12 to 10,
@@ -53,11 +61,6 @@ class ProfilePageViewHolder(
             string(R.string.edit_page)
         } else {
             string(R.string.view_page)
-        }
-        binding.tvViewProfile.text = if (item.user.isOwner) {
-            string(R.string.edit_profile)
-        } else {
-            string(R.string.view_profile)
         }
         with(binding.tvFollow) {
             isGone = item.user.isOwner
