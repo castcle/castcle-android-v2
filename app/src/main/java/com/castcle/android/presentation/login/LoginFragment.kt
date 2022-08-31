@@ -22,9 +22,12 @@ import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class LoginFragment : BaseFragment(), LoginListener {
 
     private val viewModel by viewModel<LoginViewModel>()
+
+    private val directions = LoginFragmentDirections
 
     private val facebookLoginManager by inject<LoginManager>()
 
@@ -64,7 +67,6 @@ class LoginFragment : BaseFragment(), LoginListener {
     }
 
     override fun onFacebookLoginClicked() {
-        facebookLoginManager.logOut()
         facebookLoginManager.logInWithReadPermissions(
             callbackManager = callbackManager,
             fragment = this,
@@ -78,14 +80,18 @@ class LoginFragment : BaseFragment(), LoginListener {
                 }
 
                 override fun onCancel() {
-                    facebookLoginManager.logOut()
+                    viewModel.logoutFacebook()
                 }
 
                 override fun onError(error: FacebookException) {
-                    facebookLoginManager.logOut()
+                    viewModel.logoutFacebook()
                     toast(error.message)
                 }
             })
+    }
+
+    override fun onForgotPasswordClicked() {
+        directions.toForgotPasswordFragment().navigate()
     }
 
     override fun onGoogleLoginClicked() {
@@ -118,6 +124,16 @@ class LoginFragment : BaseFragment(), LoginListener {
 
     override fun onUrlClicked(url: String) {
         openUrl(url)
+    }
+
+    override fun onStop() {
+        changeSoftInputMode(false)
+        super.onStop()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        changeSoftInputMode(true)
     }
 
     private val adapter by lazy {

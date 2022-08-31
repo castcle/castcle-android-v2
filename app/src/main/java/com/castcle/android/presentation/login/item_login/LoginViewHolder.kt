@@ -59,7 +59,7 @@ class LoginViewHolder(
             listener.onUrlClicked(URL_PRIVACY_POLICY)
         }
         compositeDisposable += binding.tvForgotPassword.onClick {
-
+            listener.onForgotPasswordClicked()
         }
         compositeDisposable += binding.tvSignUp.onClick {
 

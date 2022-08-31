@@ -17,6 +17,15 @@ fun String.toTime(): Date {
     }
 }
 
+fun Long.toWalletTime(): String {
+    return try {
+        SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.UK).format(Date(this))
+    } catch (exception: Exception) {
+        Timber.e(exception)
+        ""
+    }
+}
+
 @SuppressLint("SimpleDateFormat")
 fun convertLongToTime(time: Long, pattern: String = SOURCE_DATE_FORMAT): String {
     val date = Date(time)
@@ -24,15 +33,5 @@ fun convertLongToTime(time: Long, pattern: String = SOURCE_DATE_FORMAT): String 
     return format.format(date)
 }
 
-const val FORMAT_AGO = "yyyy-MM-dd HH:mm:ss"
 const val COMMON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-const val COMMON_DOB_DATE_FORMAT = "d MMMM yyyy"
-const val COMMON_DOB_DATE_FORMAT_V1 = "yyyy-MM-dd"
-const val COMMON_DOB_DATE_FORMAT_OLD = "DD MM YY"
-const val DOB_DATE_FORMAT = "d/MMMM/YYYY"
-const val PAGE_DATE_FORMAT = "d MMM YYYY"
-const val WALLET_HISTORY_FORMAT = "dd/MM/yyyy HH:mm"
 const val SOURCE_DATE_FORMAT = "MMM dd,yyyy"
-const val LANGUAGE_CODE_TH = "th"
-const val LANGUAGE_CODE_EN = "en"
-const val ADDITIONAL_BUDDHIST_YEARS = 543

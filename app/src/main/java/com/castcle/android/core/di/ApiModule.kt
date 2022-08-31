@@ -28,4 +28,7 @@ val apiModule = module {
     single {
         get<Retrofit>().create(UserApi::class.java)
     }
+    single {
+        get<Retrofit>().create(WalletApi::class.java)
+    }
 }

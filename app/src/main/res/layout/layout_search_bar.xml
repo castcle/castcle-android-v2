@@ -53,10 +53,10 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivClear"
-        android:layout_width="@dimen/_22sdp"
-        android:layout_height="@dimen/_22sdp"
+        android:layout_width="@dimen/_21sdp"
+        android:layout_height="@dimen/_21sdp"
         android:layout_marginEnd="@dimen/_14sdp"
-        android:padding="@dimen/_2sdp"
+        android:padding="@dimen/_4sdp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/etSearch"
         app:layout_constraintEnd_toEndOf="@+id/etSearch"

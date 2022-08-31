@@ -82,6 +82,11 @@ class SettingFragment : BaseFragment(), SettingListener {
         directions.toResentVerifyEmailFragment().navigate()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.fetchData()
+    }
+
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(SettingLogoutViewRenderer())

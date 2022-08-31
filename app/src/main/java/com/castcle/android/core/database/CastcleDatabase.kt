@@ -14,6 +14,7 @@ import com.castcle.android.data.metadata.dao.CountryCodeDao
 import com.castcle.android.data.notification.dao.NotificationBadgesDao
 import com.castcle.android.data.search.dao.*
 import com.castcle.android.data.user.dao.*
+import com.castcle.android.data.wallet.dao.*
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.RecursiveRefreshTokenEntity
 import com.castcle.android.domain.authentication.type.AccessTokenType
@@ -32,6 +33,8 @@ import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
 import com.castcle.android.domain.search.entity.*
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.*
+import com.castcle.android.domain.wallet.entity.*
+import com.castcle.android.domain.wallet.type.*
 
 @Database(
     autoMigrations = [
@@ -58,6 +61,9 @@ import com.castcle.android.domain.user.type.*
         SearchKeywordEntity::class,
         SyncSocialEntity::class,
         UserEntity::class,
+        WalletBalanceEntity::class,
+        WalletDashboardEntity::class,
+        WalletHistoryEntity::class,
         WhoToFollowEntity::class,
     ],
     version = DATABASE_VERSION,
@@ -74,6 +80,10 @@ import com.castcle.android.domain.user.type.*
     SocialType.Converter::class,
     StringListConverter::class,
     UserType.Converter::class,
+    WalletDashboardType.Converter::class,
+    WalletHistoryFilter.Converter::class,
+    WalletHistoryStatus.Converter::class,
+    WalletHistoryType.Converter::class,
 )
 abstract class CastcleDatabase : RoomDatabase() {
     abstract fun accessToken(): AccessTokenDao
@@ -93,5 +103,8 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun searchKeyword(): SearchKeywordDao
     abstract fun syncSocial(): SyncSocialDao
     abstract fun user(): UserDao
+    abstract fun walletBalance(): WalletBalanceDao
+    abstract fun walletDashboard(): WalletDashboardDao
+    abstract fun walletHistory(): WalletHistoryDao
     abstract fun whoToFollow(): WhoToFollowDao
 }

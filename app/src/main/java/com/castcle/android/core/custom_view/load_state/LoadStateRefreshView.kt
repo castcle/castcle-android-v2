@@ -18,6 +18,8 @@ import com.castcle.android.core.custom_view.load_state.item_empty_state_search.E
 import com.castcle.android.core.custom_view.load_state.item_empty_state_search.EmptyStateSearchViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewRenderer
+import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
+import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_comment.LoadingStateCommentViewEntity
@@ -44,6 +46,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
             registerRenderer(EmptyStateProfileViewRenderer())
             registerRenderer(EmptyStateSearchViewRenderer())
             registerRenderer(ErrorStateViewRenderer())
+            registerRenderer(LoadingViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer())
             registerRenderer(LoadingStateCommentViewRenderer())
             registerRenderer(LoadingStateProfileViewRenderer())
@@ -74,8 +77,39 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
     }
 
     @FlowPreview
+    suspend fun bind(
+        adapter: CastcleAdapter,
+        loadState: MutableSharedFlow<LoadState>,
+        recyclerView: RecyclerView,
+        type: LoadStateRefreshItemsType,
+    ) {
+        updateStateItems(type)
+        loadState.toCombinedLoadStates()
+            .filterNotNull()
+            .distinctUntilChanged()
+            .collectLatest {
+                val itemCount = adapter.itemCount
+                when {
+                    it.isEmptyState(itemCount) -> setEmptyState(
+                        emptyItems = stateItems.empty,
+                    )
+                    it.isErrorState() -> setErrorState(
+                        baseError = it.refresh.cast<LoadState.Error>()?.error,
+                        baseErrorItems = stateItems.error,
+                    )
+                    it.isIdleState(itemCount) -> setIdleState(
+                        pagingRecyclerView = recyclerView,
+                    )
+                    it.isLoadingState() -> setLoadingState(
+                        loadingItems = stateItems.loading,
+                    )
+                }
+            }
+    }
+
+    @FlowPreview
     suspend fun <T : Any, ViewHolder : RecyclerView.ViewHolder> bind(
-        loadState: MutableStateFlow<LoadState>? = null,
+        loadState: MutableSharedFlow<LoadState>? = null,
         pagingAdapter: PagingDataAdapter<T, ViewHolder>,
         pagingRecyclerView: RecyclerView,
         type: LoadStateRefreshItemsType,
@@ -122,7 +156,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
     private fun CombinedLoadStates.isLoadingState() =
         refresh is LoadState.Loading
 
-    private fun MutableStateFlow<LoadState>.toCombinedLoadStates() = map { refresh ->
+    private fun MutableSharedFlow<LoadState>.toCombinedLoadStates() = map { refresh ->
         val notLoading = LoadState.NotLoading(endOfPaginationReached = true)
         val source = LoadStates(append = notLoading, prepend = notLoading, refresh = notLoading)
         CombinedLoadStates(
@@ -142,7 +176,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
     }
 
     private fun setErrorState(
-        baseAction: () -> Unit,
+        baseAction: () -> Unit = {},
         baseError: Throwable?,
         baseErrorItems: List<CastcleViewEntity>,
     ) {
@@ -205,6 +239,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 empty = EmptyStateSearchViewEntity.create(1),
                 error = ErrorStateViewEntity.create(1),
                 loading = LoadingStateUserViewEntity.create(10),
+            )
+            WALLET_DASHBOARD -> StateItems(
+                empty = ErrorStateViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingViewEntity.create(1),
             )
         }
     }

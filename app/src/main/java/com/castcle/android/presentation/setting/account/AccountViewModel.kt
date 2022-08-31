@@ -5,6 +5,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.authentication.AuthenticationRepository
+import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.domain.user.type.SocialType
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewEntity
@@ -45,7 +46,7 @@ class AccountViewModel(
                     titleId = R.string.email,
                 ),
                 AccountMenuViewEntity(
-                    action = { it.onMobileNumberClicked() },
+                    action = { it.onRequestOtpClicked(OtpType.Mobile) },
                     detail = if (result.user.mobileCountryCode.isNullOrBlank() || result.user.mobileNumber.isNullOrBlank()) {
                         R.string.unregistered
                     } else {
@@ -54,7 +55,13 @@ class AccountViewModel(
                     titleId = R.string.mobile_number,
                 ),
                 AccountMenuViewEntity(
-                    action = { it.onPasswordClicked() },
+                    action = {
+                        if (result.user.passwordNotSet == false) {
+                            it.onChangePasswordClicked()
+                        } else {
+                            it.onRequestOtpClicked(OtpType.Email)
+                        }
+                    },
                     detail = if (result.user.passwordNotSet == false) {
                         R.string.registered
                     } else {
@@ -118,10 +125,19 @@ class AccountViewModel(
             )
         }
 
+    init {
+        logoutFacebook()
+    }
+
     fun linkWithFacebook() {
-        launch(onError = onError::postValue) {
-            repository.linkWithFacebook()
+        launch(onError = {
+            onError.postValue(it)
+            logoutFacebook()
+        }, onSuccess = {
             onSuccess.postValue(Unit)
+            logoutFacebook()
+        }) {
+            repository.linkWithFacebook()
         }
     }
 
@@ -129,6 +145,12 @@ class AccountViewModel(
         launch(onError = onError::postValue) {
             repository.linkWithTwitter(token)
             onSuccess.postValue(Unit)
+        }
+    }
+
+    fun logoutFacebook() {
+        launch {
+            repository.loginOutFacebook()
         }
     }
 
