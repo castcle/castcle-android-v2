@@ -17,12 +17,15 @@
     <color name="black_transparent_1">#80000000</color>
     <color name="black_transparent_2">#4C000000</color>
     <color name="blue">#01D2FF</color>
+    <color name="blue_2">#B9F3FF</color>
     <color name="blue_facebook">#1877F2</color>
     <color name="blue_transparent">#9901D2FF</color>
     <color name="blue_twitter">#1DA1F2</color>
+    <color name="green_1">#79BE60</color>
     <color name="red_1">#CC0000</color>
     <color name="red_2">#FF3D3D</color>
     <color name="red_3">#BE5454</color>
+    <color name="red_4">#FF8080</color>
     <color name="ripple_grey">#707070</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>

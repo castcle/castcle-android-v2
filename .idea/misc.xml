@@ -36,10 +36,13 @@
         <entry key="app/src/main/res/drawable/bg_ripple_rectangle_corner_24dp.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_ad.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_airdrop.xml" value="0.294" />
+        <entry key="app/src/main/res/drawable/ic_airdrop_x.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_arrow_end.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.2845" />
         <entry key="app/src/main/res/drawable/ic_avatar.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_block.xml" value="0.3945" />
+        <entry key="app/src/main/res/drawable/ic_buy.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_castcle.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_check_circle.xml" value="0.325" />
@@ -48,6 +51,7 @@
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_content_farming.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3945" />
+        <entry key="app/src/main/res/drawable/ic_deposit.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_discord.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_drop_down.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_drop_down_2.xml" value="0.1085" />
@@ -55,6 +59,7 @@
         <entry key="app/src/main/res/drawable/ic_empty_search.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/ic_facebook.xml" value="0.394" />
         <entry key="app/src/main/res/drawable/ic_feed.xml" value="0.2845" />
+        <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_github.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_google.xml" value="0.394" />
@@ -73,15 +78,20 @@
         <entry key="app/src/main/res/drawable/ic_password_visibie.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_privacy.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_public.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_qr_code.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_recast.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_receive.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_register_mobile.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/ic_report.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_rerply.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.373" />
         <entry key="app/src/main/res/drawable/ic_select_image.xml" value="0.4335" />
+        <entry key="app/src/main/res/drawable/ic_send.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_sent_comment.xml" value="0.3405" />
         <entry key="app/src/main/res/drawable/ic_signal.xml" value="0.3475" />
+        <entry key="app/src/main/res/drawable/ic_social_reward.xml" value="0.294" />
+        <entry key="app/src/main/res/drawable/ic_status_send.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_sync_social_media.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_telegram.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_top_trends.xml" value="0.316" />
@@ -121,6 +131,7 @@
         <entry key="app/src/main/res/layout/item_empty_state_feed.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_empty_state_profile.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_empty_state_search.xml" value="0.24739583333333334" />
+        <entry key="app/src/main/res/layout/item_error_append.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_error_state.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_feed_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_feed_image_1.xml" value="0.5286458333333334" />
@@ -140,12 +151,14 @@
         <entry key="app/src/main/res/layout/item_forgot_password.xml" value="0.20307823856348867" />
         <entry key="app/src/main/res/layout/item_load_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.5286458333333334" />
+        <entry key="app/src/main/res/layout/item_loading_append.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_loading_state_cast.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_comment.xml" value="0.5479166666666667" />
         <entry key="app/src/main/res/layout/item_loading_state_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_loading_state_profile.xml" value="0.67" />
         <entry key="app/src/main/res/layout/item_loading_state_user.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/item_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_login_append.xml" value="0.4270088346655448" />
         <entry key="app/src/main/res/layout/item_mention_hashtag.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_mention_user.xml" value="0.5276041666666667" />
         <entry key="app/src/main/res/layout/item_option_dialog.xml" value="0.44976485677640016" />
@@ -179,6 +192,12 @@
         <entry key="app/src/main/res/layout/item_update_profile_success.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_verify_otp.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_verify_password.xml" value="0.20307823856348867" />
+        <entry key="app/src/main/res/layout/item_wallet_dashboard_balance.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_wallet_dashboard_dialog_filter.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_wallet_dashboard_dialog_user.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_wallet_dashboard_empty.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_wallet_dashboard_history.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_wallet_history_filter_dialog.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_who_to_follow.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_action_bar.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_bottom_navigation.xml" value="0.5286458333333334" />

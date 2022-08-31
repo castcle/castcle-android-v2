@@ -44,15 +44,15 @@ interface UserDao {
     suspend fun insert(items: List<UserEntity>): List<Long>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 AND user_type = :type")
+    fun retrieve(type: UserType): Flow<List<UserEntity>>
+
+    @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 AND user_type = :type")
     @Transaction
     fun retrieveWithLinkSocial(type: UserType): Flow<UserWithLinkSocialEntity?>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 ORDER BY user_createdAt ASC")
     @Transaction
     fun retrieveWithSyncSocial(): Flow<List<UserWithSyncSocialEntity>>
-
-    @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 AND user_type = :type")
-    fun retrieve(type: UserType): Flow<List<UserEntity>>
 
     @Query(
         "UPDATE $TABLE_USER SET user_avatar = :avatar, " +

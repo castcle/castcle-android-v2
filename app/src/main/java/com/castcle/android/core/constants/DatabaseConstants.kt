@@ -1,7 +1,7 @@
 package com.castcle.android.core.constants
 
 const val DATABASE_NAME = "CastcleDatabase"
-const val DATABASE_VERSION = 21
+const val DATABASE_VERSION = 22
 const val TABLE_ACCESS_TOKEN = "accessToken"
 const val TABLE_CAST = "casts"
 const val TABLE_COMMENT = "comment"
@@ -19,4 +19,7 @@ const val TABLE_SEARCH = "search"
 const val TABLE_SEARCH_KEYWORD = "searchKeyword"
 const val TABLE_SYNC_SOCIAL = "syncSocial"
 const val TABLE_USER = "user"
+const val TABLE_WALLET_BALANCE = "walletBalance"
+const val TABLE_WALLET_DASHBOARD = "walletDashboard"
+const val TABLE_WALLET_HISTORY = "walletHistory"
 const val TABLE_WHO_TO_FOLLOW = "whoToFollow"

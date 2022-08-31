@@ -16,4 +16,12 @@ data class LoadingViewEntity(
 
     override fun viewType() = R.layout.item_loading
 
+    companion object {
+        fun create(size: Int): List<LoadingViewEntity> {
+            return mutableListOf<LoadingViewEntity>().apply {
+                repeat(size) { add(LoadingViewEntity()) }
+            }
+        }
+    }
+
 }

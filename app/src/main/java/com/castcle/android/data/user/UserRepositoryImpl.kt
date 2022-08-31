@@ -122,8 +122,11 @@ class UserRepositoryImpl(
         val syncSocial = SyncSocialEntity.map(response?.payload)
         val user = UserEntity.mapOwner(response?.payload)
         glidePreloader.loadUser(user)
-        database.syncSocial().insert(syncSocial)
-        database.user().upsert(user)
+        database.withTransaction {
+            database.syncSocial().delete(user.map { it.id })
+            database.syncSocial().insert(syncSocial)
+            database.user().upsert(user)
+        }
         return user
     }
 
@@ -136,7 +139,7 @@ class UserRepositoryImpl(
         database.withTransaction {
             database.linkSocial().delete()
             database.linkSocial().insert(linkSocial)
-            database.syncSocial().delete()
+            database.syncSocial().delete(listOf(user.id))
             database.syncSocial().insert(syncSocial)
             database.user().upsert(user)
         }
