@@ -18,6 +18,7 @@ import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
 import com.castcle.android.domain.user.type.UserType
 import com.facebook.*
+import com.facebook.login.LoginManager
 import com.google.android.gms.auth.GoogleAuthUtil
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.messaging.FirebaseMessaging
@@ -32,8 +33,9 @@ import kotlin.coroutines.*
 @Singleton
 class AuthenticationRepositoryImpl(
     private val api: AuthenticationApi,
-    private val database: CastcleDatabase,
     private val context: Context,
+    private val database: CastcleDatabase,
+    private val facebookLoginManager: LoginManager,
     private val glidePreloader: GlidePreloader,
 ) : AuthenticationRepository {
 
@@ -169,6 +171,7 @@ class AuthenticationRepositoryImpl(
     override suspend fun loginOut() {
         database.withTransaction {
             fetchGuestAccessToken()
+            loginOutFacebook()
             database.cast().delete()
             database.linkSocial().delete()
             database.notificationBadges().delete()
@@ -176,6 +179,20 @@ class AuthenticationRepositoryImpl(
             database.recursiveRefreshToken().delete()
             database.syncSocial().delete()
             database.user().delete()
+        }
+    }
+
+    override suspend fun loginOutFacebook() {
+        return suspendCoroutine { coroutine ->
+            GraphRequest(
+                accessToken = AccessToken.getCurrentAccessToken(),
+                graphPath = "/me/permissions",
+                httpMethod = HttpMethod.DELETE,
+                callback = {
+                    facebookLoginManager.logOut()
+                    coroutine.resume(Unit)
+                }
+            ).executeAsync()
         }
     }
 

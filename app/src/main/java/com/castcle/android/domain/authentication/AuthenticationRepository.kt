@@ -20,6 +20,7 @@ interface AuthenticationRepository {
     suspend fun loginWithSocial(body: LoginWithSocialRequest)
     suspend fun loginWithTwitter(token: TwitterAuthToken?)
     suspend fun loginOut()
+    suspend fun loginOutFacebook()
     suspend fun registerFirebaseMessagingToken()
     suspend fun requestOtp(otp: OtpEntity): OtpEntity
     suspend fun resentVerifyEmail()

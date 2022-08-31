@@ -125,10 +125,19 @@ class AccountViewModel(
             )
         }
 
+    init {
+        logoutFacebook()
+    }
+
     fun linkWithFacebook() {
-        launch(onError = onError::postValue) {
-            repository.linkWithFacebook()
+        launch(onError = {
+            onError.postValue(it)
+            logoutFacebook()
+        }, onSuccess = {
             onSuccess.postValue(Unit)
+            logoutFacebook()
+        }) {
+            repository.linkWithFacebook()
         }
     }
 
@@ -136,6 +145,12 @@ class AccountViewModel(
         launch(onError = onError::postValue) {
             repository.linkWithTwitter(token)
             onSuccess.postValue(Unit)
+        }
+    }
+
+    fun logoutFacebook() {
+        launch {
+            repository.loginOutFacebook()
         }
     }
 

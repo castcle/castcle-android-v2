@@ -32,7 +32,7 @@ android {
             applicationId "com.castcle.android.dev.v2"
         }
         production {
-            applicationId "com.castcle.android"
+            applicationId "com.castcle.android.v2"
         }
         staging {
             applicationId "com.castcle.android.stg.v2"
@@ -141,7 +141,7 @@ dependencies {
     implementation "com.github.perfomer:blitz:1.0.10"
 
     // Twitter
-    implementation ("com.twitter.sdk.android:twitter:3.3.0") {
+    implementation("com.twitter.sdk.android:twitter:3.3.0") {
         exclude group: "com.android.support"
     }
 

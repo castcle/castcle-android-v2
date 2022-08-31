@@ -40,7 +40,7 @@ class LoadStateAppendAdapter(
             binding.loading.isVisible = loadState is LoadState.Loading
             binding.retry.isVisible = loadState is LoadState.Error
             binding.tvError.isVisible = BuildConfig.DEBUG && loadState is LoadState.Error
-            binding.tvError.text = "${loadState.cast<LoadState.Error>()?.error?.message}"
+            binding.tvError.text = loadState.cast<LoadState.Error>()?.error?.message.orEmpty()
         }
 
     }
