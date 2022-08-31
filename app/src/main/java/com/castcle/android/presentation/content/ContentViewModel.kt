@@ -48,7 +48,7 @@ class ContentViewModel(
 
     val hashtags = MutableLiveData<List<HashtagEntity>>()
 
-    val loadState = MutableStateFlow<LoadState>(LoadState.Loading)
+    val loadState = MutableSharedFlow<LoadState>()
 
     val mentions = MutableLiveData<List<UserEntity>>()
 
@@ -101,17 +101,19 @@ class ContentViewModel(
         launch(
             onError = {
                 if (it is CastcleException.ContentNotFoundException) {
-                    loadState.value = RetryException.loadState(
-                        error = it,
-                        errorItems = EmptyStateContentViewEntity.create(1),
-                        retryAction = { getContent() },
+                    loadState.emitOnSuspend(
+                        RetryException.loadState(
+                            error = it,
+                            errorItems = EmptyStateContentViewEntity.create(1),
+                            retryAction = { getContent() },
+                        )
                     )
                 } else {
-                    loadState.value = RetryException.loadState(it) { getContent() }
+                    loadState.emitOnSuspend(RetryException.loadState(it) { getContent() })
                 }
             },
             onLaunch = {
-                loadState.value = LoadState.Loading
+                loadState.emitOnSuspend(LoadState.Loading)
             },
         ) {
             val castInDatabase = database.cast().get(contentId)

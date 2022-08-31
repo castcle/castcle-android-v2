@@ -10,6 +10,9 @@ interface SyncSocialDao {
     @Query("DELETE FROM $TABLE_SYNC_SOCIAL")
     suspend fun delete()
 
+    @Query("DELETE FROM $TABLE_SYNC_SOCIAL WHERE syncSocial_userId IN (:userId)")
+    suspend fun delete(userId: List<String>)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<SyncSocialEntity>)
 

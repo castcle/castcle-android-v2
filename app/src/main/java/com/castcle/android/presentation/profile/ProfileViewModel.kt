@@ -36,7 +36,7 @@ class ProfileViewModel(
 
     val currentUser = MutableStateFlow<UserEntity?>(null)
 
-    val loadState = MutableStateFlow<LoadState>(LoadState.Loading)
+    val loadState = MutableSharedFlow<LoadState>()
 
     init {
         getUser()
@@ -76,17 +76,19 @@ class ProfileViewModel(
         launch(
             onError = {
                 if (it is CastcleException.UserNotFoundException) {
-                    loadState.value = RetryException.loadState(
-                        error = it,
-                        errorItems = EmptyStateProfileViewEntity.create(1),
-                        retryAction = { getUser() },
+                    loadState.emitOnSuspend(
+                        RetryException.loadState(
+                            error = it,
+                            errorItems = EmptyStateProfileViewEntity.create(1),
+                            retryAction = { getUser() },
+                        )
                     )
                 } else {
-                    loadState.value = RetryException.loadState(it) { getUser() }
+                    loadState.emitOnSuspend(RetryException.loadState(it) { getUser() })
                 }
             },
             onLaunch = {
-                loadState.value = LoadState.Loading
+                loadState.emitOnSuspend(LoadState.Loading)
             },
         ) {
             val userInDatabase = database.user().get(userId).firstOrNull()

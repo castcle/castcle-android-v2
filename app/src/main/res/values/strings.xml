@@ -6,6 +6,7 @@
     <string name="advertised">Advertised</string>
     <string name="app_name">Castcle V2</string>
     <string name="block_user">Block %s</string>
+    <string name="buy">Buy</string>
     <string name="cast_of">Cast of %s</string>
     <string name="cast">Cast</string>
     <string name="casts">Casts</string>
@@ -37,6 +38,7 @@
     <string name="delete">Delete</string>
     <string name="delete_account">Delete Account</string>
     <string name="delete_page">Delete page</string>
+    <string name="deposit">Deposit</string>
     <string name="dialog_recast_title">Choose Page or User</string>
     <string name="facebook">Facebook</string>
     <string name="fragment_account_title_1">Account Setting</string>
@@ -100,6 +102,11 @@
     <string name="fragment_verify_otp_title_9">You will receive a 6 digit code to reset you password. Verification code will be sent to %s</string>
     <string name="fragment_verify_password_title_1">Please enter your current password</string>
     <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
+    <string name="fragment_wallet_dashboard_title_1">Total Balance</string>
+    <string name="fragment_wallet_dashboard_title_2">Farm Balance</string>
+    <string name="fragment_wallet_dashboard_title_3">Avail. Balance</string>
+    <string name="fragment_wallet_dashboard_title_4">No history</string>
+    <string name="fragment_wallet_dashboard_title_5">All %s history will be displayed here</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
@@ -112,8 +119,10 @@
     <string name="new_cast">New Cast</string>
     <string name="not_verify">Not verify</string>
     <string name="notification">Notification</string>
+    <string name="page">Page</string>
     <string name="password">Password</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="profile">Profile</string>
     <string name="public_title">Public</string>
     <string name="rank_trending">%d. Trending</string>
     <string name="quote_cast">Quote Cast</string>
@@ -132,6 +141,7 @@
     <string name="report_user_title">Report User</string>
     <string name="retry">Retry</string>
     <string name="search">Search</string>
+    <string name="send">Send</string>
     <string name="setting">Setting</string>
     <string name="show_more">Show more</string>
     <string name="sync_social_media">Sync social media</string>
@@ -145,6 +155,7 @@
     <string name="view">View</string>
     <string name="view_page">View Page</string>
     <string name="view_profile">View Profile</string>
+    <string name="wallet">Wallet</string>
     <string name="warning_permission_required">Permission required for this feature to be available.</string>
     <string name="whats_new_today">What\'s new today\?</string>
     <string name="whats_on_your_mind">What\'s on your mind\?</string>

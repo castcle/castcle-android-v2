@@ -31,6 +31,22 @@
 
     </dialog>
 
+    <dialog
+        android:id="@+id/walletHistoryFilterDialogFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment">
+
+        <argument
+            android:name="currentFilter"
+            app:argType="com.castcle.android.domain.wallet.type.WalletHistoryFilter"
+            app:nullable="true" />
+
+        <argument
+            android:name="currentUserId"
+            app:argType="string"
+            app:nullable="true" />
+
+    </dialog>
+
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.castcle.android.presentation.setting.account.AccountFragment">
@@ -185,6 +201,10 @@
         <action
             android:id="@+id/toSettingFragment"
             app:destination="@id/settingFragment" />
+
+        <action
+            android:id="@+id/toWalletDashboardFragment"
+            app:destination="@id/walletDashboardFragment" />
 
         <action
             android:id="@+id/toWhoToFollowFragment"
@@ -451,6 +471,16 @@
         <action
             android:id="@+id/toChangePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletDashboardFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_dashboard.WalletDashboardFragment">
+
+        <action
+            android:id="@+id/toWalletHistoryFilterDialogFragment"
+            app:destination="@id/walletHistoryFilterDialogFragment" />
 
     </fragment>
 

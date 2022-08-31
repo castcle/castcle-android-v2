@@ -63,7 +63,9 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                     binding.actionBar.bind(
                         leftButtonIcon = R.drawable.ic_castcle,
                         leftButtonAction = { scrollToTop() },
-                        rightButtonAction = { directions.toLoginFragment().navigate() },
+                        rightButtonAction = {
+                            directions.toLoginFragment().navigate()
+                        },
                         rightButtonIcon = R.drawable.ic_user,
                         title = R.string.for_you,
                         titleColor = R.color.blue,
@@ -72,9 +74,13 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                     binding.actionBar.bind(
                         leftButtonIcon = R.drawable.ic_castcle,
                         leftButtonAction = { scrollToTop() },
-                        rightButtonAction = { directions.toSettingFragment().navigate() },
+                        rightButtonAction = {
+                            directions.toSettingFragment().navigate()
+                        },
                         rightButtonIcon = R.drawable.ic_hamburger,
-                        rightSecondButtonAction = {},
+                        rightSecondButtonAction = {
+                            directions.toWalletDashboardFragment().navigate()
+                        },
                         rightSecondButtonIcon = R.drawable.ic_wallet,
                         title = R.string.for_you,
                         titleColor = R.color.blue,

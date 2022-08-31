@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_background_1">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/retry"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_36sdp"
+        android:layout_marginBottom="@dimen/_72sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/black_background_2"
+        android:padding="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_refresh"
+        app:tint="@color/blue" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:gravity="center"
+        android:maxLines="3"
+        android:textColor="@color/red_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/retry"
+        tools:text="Prakan Sornbootnark" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
