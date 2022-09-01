@@ -29,12 +29,13 @@ class FeedImageViewHolder(
     private val compositeDisposable: CompositeDisposable,
     private val listener: FeedListener,
     private val displayType: FeedDisplayType,
-) : CastcleViewHolder<FeedImageViewEntity>(binding.root), UserBarListener, ParticipateBarListener {
+) : CastcleViewHolder<FeedImageViewEntity>(binding.root), UserBarListener, ParticipateBarListener,
+    FeedImageViewListener {
 
     override var item = FeedImageViewEntity()
 
     private val adapter by lazy {
-        CastcleAdapter(listener, compositeDisposable).apply {
+        CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(FeedImageItemViewRenderer())
         }
     }
@@ -118,6 +119,10 @@ class FeedImageViewHolder(
 
     override fun onFollowClicked(user: UserEntity) {
         listener.onFollowClicked(user)
+    }
+
+    override fun onChildImageClicked(position: Int) {
+        listener.onImageClicked(image = item.cast.image, position = position)
     }
 
     override fun onLikeClicked(cast: CastEntity) {

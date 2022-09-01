@@ -9,10 +9,9 @@ import com.castcle.android.presentation.dialog.option.OptionDialogType
 interface FeedListener : CastcleListener {
     fun onCommentClicked(cast: CastEntity, user: UserEntity) = Unit
     fun onContentFarmingClicked(cast: CastEntity) = Unit
-    fun onDeleteImageClicked(index: Int) = Unit
     fun onFollowClicked(user: UserEntity) = Unit
     fun onHashtagClicked(keyword: String) = Unit
-    fun onImageClicked(photo: ImageEntity) = Unit
+    fun onImageClicked(image: List<ImageEntity>, position: Int) = Unit
     fun onLikeClicked(cast: CastEntity) = Unit
     fun onLinkClicked(url: String) = Unit
     fun onMentionClicked(castcleId: String) = Unit

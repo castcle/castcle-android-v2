@@ -15,6 +15,7 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentNewCastBinding
 import com.castcle.android.presentation.feed.FeedDisplayType
 import com.castcle.android.presentation.feed.FeedListener
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_image_item.FeedImageItemViewRenderer
 import com.castcle.android.presentation.feed.item_feed_report.FeedReportViewRenderer
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 
-class NewCastFragment : BaseFragment(), FeedListener {
+class NewCastFragment : BaseFragment(), FeedListener, FeedImageViewListener {
 
     private val viewModel by stateViewModel<NewCastViewModel> { parametersOf(args.userId) }
 
@@ -183,10 +184,10 @@ class NewCastFragment : BaseFragment(), FeedListener {
         }
     }
 
-    override fun onDeleteImageClicked(index: Int) {
+    override fun onChildImageDeleteClicked(position: Int) {
         viewModel.imageUri.value = viewModel.imageUri.value
             .toMutableList()
-            .apply { removeAt(index) }
+            .apply { removeAt(position) }
     }
 
     override fun onStop() {

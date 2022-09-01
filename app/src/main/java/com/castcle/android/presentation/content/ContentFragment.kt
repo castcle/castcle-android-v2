@@ -33,6 +33,7 @@ import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
+import com.stfalcon.imageviewer.StfalconImageViewer
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
@@ -177,8 +178,13 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         directions.toSearchFragment(keyword).navigate()
     }
 
-    override fun onImageClicked(photo: ImageEntity) {
-        openUrl(photo.original)
+    override fun onImageClicked(image: List<ImageEntity>, position: Int) {
+        StfalconImageViewer.Builder(context, image, ::loadViewLargeImage)
+            .withStartPosition(position)
+            .withHiddenStatusBar(true)
+            .allowSwipeToDismiss(true)
+            .allowZooming(true)
+            .show()
     }
 
     override fun onLikeClicked(cast: CastEntity) {

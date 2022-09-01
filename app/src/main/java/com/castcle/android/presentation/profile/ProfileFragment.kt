@@ -11,8 +11,7 @@ import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastclePagingDataAdapter
 import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
-import com.castcle.android.core.extensions.openUrl
-import com.castcle.android.core.extensions.setRefreshColor
+import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
@@ -30,7 +29,7 @@ import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageVie
 import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.profile.item_profile_page.ProfilePageViewRenderer
 import com.castcle.android.presentation.profile.item_profile_user.ProfileUserViewRenderer
-import com.castcle.android.presentation.search.search.SearchFragmentDirections
+import com.stfalcon.imageviewer.StfalconImageViewer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -115,8 +114,13 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
         directions.toSearchFragment(keyword).navigate()
     }
 
-    override fun onImageClicked(photo: ImageEntity) {
-        openUrl(photo.original)
+    override fun onImageClicked(image: List<ImageEntity>, position: Int) {
+        StfalconImageViewer.Builder(context, image, ::loadViewLargeImage)
+            .withStartPosition(position)
+            .withHiddenStatusBar(true)
+            .allowSwipeToDismiss(true)
+            .allowZooming(true)
+            .show()
     }
 
     override fun onLikeClicked(cast: CastEntity) {
