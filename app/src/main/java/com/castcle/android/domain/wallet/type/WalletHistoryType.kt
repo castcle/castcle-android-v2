@@ -8,13 +8,17 @@ sealed class WalletHistoryType(val id: String, val name: String) {
 
     object Deposit : WalletHistoryType(id = "deposit", name = "Deposit")
 
+    object ContentReach : WalletHistoryType(id = "content-reach", name = "Content Reach")
+
     object Farmed : WalletHistoryType(id = "farmed", name = "Farmed")
 
     object Farming : WalletHistoryType(id = "farming", name = "Farming")
 
     object Receive : WalletHistoryType(id = "receive", name = "Receive")
 
-    object Referral : WalletHistoryType(id = "referral", name = "Referral")
+    object Referral : WalletHistoryType(id = "referral", name = "Referral Reward")
+
+    object SeenAds : WalletHistoryType(id = "seen-ads", name = "Seen Ads")
 
     object Send : WalletHistoryType(id = "send", name = "Send")
 
@@ -28,10 +32,12 @@ sealed class WalletHistoryType(val id: String, val name: String) {
         fun getFromId(id: String?) = when (id) {
             Airdrop.id -> Airdrop
             Deposit.id -> Deposit
+            ContentReach.id -> ContentReach
             Farmed.id -> Farmed
             Farming.id -> Farming
             Receive.id -> Receive
             Referral.id -> Referral
+            SeenAds.id -> SeenAds
             Send.id -> Send
             Social.id -> Social
             Unfarming.id -> Unfarming

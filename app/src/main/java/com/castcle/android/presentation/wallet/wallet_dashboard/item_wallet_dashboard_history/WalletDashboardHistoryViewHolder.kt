@@ -1,10 +1,8 @@
 package com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dashboard_history
 
-import androidx.core.view.isVisible
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
-import com.castcle.android.core.extensions.color
-import com.castcle.android.core.extensions.toWalletTime
+import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemWalletDashboardHistoryBinding
 import com.castcle.android.domain.wallet.type.WalletHistoryType
 import java.text.NumberFormat
@@ -17,41 +15,59 @@ class WalletDashboardHistoryViewHolder(
 
     override fun bind(bindItem: WalletDashboardHistoryViewEntity) {
         binding.tvTitle.text = item.history.type.name
-        binding.tvDate.text = item.history.createdAt.toWalletTime()
         binding.tvStatus.text = item.history.status.name
-        binding.tvStatus.isVisible = item.history.type is WalletHistoryType.Deposit
-            || item.history.type is WalletHistoryType.Receive
-            || item.history.type is WalletHistoryType.Send
-            || item.history.type is WalletHistoryType.Withdraw
-        binding.tvValue.text = item.history.value.toCastToken()
+        binding.tvDate.text = item.history.createdAt.toWalletTime()
+        binding.tvValue.text = if (item.history.type is WalletHistoryType.Farming) {
+            "-${item.history.value.toCastToken()}"
+        } else {
+            item.history.value.toCastToken()
+        }
         binding.tvValue.setTextColor(
             when (item.history.type) {
-                WalletHistoryType.Airdrop -> color(R.color.blue)
+                WalletHistoryType.Airdrop,
+                WalletHistoryType.ContentReach,
+                WalletHistoryType.Farmed,
+                WalletHistoryType.Referral,
+                WalletHistoryType.SeenAds,
+                WalletHistoryType.Social,
+                WalletHistoryType.Unfarming -> color(R.color.blue)
                 WalletHistoryType.Deposit,
                 WalletHistoryType.Receive -> color(R.color.green_1)
-                WalletHistoryType.Farmed,
                 WalletHistoryType.Farming,
-                WalletHistoryType.Referral,
-                WalletHistoryType.Social,
-                WalletHistoryType.Unfarming -> color(R.color.white)
                 WalletHistoryType.Send,
                 WalletHistoryType.Withdraw -> color(R.color.red_4)
             }
         )
         binding.ivIcon.setImageResource(
             when (item.history.type) {
-                WalletHistoryType.Airdrop -> R.drawable.ic_airdrop
+                WalletHistoryType.Airdrop,
+                WalletHistoryType.Referral -> R.drawable.ic_airdrop
                 WalletHistoryType.Deposit,
                 WalletHistoryType.Receive -> R.drawable.ic_status_receive
+                WalletHistoryType.ContentReach,
                 WalletHistoryType.Farmed,
                 WalletHistoryType.Farming,
+                WalletHistoryType.SeenAds,
                 WalletHistoryType.Unfarming -> R.drawable.ic_content_farming
-                WalletHistoryType.Referral,
                 WalletHistoryType.Social -> R.drawable.ic_social_reward
                 WalletHistoryType.Send,
                 WalletHistoryType.Withdraw -> R.drawable.ic_status_send
             }
         )
+        binding.ivIcon.imageTintList = when (item.history.type) {
+            WalletHistoryType.Airdrop,
+            WalletHistoryType.ContentReach,
+            WalletHistoryType.Farmed,
+            WalletHistoryType.Referral,
+            WalletHistoryType.SeenAds,
+            WalletHistoryType.Social -> colorStateList(R.color.white)
+            WalletHistoryType.Deposit,
+            WalletHistoryType.Receive -> colorStateList(R.color.green_1)
+            WalletHistoryType.Farming -> colorStateList(R.color.blue)
+            WalletHistoryType.Send,
+            WalletHistoryType.Unfarming,
+            WalletHistoryType.Withdraw -> colorStateList(R.color.red_4)
+        }
     }
 
     private fun Double.toCastToken(): String {

@@ -70,7 +70,6 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
     override fun initConsumer() {
         lifecycleScope.launch {
             binding.loadStateRefreshView.bind(
-                adapter = adapter,
                 loadState = viewModel.loadState,
                 recyclerView = binding.recyclerView,
                 type = LoadStateRefreshItemsType.WALLET_DASHBOARD,
@@ -85,15 +84,15 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
     }
 
     override fun onDepositClicked(currentUserId: String) {
-
+        directions.toWalletDepositFragment(currentUserId).navigate()
     }
 
     override fun onFilterClicked(currentFilter: WalletHistoryFilter) {
-        directions.toWalletHistoryFilterDialogFragment(currentFilter, null).navigate()
+        directions.toWalletDashboardDialogFragment(currentFilter, null).navigate()
     }
 
     override fun onSelectUserClicked(currentUserId: String) {
-        directions.toWalletHistoryFilterDialogFragment(null, currentUserId).navigate()
+        directions.toWalletDashboardDialogFragment(null, currentUserId).navigate()
     }
 
     override fun onSendClicked(currentUserId: String) {

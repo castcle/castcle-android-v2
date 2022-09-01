@@ -50,6 +50,7 @@
         <entry key="app/src/main/res/drawable/ic_close_2.xml" value="0.325" />
         <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.3475" />
         <entry key="app/src/main/res/drawable/ic_content_farming.xml" value="0.371" />
+        <entry key="app/src/main/res/drawable/ic_copy.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_deposit.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_discord.xml" value="0.3475" />
@@ -86,6 +87,7 @@
         <entry key="app/src/main/res/drawable/ic_report.xml" value="0.3945" />
         <entry key="app/src/main/res/drawable/ic_rerply.xml" value="0.371" />
         <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.373" />
+        <entry key="app/src/main/res/drawable/ic_save.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_select_image.xml" value="0.4335" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.294" />
         <entry key="app/src/main/res/drawable/ic_sent_comment.xml" value="0.3405" />
@@ -197,6 +199,7 @@
         <entry key="app/src/main/res/layout/item_wallet_dashboard_dialog_user.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_wallet_dashboard_empty.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_wallet_dashboard_history.xml" value="0.43394613082513894" />
+        <entry key="app/src/main/res/layout/item_wallet_deposit.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_wallet_history_filter_dialog.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_who_to_follow.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_action_bar.xml" value="0.5" />
