@@ -6,25 +6,25 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemFeedImageItemBinding
-import com.castcle.android.presentation.feed.FeedListener
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
 class FeedImageItemViewHolder(
     private val binding: ItemFeedImageItemBinding,
     private val compositeDisposable: CompositeDisposable,
-    private val listener: FeedListener,
+    private val listener: FeedImageViewListener,
 ) : CastcleViewHolder<FeedImageItemViewEntity>(binding.root) {
 
     override var item = FeedImageItemViewEntity()
 
     init {
         compositeDisposable += binding.ivDelete.onClick {
-            listener.onDeleteImageClicked(bindingAdapterPosition)
+            listener.onChildImageDeleteClicked(bindingAdapterPosition)
         }
         compositeDisposable += binding.ivImage.onClick {
             if (item.uri == null) {
-                listener.onLinkClicked(item.image.original)
+                listener.onChildImageClicked(bindingAdapterPosition)
             }
         }
     }

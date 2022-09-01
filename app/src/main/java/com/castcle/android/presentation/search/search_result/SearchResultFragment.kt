@@ -29,6 +29,7 @@ import com.castcle.android.presentation.home.HomeViewModel
 import com.castcle.android.presentation.search.search.SearchFragmentDirections
 import com.castcle.android.presentation.search.search_result.item_search_people.SearchPeopleViewRenderer
 import com.castcle.android.presentation.who_to_follow.WhoToFollowListener
+import com.stfalcon.imageviewer.StfalconImageViewer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -104,8 +105,13 @@ class SearchResultFragment : BaseFragment(), FeedListener, LoadStateListener, Wh
         directions.toSearchFragment(keyword).navigate()
     }
 
-    override fun onImageClicked(photo: ImageEntity) {
-        openUrl(photo.original)
+    override fun onImageClicked(image: List<ImageEntity>, position: Int) {
+        StfalconImageViewer.Builder(context, image, ::loadViewLargeImage)
+            .withStartPosition(position)
+            .withHiddenStatusBar(true)
+            .allowSwipeToDismiss(true)
+            .allowZooming(true)
+            .show()
     }
 
     override fun onLikeClicked(cast: CastEntity) {

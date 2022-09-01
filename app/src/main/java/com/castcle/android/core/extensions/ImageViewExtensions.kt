@@ -7,6 +7,7 @@ import androidx.annotation.DrawableRes
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.castcle.android.R
 import com.castcle.android.core.glide.*
+import com.castcle.android.domain.core.entity.ImageEntity
 
 fun ImageView.loadAvatarImage(imageUrl: String?) {
     GlideApp.with(context).clear(this)
@@ -16,6 +17,20 @@ fun ImageView.loadAvatarImage(imageUrl: String?) {
         .placeholder(R.drawable.ic_avatar)
         .circleCrop()
         .into(this)
+}
+
+fun loadViewLargeImage(imageView: ImageView, image: ImageEntity) {
+    val thumbnail = GlideApp.with(imageView.context)
+        .asDrawable()
+        .load(GlideUrlWithQueryParameter(image.thumbnail))
+    val error = GlideApp.with(imageView.context)
+        .load(R.drawable.ic_image)
+    GlideApp.with(imageView.context)
+        .load(GlideUrlWithQueryParameter(image.original))
+        .thumbnail(thumbnail)
+        .placeholder(R.drawable.ic_image)
+        .error(error)
+        .into(imageView)
 }
 
 fun ImageView.loadImage(

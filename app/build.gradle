@@ -101,6 +101,9 @@ dependencies {
     // Google
     implementation "com.google.android.gms:play-services-auth:20.2.0"
     implementation "com.google.android.material:material:1.6.1"
+    
+    // Image Viewer
+    implementation "com.github.stfalcon-studio:StfalconImageViewer:v1.0.1"
 
     // Koin
     implementation "io.insert-koin:koin-android:3.2.0"
