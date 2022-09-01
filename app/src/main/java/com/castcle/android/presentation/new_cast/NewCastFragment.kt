@@ -1,6 +1,5 @@
 package com.castcle.android.presentation.new_cast
 
-import android.Manifest
 import android.os.Bundle
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -82,7 +81,7 @@ class NewCastFragment : BaseFragment(), FeedListener {
             binding.etMessage.showKeyboard()
         }
         compositeDisposable += binding.ivSelectedImage.onClick {
-            permissionCallback.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            selectImageCallback.launch("image/*")
         }
         compositeDisposable += binding.tvCast.onClick {
             showLoading()
@@ -131,16 +130,6 @@ class NewCastFragment : BaseFragment(), FeedListener {
     ) {
         if (it.isNotEmpty()) {
             viewModel.imageUri.value = it.take(4)
-        }
-    }
-
-    private val permissionCallback = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isPermissionGrant ->
-        if (isPermissionGrant) {
-            selectImageCallback.launch("image/*")
-        } else {
-            toast(string(R.string.warning_permission_required))
         }
     }
 

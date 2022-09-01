@@ -10,6 +10,11 @@ import retrofit2.http.*
 
 interface WalletApi {
 
+    @GET("v2/qr-codes/castcle/{$PARAMETER_ID}")
+    suspend fun getMyQrCode(
+        @Path(PARAMETER_ID) id: String,
+    ): Response<BaseResponse<String>>
+
     @GET("v2/wallets/{$PARAMETER_ID}")
     suspend fun getWalletBalance(
         @Path(PARAMETER_ID) id: String,

@@ -32,7 +32,7 @@
     </dialog>
 
     <dialog
-        android:id="@+id/walletHistoryFilterDialogFragment"
+        android:id="@+id/walletDashboardDialogFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment">
 
         <argument
@@ -479,8 +479,22 @@
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.WalletDashboardFragment">
 
         <action
-            android:id="@+id/toWalletHistoryFilterDialogFragment"
-            app:destination="@id/walletHistoryFilterDialogFragment" />
+            android:id="@+id/toWalletDashboardDialogFragment"
+            app:destination="@id/walletDashboardDialogFragment" />
+
+        <action
+            android:id="@+id/toWalletDepositFragment"
+            app:destination="@id/walletDepositFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletDepositFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_deposit.WalletDepositFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
 
     </fragment>
 

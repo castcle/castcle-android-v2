@@ -78,29 +78,23 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     @FlowPreview
     suspend fun bind(
-        adapter: CastcleAdapter,
         loadState: MutableSharedFlow<LoadState>,
         recyclerView: RecyclerView,
         type: LoadStateRefreshItemsType,
     ) {
         updateStateItems(type)
-        loadState.toCombinedLoadStates()
-            .filterNotNull()
+        loadState
             .distinctUntilChanged()
             .collectLatest {
-                val itemCount = adapter.itemCount
-                when {
-                    it.isEmptyState(itemCount) -> setEmptyState(
-                        emptyItems = stateItems.empty,
-                    )
-                    it.isErrorState() -> setErrorState(
-                        baseError = it.refresh.cast<LoadState.Error>()?.error,
+                when (it) {
+                    is LoadState.Error -> setErrorState(
+                        baseError = it.cast<LoadState.Error>()?.error,
                         baseErrorItems = stateItems.error,
                     )
-                    it.isIdleState(itemCount) -> setIdleState(
+                    is LoadState.NotLoading -> setIdleState(
                         pagingRecyclerView = recyclerView,
                     )
-                    it.isLoadingState() -> setLoadingState(
+                    is LoadState.Loading -> setLoadingState(
                         loadingItems = stateItems.loading,
                     )
                 }
@@ -240,7 +234,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 error = ErrorStateViewEntity.create(1),
                 loading = LoadingStateUserViewEntity.create(10),
             )
-            WALLET_DASHBOARD -> StateItems(
+            WALLET_DASHBOARD, WALLET_DEPOSIT -> StateItems(
                 empty = ErrorStateViewEntity.create(1),
                 error = ErrorStateViewEntity.create(1),
                 loading = LoadingViewEntity.create(1),

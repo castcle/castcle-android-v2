@@ -14,6 +14,17 @@ class WalletRepositoryImpl(
     private val database: CastcleDatabase,
 ) : WalletRepository {
 
+    override suspend fun getMyQrCode(userId: String): String {
+        return try {
+            apiCall { api.getMyQrCode(id = userId) }
+                ?.payload
+                ?.let { it.substring(it.indexOf(",") + 1) }
+                ?: ""
+        } catch (exception: Exception) {
+            ""
+        }
+    }
+
     override suspend fun getWalletBalance(userId: String): WalletBalanceEntity {
         val response = apiCall { api.getWalletBalance(id = userId) }
         val walletBalance = WalletBalanceEntity.map(response)

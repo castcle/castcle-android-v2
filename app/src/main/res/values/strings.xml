@@ -107,6 +107,9 @@
     <string name="fragment_wallet_dashboard_title_3">Avail. Balance</string>
     <string name="fragment_wallet_dashboard_title_4">No history</string>
     <string name="fragment_wallet_dashboard_title_5">All %s history will be displayed here</string>
+    <string name="fragment_wallet_deposit_title_1">Deposit CAST</string>
+    <string name="fragment_wallet_deposit_title_2">Castcle ID</string>
+    <string name="fragment_wallet_deposit_title_3">Castcle Decentralized Social Media</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
@@ -140,9 +143,11 @@
     <string name="reporting_content_title">You reported this cast.</string>
     <string name="report_user_title">Report User</string>
     <string name="retry">Retry</string>
+    <string name="save">Save</string>
     <string name="search">Search</string>
     <string name="send">Send</string>
     <string name="setting">Setting</string>
+    <string name="share">Share</string>
     <string name="show_more">Show more</string>
     <string name="sync_social_media">Sync social media</string>
     <string name="submit">Submit</string>
@@ -156,7 +161,6 @@
     <string name="view_page">View Page</string>
     <string name="view_profile">View Profile</string>
     <string name="wallet">Wallet</string>
-    <string name="warning_permission_required">Permission required for this feature to be available.</string>
     <string name="whats_new_today">What\'s new today\?</string>
     <string name="whats_on_your_mind">What\'s on your mind\?</string>
     <string name="who_to_follow">Who To Follow</string>

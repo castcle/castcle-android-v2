@@ -2,18 +2,21 @@ package com.castcle.android.core.extensions
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ClipData
-import android.content.Context
+import android.content.*
+import android.graphics.Bitmap
 import android.graphics.Rect
+import android.net.Uri
 import android.os.*
+import android.provider.MediaStore
 import android.provider.Settings
 import android.util.DisplayMetrics
-import android.view.View
-import android.view.WindowInsets
+import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.DimenRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.castcle.android.BuildConfig
@@ -21,6 +24,7 @@ import com.castcle.android.R
 import com.castcle.android.core.constants.AUTHORIZATION_PREFIX
 import com.castcle.android.core.constants.HEADER_AUTHORIZATION
 import com.castcle.android.core.error.ErrorMapper
+import com.facebook.FacebookSdk.getCacheDir
 import com.google.gson.Gson
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
@@ -34,9 +38,11 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import retrofit2.Response
 import timber.log.Timber
+import java.io.*
 import java.text.NumberFormat
 import java.util.*
 import java.util.concurrent.*
+
 
 suspend fun <T> apiCall(apiCall: suspend () -> Response<T>): T? {
     try {
@@ -93,10 +99,9 @@ fun convertDpToPx(context: Context, dp: Float): Float {
 
 fun Context.copyToClipboard(text: String?): Boolean {
     return try {
-        val clipboardManager = this
-            .getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-        val clipData = ClipData
-            .newPlainText("feed-message", text)
+        val clipboardManager =
+            getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+        val clipData = ClipData.newPlainText("", text)
         clipboardManager.setPrimaryClip(clipData)
         Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show()
         true
@@ -205,6 +210,56 @@ fun <T> List<T>.secondOrNull(): T? {
     return if (size < 2) null else this[1]
 }
 
+fun Bitmap.saveImageToCache(context: Context): Uri {
+    return try {
+        val imagesFolder = File(getCacheDir(), "images")
+        imagesFolder.mkdirs()
+        val file = File(imagesFolder, "shared_image.png")
+        val stream = FileOutputStream(file)
+        compress(Bitmap.CompressFormat.PNG, 90, stream)
+        stream.flush()
+        stream.close()
+        FileProvider.getUriForFile(context, "com.castcle.android", file)
+    } catch (exception: IOException) {
+        throw exception
+    }
+}
+
+fun Activity.saveImage(bitmap: Bitmap, name: String) {
+    val folderName = "Castcle"
+    val fos = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val resolver = contentResolver
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, "DCIM/$folderName")
+        val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        resolver.openOutputStream(imageUri ?: Uri.EMPTY)
+    } else {
+        val imagesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+            .toString()
+            .plus(File.separator)
+            .plus(folderName)
+        val file = File(imagesDir)
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        val image = File(imagesDir, "$name.png")
+        FileOutputStream(image)
+    }
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+    fos?.flush()
+    fos?.close()
+}
+
+fun Activity.shareImageUri(uri: Uri) {
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.putExtra(Intent.EXTRA_STREAM, uri)
+    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    intent.type = "image/png"
+    startActivity(intent)
+}
+
 fun View.setPadding(
     @DimenRes top: Int? = null,
     @DimenRes bottom: Int? = null,
@@ -237,6 +292,25 @@ fun String.toBearer(url: HttpUrl? = null): String {
         Timber.d("$HEADER_AUTHORIZATION($url) : $AUTHORIZATION_PREFIX$this")
     }
     return "$AUTHORIZATION_PREFIX$this"
+}
+
+fun View.toBitmap(
+    onBeforeDrawBitmap: () -> Unit = {},
+    onError: (Exception) -> Unit = {},
+    onSuccess: (Bitmap) -> Unit = {},
+) {
+    onBeforeDrawBitmap.invoke()
+    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+        override fun onGlobalLayout() {
+            try {
+                viewTreeObserver.removeOnGlobalLayoutListener(this)
+                onSuccess.invoke(drawToBitmap())
+            } catch (exception: Exception) {
+                onError.invoke(exception)
+            }
+        }
+    })
+    requestLayout()
 }
 
 fun Boolean.toInt(): Int {
