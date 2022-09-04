@@ -17,7 +17,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.util.*
 
 class WalletDepositFragment : BaseFragment(), WalletDepositListener {
 
@@ -47,7 +46,7 @@ class WalletDepositFragment : BaseFragment(), WalletDepositListener {
             binding.loadStateRefreshView.bind(
                 loadState = viewModel.loadState,
                 recyclerView = binding.recyclerView,
-                type = LoadStateRefreshItemsType.WALLET_DEPOSIT,
+                type = LoadStateRefreshItemsType.DEFAULT,
             )
         }
     }

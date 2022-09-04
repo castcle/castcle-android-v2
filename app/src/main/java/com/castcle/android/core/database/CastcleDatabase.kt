@@ -64,6 +64,7 @@ import com.castcle.android.domain.wallet.type.*
         WalletBalanceEntity::class,
         WalletDashboardEntity::class,
         WalletHistoryEntity::class,
+        WalletShortcutEntity::class,
         WhoToFollowEntity::class,
     ],
     version = DATABASE_VERSION,
@@ -106,5 +107,6 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun walletBalance(): WalletBalanceDao
     abstract fun walletDashboard(): WalletDashboardDao
     abstract fun walletHistory(): WalletHistoryDao
+    abstract fun walletShortcut(): WalletShortcutDao
     abstract fun whoToFollow(): WhoToFollowDao
 }

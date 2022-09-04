@@ -486,6 +486,14 @@
             android:id="@+id/toWalletDepositFragment"
             app:destination="@id/walletDepositFragment" />
 
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+        <action
+            android:id="@+id/toWalletSendFragment"
+            app:destination="@id/walletSendFragment" />
+
     </fragment>
 
     <fragment
@@ -495,6 +503,48 @@
         <argument
             android:name="userId"
             app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletScanQrCodeFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment">
+
+        <argument
+            android:name="requestType"
+            app:argType="com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType" />
+
+        <action
+            android:id="@+id/toWalletDepositFragment"
+            app:destination="@id/walletDepositFragment" />
+
+        <action
+            android:id="@+id/toWalletSendFragment"
+            app:destination="@id/walletSendFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletSendFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_send.WalletSendFragment">
+
+        <argument
+            android:name="targetCastcleId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="targetUserId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
 
     </fragment>
 

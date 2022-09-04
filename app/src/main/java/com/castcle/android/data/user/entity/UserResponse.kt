@@ -27,10 +27,12 @@ data class UserResponse(
     @SerializedName("links") val links: UserLinkResponse? = null,
     @SerializedName("linkSocial") val linkSocial: SocialProviderResponse? = null,
     @SerializedName("mobile") val mobile: UserMobileResponse? = null,
+    @SerializedName("order") val order: Int? = null,
     @SerializedName("overview") val overview: String? = null,
     @SerializedName("passwordNotSet") val passwordNotSet: Boolean? = null,
     @SerializedName("pdpa") val pdpa: Boolean? = null,
     @SerializedName("syncSocial") val syncSocial: SocialProviderResponse? = null,
     @SerializedName("type") val type: String? = null,
+    @SerializedName("userId") val userId: String? = null,
     @SerializedName("verified") val verified: VerifiedResponse? = null,
 )
