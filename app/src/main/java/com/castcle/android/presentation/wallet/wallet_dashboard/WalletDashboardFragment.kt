@@ -20,6 +20,7 @@ import com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dash
 import com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dashboard_history.WalletDashboardHistoryViewRenderer
 import com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment.Companion.SELECT_FILTER
 import com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment.Companion.SELECT_USER
+import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -39,7 +40,11 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
         )
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            rightButtonAction = { toast("Scan") },
+            rightButtonAction = {
+                val userId = viewModel.userId.value.orEmpty()
+                val requestType = WalletScanQrCodeRequestType.FromDashboard(userId)
+                directions.toWalletScanQrCodeFragment(requestType).navigate()
+            },
             rightButtonIcon = R.drawable.ic_qr_code,
             title = R.string.wallet,
         )
@@ -72,7 +77,7 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
             binding.loadStateRefreshView.bind(
                 loadState = viewModel.loadState,
                 recyclerView = binding.recyclerView,
-                type = LoadStateRefreshItemsType.WALLET_DASHBOARD,
+                type = LoadStateRefreshItemsType.DEFAULT,
             )
         }
     }
@@ -96,7 +101,11 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
     }
 
     override fun onSendClicked(currentUserId: String) {
-
+        directions.toWalletSendFragment(
+            targetCastcleId = null,
+            targetUserId = null,
+            userId = currentUserId,
+        ).navigate()
     }
 
     private val adapter by lazy {

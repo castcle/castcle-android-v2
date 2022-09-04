@@ -3,6 +3,7 @@ package com.castcle.android.data.wallet.dao
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_WALLET_BALANCE
 import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WalletBalanceDao {
@@ -12,5 +13,8 @@ interface WalletBalanceDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(item: WalletBalanceEntity)
+
+    @Query("SELECT * FROM $TABLE_WALLET_BALANCE WHERE walletBalance_userId = :userId")
+    fun retrieve(userId: String): Flow<WalletBalanceEntity?>
 
 }

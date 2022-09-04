@@ -1,4 +1,5 @@
 <resources>
+    <string name="add">Add</string>
     <string name="about_us">About Us</string>
     <string name="account">Account</string>
     <string name="account_settings">Account Settings</string>
@@ -110,12 +111,27 @@
     <string name="fragment_wallet_deposit_title_1">Deposit CAST</string>
     <string name="fragment_wallet_deposit_title_2">Castcle ID</string>
     <string name="fragment_wallet_deposit_title_3">Castcle Decentralized Social Media</string>
+    <string name="fragment_wallet_scan_qr_code_title_1">Scan QR Code</string>
+    <string name="fragment_wallet_scan_qr_code_title_2">Scan your QR code to get quick access</string>
+    <string name="fragment_wallet_scan_qr_code_title_3">My QR Code</string>
+    <string name="fragment_wallet_send_title_1">Send to</string>
+    <string name="fragment_wallet_send_title_2">\@Castcle ID or 0xgjd…bfjsfj</string>
+    <string name="fragment_wallet_send_title_3">Memo (optional)</string>
+    <string name="fragment_wallet_send_title_4">Enter Memo</string>
+    <string name="fragment_wallet_send_title_5">Amount</string>
+    <string name="fragment_wallet_send_title_6">Enter your amount</string>
+    <string name="fragment_wallet_send_title_7">Max</string>
+    <string name="fragment_wallet_send_title_8">Current available balance: %s</string>
+    <string name="fragment_wallet_send_title_9">Note</string>
+    <string name="fragment_wallet_send_title_10">Receive amount</string>
+    <string name="fragment_wallet_send_title_11">Network fee 0 CAST</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
     <string name="link">Link</string>
     <string name="linked">Linked</string>
     <string name="logout">Log out</string>
+    <string name="manage">Manage ></string>
     <string name="message">Message</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="more_image">+%d</string>
@@ -148,6 +164,7 @@
     <string name="send">Send</string>
     <string name="setting">Setting</string>
     <string name="share">Share</string>
+    <string name="shortcuts">Shortcuts</string>
     <string name="show_more">Show more</string>
     <string name="sync_social_media">Sync social media</string>
     <string name="submit">Submit</string>
@@ -161,6 +178,7 @@
     <string name="view_page">View Page</string>
     <string name="view_profile">View Profile</string>
     <string name="wallet">Wallet</string>
+    <string name="warning_permission_required">Permission required for this feature to be available.</string>
     <string name="whats_new_today">What\'s new today\?</string>
     <string name="whats_on_your_mind">What\'s on your mind\?</string>
     <string name="who_to_follow">Who To Follow</string>

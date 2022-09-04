@@ -213,6 +213,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 loading = LoadingStateCastViewEntity.create(1)
                     .plus(LoadingStateCommentViewEntity.create(5)),
             )
+            DEFAULT -> StateItems(
+                empty = ErrorStateViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingViewEntity.create(1),
+            )
             FEED -> StateItems(
                 empty = EmptyStateFeedViewEntity.create(1),
                 error = EmptyStateFeedViewEntity.create(1),
@@ -233,11 +238,6 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 empty = EmptyStateSearchViewEntity.create(1),
                 error = ErrorStateViewEntity.create(1),
                 loading = LoadingStateUserViewEntity.create(10),
-            )
-            WALLET_DASHBOARD, WALLET_DEPOSIT -> StateItems(
-                empty = ErrorStateViewEntity.create(1),
-                error = ErrorStateViewEntity.create(1),
-                loading = LoadingViewEntity.create(1),
             )
         }
     }

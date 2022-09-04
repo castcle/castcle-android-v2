@@ -2,6 +2,7 @@ package com.castcle.android.domain.authentication.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.auth0.android.jwt.JWT
 import com.castcle.android.core.constants.TABLE_ACCESS_TOKEN
 import com.castcle.android.data.authentication.entity.GetGuestAccessTokenResponse
 import com.castcle.android.data.authentication.entity.LoginResponse
@@ -14,6 +15,14 @@ data class AccessTokenEntity(
     val refreshToken: String = "",
     val type: AccessTokenType = AccessTokenType.Guest
 ) {
+
+    fun getAccountId(): String {
+        return try {
+            JWT(accessToken).claims["id"]?.asString() ?: ""
+        } catch (exception: Exception) {
+            ""
+        }
+    }
 
     fun isGuest() = type is AccessTokenType.Guest
 

@@ -72,6 +72,13 @@ fun Int?.asCount(): String {
     }
 }
 
+fun Double.asCastToken(): String {
+    return NumberFormat.getInstance()
+        .apply { maximumFractionDigits = 8 }
+        .format(this)
+        .plus(" CAST")
+}
+
 fun Int.asComma(): String {
     return NumberFormat.getInstance().format(this)
 }
