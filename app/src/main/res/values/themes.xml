@@ -117,6 +117,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="AppTextSarabunLight.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
     <style name="AppTextSarabunLight.Small">
         <item name="android:textSize">@dimen/_12sdp</item>
     </style>

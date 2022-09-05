@@ -280,7 +280,7 @@
         app:srcCompat="@drawable/bg_airdrop" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/AppTextKanit.Regular"
+        style="@style/AppTextKanit.Small"
         android:id="@+id/tvFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -294,8 +294,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFilter"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
         android:padding="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="@+id/tvFilter"
         app:layout_constraintEnd_toEndOf="parent"

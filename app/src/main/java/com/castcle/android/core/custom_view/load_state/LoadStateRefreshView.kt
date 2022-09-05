@@ -1,3 +1,26 @@
+/* Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+ * Thailand 10160, or visit www.castcle.com if you need additional information
+ * or have any questions.
+ *
+ * Created by Prakan Sornbootnark on 15/08/2022. */
+
 package com.castcle.android.core.custom_view.load_state
 
 import android.content.Context
@@ -78,29 +101,23 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     @FlowPreview
     suspend fun bind(
-        adapter: CastcleAdapter,
         loadState: MutableSharedFlow<LoadState>,
         recyclerView: RecyclerView,
         type: LoadStateRefreshItemsType,
     ) {
         updateStateItems(type)
-        loadState.toCombinedLoadStates()
-            .filterNotNull()
+        loadState
             .distinctUntilChanged()
             .collectLatest {
-                val itemCount = adapter.itemCount
-                when {
-                    it.isEmptyState(itemCount) -> setEmptyState(
-                        emptyItems = stateItems.empty,
-                    )
-                    it.isErrorState() -> setErrorState(
-                        baseError = it.refresh.cast<LoadState.Error>()?.error,
+                when (it) {
+                    is LoadState.Error -> setErrorState(
+                        baseError = it.cast<LoadState.Error>()?.error,
                         baseErrorItems = stateItems.error,
                     )
-                    it.isIdleState(itemCount) -> setIdleState(
+                    is LoadState.NotLoading -> setIdleState(
                         pagingRecyclerView = recyclerView,
                     )
-                    it.isLoadingState() -> setLoadingState(
+                    is LoadState.Loading -> setLoadingState(
                         loadingItems = stateItems.loading,
                     )
                 }
@@ -219,6 +236,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 loading = LoadingStateCastViewEntity.create(1)
                     .plus(LoadingStateCommentViewEntity.create(5)),
             )
+            DEFAULT -> StateItems(
+                empty = ErrorStateViewEntity.create(1),
+                error = ErrorStateViewEntity.create(1),
+                loading = LoadingViewEntity.create(1),
+            )
             FEED -> StateItems(
                 empty = EmptyStateFeedViewEntity.create(1),
                 error = EmptyStateFeedViewEntity.create(1),
@@ -239,11 +261,6 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 empty = EmptyStateSearchViewEntity.create(1),
                 error = ErrorStateViewEntity.create(1),
                 loading = LoadingStateUserViewEntity.create(10),
-            )
-            WALLET_DASHBOARD -> StateItems(
-                empty = ErrorStateViewEntity.create(1),
-                error = ErrorStateViewEntity.create(1),
-                loading = LoadingViewEntity.create(1),
             )
         }
     }
