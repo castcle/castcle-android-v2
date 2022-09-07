@@ -48,6 +48,20 @@
         <item name="android:textSize">@dimen/_12sdp</item>
     </style>
 
+    <style name="AppTheme.TextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="ContentToolBarStyle" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="tabTextAppearance">@style/AppTheme.TextStyle</item>
+        <item name="tabTextColor">@color/gray_1</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="indicatorInset">@color/transparent</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
     <style name="AppTextKanit">
         <item name="fontFamily">@font/kanit_regular</item>
         <item name="android:textColor">@color/white</item>
@@ -133,4 +147,7 @@
         <item name="android:textSize">@dimen/_9sdp</item>
     </style>
 
+    <style name="ThemeOverlay.App.CheckBox" parent="">
+        <item name="buttonTint">@color/checkbox_tint</item>
+    </style>
 </resources>

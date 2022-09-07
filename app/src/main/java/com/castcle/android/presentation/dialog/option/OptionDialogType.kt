@@ -52,7 +52,8 @@ sealed class OptionDialogType : Parcelable {
     }
 
     @Parcelize
-    data class OtherCommentOption(val castcleId: String, val commentId: String) : OptionDialogType() {
+    data class OtherCommentOption(val castcleId: String, val commentId: String) :
+        OptionDialogType() {
         @IgnoredOnParcel val replyComment = 0
     }
 
@@ -70,6 +71,12 @@ sealed class OptionDialogType : Parcelable {
     @Parcelize
     data class ReplyOption(val replyCommentId: String) : OptionDialogType() {
         @IgnoredOnParcel val deleteReply = 0
+    }
+
+    @Parcelize
+    object CameraOption : OptionDialogType() {
+        @IgnoredOnParcel val selectCamera = 0
+        @IgnoredOnParcel val selectGallery = 1
     }
 
 }

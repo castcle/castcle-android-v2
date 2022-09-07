@@ -28,11 +28,13 @@ import com.castcle.android.core.di.*
 import io.reactivex.plugins.RxJavaPlugins
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.workmanager.koin.workManagerFactory
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.ksp.generated.module
 import timber.log.Timber
 
-class CastcleApplication : Application() {
+class CastcleApplication : Application(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
@@ -45,12 +47,14 @@ class CastcleApplication : Application() {
         startKoin {
             androidContext(this@CastcleApplication)
             androidLogger()
+            workManagerFactory()
             modules(
                 ApplicationModule().module,
                 apiModule,
                 applicationModule,
                 networkModule,
                 storageModule,
+                workModule
             )
         }
     }

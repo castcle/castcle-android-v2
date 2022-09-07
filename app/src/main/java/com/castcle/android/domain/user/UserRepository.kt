@@ -23,11 +23,15 @@
 
 package com.castcle.android.domain.user
 
+import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.data.user.entity.CreateQuoteCastRequest
 import com.castcle.android.data.user.entity.ReportRequest
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
+import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     suspend fun commentCast(contentId: String, message: String)
@@ -48,4 +52,6 @@ interface UserRepository {
     suspend fun unlikeCasts(content: CastEntity)
     suspend fun unlikeComment(comment: CommentEntity)
     suspend fun unrecastContent(contentId: String, otherUserRecasted: Boolean, userId: String)
+    suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest): Flow<BaseUiState<Nothing>>
+    suspend fun updateDetailProfile(userUpdateRequest: UserUpdateRequest): Flow<BaseUiState<Nothing>>
 }

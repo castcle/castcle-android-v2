@@ -42,6 +42,16 @@ fun ImageView.loadAvatarImage(imageUrl: String?) {
         .into(this)
 }
 
+fun ImageView.loadAvatarImageLocal(imageUrl: Uri) {
+    GlideApp.with(context).clear(this)
+    GlideApp.with(context)
+        .load(imageUrl)
+        .error(R.drawable.ic_avatar)
+        .placeholder(R.drawable.ic_avatar)
+        .circleCrop()
+        .into(this)
+}
+
 fun loadViewLargeImage(imageView: ImageView, image: ImageEntity) {
     val thumbnail = GlideApp.with(imageView.context)
         .asDrawable()
@@ -65,6 +75,7 @@ fun ImageView.loadImage(
 }
 
 fun ImageView.loadScaleCenterCrop(
+    uri: Uri? = null,
     url: String?,
     thumbnailUrl: String?,
     scale: Pair<Int, Int>
@@ -81,7 +92,7 @@ fun ImageView.loadScaleCenterCrop(
         .load(R.drawable.ic_image)
         .transform(scaleCenterCrop)
     GlideApp.with(context)
-        .load(GlideUrlWithQueryParameter(url))
+        .load(uri ?: GlideUrlWithQueryParameter(url))
         .thumbnail(thumbnail)
         .placeholder(R.drawable.ic_image)
         .transform(scaleCenterCrop)

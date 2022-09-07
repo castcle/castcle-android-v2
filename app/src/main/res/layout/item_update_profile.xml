@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_background_3">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivCreatePass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_img_empty_cover" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_covers_overlay_up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivCreatePass" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_cover_overlay_down"
+        app:layout_constraintBottom_toBottomOf="@id/ivCreatePass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationLoadingCover"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:scaleType="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivCreatePass"
+        app:layout_constraintEnd_toEndOf="@id/ivCreatePass"
+        app:layout_constraintStart_toStartOf="@id/ivCreatePass"
+        app:layout_constraintTop_toTopOf="@id/ivCreatePass"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivEditCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cover_camera" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAvatarProfile"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:src="@drawable/ic_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/ivCreatePass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivCreatePass"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/vLoading"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:background="@drawable/bg_loading_avatar"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivAvatarProfile"
+        app:layout_constraintEnd_toEndOf="@id/ivAvatarProfile"
+        app:layout_constraintStart_toStartOf="@id/ivAvatarProfile"
+        app:layout_constraintTop_toTopOf="@id/ivAvatarProfile" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationLoading"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/ivAvatarProfile"
+        app:layout_constraintEnd_toEndOf="@id/ivAvatarProfile"
+        app:layout_constraintStart_toStartOf="@id/ivAvatarProfile"
+        app:layout_constraintTop_toTopOf="@id/ivAvatarProfile"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAddAvatar"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        app:layout_constraintCircle="@id/ivAvatarProfile"
+        app:layout_constraintCircleAngle="140"
+        app:layout_constraintCircleRadius="@dimen/_35sdp"
+        app:srcCompat="@drawable/ic_avatar_camera"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Regular"
+        android:id="@+id/tvCastcleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        android:shadowRadius="12"
+        android:textColor="@color/white"
+        android:translationZ="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="@id/ivAvatarProfile"
+        app:layout_constraintStart_toStartOf="@id/ivAvatarProfile"
+        app:layout_constraintTop_toBottomOf="@id/ivAvatarProfile"
+        tools:text="Kasidej Daengdej" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvCastcleId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        android:shadowColor="@color/gray_medium"
+        android:shadowRadius="12"
+        android:textColor="@color/gray_2"
+        android:translationZ="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="@id/ivAvatarProfile"
+        app:layout_constraintStart_toStartOf="@id/ivAvatarProfile"
+        app:layout_constraintTop_toBottomOf="@id/tvCastcleName"
+        tools:text="\@KasidejDaengdej" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Regular"
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/fragment_update_profile_title"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCastcleId" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.Small"
+        android:id="@+id/tvWelcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:text="@string/fragment_update_profile_message"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/AppTextKanitLight.Regular"
+        android:id="@+id/btNext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:background="@drawable/bg_corner_24dp"
+        android:backgroundTint="@color/gray_1"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/fragment_update_profile_button_next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -162,6 +162,19 @@ class OptionDialogViewModel(
                 )
                 listOf(deleteReplyItem)
             }
+            is OptionDialogType.CameraOption -> {
+                val blockUserItem = OptionDialogViewEntity(
+                    eventType = type.selectGallery,
+                    icon = R.drawable.ic_select_image,
+                    title = context.getString(R.string.select_gallery)
+                )
+                val reportUserItem = OptionDialogViewEntity(
+                    eventType = type.selectCamera,
+                    icon = R.drawable.ic_camera,
+                    title = context.getString(R.string.select_camera)
+                )
+                listOf(blockUserItem, reportUserItem)
+            }
         }
         views.postValue(items)
     }

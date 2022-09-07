@@ -26,9 +26,11 @@ package com.castcle.android.data.user
 import androidx.room.withTransaction
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.ErrorMapper
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.extensions.toMilliSecond
 import com.castcle.android.core.glide.GlidePreloader
+import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
@@ -39,6 +41,10 @@ import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.ProfileType
 import com.castcle.android.domain.user.type.UserType
+import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
+import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -307,4 +313,56 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest):
+        Flow<BaseUiState<Nothing>> {
+        return flow {
+            apiCall {
+                api.updateUserProfile(
+                    castcleId = "me", userUpdateRequest
+                ).also {
+                    if (it.isSuccessful) {
+                        updateWhenLoginSuccess(it.body())
+                        emit(BaseUiState.SuccessNonBody)
+                    } else {
+                        emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }
+    }
+
+    override suspend fun updateDetailProfile(userUpdateRequest: UserUpdateRequest):
+        Flow<BaseUiState<Nothing>> {
+        return flow {
+            emit(BaseUiState.Loading(null, true))
+            apiCall {
+                api.updateDetailProfile(
+                    castcleId = userUpdateRequest.castcleIdEdit ?: "me", userUpdateRequest
+                ).also {
+                    if (it.isSuccessful) {
+                        updateWhenLoginSuccess(it.body())
+                        emit(BaseUiState.SuccessNonBody)
+                    } else {
+                        emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
+                    }
+                    emit(BaseUiState.Loading(null, false))
+                }
+            }
+        }
+    }
+
+    private suspend fun updateWhenLoginSuccess(response: UserResponse?) {
+        val user = UserEntity.mapOwner(response)
+        val linkSocial = LinkSocialEntity.map(response)
+        val syncSocialUser = SyncSocialEntity.map(response)
+        val syncSocialPage = SyncSocialEntity.map(response)
+        glidePreloader.loadUser(user)
+        database.withTransaction {
+            database.linkSocial().delete()
+            database.linkSocial().insert(linkSocial)
+            database.syncSocial().delete()
+            database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
+            database.user().upsert(user)
+        }
+    }
 }
