@@ -70,7 +70,7 @@ fun Activity.getIntentImagePicker(
                 .createIntent()
         } else {
             ImagePicker.with(this)
-                .galleryOnly()
+                .cameraOnly()
                 .cropSquare()
                 .createIntent()
         }
