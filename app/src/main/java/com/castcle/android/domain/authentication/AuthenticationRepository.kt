@@ -24,10 +24,14 @@
 package com.castcle.android.domain.authentication
 
 import com.castcle.android.data.authentication.entity.*
+import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.OtpEntity
+import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.sign_up.create_profile.entity.RegisterRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.twitter.sdk.android.core.TwitterAuthToken
+import kotlinx.coroutines.flow.Flow
 
 interface AuthenticationRepository {
     suspend fun changePassword(otp: OtpEntity)
@@ -50,4 +54,17 @@ interface AuthenticationRepository {
     suspend fun unregisterFirebaseMessagingToken()
     suspend fun updateMobileNumber(otp: OtpEntity): OtpEntity
     suspend fun verifyOtp(otp: OtpEntity): OtpEntity
+    suspend fun emailIsExist(
+        emailIsExistRequest: EmailIsExistRequest
+    ): Flow<BaseUiState<AuthExistResponse>>
+
+    suspend fun castcleIdIsExist(castcleRequest: CastcleIdExistRequest):
+        Flow<BaseUiState<AuthExistResponse>>
+
+    suspend fun getSuggestionCastcleId(displayNameRequest: DisplayNameRequest):
+        Flow<BaseUiState<AuthPayload>>
+
+    suspend fun registerWithEmail(reqisterRequest: RegisterRequest): Flow<BaseUiState<UserEntity>>
+
+    suspend fun createPage(reqisterRequest: RegisterRequest): Flow<BaseUiState<UserEntity>>
 }

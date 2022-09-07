@@ -117,6 +117,10 @@ class LoginFragment : BaseFragment(), LoginListener {
         directions.toForgotPasswordFragment().navigate()
     }
 
+    override fun onSignUpClicked() {
+        directions.toSignUpFragment().navigate()
+    }
+
     override fun onGoogleLoginClicked() {
         googleSignInClient.signOut()
         googleSignInCallback.launch(googleSignInClient.signInIntent)

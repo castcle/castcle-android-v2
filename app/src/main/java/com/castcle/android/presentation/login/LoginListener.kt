@@ -32,4 +32,5 @@ interface LoginListener : CastcleListener {
     fun onGoogleLoginClicked()
     fun onTwitterLoginClicked()
     fun onUrlClicked(url: String)
+    fun onSignUpClicked()
 }

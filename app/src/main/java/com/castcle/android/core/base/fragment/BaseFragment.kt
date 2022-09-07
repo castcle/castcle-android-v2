@@ -25,6 +25,7 @@ package com.castcle.android.core.base.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.*
 import androidx.navigation.fragment.findNavController
@@ -97,4 +98,13 @@ abstract class BaseFragment : Fragment() {
         activity?.cast<BaseActivity>()?.dismissLoading()
     }
 
+    fun Fragment.addOnBackPressedCallback(block: (() -> Unit)? = null) {
+        activity?.onBackPressedDispatcher?.addCallback(
+            this, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    block?.invoke()
+                }
+            }
+        )
+    }
 }

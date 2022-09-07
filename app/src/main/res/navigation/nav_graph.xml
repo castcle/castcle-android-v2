@@ -220,6 +220,65 @@
             android:id="@+id/toForgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
 
+        <action
+            android:id="@+id/toSignUpFragment"
+            app:destination="@id/signUpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.castcle.android.presentation.sign_up.SignUpFragment">
+
+        <action
+            android:id="@+id/toCreateNewProfileFragment"
+            app:destination="@id/createNewProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.create_profile.CreateNewProfileFragment">
+
+        <action
+            android:id="@+id/toUpdateprofileFragment"
+            app:destination="@id/updateProfileFragment" />
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile.UpdateProfileFragment">
+
+        <action
+            android:id="@+id/toEditNewProfileFragment"
+            app:destination="@id/editNewProfileFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile_detail.EditDetailNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
     </fragment>
 
     <fragment
