@@ -96,6 +96,7 @@ class CreateNewProfileFragment : BaseFragment() {
                     if (text?.isBlank() == true) {
                         setText(uiState.data)
                     }
+                    enableBottomNext(true)
                 }
             }
             else -> Unit
@@ -217,7 +218,10 @@ class CreateNewProfileFragment : BaseFragment() {
             }
             else -> {
                 handleErrorState()
-                enableBottomNext(false)
+                enableBottomNext(
+                    binding.itInDisplayName.text?.isNotBlank() == true &&
+                        binding.itInCastcleId.text?.isNotBlank() == true
+                )
             }
         }
     }
