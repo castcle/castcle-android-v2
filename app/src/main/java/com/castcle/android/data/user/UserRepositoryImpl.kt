@@ -43,8 +43,10 @@ import com.castcle.android.domain.user.type.ProfileType
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
 import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -340,29 +342,32 @@ class UserRepositoryImpl(
                     castcleId = userUpdateRequest.castcleIdEdit ?: "me", userUpdateRequest
                 ).also {
                     if (it.isSuccessful) {
-                        updateWhenLoginSuccess(it.body())
                         emit(BaseUiState.SuccessNonBody)
+                        updateWhenLoginSuccess(it.body())
+                        emit(BaseUiState.Loading(null, false))
                     } else {
                         emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
+                        emit(BaseUiState.Loading(null, false))
                     }
-                    emit(BaseUiState.Loading(null, false))
                 }
             }
         }
     }
 
     private suspend fun updateWhenLoginSuccess(response: UserResponse?) {
-        val user = UserEntity.mapOwner(response)
-        val linkSocial = LinkSocialEntity.map(response)
-        val syncSocialUser = SyncSocialEntity.map(response)
-        val syncSocialPage = SyncSocialEntity.map(response)
-        glidePreloader.loadUser(user)
-        database.withTransaction {
-            database.linkSocial().delete()
-            database.linkSocial().insert(linkSocial)
-            database.syncSocial().delete()
-            database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
-            database.user().upsert(user)
+        withContext(Dispatchers.IO) {
+            val user = UserEntity.mapOwner(response)
+            val linkSocial = LinkSocialEntity.map(response)
+            val syncSocialUser = SyncSocialEntity.map(response)
+            val syncSocialPage = SyncSocialEntity.map(response)
+            glidePreloader.loadUser(user)
+            database.withTransaction {
+                database.linkSocial().delete()
+                database.linkSocial().insert(linkSocial)
+                database.syncSocial().delete()
+                database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
+                database.user().upsert(user)
+            }
         }
     }
 }
