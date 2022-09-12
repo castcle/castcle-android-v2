@@ -323,13 +323,13 @@ class AuthenticationRepositoryImpl(
             emit(BaseUiState.Loading(null, true))
             apiCall {
                 api.registerWithEmail(reqisterRequest).also {
+                    emit(BaseUiState.Loading(null, false))
                     if (it.isSuccessful) {
                         updateWhenLoginSuccess(it.body())
                         emit(BaseUiState.Success(_data = UserEntity.mapOwner(it.body()?.profile)))
                     } else {
                         emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
                     }
-                    emit(BaseUiState.Loading(null, false))
                 }
             }
         }.distinctUntilChanged()

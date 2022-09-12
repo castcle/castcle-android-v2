@@ -70,15 +70,17 @@ class EditDetailViewModel(
     }
 
     fun onUpdateDetail(userUpdateRequest: UserUpdateRequest) {
-        launch(onError = {
-            viewModelScope.launch {
-                updateUiState.emit(BaseUiState.Error(it))
-            }
-        }) {
-            userRepository.updateDetailProfile(userUpdateRequest)
-                .collect {
-                    updateUiState.emit(it)
+        viewModelScope.launch {
+            launch(onError = {
+                viewModelScope.launch {
+                    updateUiState.emit(BaseUiState.Error(it))
                 }
+            }) {
+                userRepository.updateDetailProfile(userUpdateRequest)
+                    .collectLatest {
+                        updateUiState.emit(it)
+                    }
+            }
         }
     }
 }
