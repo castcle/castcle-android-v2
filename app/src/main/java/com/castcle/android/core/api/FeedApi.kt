@@ -27,10 +27,19 @@ import com.castcle.android.core.base.response.BaseResponse
 import com.castcle.android.core.constants.*
 import com.castcle.android.data.feed.entity.FeedResponse
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface FeedApi {
+
+    @POST("v2/feeds/{$PARAMETER_ID}/off-view")
+    suspend fun contentOffView(
+        @Path(PARAMETER_ID) id: String,
+    ): Response<Unit>
+
+    @POST("v2/feeds/{$PARAMETER_ID}/seen")
+    suspend fun contentSeen(
+        @Path(PARAMETER_ID) id: String,
+    ): Response<Unit>
 
     @GET("v2/feeds/recent/forYou")
     suspend fun getFeed(

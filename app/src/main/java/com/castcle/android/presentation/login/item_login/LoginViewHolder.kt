@@ -85,7 +85,7 @@ class LoginViewHolder(
             listener.onForgotPasswordClicked()
         }
         compositeDisposable += binding.tvSignUp.onClick {
-
+            listener.onSignUpClicked()
         }
         compositeDisposable += binding.btLogin.onClick {
             listener.onEmailLoginClicked(item.email, item.password)

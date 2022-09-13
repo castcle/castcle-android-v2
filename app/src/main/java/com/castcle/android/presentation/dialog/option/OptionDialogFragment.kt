@@ -39,6 +39,7 @@ import com.castcle.android.presentation.content.ContentFragment.Companion.REPLY_
 import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_recast_title.RecastTitleViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_select_recast_user.SelectRecastUserViewRenderer
+import com.castcle.android.presentation.sign_up.update_profile.UpdateProfileFragment.Companion.OPTIONAL_SELECT
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -109,6 +110,22 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
             is OptionDialogType.ReplyOption -> {
                 showLoading()
                 viewModel.deleteReply(type.replyCommentId)
+            }
+            is OptionDialogType.CameraOption -> when (eventType) {
+                type.selectGallery -> {
+                    setFragmentResult(
+                        OPTIONAL_SELECT,
+                        bundleOf(OPTIONAL_SELECT to type.selectGallery)
+                    )
+                    backPress()
+                }
+                type.selectCamera -> {
+                    setFragmentResult(
+                        OPTIONAL_SELECT,
+                        bundleOf(OPTIONAL_SELECT to type.selectCamera)
+                    )
+                    backPress()
+                }
             }
         }
     }

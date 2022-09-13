@@ -36,6 +36,7 @@ import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.feed.data_source.FeedRemoteMediator
 import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.type.LoadKeyType
+import com.castcle.android.domain.feed.FeedRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import org.koin.android.annotation.KoinViewModel
@@ -47,12 +48,15 @@ class FeedViewModel(
     private val feedMapper: FeedMapper,
     private val feedResponseMapper: FeedResponseMapper,
     private val glidePreloader: GlidePreloader,
+    private val repository: FeedRepository,
     private val state: SavedStateHandle,
 ) : BaseViewModel() {
 
     init {
         clearDatabase()
     }
+
+    private val contentEngagement = mutableListOf<Pair<String, String>>()
 
     val isGuest = database.accessToken()
         .retrieve()
@@ -91,6 +95,16 @@ class FeedViewModel(
                 database.followingFollowers().delete()
                 database.profile().delete()
                 database.loadKey().delete(LoadKeyType.Profile)
+            }
+        }
+    }
+
+    fun contentOffViewSeen(offView: String, seen: String) {
+        launch {
+            if (!contentEngagement.contains(offView to seen)) {
+                contentEngagement.add(offView to seen)
+                repository.contentOffView(offView)
+                repository.contentSeen(seen)
             }
         }
     }

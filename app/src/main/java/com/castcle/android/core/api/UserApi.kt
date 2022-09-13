@@ -28,6 +28,8 @@ import com.castcle.android.core.constants.*
 import com.castcle.android.data.cast.entity.CastResponse
 import com.castcle.android.data.content.entity.CommentResponse
 import com.castcle.android.data.user.entity.*
+import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
+import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -155,4 +157,15 @@ interface UserApi {
         @Path(PARAMETER_CONTENT_ID) contentId: String,
     ): Response<Unit>
 
+    @PUT("v2/users/{castcleId}")
+    suspend fun updateUserProfile(
+        @Path("castcleId") castcleId: String,
+        @Body uploadImageRequest: UploadImageRequest
+    ): Response<UserResponse>
+
+    @PUT("v2/users/{castcleId}")
+    suspend fun updateDetailProfile(
+        @Path("castcleId") castcleId: String,
+        @Body uploadImageRequest: UserUpdateRequest
+    ): Response<UserResponse>
 }

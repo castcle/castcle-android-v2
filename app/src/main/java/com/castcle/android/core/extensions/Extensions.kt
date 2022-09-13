@@ -36,8 +36,10 @@ import android.util.DisplayMetrics
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
 import androidx.fragment.app.Fragment
@@ -47,6 +49,7 @@ import com.castcle.android.R
 import com.castcle.android.core.constants.AUTHORIZATION_PREFIX
 import com.castcle.android.core.constants.HEADER_AUTHORIZATION
 import com.castcle.android.core.error.ErrorMapper
+import com.castcle.android.data.base.BaseUiState
 import com.facebook.FacebookSdk.getCacheDir
 import com.google.gson.Gson
 import com.jakewharton.rxbinding2.view.RxView
@@ -54,8 +57,10 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.twitter.sdk.android.core.models.User
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
 import okhttp3.HttpUrl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -79,6 +84,32 @@ suspend fun <T> apiCall(apiCall: suspend () -> Response<T>): T? {
     } catch (exception: Exception) {
         throw ErrorMapper().map(exception)
     }
+}
+
+suspend fun <T> toApiCallFlow(call: suspend () -> Response<T>): Flow<BaseUiState<T>> {
+    return flow {
+        emit(BaseUiState.Loading(null, true))
+
+        try {
+            call().let { c ->
+                try {
+                    if (c.isSuccessful) {
+                        c.body()?.let {
+                            emit(BaseUiState.Success(it))
+                        } ?: emit(BaseUiState.SuccessNonBody)
+                    } else {
+                        emit(BaseUiState.Error(ErrorMapper().map(c.errorBody())))
+                    }
+                } catch (e: Exception) {
+                    emit(BaseUiState.Error(ErrorMapper().map(c.errorBody())))
+                }
+            }
+            emit(BaseUiState.Loading(null, false))
+        } catch (e: Exception) {
+            emit(BaseUiState.Error(ErrorMapper().map(call().errorBody())))
+        }
+
+    }.flowOn(Dispatchers.IO)
 }
 
 fun Int?.asCount(): String {
@@ -357,6 +388,10 @@ fun Context.vibrate(time: Int = 50) {
     vibrator?.vibrate(
         VibrationEffect.createOneShot(time.toLong(), VibrationEffect.DEFAULT_AMPLITUDE)
     )
+}
+
+fun Context.getColorResource(@ColorRes colorRes: Int): Int {
+    return ContextCompat.getColor(this, colorRes)
 }
 
 fun View.visible() {

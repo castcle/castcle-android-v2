@@ -28,13 +28,18 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.feed.FeedEngagement
 
 data class FeedWebViewEntity(
     val cast: CastEntity = CastEntity(),
     val feedId: String = "",
     override val uniqueId: String = "",
     val user: UserEntity = UserEntity(),
-) : CastcleViewEntity {
+) : CastcleViewEntity, FeedEngagement {
+
+    override fun getFeedEngagementId(): String? {
+        return feedId.ifBlank { null }
+    }
 
     override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
         target?.cast<FeedWebViewEntity>()?.uniqueId == uniqueId

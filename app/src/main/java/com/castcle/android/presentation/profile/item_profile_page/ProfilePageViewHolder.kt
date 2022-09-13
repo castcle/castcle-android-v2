@@ -39,8 +39,7 @@ class ProfilePageViewHolder(
     private val binding: ItemProfilePageBinding,
     private val compositeDisposable: CompositeDisposable,
     private val listener: ProfileListener,
-
-    ) : CastcleViewHolder<ProfilePageViewEntity>(binding.root) {
+) : CastcleViewHolder<ProfilePageViewEntity>(binding.root) {
 
     override var item = ProfilePageViewEntity()
 
@@ -54,7 +53,10 @@ class ProfilePageViewHolder(
             listener.onOptionClicked(type)
         }
         compositeDisposable += binding.ivAvatar.onClick {
-
+            listener.onImageClicked(listOf(item.user.avatar), 0)
+        }
+        compositeDisposable += binding.ivCover.onClick {
+            listener.onImageClicked(listOfNotNull(item.user.cover), 0)
         }
         compositeDisposable += binding.viewFollowers.onClick {
             listener.onFollowingFollowersClicked(isFollowing = false, user = item.user)

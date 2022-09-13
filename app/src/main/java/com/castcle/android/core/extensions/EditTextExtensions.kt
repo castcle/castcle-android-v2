@@ -24,6 +24,8 @@
 package com.castcle.android.core.extensions
 
 import android.app.Activity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 
@@ -32,3 +34,73 @@ fun EditText.showKeyboard() {
     val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
     imm?.showSoftInput(this, 0)
 }
+
+class TextChangeCastcleIdListener(
+    val editText: EditText,
+    val onTextChanged: ((String) -> Unit)? = null
+) : TextWatcher {
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        onTextChanged?.invoke(handlerInputCastcleId(p0.toString()))
+    }
+
+    override fun afterTextChanged(message: Editable?) {
+        with(editText) {
+            removeTextChangedListener(this@TextChangeCastcleIdListener)
+            setText(handlerInputCastcleId(message.toString()))
+            addTextChangedListener(this@TextChangeCastcleIdListener)
+            setSelection(editText.text.toString().length)
+        }
+    }
+}
+
+fun handlerInputCastcleId(message: String): String {
+    return when {
+        message.contains(defaultCastcleId) && message.length == 1 -> {
+            ""
+        }
+        message.contains(defaultCastcleId) || message.isEmpty() -> {
+            message
+        }
+        else -> {
+            "@$message"
+        }
+    }
+}
+
+class TextChangeListener(val editText: EditText, val onTextChanged: ((String) -> Unit)? = null) :
+    TextWatcher {
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        onTextChanged?.invoke(handlerInputUrl(p0.toString()))
+    }
+
+    override fun afterTextChanged(message: Editable?) {
+        editText.removeTextChangedListener(this)
+        handlerInputUrl(message.toString()).run {
+            editText.setText(this)
+            editText.setSelection(this.length)
+        }
+        editText.addTextChangedListener(this)
+    }
+}
+
+private fun handlerInputUrl(message: String): String {
+    return when {
+        message == schemeFailHttps -> ""
+        message.contains(schemeHttps) -> message.replaceBeforeLast(schemeHttps, "")
+        else -> "$schemeHttps$message"
+    }
+}
+
+fun Editable.isHasValue(): String? {
+    return this.toString().ifBlank {
+        null
+    }
+}
+
+private const val schemeHttps = "https://"
+private const val schemeFailHttps = "https:/"
+private const val defaultCastcleId = "@"

@@ -23,10 +23,13 @@
 
 package com.castcle.android.data.authentication.entity
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 @Keep
+@Parcelize
 data class VerifyOtpRequest(
     @SerializedName("countryCode") val countryCode: String? = null,
     @SerializedName("email") val email: String? = null,
@@ -35,4 +38,4 @@ data class VerifyOtpRequest(
     @SerializedName("otp") val otp: String? = null,
     @SerializedName("password") val password: String? = null,
     @SerializedName("refCode") val refCode: String? = null,
-)
+) : Parcelable

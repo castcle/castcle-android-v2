@@ -121,11 +121,11 @@ internal class BlitzAttachCusListener(
         }
     }
 
-    override fun onViewDetachedFromWindow(v: View?) {
+    override fun onViewDetachedFromWindow(v: View) {
         target.removeCallbacks(runnable)
     }
 
-    override fun onViewAttachedToWindow(v: View?) {
+    override fun onViewAttachedToWindow(v: View) {
         updateRunnableSubscription()
     }
 

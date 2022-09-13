@@ -40,7 +40,7 @@ import java.util.concurrent.*
 
 val networkModule = module {
     single {
-        GsonConverterFactory.create(GsonBuilder().serializeNulls().setLenient().create())
+        GsonConverterFactory.create(GsonBuilder().setLenient().create())
     }
     single {
         HttpLoggingInterceptor().apply {

@@ -36,6 +36,7 @@ import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.custom_view.load_state.LoadStateRefreshItemsType
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentWalletSendBinding
+import com.castcle.android.domain.wallet.type.WalletTransactionType
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment.Companion.ADDRESS_RESULT
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment.Companion.MEMO_RESULT
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment.Companion.RESULT_CASTCLE_ID
@@ -43,7 +44,9 @@ import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrC
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment.Companion.RESULT_USER_ID
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
 import com.castcle.android.presentation.wallet.wallet_send.item_wallet_send.WalletSendViewRenderer
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -79,6 +82,11 @@ class WalletSendFragment : BaseFragment(), WalletSendListener {
         viewModel.views.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+        compositeDisposable += binding.tvSend.onClick {
+            showLoading()
+            hideKeyboard()
+            viewModel.reviewTransaction()
+        }
         setFragmentResultListener(ADDRESS_RESULT) { _, bundle ->
             val castcleId = bundle.getString(RESULT_CASTCLE_ID).orEmpty()
             val userId = bundle.getString(RESULT_USER_ID).orEmpty()
@@ -103,6 +111,20 @@ class WalletSendFragment : BaseFragment(), WalletSendListener {
                 recyclerView = binding.recyclerView,
                 type = LoadStateRefreshItemsType.DEFAULT,
             )
+        }
+        lifecycleScope.launch {
+            viewModel.onError.collectLatest {
+                dismissLoading()
+                toast(it.message)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onSuccess.collectLatest {
+                dismissLoading()
+                directions
+                    .toWalletTransactionFragment(request = it, type = WalletTransactionType.Review)
+                    .navigate()
+            }
         }
     }
 
