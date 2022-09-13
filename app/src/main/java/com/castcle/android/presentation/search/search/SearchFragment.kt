@@ -56,8 +56,8 @@ class SearchFragment : BaseFragment() {
         binding.viewPager.offscreenPageLimit = 3
         binding.viewPager.adapter = SearchViewPagerAdapter(tabItemType)
         binding.viewPager.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
-            override fun onViewAttachedToWindow(p0: View?) = Unit
-            override fun onViewDetachedFromWindow(p0: View?) {
+            override fun onViewAttachedToWindow(p0: View) = Unit
+            override fun onViewDetachedFromWindow(p0: View) {
                 binding.viewPager.adapter = null
                 tabLayoutMediator.detach()
             }

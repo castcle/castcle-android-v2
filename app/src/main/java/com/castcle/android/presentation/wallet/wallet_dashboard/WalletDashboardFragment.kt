@@ -44,6 +44,7 @@ import com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dash
 import com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment.Companion.SELECT_FILTER
 import com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment.Companion.SELECT_USER
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
+import com.castcle.android.presentation.wallet.wallet_transaction.WalletTransactionFragment.Companion.TRANSACTION_SUCCESS
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -85,6 +86,11 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
         }
         setFragmentResultListener(SELECT_USER) { _, bundle ->
             bundle.getString(SELECT_USER)?.let { viewModel.userId.value = it }
+        }
+        setFragmentResultListener(TRANSACTION_SUCCESS) { _, bundle ->
+            if (bundle.getBoolean(TRANSACTION_SUCCESS, false)) {
+                viewModel.refreshData()
+            }
         }
     }
 

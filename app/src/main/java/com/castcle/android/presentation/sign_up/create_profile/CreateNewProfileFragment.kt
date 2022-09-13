@@ -186,7 +186,7 @@ class CreateNewProfileFragment : BaseFragment() {
                 }
             else -> profileBuild
         }
-        directions.toUpdateprofileFragment(bundle).navigate()
+        directions.toUpdateProfileFragment(bundle).navigate()
     }
 
     private fun handlerUiState(verifyProfileState: VerifyProfileState) {

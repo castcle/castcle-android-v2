@@ -21,21 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.data.authentication.entity
+package com.castcle.android.presentation.wallet.wallet_transaction.item_wallet_transaction
 
-import android.os.Parcelable
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemWalletTransactionBinding
+import com.castcle.android.presentation.wallet.wallet_transaction.WalletTransactionListener
+import io.reactivex.disposables.CompositeDisposable
 
-@Keep
-@Parcelize
-data class VerifyOtpRequest(
-    @SerializedName("countryCode") val countryCode: String? = null,
-    @SerializedName("email") val email: String? = null,
-    @SerializedName("mobileNumber") val mobileNumber: String? = null,
-    @SerializedName("objective") val objective: String? = null,
-    @SerializedName("otp") val otp: String? = null,
-    @SerializedName("password") val password: String? = null,
-    @SerializedName("refCode") val refCode: String? = null,
-) : Parcelable
+class WalletTransactionViewRenderer : CastcleViewRenderer<WalletTransactionViewEntity,
+    WalletTransactionViewHolder,
+    WalletTransactionListener>(R.layout.item_wallet_transaction) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: WalletTransactionListener,
+        compositeDisposable: CompositeDisposable
+    ) = WalletTransactionViewHolder(
+        ItemWalletTransactionBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
+
+}

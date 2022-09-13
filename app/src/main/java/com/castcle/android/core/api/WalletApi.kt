@@ -32,6 +32,12 @@ import retrofit2.http.*
 
 interface WalletApi {
 
+    @POST("v2/wallets/{$PARAMETER_ID}/send/confirm")
+    suspend fun confirmTransaction(
+        @Path(PARAMETER_ID) id: String,
+        @Body body: WalletTransactionRequest,
+    ): Response<Unit>
+
     @GET("v2/qr-codes/castcle/{$PARAMETER_ID}")
     suspend fun getMyQrCode(
         @Path(PARAMETER_ID) id: String,
@@ -52,5 +58,11 @@ interface WalletApi {
     suspend fun getWalletShortcuts(
         @Path(PARAMETER_ID) id: String,
     ): Response<WalletShortcutsResponse>
+
+    @POST("v2/wallets/{$PARAMETER_ID}/send/review")
+    suspend fun reviewTransaction(
+        @Path(PARAMETER_ID) id: String,
+        @Body body: WalletTransactionRequest,
+    ): Response<Unit>
 
 }

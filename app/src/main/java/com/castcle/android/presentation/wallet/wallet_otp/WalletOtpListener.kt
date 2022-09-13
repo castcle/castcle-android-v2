@@ -21,21 +21,14 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.data.authentication.entity
+package com.castcle.android.presentation.wallet.wallet_otp
 
-import android.os.Parcelable
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import com.castcle.android.core.base.recyclerview.CastcleListener
+import com.castcle.android.domain.authentication.entity.OtpEntity
+import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
 
-@Keep
-@Parcelize
-data class VerifyOtpRequest(
-    @SerializedName("countryCode") val countryCode: String? = null,
-    @SerializedName("email") val email: String? = null,
-    @SerializedName("mobileNumber") val mobileNumber: String? = null,
-    @SerializedName("objective") val objective: String? = null,
-    @SerializedName("otp") val otp: String? = null,
-    @SerializedName("password") val password: String? = null,
-    @SerializedName("refCode") val refCode: String? = null,
-) : Parcelable
+interface WalletOtpListener : CastcleListener {
+    fun onConfirmClicked(otpEmail: OtpEntity, otpMobile: OtpEntity)
+    fun onResendOtpEmail(otp: OtpEntity)
+    fun onResendOtpMobile(otp: OtpEntity)
+}

@@ -135,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_24sdp"
-        android:text="@string/fragment_wallet_send_title_5"
+        android:text="@string/amount"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etMemo" />

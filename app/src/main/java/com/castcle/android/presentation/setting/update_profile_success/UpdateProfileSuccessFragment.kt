@@ -49,6 +49,7 @@ class UpdateProfileSuccessFragment : BaseFragment(), UpdateProfileSuccessListene
             title = when (args.otp.objective) {
                 is OtpObjective.ChangePassword,
                 is OtpObjective.ForgotPassword -> R.string.password
+                is OtpObjective.SendToken,
                 is OtpObjective.VerifyMobile -> R.string.mobile_number
             },
         )
@@ -63,12 +64,14 @@ class UpdateProfileSuccessFragment : BaseFragment(), UpdateProfileSuccessListene
         description = when (args.otp.objective) {
             is OtpObjective.ChangePassword,
             is OtpObjective.ForgotPassword -> string(R.string.fragment_update_profile_success_title_4)
+            is OtpObjective.SendToken,
             is OtpObjective.VerifyMobile -> string(R.string.fragment_update_profile_success_title_2)
         },
         icon = R.drawable.ic_update_profile_success,
         title = when (args.otp.objective) {
             is OtpObjective.ChangePassword,
             is OtpObjective.ForgotPassword -> string(R.string.fragment_update_profile_success_title_3)
+            is OtpObjective.SendToken,
             is OtpObjective.VerifyMobile -> string(R.string.fragment_update_profile_success_title_1)
         },
     )
