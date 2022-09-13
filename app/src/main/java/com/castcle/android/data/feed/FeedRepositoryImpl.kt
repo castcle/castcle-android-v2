@@ -21,32 +21,24 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web
+package com.castcle.android.data.feed
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
+import com.castcle.android.core.api.FeedApi
+import com.castcle.android.core.extensions.apiCall
+import com.castcle.android.domain.feed.FeedRepository
+import org.koin.core.annotation.Singleton
 
-data class FeedWebViewEntity(
-    val cast: CastEntity = CastEntity(),
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
+@Singleton
+class FeedRepositoryImpl(
+    private val api: FeedApi,
+) : FeedRepository {
 
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
+    override suspend fun contentOffView(feedId: String) {
+        apiCall { api.contentOffView(id = feedId) }
     }
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebViewEntity>() == this
+    override suspend fun contentSeen(feedId: String) {
+        apiCall { api.contentSeen(id = feedId) }
     }
-
-    override fun viewType() = R.layout.item_feed_web
 
 }
