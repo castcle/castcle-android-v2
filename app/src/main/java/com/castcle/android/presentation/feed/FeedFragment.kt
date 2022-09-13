@@ -27,6 +27,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastclePagingDataAdapter
@@ -118,6 +120,23 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
             binding.swipeRefresh.isRefreshing = false
             adapter.refresh()
         }
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visiblePosition = (recyclerView.layoutManager as? LinearLayoutManager)
+                    ?.findFirstVisibleItemPosition()
+                    ?: RecyclerView.NO_POSITION
+                val offView = adapter.snapshot().getOrNull(visiblePosition.minus(1))
+                    ?.cast<FeedEngagement>()
+                    ?.getFeedEngagementId()
+                val seen = adapter.snapshot().getOrNull(visiblePosition)
+                    ?.cast<FeedEngagement>()
+                    ?.getFeedEngagementId()
+                if (offView != null && seen != null) {
+                    viewModel.contentOffViewSeen(offView, seen)
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
     @ExperimentalCoroutinesApi

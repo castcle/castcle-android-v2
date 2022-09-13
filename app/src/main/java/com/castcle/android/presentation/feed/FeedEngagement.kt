@@ -21,32 +21,8 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web
+package com.castcle.android.presentation.feed
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
-
-data class FeedWebViewEntity(
-    val cast: CastEntity = CastEntity(),
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
-
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
-    }
-
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebViewEntity>() == this
-    }
-
-    override fun viewType() = R.layout.item_feed_web
-
+interface FeedEngagement {
+    fun getFeedEngagementId(): String?
 }
