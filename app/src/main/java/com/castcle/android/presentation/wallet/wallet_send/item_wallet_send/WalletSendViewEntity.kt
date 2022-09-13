@@ -31,6 +31,7 @@ import com.castcle.android.presentation.wallet.wallet_send.item_wallet_send_shor
 data class WalletSendViewEntity(
     var amount: Double = 0.0,
     val balance: Double = 0.0,
+    val castcleId: String = "",
     var memo: String = "",
     var note: String = "",
     var targetCastcleId: String = "",

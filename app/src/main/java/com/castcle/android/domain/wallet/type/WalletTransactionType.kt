@@ -21,21 +21,17 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.data.authentication.entity
+package com.castcle.android.domain.wallet.type
 
 import android.os.Parcelable
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-@Keep
-@Parcelize
-data class VerifyOtpRequest(
-    @SerializedName("countryCode") val countryCode: String? = null,
-    @SerializedName("email") val email: String? = null,
-    @SerializedName("mobileNumber") val mobileNumber: String? = null,
-    @SerializedName("objective") val objective: String? = null,
-    @SerializedName("otp") val otp: String? = null,
-    @SerializedName("password") val password: String? = null,
-    @SerializedName("refCode") val refCode: String? = null,
-) : Parcelable
+sealed class WalletTransactionType(val id: String, val name: String) : Parcelable {
+
+    @Parcelize
+    object Completed : WalletTransactionType(id = "completed", name = "Transaction Completed")
+
+    @Parcelize
+    object Review : WalletTransactionType(id = "review", name = "Review Send")
+
+}

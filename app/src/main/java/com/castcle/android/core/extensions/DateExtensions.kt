@@ -55,6 +55,15 @@ fun Long.toWalletTime(): String {
     }
 }
 
+fun Long.toDateTime(): String {
+    return try {
+        SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Date(this))
+    } catch (exception: Exception) {
+        Timber.e(exception)
+        ""
+    }
+}
+
 @SuppressLint("SimpleDateFormat")
 fun convertLongToTime(time: Long, pattern: String = SOURCE_DATE_FORMAT): String {
     val date = Date(time)

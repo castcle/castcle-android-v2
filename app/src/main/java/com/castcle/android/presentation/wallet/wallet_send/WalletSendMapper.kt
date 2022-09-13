@@ -51,6 +51,7 @@ class WalletSendMapper {
             )
         }
         return WalletSendViewEntity(
+            castcleId = account.find { it.id == parameter.userId }?.castcleId.orEmpty(),
             shortcut = accountItems.plus(shortcutItems),
             targetCastcleId = parameter.targetCastcleId.orEmpty(),
             targetUserId = parameter.targetUserId.orEmpty(),

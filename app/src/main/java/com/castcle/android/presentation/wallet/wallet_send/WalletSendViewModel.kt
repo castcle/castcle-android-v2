@@ -28,6 +28,7 @@ import androidx.paging.LoadState
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.error.RetryException
+import com.castcle.android.data.wallet.entity.WalletTransactionRequest
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.domain.wallet.WalletRepository
 import com.castcle.android.presentation.wallet.wallet_send.item_wallet_send.WalletSendViewEntity
@@ -43,6 +44,10 @@ class WalletSendViewModel(
 ) : BaseViewModel() {
 
     val loadState = MutableSharedFlow<LoadState>()
+
+    val onError = MutableSharedFlow<Throwable>()
+
+    val onSuccess = MutableSharedFlow<WalletTransactionRequest>()
 
     val views = MutableLiveData<WalletSendViewEntity>()
 
@@ -75,6 +80,32 @@ class WalletSendViewModel(
                 }.distinctUntilChanged().collectLatest {
                     views.postValue(it)
                 }
+        }
+    }
+
+    fun reviewTransaction() {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { onSuccess.emitOnSuspend(it) },
+        ) {
+            val detail = WalletTransactionRequest.Detail(
+                castcleId = views.value?.castcleId,
+                targetCastcleId = views.value?.targetCastcleId,
+                timestamp = System.currentTimeMillis(),
+                userId = views.value?.userId.orEmpty(),
+            )
+            val transaction = WalletTransactionRequest.Transaction(
+                address = views.value?.targetUserId,
+                amount = views.value?.amount ?: 0.0,
+                chainId = "castcle",
+                memo = views.value?.memo?.ifBlank { null },
+                note = views.value?.note?.ifBlank { null },
+            )
+            val body = WalletTransactionRequest(
+                detail = detail,
+                transaction = transaction,
+            )
+            repository.reviewTransaction(body = body)
         }
     }
 

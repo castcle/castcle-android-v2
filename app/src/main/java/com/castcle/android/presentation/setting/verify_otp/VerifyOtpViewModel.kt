@@ -66,6 +66,7 @@ class VerifyOtpViewModel(
             when (otp.objective) {
                 is OtpObjective.ChangePassword,
                 is OtpObjective.ForgotPassword -> repository.verifyOtp(otp)
+                is OtpObjective.SendToken,
                 is OtpObjective.VerifyMobile -> repository.updateMobileNumber(otp)
             }
         }

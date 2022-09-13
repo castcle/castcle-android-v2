@@ -28,6 +28,7 @@ import com.castcle.android.core.api.WalletApi
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.glide.GlidePreloader
+import com.castcle.android.data.wallet.entity.WalletTransactionRequest
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.UserType
@@ -42,6 +43,10 @@ class WalletRepositoryImpl(
     private val database: CastcleDatabase,
     private val glidePreloader: GlidePreloader,
 ) : WalletRepository {
+
+    override suspend fun confirmTransaction(body: WalletTransactionRequest) {
+        apiCall { api.confirmTransaction(body = body, id = body.detail?.userId.orEmpty()) }
+    }
 
     override suspend fun getMyQrCode(userId: String): String {
         return try {
@@ -100,6 +105,11 @@ class WalletRepositoryImpl(
             database.walletShortcut().delete()
             database.walletShortcut().insert(shortcut)
         }
+    }
+
+    override suspend fun reviewTransaction(body: WalletTransactionRequest): WalletTransactionRequest {
+        apiCall { api.reviewTransaction(body = body, id = body.detail?.userId.orEmpty()) }
+        return body
     }
 
 }

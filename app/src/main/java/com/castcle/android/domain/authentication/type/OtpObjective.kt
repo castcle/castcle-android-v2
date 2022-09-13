@@ -35,6 +35,9 @@ sealed class OtpObjective(val id: String) : Parcelable {
     object ForgotPassword : OtpObjective(id = "forgot_password")
 
     @Parcelize
+    object SendToken : OtpObjective(id = "send_token")
+
+    @Parcelize
     object VerifyMobile : OtpObjective(id = "verify_mobile")
 
 }

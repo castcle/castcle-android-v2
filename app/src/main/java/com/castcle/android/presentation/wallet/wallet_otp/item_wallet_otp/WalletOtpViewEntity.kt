@@ -21,21 +21,27 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.data.authentication.entity
+package com.castcle.android.presentation.wallet.wallet_otp.item_wallet_otp
 
-import android.os.Parcelable
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
+import com.castcle.android.domain.authentication.entity.OtpEntity
 
-@Keep
-@Parcelize
-data class VerifyOtpRequest(
-    @SerializedName("countryCode") val countryCode: String? = null,
-    @SerializedName("email") val email: String? = null,
-    @SerializedName("mobileNumber") val mobileNumber: String? = null,
-    @SerializedName("objective") val objective: String? = null,
-    @SerializedName("otp") val otp: String? = null,
-    @SerializedName("password") val password: String? = null,
-    @SerializedName("refCode") val refCode: String? = null,
-) : Parcelable
+data class WalletOtpViewEntity(
+    val otpEmail: OtpEntity = OtpEntity(),
+    val otpMobile: OtpEntity = OtpEntity(),
+    var otpNumberEmail: String = "",
+    var otpNumberMobile: String = "",
+    override val uniqueId: String = "${R.layout.item_wallet_otp}",
+) : CastcleViewEntity {
+
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<WalletOtpViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<WalletOtpViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_wallet_otp
+
+}
