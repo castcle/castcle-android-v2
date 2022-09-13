@@ -39,8 +39,7 @@ class ProfileUserViewHolder(
     private val binding: ItemProfileUserBinding,
     private val compositeDisposable: CompositeDisposable,
     private val listener: ProfileListener,
-
-    ) : CastcleViewHolder<ProfileUserViewEntity>(binding.root) {
+) : CastcleViewHolder<ProfileUserViewEntity>(binding.root) {
 
     override var item = ProfileUserViewEntity()
 
@@ -54,7 +53,10 @@ class ProfileUserViewHolder(
             listener.onOptionClicked(type)
         }
         compositeDisposable += binding.ivAvatar.onClick {
-
+            listener.onImageClicked(listOf(item.user.avatar), 0)
+        }
+        compositeDisposable += binding.ivCover.onClick {
+            listener.onImageClicked(listOfNotNull(item.user.cover), 0)
         }
         compositeDisposable += binding.viewFollowing.onClick {
             listener.onFollowingFollowersClicked(isFollowing = true, user = item.user)
