@@ -37,6 +37,12 @@ interface WalletApi {
         @Body body: WalletTransactionRequest,
     ): Response<Unit>
 
+    @DELETE("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/{$PARAMETER_SHORTCUT_ID}")
+    suspend fun deleteShortcut(
+        @Path(PARAMETER_ACCOUNT_ID) accountId: String,
+        @Path(PARAMETER_SHORTCUT_ID) shortcutId: String,
+    ): Response<Unit>
+
     @GET("v2/qr-codes/castcle/{$PARAMETER_ID}")
     suspend fun getMyQrCode(
         @Path(PARAMETER_ID) id: String,
@@ -68,6 +74,12 @@ interface WalletApi {
     suspend fun getWalletShortcuts(
         @Path(PARAMETER_ID) id: String,
     ): Response<WalletShortcutsResponse>
+
+    @PUT("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/sort")
+    suspend fun sortWalletShortcuts(
+        @Path(PARAMETER_ACCOUNT_ID) accountId: String,
+        @Body body: SortWalletShortcutRequest,
+    ): Response<Unit>
 
     @POST("v2/wallets/{$PARAMETER_ID}/send/review")
     suspend fun reviewTransaction(

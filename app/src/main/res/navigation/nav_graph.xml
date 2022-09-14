@@ -589,6 +589,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/walletEditShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_edit_shortcut.WalletEditShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/walletOtpFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_otp.WalletOtpFragment">
 
@@ -671,6 +681,10 @@
         <argument
             android:name="userId"
             app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletEditShortcutFragment"
+            app:destination="@id/walletEditShortcutFragment" />
 
     </fragment>
 
