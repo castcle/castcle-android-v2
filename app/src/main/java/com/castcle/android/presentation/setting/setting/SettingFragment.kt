@@ -89,7 +89,9 @@ class SettingFragment : BaseFragment(), SettingListener {
         viewModel.logout()
     }
 
-    override fun onNewPageClick() = Unit
+    override fun onNewPageClick() {
+        directions.toPageCondition().navigate()
+    }
 
     override fun onNotificationClicked() = Unit
 

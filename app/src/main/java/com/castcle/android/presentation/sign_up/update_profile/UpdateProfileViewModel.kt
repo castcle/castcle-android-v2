@@ -73,7 +73,7 @@ class UpdateProfileViewModel(
         }
     }
 
-    fun upLoadImageAvatarOrCover(imageRequest: UpLoadImagesRequest) {
+    private fun upLoadImageAvatarOrCover(imageRequest: UpLoadImagesRequest) {
         imageUploaderWorkHelper.uploadImage(imageRequest.toStringImageRequest())
     }
 

@@ -23,6 +23,7 @@
     <string name="edit_page">Edit Page</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
+    <string name="none">None</string>
     <string name="empty_state_content_title">Sorry, this cast isn\'t available</string>
     <string name="empty_state_content_description">This link you followed may be broken, or the cast may have been removed.</string>
     <string name="empty_feed_title">Trouble Loading News Feed</string>
@@ -221,7 +222,7 @@
     <string name="fragment_sign_up_email_error_format">Wrong email format.</string>
     <string name="fragment_new_profile_title">Create your Castcle ID and Display name</string>
     <string name="fragment_new_profile_message">Your Castcle ID will be associated with your Castcle profile,You can change your display name later</string>
-    <string name="fragment_new_page_message">Your Castcle ID will be associated with your Castcle page,You can change your display name later</string>
+    <string name="fragment_new_page_message">Your display name and Castcle ID should associate with your Page\'s identity. You may adjust your name and ID later.</string>
     <string name="fragment_new_profile_castcle_id_title">Castcle ID</string>
     <string name="fragment_new_profile_castcle_id_hint">Enter your Castcle ID</string>
     <string name="fragment_new_profile_castcle_display_name">Display name</string>
@@ -243,6 +244,8 @@
     <string name="fragment_edit_new_profile_over">Overview</string>
     <string name="fragment_edit_new_profile_over_view_hit">Write something to introduce yourself</string>
     <string name="fragment_edit_new_profile_birth_date">Birth date</string>
+    <string name="fragment_edit_new_page_email">Email</string>
+    <string name="fragment_edit_new_contact_number">Contact number</string>
     <string name="fragment_edit_new_profile_social_links">Social media links</string>
     <string name="fragment_edit_new_profile_button">Confirm</string>
     <string name="fragment_edit_new_profile_link_https">https://</string>
@@ -250,4 +253,15 @@
     <string name="select_gallery">Choose from Camera Roll</string>
     <string name="select_camera">Take Photo</string>
     <string name="upload_image_success">Successfully upload image.</string>
+    <string name="upload_image_failed">Failed upload image.</string>
+    <string name="fragment_condition_create_page_title">Create new Page</string>
+    <string name="fragment_condition_create_page_message">Start your new journey and connect with millions of other people on Castcle. Your Page can help share your ideas and engage with people worldwide.</string>
+    <string name="fragment_condition_create_button">Create new Page</string>
+    <string name="contact_email_description">This email will be linked to your page.  Once confirmed, users will be able to see your Page\'s contact information.</string>
+    <string name="contact_contract_number_description">This phone number will be linked to your Page.  Once completed, users will be able to see your Page\’s contact information.</string>
+    <string name="email_error_message">Someone already has this email address.Try another name.</string>
+    <string name="fragment_insert_contract_number_hint">Enter your contract number</string>
+    <string name="fragment_insert_contract_number">Contract Number</string>
+    <string name="fragment_insert_email">Email</string>
+    <string name="dialog_common_warning">Warning</string>
 </resources>

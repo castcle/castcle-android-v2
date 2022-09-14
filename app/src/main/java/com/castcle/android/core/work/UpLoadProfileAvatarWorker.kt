@@ -49,6 +49,7 @@ class UpLoadProfileAvatarWorker(
                 .flatMapConcat {
                     userRepository.updateUserProfile(
                         UploadImageRequest(
+                            currentCastcleId = imageUpLoad.castcleId,
                             images = it
                         )
                     )

@@ -67,6 +67,8 @@ data class UserEntity(
     @ColumnInfo(name = "${TABLE_USER}_verifiedMobile") val verifiedMobile: Boolean = false,
     @ColumnInfo(name = "${TABLE_USER}_verifiedOfficial") val verifiedOfficial: Boolean = false,
     @ColumnInfo(name = "${TABLE_USER}_verifiedSocial") val verifiedSocial: Boolean = false,
+    @ColumnInfo(name = "${TABLE_USER}_contactEmail") val contactEmail: String? = null,
+    @ColumnInfo(name = "${TABLE_USER}_contactNumber") val contactNumber: String? = null,
 ) : Parcelable {
 
     fun isNotVerified(): Boolean {
@@ -121,6 +123,8 @@ data class UserEntity(
             verifiedMobile = response?.verified?.mobile ?: false,
             verifiedOfficial = response?.verified?.official ?: false,
             verifiedSocial = response?.verified?.social ?: false,
+            contactEmail = response?.contact?.email,
+            contactNumber = response?.contact?.phone
         )
     }
 

@@ -1,9 +1,11 @@
-package com.castcle.android.presentation.sign_up.update_profile_detail.item_edit_new_profile
+package com.castcle.android.presentation.setting.create_page.item_page_condition
 
-import com.castcle.android.core.base.recyclerview.CastcleViewHolder
-import com.castcle.android.core.extensions.setStatePass
-import com.castcle.android.databinding.ItemEditDetailNewProfileBinding
-import com.castcle.android.presentation.sign_up.update_profile_detail.EditNewProfileListener
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemPageConditionBinding
+import com.castcle.android.presentation.setting.create_page.CreatePageConditionListener
 import io.reactivex.disposables.CompositeDisposable
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
@@ -28,29 +30,20 @@ import io.reactivex.disposables.CompositeDisposable
 //  or have any questions.
 //
 //
-//  Created by sklim on 7/9/2022 AD at 11:47.
+//  Created by sklim on 12/9/2022 AD at 10:07.
 
-class EditProfileViewHolder(
-    val binding: ItemEditDetailNewProfileBinding,
-    private val compositeDisposable: CompositeDisposable,
-    private val listener: EditNewProfileListener,
-) : CastcleViewHolder<EditProfileViewEntity>(binding.root) {
+class ItemPageConditionViewRenderer : CastcleViewRenderer<ItemPageConditionViewEntity,
+    ItemPageConditionViewHolder,
+    CreatePageConditionListener>(R.layout.item_page_condition) {
 
-    override var item = EditProfileViewEntity()
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: CreatePageConditionListener,
+        compositeDisposable: CompositeDisposable
+    ) = ItemPageConditionViewHolder(
+        ItemPageConditionBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
 
-    init {
-
-    }
-
-    private fun handleButtonDone(notBlank: Boolean) {
-        binding.btDone.run {
-            isEnabled = notBlank
-            setStatePass(notBlank)
-        }
-    }
-
-    override fun bind(bindItem: EditProfileViewEntity) {
-        super.bind(bindItem)
-
-    }
 }

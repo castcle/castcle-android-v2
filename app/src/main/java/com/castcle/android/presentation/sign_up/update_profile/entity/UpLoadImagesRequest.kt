@@ -5,6 +5,8 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class UploadImageRequest(
+    var currentCastcleId: String? = null,
+
     @SerializedName("images")
     var images: UpLoadImagesRequest? = null,
 )
@@ -24,13 +26,28 @@ data class UserUpdateRequest(
     @SerializedName("dob")
     var dob: String? = null,
 
+    @SerializedName("contact")
+    var contract: Contract? = null,
+
     @SerializedName("links")
     var links: UserLinkResponse? = null
+)
+
+data class Contract(
+    @SerializedName("countryCode")
+    var countryCode: String? = null,
+
+    @SerializedName("phone")
+    var phone: String? = null,
+
+    @SerializedName("email")
+    var email: String? = null,
 )
 
 data class UpLoadImagesRequest(
     @SerializedName("avatar")
     var avatar: String? = null,
+
     @SerializedName("cover")
     var cover: String? = null,
 

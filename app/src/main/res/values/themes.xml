@@ -68,6 +68,11 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <style name="Dialog.NoTitle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:padding">@dimen/_8sdp</item>
+    </style>
+
     <style name="AppTextKanit.Headline">
         <item name="android:textSize">@dimen/_18sdp</item>
     </style>

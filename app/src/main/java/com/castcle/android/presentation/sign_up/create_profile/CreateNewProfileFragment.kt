@@ -1,5 +1,6 @@
 package com.castcle.android.presentation.sign_up.create_profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -57,11 +58,32 @@ class CreateNewProfileFragment : BaseFragment() {
     private val profileBuild: ProfileBundle
         get() = args.profileBundle
 
+    private val keyboardListener = object : KeyboardListener() {
+
+        @SuppressLint("SetTextI18n")
+        override fun onVisibilityStateChanged(isShown: Boolean) {
+            val delay = if (isShown) HIDE_DELAY_IN_MILLISECONDS else SHOW_DELAY_IN_MILLISECONDS
+            handlerBottomContent(isShown, delay)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
+
+    override fun onStart() {
+        super.onStart()
+        requireActivity().registerKeyboardListener(keyboardListener)
+        changeSoftInputMode(true)
+    }
+
+    override fun onStop() {
+        requireActivity().unregisterKeyboardListener(keyboardListener)
+        changeSoftInputMode(false)
+        super.onStop()
+    }
 
     override fun initConsumer() {
         lifecycleScope.launch {
@@ -102,6 +124,7 @@ class CreateNewProfileFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initViewProperties() {
         super.initViewProperties()
 
@@ -110,6 +133,8 @@ class CreateNewProfileFragment : BaseFragment() {
                 viewModel.createUserState.value = CreateUserState.PROFILE_CREATE
                 initActionBar(getString(R.string.fragment_new_profile_bar_profile))
                 binding.tvWelcome.text = getString(R.string.fragment_new_profile_message)
+                binding.ivCreatePass.background =
+                    requireContext().getDrawableRes(R.drawable.ic_img_new_user_cover)
                 (profileBuild as ProfileBundle.CreateProfile).also {
                     viewModel.email.value = it.email
                     viewModel.password.value = it.password
@@ -119,6 +144,8 @@ class CreateNewProfileFragment : BaseFragment() {
                 viewModel.createUserState.value = CreateUserState.PAGE_CREATE
                 initActionBar(getString(R.string.fragment_new_profile_bar_page))
                 binding.tvWelcome.text = getString(R.string.fragment_new_page_message)
+                binding.ivCreatePass.background =
+                    requireContext().getDrawableRes(R.drawable.ic_create_page)
             }
         }
 
@@ -127,20 +154,50 @@ class CreateNewProfileFragment : BaseFragment() {
                 addTextChangedListener(
                     TextChangeCastcleIdListener(this,
                         onTextChanged = {
-                            viewModel.handlerDisplayName(it)
+                            if (it.isNotBlank()) {
+                                viewModel.handlerDisplayName(it)
+                            } else {
+                                buttonDone()
+                            }
                         })
                 )
             }
 
-            compositeDisposable += itInDisplayName.onTextChange {
-                viewModel.getSuggestionCastcleID(it)
-                enableBottomNext(binding.itInCastcleId.text?.isNotBlank() == true)
+            itInDisplayName.setOnTouchListener { _, _ ->
+                svContent.scrollTo(0, svContent.bottom)
+                false
             }
 
-            btNext.onClick {
+            itInDisplayName.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    buttonDone(binding.itInDisplayName.text?.isNotBlank() == true)
+                }
+            }
+
+            itInCastcleId.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    buttonDone(binding.itInCastcleId.text?.isNotBlank() == true)
+                }
+            }
+
+            compositeDisposable += itInDisplayName.onTextChange {
+                viewModel.getSuggestionCastcleID(it)
+                enableBottomNext(it.isNotBlank())
+                buttonDone(it.isNotBlank())
+            }
+
+            compositeDisposable += btNext.onClick {
                 onRegisterOrCreate()
             }
+            compositeDisposable += tvCast.onClick {
+                handlerHideKeyboard()
+            }
         }
+    }
+
+    private fun handlerHideKeyboard() {
+        requireActivity().hideKeyboard()
+        binding.clCast.gone()
     }
 
     private fun onRegisterOrCreate() {
@@ -213,12 +270,16 @@ class CreateNewProfileFragment : BaseFragment() {
                 )
             }
             VerifyProfileState.CASTCLE_ID_PASS -> {
+                handleErrorState()
+                buttonDone(binding.itInCastcleId.text?.isNotBlank() == true)
                 enableBottomNext(binding.itInDisplayName.text?.isNotBlank() == true)
             }
-            else -> {
+            VerifyProfileState.NONE -> {
+                buttonDone()
                 handleErrorState()
                 enableBottomNext(false)
             }
+            else -> Unit
         }
     }
 
@@ -243,7 +304,25 @@ class CreateNewProfileFragment : BaseFragment() {
         )
     }
 
-    override fun initObserver() {
+    private fun handlerBottomContent(shown: Boolean, delay: Long) {
+        with(binding) {
+            clCast.visibleOrGone(
+                shown && viewModel.createUserState.value ==
+                    CreateUserState.PAGE_CREATE, delay = delay
+            )
+            when {
+                itInDisplayName.isFocused -> {
+                    buttonDone(itInDisplayName.text?.isNotBlank() == true)
+                }
+                itInCastcleId.isFocused -> {
+                    buttonDone(itInCastcleId.text?.isNotBlank() == true)
+                }
+            }
+            btNext.visibleOrGone(!shown)
+        }
+    }
 
+    private fun buttonDone(isPass: Boolean = false) {
+        binding.tvCast.setStateDone(isPass)
     }
 }

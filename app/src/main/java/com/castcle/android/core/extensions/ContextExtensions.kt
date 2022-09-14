@@ -2,7 +2,9 @@ package com.castcle.android.core.extensions
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
@@ -31,4 +33,8 @@ import androidx.core.content.ContextCompat
 
 fun Context.getColorResStateList(@ColorRes colorRes: Int): ColorStateList? {
     return ContextCompat.getColorStateList(this, colorRes)
+}
+
+fun Context.getDrawableRes(@DrawableRes drawable: Int): Drawable? {
+    return ContextCompat.getDrawable(this, drawable)
 }

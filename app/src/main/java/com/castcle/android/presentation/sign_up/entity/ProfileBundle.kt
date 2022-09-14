@@ -56,6 +56,7 @@ enum class CreateUserState(val state: String) {
 
 enum class VerifyProfileState {
     NONE,
+    ON_PROGRESS,
     CASTCLE_ID_ERROR,
     CASTCLE_ID_LENGHT_ERROR,
     CASTCLE_ID_SPECIAL_ERROR,

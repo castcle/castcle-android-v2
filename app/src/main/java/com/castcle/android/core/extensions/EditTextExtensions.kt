@@ -69,8 +69,10 @@ fun handlerInputCastcleId(message: String): String {
     }
 }
 
-class TextChangeListener(val editText: EditText, val onTextChanged: ((String) -> Unit)? = null) :
-    TextWatcher {
+class TextChangeListener(
+    private val editText: EditText,
+    val onTextChanged: ((String) -> Unit)? = null
+) : TextWatcher {
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -78,16 +80,18 @@ class TextChangeListener(val editText: EditText, val onTextChanged: ((String) ->
     }
 
     override fun afterTextChanged(message: Editable?) {
-        editText.removeTextChangedListener(this)
-        handlerInputUrl(message.toString()).run {
-            editText.setText(this)
-            editText.setSelection(this.length)
+        with(editText) {
+            removeTextChangedListener(this@TextChangeListener)
+            handlerInputUrl(message.toString()).run {
+                setText(this)
+                setSelection(this.length)
+            }
+            addTextChangedListener(this@TextChangeListener)
         }
-        editText.addTextChangedListener(this)
     }
 }
 
-private fun handlerInputUrl(message: String): String {
+fun handlerInputUrl(message: String): String {
     return when {
         message == schemeFailHttps -> ""
         message.contains(schemeHttps) -> message.replaceBeforeLast(schemeHttps, "")
