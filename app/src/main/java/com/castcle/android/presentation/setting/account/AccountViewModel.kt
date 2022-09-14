@@ -55,17 +55,17 @@ class AccountViewModel(
                 AccountTitleViewEntity(titleId = R.string.fragment_account_title_1),
                 AccountMenuViewEntity(
                     action = {
-                        if (!result.user.email.isNullOrBlank() && !result.user.verifiedEmail) {
+                        if (!result.user.email.isNullOrBlank() && result.user.verifiedEmail == false) {
                             it.onResentVerifyEmailClicked()
                         }
                     },
-                    description = if (result.user.email.isNullOrBlank() || result.user.verifiedEmail) {
+                    description = if (result.user.email.isNullOrBlank() || result.user.verifiedEmail == true) {
                         null
                     } else {
                         R.string.not_verify
                     },
                     detail = result.user.email?.ifBlank { null } ?: R.string.unregistered,
-                    showArrow = !result.user.verifiedEmail,
+                    showArrow = result.user.verifiedEmail == false,
                     titleId = R.string.email,
                 ),
                 AccountMenuViewEntity(

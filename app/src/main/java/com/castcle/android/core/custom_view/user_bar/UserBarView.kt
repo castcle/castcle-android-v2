@@ -52,7 +52,7 @@ class UserBarView(context: Context, attrs: AttributeSet) : ConstraintLayout(cont
         binding.tvDisplayName.text = user.displayName
         binding.ivAvatar.loadAvatarImage(imageUrl = user.avatar.thumbnail)
         binding.tvFollow.isGone = user.followed || user.isOwner
-        binding.ivOfficial.isVisible = user.verifiedOfficial
+        binding.ivOfficial.isVisible = user.verifiedOfficial == true
         when {
             cast.id == "default" -> {
                 binding.tvDateTime.text = context.getString(R.string.introduction)

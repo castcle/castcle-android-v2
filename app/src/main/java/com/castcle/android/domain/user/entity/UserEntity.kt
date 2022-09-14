@@ -63,16 +63,16 @@ data class UserEntity(
     @ColumnInfo(name = "${TABLE_USER}_passwordNotSet") val passwordNotSet: Boolean? = null,
     @ColumnInfo(name = "${TABLE_USER}_pdpa") val pdpa: Boolean? = null,
     @ColumnInfo(name = "${TABLE_USER}_type") val type: UserType = UserType.People,
-    @ColumnInfo(name = "${TABLE_USER}_verifiedEmail") val verifiedEmail: Boolean = false,
-    @ColumnInfo(name = "${TABLE_USER}_verifiedMobile") val verifiedMobile: Boolean = false,
-    @ColumnInfo(name = "${TABLE_USER}_verifiedOfficial") val verifiedOfficial: Boolean = false,
-    @ColumnInfo(name = "${TABLE_USER}_verifiedSocial") val verifiedSocial: Boolean = false,
+    @ColumnInfo(name = "${TABLE_USER}_verifiedEmail") val verifiedEmail: Boolean? = null,
+    @ColumnInfo(name = "${TABLE_USER}_verifiedMobile") val verifiedMobile: Boolean? = null,
+    @ColumnInfo(name = "${TABLE_USER}_verifiedOfficial") val verifiedOfficial: Boolean? = null,
+    @ColumnInfo(name = "${TABLE_USER}_verifiedSocial") val verifiedSocial: Boolean? = null,
     @ColumnInfo(name = "${TABLE_USER}_contactEmail") val contactEmail: String? = null,
     @ColumnInfo(name = "${TABLE_USER}_contactNumber") val contactNumber: String? = null,
 ) : Parcelable {
 
     fun isNotVerified(): Boolean {
-        return !verifiedEmail && !verifiedMobile && !verifiedOfficial && !verifiedSocial
+        return verifiedEmail == false && verifiedMobile == false && verifiedOfficial == false && verifiedSocial == false
     }
 
     companion object {
@@ -84,7 +84,7 @@ data class UserEntity(
 
         fun map(
             ownerUserId: List<String?>?,
-            response: List<UserResponse>?
+            response: List<UserResponse>?,
         ): MutableList<UserEntity> {
             return response.orEmpty().map { map(ownerUserId, it) }.toMutableList()
         }
@@ -119,10 +119,10 @@ data class UserEntity(
             passwordNotSet = response?.passwordNotSet,
             pdpa = response?.passwordNotSet,
             type = UserType.getFromId(response?.type),
-            verifiedEmail = response?.verified?.email ?: false,
-            verifiedMobile = response?.verified?.mobile ?: false,
-            verifiedOfficial = response?.verified?.official ?: false,
-            verifiedSocial = response?.verified?.social ?: false,
+            verifiedEmail = response?.verified?.email,
+            verifiedMobile = response?.verified?.mobile,
+            verifiedOfficial = response?.verified?.official,
+            verifiedSocial = response?.verified?.social,
             contactEmail = response?.contact?.email,
             contactNumber = response?.contact?.phone
         )
