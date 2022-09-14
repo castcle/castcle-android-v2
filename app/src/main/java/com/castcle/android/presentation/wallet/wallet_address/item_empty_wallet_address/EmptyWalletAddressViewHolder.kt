@@ -21,14 +21,15 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_send
+package com.castcle.android.presentation.wallet.wallet_address.item_empty_wallet_address
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
+import com.castcle.android.core.base.recyclerview.CastcleViewHolder
+import com.castcle.android.databinding.ItemEmptyWalletAddressBinding
 
-interface WalletSendListener : CastcleListener {
-    fun onAddShortcutClicked()
-    fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType)
-    fun onSendToClicked()
-    fun onUpdateSendButton(amount: Double, enabled: Boolean)
+class EmptyWalletAddressViewHolder(
+    binding: ItemEmptyWalletAddressBinding,
+) : CastcleViewHolder<EmptyWalletAddressViewEntity>(binding.root) {
+
+    override var item = EmptyWalletAddressViewEntity()
+
 }

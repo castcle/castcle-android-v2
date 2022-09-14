@@ -134,6 +134,10 @@ class WalletSendFragment : BaseFragment(), WalletSendListener {
         directions.toWalletScanQrCodeFragment(requestType).navigate()
     }
 
+    override fun onSendToClicked() {
+        directions.toWalletAddressFragment(userId = args.userId).navigate()
+    }
+
     override fun onUpdateSendButton(amount: Double, enabled: Boolean) {
         binding.tvAmount.text = amount.asCastToken()
         binding.tvSend.isEnabled = enabled

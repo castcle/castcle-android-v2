@@ -118,12 +118,14 @@
         <entry key="app/src/main/res/layout/fragment_content.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_insert.xml" value="0.44257467395877154" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/fragment_new_cast.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_report_detail.xml" value="0.3891871165644172" />
         <entry key="app/src/main/res/layout/fragment_report_success.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.47719298245614034" />
         <entry key="app/src/main/res/layout/fragment_search_suggestion.xml" value="0.47368421052631576" />
+        <entry key="app/src/main/res/layout/fragment_wallet_address.xml" value="0.44976485677640016" />
         <entry key="app/src/main/res/layout/fragment_wallet_scan_qr_code.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/fragment_wallet_send.xml" value="0.43394613082513894" />
         <entry key="app/src/main/res/layout/item_account_menu.xml" value="0.44976485677640016" />
@@ -227,7 +229,7 @@
         <entry key="app/src/main/res/layout/layout_recycler_view_with_search.xml" value="0.20307823856348867" />
         <entry key="app/src/main/res/layout/layout_recycler_view_with_search_bar.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/layout_search.xml" value="0.5286458333333334" />
-        <entry key="app/src/main/res/layout/layout_search_bar.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_search_bar.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_shrimmer_cast.xml" value="0.5" />
         <entry key="app/src/main/res/layout/layout_shrimmer_user_profile.xml" value="0.5286458333333334" />
         <entry key="app/src/main/res/layout/layout_user_bar.xml" value="0.5" />

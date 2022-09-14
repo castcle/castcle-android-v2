@@ -59,6 +59,19 @@ class WalletRepositoryImpl(
         }
     }
 
+    override suspend fun getWalletAddress(keyword: String, userId: String): List<UserEntity> {
+        val response = if (keyword.isBlank()) {
+            apiCall { api.getRecentWalletAddress(id = userId) }
+        } else {
+            apiCall { api.getWalletAddress(id = userId, keyword = keyword) }
+        }
+        val ownerUser = database.user().get().map { it.id }
+        val user = UserEntity.map(ownerUser, response?.castcle)
+        glidePreloader.loadUser(user)
+        database.user().upsert(user)
+        return user
+    }
+
     override suspend fun getWalletBalance(userId: String): WalletBalanceEntity {
         val response = apiCall { api.getWalletBalance(id = userId) }
         val walletBalance = WalletBalanceEntity.map(response)

@@ -24,8 +24,7 @@
 package com.castcle.android.core.api
 
 import com.castcle.android.core.base.response.BaseResponse
-import com.castcle.android.core.constants.PARAMETER_FILTER
-import com.castcle.android.core.constants.PARAMETER_ID
+import com.castcle.android.core.constants.*
 import com.castcle.android.data.wallet.entity.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -42,6 +41,17 @@ interface WalletApi {
     suspend fun getMyQrCode(
         @Path(PARAMETER_ID) id: String,
     ): Response<BaseResponse<String>>
+
+    @GET("v2/wallets/{$PARAMETER_ID}/recent")
+    suspend fun getRecentWalletAddress(
+        @Path(PARAMETER_ID) id: String,
+    ): Response<WalletRecentTransactionResponse>
+
+    @GET("v2/wallets/{$PARAMETER_ID}/recent/search/by")
+    suspend fun getWalletAddress(
+        @Path(PARAMETER_ID) id: String,
+        @Query(PARAMETER_KEYWORD) keyword: String,
+    ): Response<WalletRecentTransactionResponse>
 
     @GET("v2/wallets/{$PARAMETER_ID}")
     suspend fun getWalletBalance(

@@ -21,14 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_send
+package com.castcle.android.presentation.wallet.wallet_address.item_wallet_address
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemWalletAddressBinding
+import com.castcle.android.presentation.wallet.wallet_address.WalletAddressListener
+import io.reactivex.disposables.CompositeDisposable
 
-interface WalletSendListener : CastcleListener {
-    fun onAddShortcutClicked()
-    fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType)
-    fun onSendToClicked()
-    fun onUpdateSendButton(amount: Double, enabled: Boolean)
+class WalletAddressViewRenderer : CastcleViewRenderer<WalletAddressViewEntity,
+    WalletAddressViewHolder,
+    WalletAddressListener>(R.layout.item_wallet_address) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: WalletAddressListener,
+        compositeDisposable: CompositeDisposable
+    ) = WalletAddressViewHolder(
+        ItemWalletAddressBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
+
 }
