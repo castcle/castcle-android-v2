@@ -112,6 +112,10 @@
     <string name="fragment_wallet_address_title_2">Recent Castcle ID</string>
     <string name="fragment_wallet_address_title_3">No wallet address found</string>
     <string name="fragment_wallet_address_title_4">The wallet address you searched for was not found, or does not exist</string>
+    <string name="fragment_wallet_add_shortcut_title_1">Add Shortcut</string>
+    <string name="fragment_wallet_add_shortcut_title_2">Castcle ID or Wallet Address</string>
+    <string name="fragment_wallet_add_shortcut_title_3">Enter @Castcle ID or Wallet Address</string>
+    <string name="fragment_wallet_add_shortcut_title_4">Name</string>
     <string name="fragment_wallet_dashboard_title_1">Total Balance</string>
     <string name="fragment_wallet_dashboard_title_2">Farm Balance</string>
     <string name="fragment_wallet_dashboard_title_3">Avail. Balance</string>

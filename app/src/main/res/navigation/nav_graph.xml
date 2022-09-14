@@ -557,6 +557,24 @@
     </fragment>
 
     <fragment
+        android:id="@+id/walletAddShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_add_shortcut.WalletAddShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddressFragment"
+            app:destination="@id/walletAddressFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/walletDashboardFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.WalletDashboardFragment">
 
@@ -661,6 +679,10 @@
             app:destination="@id/walletAddressFragment" />
 
         <action
+            android:id="@+id/toWalletAddShortcutFragment"
+            app:destination="@id/walletAddShortcutFragment" />
+
+        <action
             android:id="@+id/toWalletScanQrCodeFragment"
             app:destination="@id/walletScanQrCodeFragment" />
 
@@ -681,6 +703,10 @@
         <argument
             android:name="userId"
             app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddShortcutFragment"
+            app:destination="@id/walletAddShortcutFragment" />
 
         <action
             android:id="@+id/toWalletEditShortcutFragment"

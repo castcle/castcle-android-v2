@@ -21,22 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.wallet
+package com.castcle.android.presentation.wallet.wallet_add_shortcut.item_wallet_add_shortcut
 
-import com.castcle.android.data.wallet.entity.*
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
-import com.castcle.android.domain.wallet.entity.WalletHistoryEntity
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemWalletAddShortcutBinding
+import com.castcle.android.presentation.wallet.wallet_add_shortcut.WalletAddShortcutListener
+import io.reactivex.disposables.CompositeDisposable
 
-interface WalletRepository {
-    suspend fun confirmTransaction(body: WalletTransactionRequest)
-    suspend fun createWalletShortcut(body: CreateWalletShortcutRequest)
-    suspend fun deleteWalletShortcut(shortcutId: String)
-    suspend fun getMyQrCode(userId: String): String
-    suspend fun getWalletAddress(keyword: String, userId: String): List<UserEntity>
-    suspend fun getWalletBalance(userId: String): WalletBalanceEntity
-    suspend fun getWalletHistory(filter: String, userId: String): List<WalletHistoryEntity>
-    suspend fun getWalletShortcuts(userId: String)
-    suspend fun sortWalletShortcuts(body: SortWalletShortcutRequest)
-    suspend fun reviewTransaction(body: WalletTransactionRequest): WalletTransactionRequest
+class WalletAddShortcutViewRenderer : CastcleViewRenderer<WalletAddShortcutViewEntity,
+    WalletAddShortcutViewHolder,
+    WalletAddShortcutListener>(R.layout.item_wallet_add_shortcut) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: WalletAddShortcutListener,
+        compositeDisposable: CompositeDisposable
+    ) = WalletAddShortcutViewHolder(
+        ItemWalletAddShortcutBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
+
 }

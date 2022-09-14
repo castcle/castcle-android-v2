@@ -81,6 +81,7 @@ class WalletAddressFragment : BaseFragment(), WalletAddressListener {
 
     override fun onUserClicked(user: UserEntity) {
         val bundle = bundleOf(
+            WalletScanQrCodeFragment.RESULT_AVATAR to user.avatar.thumbnail,
             WalletScanQrCodeFragment.RESULT_CASTCLE_ID to user.castcleId,
             WalletScanQrCodeFragment.RESULT_USER_ID to user.id,
         )
