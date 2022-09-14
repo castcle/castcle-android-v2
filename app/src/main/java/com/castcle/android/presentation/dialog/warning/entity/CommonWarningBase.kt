@@ -1,10 +1,4 @@
-package com.castcle.android.presentation.sign_up.update_profile_detail.item_edit_new_profile
-
-import com.castcle.android.core.base.recyclerview.CastcleViewHolder
-import com.castcle.android.core.extensions.setStatePass
-import com.castcle.android.databinding.ItemEditDetailNewProfileBinding
-import com.castcle.android.presentation.sign_up.update_profile_detail.EditNewProfileListener
-import io.reactivex.disposables.CompositeDisposable
+package com.castcle.android.presentation.dialog.warning.entity
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -28,29 +22,21 @@ import io.reactivex.disposables.CompositeDisposable
 //  or have any questions.
 //
 //
-//  Created by sklim on 7/9/2022 AD at 11:47.
+//  Created by sklim on 30/6/2022 AD at 11:50.
 
-class EditProfileViewHolder(
-    val binding: ItemEditDetailNewProfileBinding,
-    private val compositeDisposable: CompositeDisposable,
-    private val listener: EditNewProfileListener,
-) : CastcleViewHolder<EditProfileViewEntity>(binding.root) {
+sealed class CommonWarningBase {
 
-    override var item = EditProfileViewEntity()
+    class WarningUiModel(
+        val titleWarning: String,
+        val warningDescription: String
+    ) : CommonWarningBase()
 
-    init {
+    class SuccessUiModel(
+        val message: String
+    ) : CommonWarningBase()
 
-    }
-
-    private fun handleButtonDone(notBlank: Boolean) {
-        binding.btDone.run {
-            isEnabled = notBlank
-            setStatePass(notBlank)
-        }
-    }
-
-    override fun bind(bindItem: EditProfileViewEntity) {
-        super.bind(bindItem)
-
-    }
+    class ReviewError(
+        val titleWarning: String,
+        val errorList: List<String>
+    ) : CommonWarningBase()
 }

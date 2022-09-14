@@ -16,11 +16,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/svContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +40,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_img_new_user_cover" />
+                tools:srcCompat="@drawable/ic_img_new_user_cover" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/AppTextKanit.Regular"
@@ -109,7 +112,8 @@
                     android:minHeight="@dimen/_35sdp"
                     android:padding="@dimen/_8sdp"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/gray_3" />
+                    android:textColorHint="@color/gray_3"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -173,7 +177,8 @@
                     android:minHeight="@dimen/_35sdp"
                     android:padding="@dimen/_8sdp"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/gray_3" />
+                    android:textColorHint="@color/gray_3"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -198,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_marginBottom="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
         android:background="@drawable/bg_corner_24dp"
         android:backgroundTint="@color/gray_3"
         android:clickable="true"
@@ -212,5 +217,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCast"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_42sdp"
+        android:background="@color/black_background_3"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Regular"
+            android:id="@+id/tvCast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
+            android:background="@drawable/bg_corner_16dp"
+            android:backgroundTint="@color/gray_3"
+            android:foreground="@drawable/bg_outline_corner_16dp"
+            android:foregroundTint="@color/gray_3"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_4sdp"
+            android:text="@string/done"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

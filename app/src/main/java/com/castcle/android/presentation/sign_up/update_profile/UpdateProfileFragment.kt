@@ -151,10 +151,16 @@ class UpdateProfileFragment : BaseFragment(), UpdateProfileListener {
         }
 
         viewModel.checkWorkUpLoadImage()?.subscribe {
-            if (it == StateWorkLoading.SUCCESS) {
+            if (it == StateWorkLoading.SUCCESS || it == StateWorkLoading.ERROR) {
+                val message = if (it == StateWorkLoading.SUCCESS) {
+                    requireContext().getString(R.string.upload_image_success)
+                } else {
+                    requireContext().getString(R.string.upload_image_failed)
+                }
+
                 Toast.makeText(
                     requireContext(),
-                    requireContext().getString(R.string.upload_image_success),
+                    message,
                     Toast.LENGTH_SHORT
                 ).show()
                 when (viewModel.selectState.value) {

@@ -30,4 +30,5 @@ import com.google.gson.annotations.SerializedName
 data class UserContactResponse(
     @SerializedName("email") val email: String? = null,
     @SerializedName("phone") val phone: String? = null,
+    @SerializedName("countryCode") val countryCode: String? = null,
 )

@@ -7,6 +7,7 @@ import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.sign_up.entity.CreateUserState
 import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
 import com.castcle.android.presentation.sign_up.update_profile_detail.item_edit_new_profile.EditProfileViewEntity
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,6 +44,8 @@ class EditDetailViewModel(
     private val database: CastcleDatabase,
 ) : BaseViewModel() {
 
+    var createUserState = MutableLiveData(CreateUserState.PROFILE_CREATE)
+
     val editProfileItem = MutableStateFlow(EditProfileViewEntity())
 
     val updateUiState = MutableStateFlow<BaseUiState<Nothing>?>(null)
@@ -53,8 +56,13 @@ class EditDetailViewModel(
 
     fun getUserLocal(castcleId: String) {
         launch {
-            database.user().getByCastcleID(castcleId).collectLatest {
+            database.user().getByCastcleID(castcleId).collectLatest { it ->
                 userEntity.emit(it ?: UserEntity())
+                editProfileItem.value.copy(
+                    userEntity = it ?: UserEntity()
+                ).also {
+                    editProfileItem.emit(it)
+                }
             }
         }
     }

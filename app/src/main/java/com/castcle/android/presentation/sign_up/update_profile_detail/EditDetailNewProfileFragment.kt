@@ -1,5 +1,6 @@
 package com.castcle.android.presentation.sign_up.update_profile_detail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.data.user.entity.UserLinkResponse
 import com.castcle.android.databinding.FragmentEditDetailNewProfileBinding
+import com.castcle.android.presentation.setting.create_page.insert.entity.InsertEntity
+import com.castcle.android.presentation.sign_up.entity.CreateUserState
 import com.castcle.android.presentation.sign_up.entity.ProfileBundle
 import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
 import com.castcle.android.presentation.sign_up.update_profile_detail.item_edit_new_profile.EditProfileViewEntity
@@ -67,6 +70,18 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
 
     override fun initConsumer() {
         super.initConsumer()
+
+        when (profileBuild) {
+            is ProfileBundle.CreateProfile -> {
+                viewModel.createUserState.value = CreateUserState.PROFILE_CREATE
+                viewModel.getUserLocal((profileBuild as ProfileBundle.CreateProfile).castcleId)
+            }
+            is ProfileBundle.CreatePage -> {
+                viewModel.createUserState.value = CreateUserState.PAGE_CREATE
+                viewModel.getUserLocal((profileBuild as ProfileBundle.CreatePage).castcleId)
+            }
+        }
+
         lifecycleScope.launch {
             viewModel.updateUiState.collectLatest {
                 handlerUiState(it)
@@ -78,81 +93,81 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 handleBindData(it)
             }
         }
-
-        when (profileBuild) {
-            is ProfileBundle.CreateProfile -> {
-                viewModel.getUserLocal((profileBuild as ProfileBundle.CreateProfile).castcleId)
-            }
-            is ProfileBundle.CreatePage -> {
-                viewModel.getUserLocal((profileBuild as ProfileBundle.CreatePage).castcleId)
-            }
-        }
     }
 
     override fun initViewProperties() {
         super.initViewProperties()
 
-        when (profileBuild) {
-            is ProfileBundle.CreateProfile -> {
+        when (viewModel.createUserState.value) {
+            CreateUserState.PROFILE_CREATE -> {
                 initActionBar(getString(R.string.fragment_update_profile))
+                binding.itemEditProfile.itemDetailProfile.clDetailProfile.visible()
+                binding.itemEditProfile.ivCover.background =
+                    requireContext().getDrawableRes(R.drawable.ic_cover_profile_detail)
                 viewModel.castcleId.value =
                     (profileBuild as ProfileBundle.CreateProfile).castcleId
             }
-            is ProfileBundle.CreatePage -> {
+            CreateUserState.PAGE_CREATE -> {
                 initActionBar(getString(R.string.fragment_update_page))
+                binding.itemEditProfile.itemDetailProfile.clDetailProfile.gone()
+                binding.itemEditProfile.itemDetailPage.clDetailPage.visible()
+                binding.itemEditProfile.ivCover.background =
+                    requireContext().getDrawableRes(R.drawable.ic_cover_page)
                 viewModel.castcleId.value =
                     (profileBuild as ProfileBundle.CreatePage).castcleId
             }
+            else -> Unit
         }
 
         with(binding.itemEditProfile) {
-            compositeDisposable += tvBirthdayDescription.onClick {
-                onPickerBirthDateClick()
-            }
-
             with(itLinkFacebook) {
                 addTextChangedListener(
-                    TextChangeListener(this,
-                        onTextChanged = {
-                            handleButtonDone(it.isNotBlank())
-                        })
+                    TextChangeListener(this)
                 )
             }
 
             with(itLinkMedium) {
                 addTextChangedListener(
-                    TextChangeListener(this,
-                        onTextChanged = {
-                            handleButtonDone(it.isNotBlank())
-                        })
+                    TextChangeListener(this)
                 )
             }
 
             with(itLinkTwitter) {
                 addTextChangedListener(
-                    TextChangeListener(this,
-                        onTextChanged = {
-                            handleButtonDone(it.isNotBlank())
-                        })
+                    TextChangeListener(this)
                 )
             }
 
             with(itLinkYouTube) {
                 addTextChangedListener(
-                    TextChangeListener(this,
-                        onTextChanged = {
-                            handleButtonDone(it.isNotBlank())
-                        })
+                    TextChangeListener(this)
                 )
             }
 
             with(itLinkWeb) {
                 addTextChangedListener(
-                    TextChangeListener(this,
-                        onTextChanged = {
-                            handleButtonDone(it.isNotBlank())
-                        })
+                    TextChangeListener(this)
                 )
+            }
+
+            compositeDisposable += itLinkFacebook.onTextChange {
+                handleButtonDone(it.isNotBlank())
+            }
+
+            compositeDisposable += itLinkMedium.onTextChange {
+                handleButtonDone(it.isNotBlank())
+            }
+
+            compositeDisposable += itLinkTwitter.onTextChange {
+                handleButtonDone(it.isNotBlank())
+            }
+
+            compositeDisposable += itLinkYouTube.onTextChange {
+                handleButtonDone(it.isNotBlank())
+            }
+
+            compositeDisposable += itLinkWeb.onTextChange {
+                handleButtonDone(it.isNotBlank())
             }
 
             compositeDisposable += itOverView.onTextChange {
@@ -162,12 +177,52 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
             compositeDisposable += btDone.onClick {
                 onConfirmClick(getDataOnUpdate())
             }
+
+            compositeDisposable += itemDetailProfile.tvBirthdayDescription.onClick {
+                onPickerBirthDateClick()
+            }
+
+            compositeDisposable += itemDetailPage.tvEmailDescription.onClick {
+                onInsertEmail()
+            }
+
+            compositeDisposable += itemDetailPage.tvNumberDescription.onClick {
+                onInsertContactNumber()
+            }
+
         }
     }
 
+    private fun onInsertContactNumber() {
+        navigateToInsertFragment(InsertEntity.InsertContractNumber(viewModel.castcleId.value ?: ""))
+    }
+
+    private fun onInsertEmail() {
+        navigateToInsertFragment(InsertEntity.InsertEmail(viewModel.castcleId.value ?: ""))
+    }
+
+    private fun navigateToInsertFragment(insertEntity: InsertEntity) {
+        directions.toInsertFragment(insertEntity).navigate()
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun handleBindData(dataState: EditProfileViewEntity) {
         with(binding.itemEditProfile) {
-            tvBirthdayDescription.text = dataState.birthDate?.toFormatDateBirthDate()
+            dataState.birthDate?.let {
+                itemDetailProfile.tvBirthdayDescription.text = it.toFormatDateBirthDate()
+            }
+            dataState.userEntity.run {
+                with(itemDetailPage) {
+
+                    tvEmailDescription.setTextColorState(contactEmail?.isNotBlank() == true)
+                    tvEmailDescription.text =
+                        contactEmail ?: requireContext().getString(R.string.none)
+                    tvNumberDescription.setTextColorState(contactNumber?.isNotBlank() == true)
+                    tvNumberDescription.text =
+                        contactNumber ?: requireContext().getString(R.string.none)
+                    handleButtonDone(contactEmail != null || contactNumber != null)
+                }
+            }
         }
     }
 
@@ -206,8 +261,17 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
     }
 
     private fun handleNextStep() {
+        val popTo = when (viewModel.createUserState.value) {
+            CreateUserState.PROFILE_CREATE -> {
+                R.id.loginFragment
+            }
+            CreateUserState.PAGE_CREATE -> {
+                R.id.settingFragment
+            }
+            else -> 0
+        }
         directions.toProfileFragment(viewModel.userEntity.value)
-            .navigate(popUpTo = R.id.loginFragment)
+            .navigate(popUpTo = popTo)
     }
 
     override fun onPickerBirthDateClick() {
@@ -232,11 +296,21 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
 
     private fun getDataOnUpdate(): UserUpdateRequest {
         with(binding.itemEditProfile) {
-            return UserUpdateRequest(
-                dob = tvBirthdayDescription.text.toString().toISO8601(),
-                overview = itOverView.text.toString(),
-                links = getWebLinkRequest()
-            )
+            return when (viewModel.createUserState.value) {
+                CreateUserState.PROFILE_CREATE -> {
+                    UserUpdateRequest(
+                        dob = itemDetailProfile.tvBirthdayDescription.text.toString().toISO8601(),
+                        overview = itOverView.text.toString(),
+                        links = getWebLinkRequest()
+                    )
+                }
+                else -> {
+                    UserUpdateRequest(
+                        overview = itOverView.text.toString(),
+                        links = getWebLinkRequest()
+                    )
+                }
+            }
         }
     }
 

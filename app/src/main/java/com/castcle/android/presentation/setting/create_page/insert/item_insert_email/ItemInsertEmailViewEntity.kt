@@ -1,10 +1,8 @@
-package com.castcle.android.presentation.sign_up.update_profile_detail.item_edit_new_profile
+package com.castcle.android.presentation.setting.create_page.insert.item_insert_email
 
-import com.castcle.android.core.base.recyclerview.CastcleViewHolder
-import com.castcle.android.core.extensions.setStatePass
-import com.castcle.android.databinding.ItemEditDetailNewProfileBinding
-import com.castcle.android.presentation.sign_up.update_profile_detail.EditNewProfileListener
-import io.reactivex.disposables.CompositeDisposable
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -28,29 +26,20 @@ import io.reactivex.disposables.CompositeDisposable
 //  or have any questions.
 //
 //
-//  Created by sklim on 7/9/2022 AD at 11:47.
+//  Created by sklim on 12/9/2022 AD at 10:06.
 
-class EditProfileViewHolder(
-    val binding: ItemEditDetailNewProfileBinding,
-    private val compositeDisposable: CompositeDisposable,
-    private val listener: EditNewProfileListener,
-) : CastcleViewHolder<EditProfileViewEntity>(binding.root) {
+data class ItemInsertEmailViewEntity(
+    var isExists: Boolean? = null,
+    var message: Int? = null,
+    override val uniqueId: String = "${R.layout.item_insert_email}"
+) : CastcleViewEntity {
 
-    override var item = EditProfileViewEntity()
-
-    init {
-
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<ItemInsertEmailViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<ItemInsertEmailViewEntity>() == this
     }
 
-    private fun handleButtonDone(notBlank: Boolean) {
-        binding.btDone.run {
-            isEnabled = notBlank
-            setStatePass(notBlank)
-        }
-    }
+    override fun viewType() = R.layout.item_insert_email
 
-    override fun bind(bindItem: EditProfileViewEntity) {
-        super.bind(bindItem)
-
-    }
 }

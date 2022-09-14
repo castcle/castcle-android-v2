@@ -338,7 +338,9 @@ class AuthenticationRepositoryImpl(
     override suspend fun createPage(reqisterRequest: RegisterRequest): Flow<BaseUiState<UserEntity>> {
         return flow {
             apiCall {
+                emit(BaseUiState.Loading(null, true))
                 api.createPage(reqisterRequest).also {
+                    emit(BaseUiState.Loading(null, false))
                     if (it.isSuccessful) {
                         updateCreatePageSuccess(it.body())
                         emit(BaseUiState.Success(_data = UserEntity.mapOwner(it.body())))

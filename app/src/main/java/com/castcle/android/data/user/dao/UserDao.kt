@@ -107,6 +107,8 @@ interface UserDao {
             "user_passwordNotSet = case when :passwordNotSet IS NOT NULL then :passwordNotSet else user_passwordNotSet end, " +
             "user_pdpa = case when :pdpa IS NOT NULL then :pdpa else user_pdpa end, " +
             "user_type = case when :type IS NOT NULL then :type else user_type end, " +
+            "user_contactEmail = case when :contactEmail IS NOT NULL then :contactEmail else user_contactEmail end, " +
+            "user_contactNumber = case when :contactNumber IS NOT NULL then :contactNumber else user_contactNumber end, " +
             "user_verifiedEmail = :verifiedEmail, " +
             "user_verifiedMobile = :verifiedMobile, " +
             "user_verifiedOfficial = :verifiedOfficial, " +
@@ -145,6 +147,8 @@ interface UserDao {
         verifiedMobile: Boolean,
         verifiedOfficial: Boolean,
         verifiedSocial: Boolean,
+        contactEmail:String?,
+        contactNumber:String?
     )
 
     @Transaction
@@ -181,6 +185,8 @@ interface UserDao {
             verifiedMobile = item.verifiedMobile,
             verifiedOfficial = item.verifiedOfficial,
             verifiedSocial = item.verifiedSocial,
+            contactEmail = item.contactEmail,
+            contactNumber = item.contactNumber
         )
     }
 

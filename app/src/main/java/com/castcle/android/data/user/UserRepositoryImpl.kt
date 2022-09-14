@@ -318,10 +318,10 @@ class UserRepositoryImpl(
         return flow {
             apiCall {
                 api.updateUserProfile(
-                    castcleId = "me", userUpdateRequest
+                    castcleId = userUpdateRequest.currentCastcleId ?: "me", userUpdateRequest
                 ).also {
                     if (it.isSuccessful) {
-                        updateWhenLoginSuccess(it.body())
+                        updateWhenUpdateSuccess(it.body())
                         emit(BaseUiState.SuccessNonBody)
                     } else {
                         emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
@@ -337,21 +337,21 @@ class UserRepositoryImpl(
             emit(BaseUiState.Loading(null, true))
             apiCall {
                 api.updateDetailProfile(
-                    castcleId = userUpdateRequest.castcleIdEdit ?: "me", userUpdateRequest
+                    castcleId = userUpdateRequest.currentCastcleId ?: "me", userUpdateRequest
                 ).also {
+                    emit(BaseUiState.Loading(null, false))
                     if (it.isSuccessful) {
-                        updateWhenLoginSuccess(it.body())
+                        updateWhenUpdateSuccess(it.body())
                         emit(BaseUiState.SuccessNonBody)
                     } else {
                         emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
                     }
-                    emit(BaseUiState.Loading(null, false))
                 }
             }
         }
     }
 
-    private suspend fun updateWhenLoginSuccess(response: UserResponse?) {
+    private suspend fun updateWhenUpdateSuccess(response: UserResponse?) {
         val user = UserEntity.mapOwner(response)
         val linkSocial = LinkSocialEntity.map(response)
         val syncSocialUser = SyncSocialEntity.map(response)
