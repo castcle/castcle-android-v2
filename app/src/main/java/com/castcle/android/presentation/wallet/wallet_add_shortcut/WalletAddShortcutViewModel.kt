@@ -21,22 +21,34 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.wallet
+package com.castcle.android.presentation.wallet.wallet_add_shortcut
 
-import com.castcle.android.data.wallet.entity.*
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
-import com.castcle.android.domain.wallet.entity.WalletHistoryEntity
+import androidx.lifecycle.MutableLiveData
+import com.castcle.android.core.base.view_model.BaseViewModel
+import com.castcle.android.data.wallet.entity.CreateWalletShortcutRequest
+import com.castcle.android.domain.wallet.WalletRepository
+import com.castcle.android.presentation.wallet.wallet_add_shortcut.item_wallet_add_shortcut.WalletAddShortcutViewEntity
+import kotlinx.coroutines.flow.MutableSharedFlow
+import org.koin.android.annotation.KoinViewModel
 
-interface WalletRepository {
-    suspend fun confirmTransaction(body: WalletTransactionRequest)
-    suspend fun createWalletShortcut(body: CreateWalletShortcutRequest)
-    suspend fun deleteWalletShortcut(shortcutId: String)
-    suspend fun getMyQrCode(userId: String): String
-    suspend fun getWalletAddress(keyword: String, userId: String): List<UserEntity>
-    suspend fun getWalletBalance(userId: String): WalletBalanceEntity
-    suspend fun getWalletHistory(filter: String, userId: String): List<WalletHistoryEntity>
-    suspend fun getWalletShortcuts(userId: String)
-    suspend fun sortWalletShortcuts(body: SortWalletShortcutRequest)
-    suspend fun reviewTransaction(body: WalletTransactionRequest): WalletTransactionRequest
+@KoinViewModel
+class WalletAddShortcutViewModel(
+    private val repository: WalletRepository,
+) : BaseViewModel() {
+
+    val onError = MutableSharedFlow<Throwable>()
+
+    val onSuccess = MutableSharedFlow<Unit>()
+
+    val views = MutableLiveData(WalletAddShortcutViewEntity())
+
+    fun createWalletShortcut(userId: String) {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { onSuccess.emitOnSuspend(it) },
+        ) {
+            repository.createWalletShortcut(CreateWalletShortcutRequest(userId = userId))
+        }
+    }
+
 }

@@ -25,6 +25,7 @@ package com.castcle.android.core.api
 
 import com.castcle.android.core.base.response.BaseResponse
 import com.castcle.android.core.constants.*
+import com.castcle.android.data.user.entity.UserResponse
 import com.castcle.android.data.wallet.entity.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -37,8 +38,14 @@ interface WalletApi {
         @Body body: WalletTransactionRequest,
     ): Response<Unit>
 
+    @POST("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/castcle")
+    suspend fun createWalletShortcut(
+        @Path(PARAMETER_ACCOUNT_ID) accountId: String,
+        @Body body: CreateWalletShortcutRequest,
+    ): Response<UserResponse>
+
     @DELETE("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/{$PARAMETER_SHORTCUT_ID}")
-    suspend fun deleteShortcut(
+    suspend fun deleteWalletShortcut(
         @Path(PARAMETER_ACCOUNT_ID) accountId: String,
         @Path(PARAMETER_SHORTCUT_ID) shortcutId: String,
     ): Response<Unit>

@@ -65,7 +65,7 @@ class WalletShortcutFragment : BaseFragment(), WalletShortcutListener {
     }
 
     override fun onAddShortcutClicked() {
-
+        directions.toWalletAddShortcutFragment(args.userId).navigate()
     }
 
     private val adapter by lazy {

@@ -128,7 +128,9 @@ class WalletSendFragment : BaseFragment(), WalletSendListener {
         }
     }
 
-    override fun onAddShortcutClicked() = Unit
+    override fun onAddShortcutClicked() {
+        directions.toWalletAddShortcutFragment(args.userId).navigate()
+    }
 
     override fun onManageShortcutClicked() {
         directions.toWalletShortcutFragment(args.userId).navigate()

@@ -57,7 +57,7 @@ class WalletEditShortcutViewModel(
         }, onSuccess = {
             onDeleteSuccess.emitOnSuspend(position)
         }) {
-            repository.deleteShortcut(shortcutId = shortcutId)
+            repository.deleteWalletShortcut(shortcutId = shortcutId)
         }
     }
 
