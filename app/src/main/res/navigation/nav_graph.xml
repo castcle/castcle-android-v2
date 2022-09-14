@@ -137,20 +137,6 @@
         android:name="com.castcle.android.presentation.setting.country_code.CountryCodeFragment" />
 
     <fragment
-        android:id="@+id/editNewProfileFragment"
-        android:name="com.castcle.android.presentation.sign_up.update_profile_detail.EditDetailNewProfileFragment">
-
-        <argument
-            android:name="profileBundle"
-            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
-
-        <action
-            android:id="@+id/toProfileFragment"
-            app:destination="@id/profileFragment" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/followingFollowersFragment"
         android:name="com.castcle.android.presentation.following_followers.FollowingFollowersFragment">
 
@@ -251,6 +237,24 @@
         <action
             android:id="@+id/toSignUpFragment"
             app:destination="@id/signUpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile_detail.EditDetailNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toInsertFragment"
+            app:destination="@id/insertFragment" />
 
     </fragment>
 
@@ -466,6 +470,10 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
+        <action
+            android:id="@+id/toPageCondition"
+            app:destination="@+id/createPageConditionFragment" />
+
     </fragment>
 
     <fragment
@@ -664,6 +672,25 @@
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/createPageConditionFragment"
+        android:name="com.castcle.android.presentation.setting.create_page.CreatePageConditionFragment">
+
+        <action
+            android:id="@+id/toCreateNewProfileFragment"
+            app:destination="@id/createNewProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertFragment"
+        android:name="com.castcle.android.presentation.setting.create_page.insert.InsertFragment">
+
+        <argument
+            android:name="insertEntity"
+            app:argType="com.castcle.android.presentation.setting.create_page.insert.entity.InsertEntity"
+            app:nullable="false" />
     </fragment>
 
 </navigation>

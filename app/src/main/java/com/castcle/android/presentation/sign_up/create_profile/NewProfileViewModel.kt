@@ -119,6 +119,9 @@ class NewProfileViewModel(
     fun handlerDisplayName(castcleID: String) {
         viewModelScope.launch {
             val stateValidate = when {
+                castcleID.isBlank() -> {
+                    VerifyProfileState.NONE
+                }
                 castcleID.length > CASTCLE_CHAR_LIMIT -> {
                     VerifyProfileState.CASTCLE_ID_LENGHT_ERROR
                 }
@@ -127,7 +130,7 @@ class NewProfileViewModel(
                 }
                 else -> {
                     checkCastcleIdIsExist(castcleID).join()
-                    VerifyProfileState.NONE
+                    VerifyProfileState.ON_PROGRESS
                 }
             }
             inputUiState.emit(stateValidate)

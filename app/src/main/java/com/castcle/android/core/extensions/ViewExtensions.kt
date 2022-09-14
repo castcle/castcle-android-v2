@@ -66,6 +66,7 @@ fun TextView.setStatePass(isPassword: Boolean = false) {
         context.getColorResStateList(R.color.gray_3)
     }?.run {
         compoundDrawableTintList = this
+        foregroundTintList = this
         setTextColor(this)
     }
 }
@@ -104,4 +105,34 @@ fun Context.openEditBirthDate(dob: String? = null, onSelect: (Date) -> Unit) {
     }.run {
         display()
     }
+}
+
+@SuppressLint("UseCompatTextViewDrawableApis")
+fun TextView.setStateDone(isPassword: Boolean = false) {
+    if (isPassword) {
+        context.getColorResStateList(R.color.blue)
+    } else {
+        context.getColorResStateList(R.color.gray_3)
+    }?.run {
+        backgroundTintList = this
+        foregroundTintList = this
+    }
+}
+
+fun TextView.setTextColorState(isPassword: Boolean = false) {
+    if (isPassword) {
+        context.getColorResStateList(R.color.blue)
+    } else {
+        context.getColorResStateList(R.color.gray_3)
+    }?.run(::setTextColor)
+}
+
+fun TextView.setColorWaring(context: Context, isSelected: Boolean) {
+    setTextColor(
+        if (isSelected) {
+            context.getColorResource(R.color.red_3)
+        } else {
+            context.getColorResource(R.color.blue)
+        }
+    )
 }
