@@ -655,8 +655,22 @@
             app:destination="@id/walletScanQrCodeFragment" />
 
         <action
+            android:id="@+id/toWalletShortcutFragment"
+            app:destination="@id/walletShortcutFragment" />
+
+        <action
             android:id="@+id/toWalletTransactionFragment"
             app:destination="@id/walletTransactionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_shortcut.WalletShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
 
     </fragment>
 

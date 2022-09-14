@@ -20,6 +20,7 @@
     <string name="date">Date</string>
     <string name="docs">Docs</string>
     <string name="done">Done</string>
+    <string name="edit">Edit</string>
     <string name="edit_page">Edit Page</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
@@ -140,6 +141,9 @@
     <string name="fragment_wallet_send_title_8">Current available balance: %s</string>
     <string name="fragment_wallet_send_title_9">Note</string>
     <string name="fragment_wallet_send_title_10">Receive amount</string>
+    <string name="fragment_wallet_shortcut_title_1">My account</string>
+    <string name="fragment_wallet_shortcut_title_2">Shortcut list</string>
+    <string name="fragment_wallet_shortcut_title_3">+ Add shortcut</string>
     <string name="fragment_wallet_transaction_title_1">To Castcle ID</string>
     <string name="fragment_wallet_transaction_title_2">Coin</string>
     <string name="fragment_wallet_transaction_title_3">Network fee</string>
@@ -186,6 +190,7 @@
     <string name="send">Send</string>
     <string name="setting">Setting</string>
     <string name="share">Share</string>
+    <string name="shortcut">Shortcut</string>
     <string name="shortcuts">Shortcuts</string>
     <string name="show_more">Show more</string>
     <string name="sync_social_media">Sync social media</string>

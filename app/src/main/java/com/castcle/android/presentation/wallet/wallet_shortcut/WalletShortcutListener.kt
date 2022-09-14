@@ -21,15 +21,10 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_send
+package com.castcle.android.presentation.wallet.wallet_shortcut
 
 import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
 
-interface WalletSendListener : CastcleListener {
+interface WalletShortcutListener : CastcleListener {
     fun onAddShortcutClicked()
-    fun onManageShortcutClicked()
-    fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType)
-    fun onSendToClicked()
-    fun onUpdateSendButton(amount: Double, enabled: Boolean)
 }
