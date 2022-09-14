@@ -6,6 +6,19 @@
     android:layout_height="wrap_content"
     tools:background="@color/black_background_1">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivDelete"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
+        android:background="@color/red_3"
+        android:padding="@dimen/_17sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_delete" />
+
     <FrameLayout
         android:id="@+id/flAvatar"
         android:layout_width="@dimen/_32sdp"
@@ -17,7 +30,7 @@
         android:backgroundTint="@color/white"
         android:padding="@dimen/_1sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivDelete"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -34,14 +47,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
         android:ellipsize="end"
         android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="@+id/flAvatar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivHamburger"
         app:layout_constraintStart_toEndOf="@+id/flAvatar"
         app:layout_constraintTop_toTopOf="@id/flAvatar"
         tools:text="\@earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivHamburger"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/_18sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_hamburger" />
 
     <View
         android:layout_width="0dp"

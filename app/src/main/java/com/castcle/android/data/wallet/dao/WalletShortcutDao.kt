@@ -35,11 +35,30 @@ interface WalletShortcutDao {
     @Query("DELETE FROM $TABLE_WALLET_SHORT_CUT")
     suspend fun delete()
 
+    @Query("DELETE FROM $TABLE_WALLET_SHORT_CUT WHERE walletShortcut_id = :id")
+    suspend fun delete(id: String)
+
+    @Query("SELECT * FROM $TABLE_WALLET_SHORT_CUT ORDER BY walletShortcut_order ASC")
+    @Transaction
+    suspend fun get(): List<WalletShortcutWithResultEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<WalletShortcutEntity>)
 
     @Query("SELECT * FROM $TABLE_WALLET_SHORT_CUT ORDER BY walletShortcut_order ASC")
     @Transaction
     fun retrieve(): Flow<List<WalletShortcutWithResultEntity>>
+
+    @Query("UPDATE $TABLE_WALLET_SHORT_CUT SET walletShortcut_order = :order WHERE walletShortcut_id = :id")
+    suspend fun updateOrder(id: String, order: Int)
+
+    @Transaction
+    suspend fun updateOrder(items: List<Pair<String?, Int?>>) {
+        items.forEach { (id, order) ->
+            if (id != null && order != null) {
+                updateOrder(id = id, order = order)
+            }
+        }
+    }
 
 }

@@ -28,6 +28,7 @@ import com.castcle.android.core.api.WalletApi
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.glide.GlidePreloader
+import com.castcle.android.data.wallet.entity.SortWalletShortcutRequest
 import com.castcle.android.data.wallet.entity.WalletTransactionRequest
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -46,6 +47,12 @@ class WalletRepositoryImpl(
 
     override suspend fun confirmTransaction(body: WalletTransactionRequest) {
         apiCall { api.confirmTransaction(body = body, id = body.detail?.userId.orEmpty()) }
+    }
+
+    override suspend fun deleteShortcut(shortcutId: String) {
+        val accountId = database.accessToken().get()?.getAccountId().orEmpty()
+        apiCall { api.deleteShortcut(accountId = accountId, shortcutId = shortcutId) }
+        database.walletShortcut().delete(shortcutId)
     }
 
     override suspend fun getMyQrCode(userId: String): String {
@@ -118,6 +125,12 @@ class WalletRepositoryImpl(
             database.walletShortcut().delete()
             database.walletShortcut().insert(shortcut)
         }
+    }
+
+    override suspend fun sortWalletShortcuts(body: SortWalletShortcutRequest) {
+        val accountId = database.accessToken().get()?.getAccountId().orEmpty()
+        apiCall { api.sortWalletShortcuts(accountId = accountId, body = body) }
+        database.walletShortcut().updateOrder(body.payload.orEmpty().map { it.id to it.order })
     }
 
     override suspend fun reviewTransaction(body: WalletTransactionRequest): WalletTransactionRequest {

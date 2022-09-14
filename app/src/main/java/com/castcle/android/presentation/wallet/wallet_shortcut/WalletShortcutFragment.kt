@@ -42,6 +42,8 @@ class WalletShortcutFragment : BaseFragment(), WalletShortcutListener {
 
     private val args by navArgs<WalletShortcutFragmentArgs>()
 
+    private val directions = WalletShortcutFragmentDirections
+
     override fun initViewProperties() {
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
@@ -49,7 +51,9 @@ class WalletShortcutFragment : BaseFragment(), WalletShortcutListener {
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
             title = R.string.shortcut,
-            rightTextButtonAction = {},
+            rightTextButtonAction = {
+                directions.toWalletEditShortcutFragment(args.userId).navigate()
+            },
             rightTextButtonMessage = R.string.edit,
         )
     }

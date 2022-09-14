@@ -21,22 +21,31 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.wallet
+package com.castcle.android.presentation.wallet.wallet_edit_shortcut
 
-import com.castcle.android.data.wallet.entity.SortWalletShortcutRequest
-import com.castcle.android.data.wallet.entity.WalletTransactionRequest
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
-import com.castcle.android.domain.wallet.entity.WalletHistoryEntity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 
-interface WalletRepository {
-    suspend fun confirmTransaction(body: WalletTransactionRequest)
-    suspend fun deleteShortcut(shortcutId: String)
-    suspend fun getMyQrCode(userId: String): String
-    suspend fun getWalletAddress(keyword: String, userId: String): List<UserEntity>
-    suspend fun getWalletBalance(userId: String): WalletBalanceEntity
-    suspend fun getWalletHistory(filter: String, userId: String): List<WalletHistoryEntity>
-    suspend fun getWalletShortcuts(userId: String)
-    suspend fun sortWalletShortcuts(body: SortWalletShortcutRequest)
-    suspend fun reviewTransaction(body: WalletTransactionRequest): WalletTransactionRequest
+class WalletEditShortcutItemTouchHelper(
+    private val listener: WalletEditShortcutListener,
+) : ItemTouchHelper.Callback() {
+
+    override fun getMovementFlags(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+    ): Int {
+        return makeMovementFlags(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0)
+    }
+
+    override fun onMove(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder,
+    ): Boolean {
+        listener.onItemMove(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
+        return true
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) = Unit
+
 }
