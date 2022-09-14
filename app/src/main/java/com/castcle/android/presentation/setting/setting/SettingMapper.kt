@@ -53,7 +53,7 @@ class SettingMapper {
             listOf(SettingNotificationViewEntity())
         }
         val verifyEmailItems = if (
-            !userProfile.user.email.isNullOrBlank() && !userProfile.user.verifiedEmail
+            !userProfile.user.email.isNullOrBlank() && userProfile.user.verifiedEmail == false
         ) {
             listOf(SettingVerifyEmailViewEntity())
         } else {

@@ -109,10 +109,10 @@ interface UserDao {
             "user_type = case when :type IS NOT NULL then :type else user_type end, " +
             "user_contactEmail = case when :contactEmail IS NOT NULL then :contactEmail else user_contactEmail end, " +
             "user_contactNumber = case when :contactNumber IS NOT NULL then :contactNumber else user_contactNumber end, " +
-            "user_verifiedEmail = :verifiedEmail, " +
-            "user_verifiedMobile = :verifiedMobile, " +
-            "user_verifiedOfficial = :verifiedOfficial, " +
-            "user_verifiedSocial = :verifiedSocial " +
+            "user_verifiedEmail = case when :verifiedEmail IS NOT NULL then :verifiedEmail else user_verifiedEmail end, " +
+            "user_verifiedMobile = case when :verifiedMobile IS NOT NULL then :verifiedMobile else user_verifiedMobile end, " +
+            "user_verifiedOfficial = case when :verifiedOfficial IS NOT NULL then :verifiedOfficial else user_verifiedOfficial end, " +
+            "user_verifiedSocial = case when :verifiedSocial IS NOT NULL then :verifiedSocial else user_verifiedSocial end " +
             "WHERE user_id = :id OR user_castcleId = :castcleId"
     )
     suspend fun update(
@@ -143,12 +143,12 @@ interface UserDao {
         passwordNotSet: Boolean?,
         pdpa: Boolean?,
         type: UserType,
-        verifiedEmail: Boolean,
-        verifiedMobile: Boolean,
-        verifiedOfficial: Boolean,
-        verifiedSocial: Boolean,
-        contactEmail:String?,
-        contactNumber:String?
+        verifiedEmail: Boolean?,
+        verifiedMobile: Boolean?,
+        verifiedOfficial: Boolean?,
+        verifiedSocial: Boolean?,
+        contactEmail: String?,
+        contactNumber: String?,
     )
 
     @Transaction
@@ -186,7 +186,7 @@ interface UserDao {
             verifiedOfficial = item.verifiedOfficial,
             verifiedSocial = item.verifiedSocial,
             contactEmail = item.contactEmail,
-            contactNumber = item.contactNumber
+            contactNumber = item.contactNumber,
         )
     }
 
