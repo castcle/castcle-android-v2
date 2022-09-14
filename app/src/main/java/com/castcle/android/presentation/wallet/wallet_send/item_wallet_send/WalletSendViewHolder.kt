@@ -84,6 +84,9 @@ class WalletSendViewHolder(
         compositeDisposable += binding.tvSendTo.onClick {
             listener.onSendToClicked()
         }
+        compositeDisposable += binding.tvManage.onClick {
+            listener.onManageShortcutClicked()
+        }
         compositeDisposable += binding.tvMaxAmount.onClick {
             item.amount = item.balance
             binding.etAmount.setText(item.amount.toString())

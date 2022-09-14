@@ -21,15 +21,34 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_send
+package com.castcle.android.presentation.wallet.wallet_shortcut.item_wallet_shortcut
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewHolder
+import com.castcle.android.core.extensions.color
+import com.castcle.android.core.extensions.loadAvatarImage
+import com.castcle.android.databinding.ItemWalletShortcutBinding
 
-interface WalletSendListener : CastcleListener {
-    fun onAddShortcutClicked()
-    fun onManageShortcutClicked()
-    fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType)
-    fun onSendToClicked()
-    fun onUpdateSendButton(amount: Double, enabled: Boolean)
+class WalletShortcutViewHolder(
+    private val binding: ItemWalletShortcutBinding,
+) : CastcleViewHolder<WalletShortcutViewEntity>(binding.root) {
+
+    override var item = WalletShortcutViewEntity()
+
+    override fun bind(bindItem: WalletShortcutViewEntity) {
+        binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
+        binding.tvCastcleId.text = if (item.isYou) {
+            "${item.user.castcleId} (You)"
+        } else {
+            item.user.castcleId
+        }
+        binding.tvCastcleId.setTextColor(
+            if (item.isYou) {
+                color(R.color.blue)
+            } else {
+                color(R.color.white)
+            }
+        )
+    }
+
 }

@@ -130,6 +130,10 @@ class WalletSendFragment : BaseFragment(), WalletSendListener {
 
     override fun onAddShortcutClicked() = Unit
 
+    override fun onManageShortcutClicked() {
+        directions.toWalletShortcutFragment(args.userId).navigate()
+    }
+
     override fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType) {
         directions.toWalletScanQrCodeFragment(requestType).navigate()
     }

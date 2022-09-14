@@ -21,15 +21,25 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_send
+package com.castcle.android.presentation.wallet.wallet_shortcut.item_wallet_shortcut
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
+import com.castcle.android.domain.user.entity.UserEntity
 
-interface WalletSendListener : CastcleListener {
-    fun onAddShortcutClicked()
-    fun onManageShortcutClicked()
-    fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType)
-    fun onSendToClicked()
-    fun onUpdateSendButton(amount: Double, enabled: Boolean)
+data class WalletShortcutViewEntity(
+    val isYou: Boolean = false,
+    val user: UserEntity = UserEntity(),
+    override val uniqueId: String = "${R.layout.item_wallet_shortcut}",
+) : CastcleViewEntity {
+
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<WalletShortcutViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<WalletShortcutViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_wallet_shortcut
+
 }
