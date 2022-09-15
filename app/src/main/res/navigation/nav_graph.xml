@@ -32,7 +32,7 @@
     </dialog>
 
     <dialog
-        android:id="@+id/walletHistoryFilterDialogFragment"
+        android:id="@+id/walletDashboardDialogFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment">
 
         <argument
@@ -50,6 +50,10 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.castcle.android.presentation.setting.account.AccountFragment">
+
+        <action
+            android:id="@+id/toRegisterEmailFragment"
+            app:destination="@id/registerEmailFragment" />
 
         <action
             android:id="@+id/toRequestOtpFragment"
@@ -115,6 +119,20 @@
         <action
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.create_profile.CreateNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toUpdateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
 
     </fragment>
 
@@ -207,6 +225,10 @@
             app:destination="@id/walletDashboardFragment" />
 
         <action
+            android:id="@+id/toWalletVerifyFragment"
+            app:destination="@id/walletVerifyFragment" />
+
+        <action
             android:id="@+id/toWhoToFollowFragment"
             app:destination="@id/whoToFollowFragment" />
 
@@ -219,6 +241,28 @@
         <action
             android:id="@+id/toForgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+
+        <action
+            android:id="@+id/toSignUpFragment"
+            app:destination="@id/signUpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile_detail.EditDetailNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toInsertFragment"
+            app:destination="@id/insertFragment" />
 
     </fragment>
 
@@ -283,6 +327,10 @@
             app:destination="@id/searchFragment" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/registerEmailFragment"
+        android:name="com.castcle.android.presentation.setting.register_email.RegisterEmailFragment"/>
 
     <fragment
         android:id="@+id/reportDetailFragment"
@@ -434,6 +482,38 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
+        <action
+            android:id="@+id/toPageCondition"
+            app:destination="@+id/createPageConditionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.castcle.android.presentation.sign_up.SignUpFragment">
+
+        <action
+            android:id="@+id/toCreateNewProfileFragment"
+            app:destination="@id/createNewProfileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile.UpdateProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toEditNewProfileFragment"
+            app:destination="@id/editNewProfileFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
     </fragment>
 
     <fragment
@@ -475,12 +555,210 @@
     </fragment>
 
     <fragment
+        android:id="@+id/walletAddressFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_address.WalletAddressFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletAddShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_add_shortcut.WalletAddShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddressFragment"
+            app:destination="@id/walletAddressFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/walletDashboardFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.WalletDashboardFragment">
 
         <action
-            android:id="@+id/toWalletHistoryFilterDialogFragment"
-            app:destination="@id/walletHistoryFilterDialogFragment" />
+            android:id="@+id/toWalletDashboardDialogFragment"
+            app:destination="@id/walletDashboardDialogFragment" />
+
+        <action
+            android:id="@+id/toWalletDepositFragment"
+            app:destination="@id/walletDepositFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+        <action
+            android:id="@+id/toWalletSendFragment"
+            app:destination="@id/walletSendFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletDepositFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_deposit.WalletDepositFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletEditShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_edit_shortcut.WalletEditShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletOtpFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_otp.WalletOtpFragment">
+
+        <argument
+            android:name="otpEmail"
+            app:argType="com.castcle.android.domain.authentication.entity.OtpEntity" />
+
+        <argument
+            android:name="otpMobile"
+            app:argType="com.castcle.android.domain.authentication.entity.OtpEntity" />
+
+        <argument
+            android:name="request"
+            app:argType="com.castcle.android.data.wallet.entity.WalletTransactionRequest" />
+
+        <action
+            android:id="@+id/toWalletTransactionFragment"
+            app:destination="@id/walletTransactionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletScanQrCodeFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment">
+
+        <argument
+            android:name="requestType"
+            app:argType="com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType" />
+
+        <action
+            android:id="@+id/toWalletDepositFragment"
+            app:destination="@id/walletDepositFragment" />
+
+        <action
+            android:id="@+id/toWalletSendFragment"
+            app:destination="@id/walletSendFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletSendFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_send.WalletSendFragment">
+
+        <argument
+            android:name="targetCastcleId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="targetUserId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddressFragment"
+            app:destination="@id/walletAddressFragment" />
+
+        <action
+            android:id="@+id/toWalletAddShortcutFragment"
+            app:destination="@id/walletAddShortcutFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+        <action
+            android:id="@+id/toWalletShortcutFragment"
+            app:destination="@id/walletShortcutFragment" />
+
+        <action
+            android:id="@+id/toWalletTransactionFragment"
+            app:destination="@id/walletTransactionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_shortcut.WalletShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddShortcutFragment"
+            app:destination="@id/walletAddShortcutFragment" />
+
+        <action
+            android:id="@+id/toWalletEditShortcutFragment"
+            app:destination="@id/walletEditShortcutFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletTransactionFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_transaction.WalletTransactionFragment">
+
+        <argument
+            android:name="request"
+            app:argType="com.castcle.android.data.wallet.entity.WalletTransactionRequest" />
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.domain.wallet.type.WalletTransactionType" />
+
+        <action
+            android:id="@+id/toWalletOtpFragment"
+            app:destination="@id/walletOtpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletVerifyFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_verify.WalletVerifyFragment">
+
+        <action
+            android:id="@+id/toRegisterEmailFragment"
+            app:destination="@id/registerEmailFragment" />
+
+        <action
+            android:id="@+id/toRequestOtpFragment"
+            app:destination="@id/requestOtpFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
     </fragment>
 
@@ -496,6 +774,25 @@
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/createPageConditionFragment"
+        android:name="com.castcle.android.presentation.setting.create_page.CreatePageConditionFragment">
+
+        <action
+            android:id="@+id/toCreateNewProfileFragment"
+            app:destination="@id/createNewProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertFragment"
+        android:name="com.castcle.android.presentation.setting.create_page.insert.InsertFragment">
+
+        <argument
+            android:name="insertEntity"
+            app:argType="com.castcle.android.presentation.setting.create_page.insert.entity.InsertEntity"
+            app:nullable="false" />
     </fragment>
 
 </navigation>

@@ -1,3 +1,26 @@
+/* Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+ * Thailand 10160, or visit www.castcle.com if you need additional information
+ * or have any questions.
+ *
+ * Created by Prakan Sornbootnark on 15/08/2022. */
+
 package com.castcle.android.data.user.dao
 
 import androidx.room.*
@@ -30,6 +53,9 @@ interface UserDao {
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_id = :userId")
     suspend fun get(userId: String): List<UserEntity>
+
+    @Query("SELECT * FROM $TABLE_USER WHERE user_castcleId = :castcleId")
+    fun getByCastcleID(castcleId: String): Flow<UserEntity?>
 
     @Query("UPDATE $TABLE_USER SET user_casts = case when user_casts IS NOT NULL then user_casts + 1 else NULL end  WHERE user_id = :userId")
     suspend fun increaseCastCount(userId: String)
@@ -81,10 +107,12 @@ interface UserDao {
             "user_passwordNotSet = case when :passwordNotSet IS NOT NULL then :passwordNotSet else user_passwordNotSet end, " +
             "user_pdpa = case when :pdpa IS NOT NULL then :pdpa else user_pdpa end, " +
             "user_type = case when :type IS NOT NULL then :type else user_type end, " +
-            "user_verifiedEmail = :verifiedEmail, " +
-            "user_verifiedMobile = :verifiedMobile, " +
-            "user_verifiedOfficial = :verifiedOfficial, " +
-            "user_verifiedSocial = :verifiedSocial " +
+            "user_contactEmail = case when :contactEmail IS NOT NULL then :contactEmail else user_contactEmail end, " +
+            "user_contactNumber = case when :contactNumber IS NOT NULL then :contactNumber else user_contactNumber end, " +
+            "user_verifiedEmail = case when :verifiedEmail IS NOT NULL then :verifiedEmail else user_verifiedEmail end, " +
+            "user_verifiedMobile = case when :verifiedMobile IS NOT NULL then :verifiedMobile else user_verifiedMobile end, " +
+            "user_verifiedOfficial = case when :verifiedOfficial IS NOT NULL then :verifiedOfficial else user_verifiedOfficial end, " +
+            "user_verifiedSocial = case when :verifiedSocial IS NOT NULL then :verifiedSocial else user_verifiedSocial end " +
             "WHERE user_id = :id OR user_castcleId = :castcleId"
     )
     suspend fun update(
@@ -115,10 +143,12 @@ interface UserDao {
         passwordNotSet: Boolean?,
         pdpa: Boolean?,
         type: UserType,
-        verifiedEmail: Boolean,
-        verifiedMobile: Boolean,
-        verifiedOfficial: Boolean,
-        verifiedSocial: Boolean,
+        verifiedEmail: Boolean?,
+        verifiedMobile: Boolean?,
+        verifiedOfficial: Boolean?,
+        verifiedSocial: Boolean?,
+        contactEmail: String?,
+        contactNumber: String?,
     )
 
     @Transaction
@@ -155,6 +185,8 @@ interface UserDao {
             verifiedMobile = item.verifiedMobile,
             verifiedOfficial = item.verifiedOfficial,
             verifiedSocial = item.verifiedSocial,
+            contactEmail = item.contactEmail,
+            contactNumber = item.contactNumber,
         )
     }
 

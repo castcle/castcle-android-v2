@@ -102,19 +102,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tvTotalBalance" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivInfo"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:padding="@dimen/_6sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalBalanceTitle"
+        app:layout_constraintStart_toEndOf="@+id/tvTotalBalanceTitle"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalBalanceTitle"
+        app:srcCompat="@drawable/ic_info" />
+
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanit.Small"
         android:id="@+id/tvTotalBalance"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginTop="@dimen/_18sdp"
         android:layout_marginEnd="@dimen/_12sdp"
         android:ellipsize="end"
         android:gravity="end"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvTotalBalanceTitle"
+        app:layout_constraintStart_toEndOf="@+id/ivInfo"
         app:layout_constraintTop_toBottomOf="@+id/liBalance"
         tools:text="1000 CAST" />
 
@@ -280,7 +289,7 @@
         app:srcCompat="@drawable/bg_airdrop" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/AppTextKanit.Regular"
+        style="@style/AppTextKanit.Small"
         android:id="@+id/tvFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -294,8 +303,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivFilter"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
         android:padding="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="@+id/tvFilter"
         app:layout_constraintEnd_toEndOf="parent"
