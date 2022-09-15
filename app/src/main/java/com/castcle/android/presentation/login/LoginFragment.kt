@@ -90,10 +90,11 @@ class LoginFragment : BaseFragment(), LoginListener {
     }
 
     override fun onFacebookLoginClicked() {
+        facebookLoginManager.logOut()
         facebookLoginManager.logInWithReadPermissions(
             callbackManager = callbackManager,
             fragment = this,
-            permissions = listOf("email", "public_profile"),
+            permissions = listOf("email"),
         )
         facebookLoginManager.registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
