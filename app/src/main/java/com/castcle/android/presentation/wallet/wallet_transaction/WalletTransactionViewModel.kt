@@ -25,12 +25,14 @@ package com.castcle.android.presentation.wallet.wallet_transaction
 
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.data.wallet.entity.CreateWalletShortcutRequest
 import com.castcle.android.data.wallet.entity.WalletTransactionRequest
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.OtpEntity
 import com.castcle.android.domain.authentication.type.OtpObjective
 import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.domain.user.type.UserType
+import com.castcle.android.domain.wallet.WalletRepository
 import com.castcle.android.domain.wallet.type.WalletTransactionType
 import com.castcle.android.presentation.wallet.wallet_transaction.item_wallet_transaction.WalletTransactionViewEntity
 import kotlinx.coroutines.flow.*
@@ -38,11 +40,14 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class WalletTransactionViewModel(
+    private val authenticationRepository: AuthenticationRepository,
     private val database: CastcleDatabase,
-    private val repository: AuthenticationRepository,
     private val request: WalletTransactionRequest = WalletTransactionRequest(),
     private val type: WalletTransactionType = WalletTransactionType.Review,
+    private val walletRepository: WalletRepository,
 ) : BaseViewModel() {
+
+    val onCreateShortcutSuccess = MutableSharedFlow<Unit>()
 
     val onError = MutableSharedFlow<Throwable>()
 
@@ -55,6 +60,15 @@ class WalletTransactionViewModel(
         .map { it && database.user().get().find { find -> find.id == targetUserId } == null }
         .map { shortcutVisible -> WalletTransactionViewEntity(request, shortcutVisible, type) }
         .distinctUntilChanged()
+
+    fun createWalletShortcut(userId: String) {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { onCreateShortcutSuccess.emitOnSuspend(it) },
+        ) {
+            walletRepository.createWalletShortcut(CreateWalletShortcutRequest(userId = userId))
+        }
+    }
 
     fun requestOtp() {
         launch(
@@ -73,7 +87,8 @@ class WalletTransactionViewModel(
                 objective = OtpObjective.SendToken,
                 type = OtpType.Mobile,
             )
-            repository.requestOtp(otpEmail) to repository.requestOtp(otpMobile)
+            authenticationRepository.requestOtp(otpEmail) to
+                authenticationRepository.requestOtp(otpMobile)
         }
     }
 

@@ -56,7 +56,7 @@ class SearchPeopleViewHolder(
         binding.tvOverview.text = item.user.overview
         binding.tvUserName.text = item.user.displayName
         binding.tvCastcleId.text = item.user.castcleId
-        binding.ivOfficial.isVisible = item.user.verifiedOfficial
+        binding.ivOfficial.isVisible = item.user.verifiedOfficial == true
         with(binding.tvFollow) {
             isVisible = !item.user.isOwner
             text = if (item.user.followed) {

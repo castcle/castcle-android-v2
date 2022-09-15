@@ -49,6 +49,8 @@ class CastcleActionBarView(context: Context, attrs: AttributeSet) :
     fun bind(
         leftButtonAction: (() -> Unit)? = null,
         @DrawableRes leftButtonIcon: Int? = R.drawable.ic_back,
+        rightTextButtonAction: (() -> Unit)? = null,
+        rightTextButtonMessage: Any? = null,
         rightButtonAction: (() -> Unit)? = null,
         @DrawableRes rightButtonIcon: Int? = null,
         rightSecondButtonAction: (() -> Unit)? = null,
@@ -70,6 +72,11 @@ class CastcleActionBarView(context: Context, attrs: AttributeSet) :
         } else {
             binding.ivRightIcon.setOnClickListener(null)
         }
+        if (rightTextButtonAction != null && rightTextButtonMessage != null) {
+            compositeDisposable += binding.ivRightTextIcon.onClick { rightTextButtonAction.invoke() }
+        } else {
+            binding.ivRightTextIcon.setOnClickListener(null)
+        }
         if (rightButtonIcon != null) {
             binding.ivRightIcon.setImageResource(rightButtonIcon)
         } else {
@@ -87,6 +94,16 @@ class CastcleActionBarView(context: Context, attrs: AttributeSet) :
         }
         binding.ivLeftIcon.isVisible = leftButtonIcon != null
         binding.ivRightIcon.isVisible = rightButtonIcon != null
+        binding.ivRightTextIcon.isVisible = rightTextButtonMessage != null
+        binding.ivRightTextIcon.text = when (rightTextButtonMessage) {
+            is String -> rightTextButtonMessage
+            is Int -> try {
+                context.getString(rightTextButtonMessage)
+            } catch (exception: Exception) {
+                ""
+            }
+            else -> ""
+        }
         binding.ivRightSecondIcon.isVisible = rightSecondButtonIcon != null
         binding.tvTitle.setTextColor(context.getColor(titleColor))
         binding.tvTitle.text = when (title) {

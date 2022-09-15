@@ -28,6 +28,8 @@ import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrC
 
 interface WalletSendListener : CastcleListener {
     fun onAddShortcutClicked()
+    fun onManageShortcutClicked()
     fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType)
+    fun onSendToClicked()
     fun onUpdateSendButton(amount: Double, enabled: Boolean)
 }

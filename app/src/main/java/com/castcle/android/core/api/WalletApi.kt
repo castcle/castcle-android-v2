@@ -24,8 +24,8 @@
 package com.castcle.android.core.api
 
 import com.castcle.android.core.base.response.BaseResponse
-import com.castcle.android.core.constants.PARAMETER_FILTER
-import com.castcle.android.core.constants.PARAMETER_ID
+import com.castcle.android.core.constants.*
+import com.castcle.android.data.user.entity.UserResponse
 import com.castcle.android.data.wallet.entity.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -38,10 +38,33 @@ interface WalletApi {
         @Body body: WalletTransactionRequest,
     ): Response<Unit>
 
+    @POST("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/castcle")
+    suspend fun createWalletShortcut(
+        @Path(PARAMETER_ACCOUNT_ID) accountId: String,
+        @Body body: CreateWalletShortcutRequest,
+    ): Response<UserResponse>
+
+    @DELETE("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/{$PARAMETER_SHORTCUT_ID}")
+    suspend fun deleteWalletShortcut(
+        @Path(PARAMETER_ACCOUNT_ID) accountId: String,
+        @Path(PARAMETER_SHORTCUT_ID) shortcutId: String,
+    ): Response<Unit>
+
     @GET("v2/qr-codes/castcle/{$PARAMETER_ID}")
     suspend fun getMyQrCode(
         @Path(PARAMETER_ID) id: String,
     ): Response<BaseResponse<String>>
+
+    @GET("v2/wallets/{$PARAMETER_ID}/recent")
+    suspend fun getRecentWalletAddress(
+        @Path(PARAMETER_ID) id: String,
+    ): Response<WalletRecentTransactionResponse>
+
+    @GET("v2/wallets/{$PARAMETER_ID}/recent/search/by")
+    suspend fun getWalletAddress(
+        @Path(PARAMETER_ID) id: String,
+        @Query(PARAMETER_KEYWORD) keyword: String,
+    ): Response<WalletRecentTransactionResponse>
 
     @GET("v2/wallets/{$PARAMETER_ID}")
     suspend fun getWalletBalance(
@@ -58,6 +81,12 @@ interface WalletApi {
     suspend fun getWalletShortcuts(
         @Path(PARAMETER_ID) id: String,
     ): Response<WalletShortcutsResponse>
+
+    @PUT("v2/wallets/{$PARAMETER_ACCOUNT_ID}/shortcuts/sort")
+    suspend fun sortWalletShortcuts(
+        @Path(PARAMETER_ACCOUNT_ID) accountId: String,
+        @Body body: SortWalletShortcutRequest,
+    ): Response<Unit>
 
     @POST("v2/wallets/{$PARAMETER_ID}/send/review")
     suspend fun reviewTransaction(

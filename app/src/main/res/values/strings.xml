@@ -2,6 +2,7 @@
     <string name="add">Add</string>
     <string name="about_us">About Us</string>
     <string name="account">Account</string>
+    <string name="account_setting">Account Setting</string>
     <string name="account_settings">Account Settings</string>
     <string name="ad_manager">Ad Manager</string>
     <string name="advertised">Advertised</string>
@@ -20,6 +21,7 @@
     <string name="date">Date</string>
     <string name="docs">Docs</string>
     <string name="done">Done</string>
+    <string name="edit">Edit</string>
     <string name="edit_page">Edit Page</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
@@ -46,9 +48,8 @@
     <string name="deposit">Deposit</string>
     <string name="dialog_recast_title">Choose Page or User</string>
     <string name="facebook">Facebook</string>
-    <string name="fragment_account_title_1">Account Setting</string>
+    <string name="fragment_account_title_1">Account Control</string>
     <string name="fragment_account_title_2">Link Social Media Account</string>
-    <string name="fragment_account_title_3">Account Control</string>
     <string name="fragment_change_password_title_1">Please enter your new password</string>
     <string name="fragment_change_password_title_2">Confirm password</string>
     <string name="fragment_change_password_title_3">Enter to confirm your password</string>
@@ -66,6 +67,8 @@
     <string name="fragment_login_title_6">Login</string>
     <string name="fragment_login_title_7">Or continue with</string>
     <string name="fragment_login_title_8">Don’t have an account? <font color="#01D2FF">Sign up</font></string>
+    <string name="fragment_register_email_title_1">Please enter you Email address</string>
+    <string name="fragment_register_email_title_2">Your email address is required on this following section</string>
     <string name="fragment_register_mobile_title_1">Register mobile number</string>
     <string name="fragment_register_mobile_title_2">Please enter you country/mobile number to verify your account</string>
     <string name="fragment_register_mobile_title_3">Your mobile number</string>
@@ -107,11 +110,21 @@
     <string name="fragment_verify_otp_title_9">You will receive a 6 digit code to reset you password. Verification code will be sent to %s</string>
     <string name="fragment_verify_password_title_1">Please enter your current password</string>
     <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
+    <string name="fragment_wallet_address_title_1">\@Castcle ID or Wallet Address</string>
+    <string name="fragment_wallet_address_title_2">Recent Castcle ID</string>
+    <string name="fragment_wallet_address_title_3">No wallet address found</string>
+    <string name="fragment_wallet_address_title_4">The wallet address you searched for was not found, or does not exist</string>
+    <string name="fragment_wallet_add_shortcut_title_1">Add Shortcut</string>
+    <string name="fragment_wallet_add_shortcut_title_2">Castcle ID or Wallet Address</string>
+    <string name="fragment_wallet_add_shortcut_title_3">Enter @Castcle ID or Wallet Address</string>
+    <string name="fragment_wallet_add_shortcut_title_4">Name</string>
+    <string name="fragment_wallet_add_shortcut_title_5">Shortcut successfully added</string>
     <string name="fragment_wallet_dashboard_title_1">Total Balance</string>
     <string name="fragment_wallet_dashboard_title_2">Farm Balance</string>
     <string name="fragment_wallet_dashboard_title_3">Avail. Balance</string>
     <string name="fragment_wallet_dashboard_title_4">No history</string>
     <string name="fragment_wallet_dashboard_title_5">All %s history will be displayed here</string>
+    <string name="fragment_wallet_dashboard_title_6">Value: Approximately\n%s USD</string>
     <string name="fragment_wallet_deposit_title_1">Deposit CAST</string>
     <string name="fragment_wallet_deposit_title_2">Castcle ID</string>
     <string name="fragment_wallet_deposit_title_3">Castcle Decentralized Social Media</string>
@@ -127,7 +140,7 @@
     <string name="fragment_wallet_scan_qr_code_title_2">Scan your QR code to get quick access</string>
     <string name="fragment_wallet_scan_qr_code_title_3">My QR Code</string>
     <string name="fragment_wallet_send_title_1">Send to</string>
-    <string name="fragment_wallet_send_title_2">\@Castcle ID or 0xgjd…bfjsfj</string>
+    <string name="fragment_wallet_send_title_2">\@Castcle ID or Wallet Address</string>
     <string name="fragment_wallet_send_title_3">Memo (optional)</string>
     <string name="fragment_wallet_send_title_4">Enter Memo</string>
     <string name="fragment_wallet_send_title_5">Network fee 0 CAST</string>
@@ -136,6 +149,9 @@
     <string name="fragment_wallet_send_title_8">Current available balance: %s</string>
     <string name="fragment_wallet_send_title_9">Note</string>
     <string name="fragment_wallet_send_title_10">Receive amount</string>
+    <string name="fragment_wallet_shortcut_title_1">My account</string>
+    <string name="fragment_wallet_shortcut_title_2">Shortcut list</string>
+    <string name="fragment_wallet_shortcut_title_3">+ Add shortcut</string>
     <string name="fragment_wallet_transaction_title_1">To Castcle ID</string>
     <string name="fragment_wallet_transaction_title_2">Coin</string>
     <string name="fragment_wallet_transaction_title_3">Network fee</string>
@@ -143,6 +159,7 @@
     <string name="fragment_wallet_transaction_title_5">Note</string>
     <string name="fragment_wallet_transaction_title_6">Be sure to check the address before confirming</string>
     <string name="fragment_wallet_transaction_title_7">Add to shortcut</string>
+    <string name="fragment_wallet_verify_title_1">General Information</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
@@ -182,6 +199,7 @@
     <string name="send">Send</string>
     <string name="setting">Setting</string>
     <string name="share">Share</string>
+    <string name="shortcut">Shortcut</string>
     <string name="shortcuts">Shortcuts</string>
     <string name="show_more">Show more</string>
     <string name="sync_social_media">Sync social media</string>

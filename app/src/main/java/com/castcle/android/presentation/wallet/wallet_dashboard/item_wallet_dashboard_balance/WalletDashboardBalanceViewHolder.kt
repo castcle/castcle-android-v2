@@ -41,6 +41,9 @@ class WalletDashboardBalanceViewHolder(
     override var item = WalletDashboardBalanceViewEntity()
 
     init {
+        compositeDisposable += binding.ivInfo.onClick {
+            listener.onInfoClicked(item.balance.totalBalance)
+        }
         compositeDisposable += binding.viewSelectUser.onClick {
             listener.onSelectUserClicked(item.user.id)
         }

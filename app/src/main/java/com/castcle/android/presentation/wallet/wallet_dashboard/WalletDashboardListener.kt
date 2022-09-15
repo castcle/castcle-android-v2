@@ -30,6 +30,7 @@ interface WalletDashboardListener : CastcleListener {
     fun onAirdropClicked()
     fun onDepositClicked(currentUserId: String)
     fun onFilterClicked(currentFilter: WalletHistoryFilter)
+    fun onInfoClicked(balance: String)
     fun onSelectUserClicked(currentUserId: String)
     fun onSendClicked(currentUserId: String)
 }

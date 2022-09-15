@@ -27,10 +27,11 @@ import com.castcle.android.core.base.recyclerview.CastcleListener
 import com.castcle.android.domain.authentication.type.OtpType
 
 interface AccountListener : CastcleListener {
-    fun onChangePasswordClicked()
-    fun onDeleteAccountClicked()
-    fun onLinkFacebookClicked()
-    fun onLinkTwitterClicked()
-    fun onRequestOtpClicked(type: OtpType)
-    fun onResentVerifyEmailClicked()
+    fun onChangePasswordClicked() = Unit
+    fun onDeleteAccountClicked() = Unit
+    fun onLinkFacebookClicked() = Unit
+    fun onLinkTwitterClicked() = Unit
+    fun onRegisterEmailClicked() = Unit
+    fun onRequestOtpClicked(type: OtpType) = Unit
+    fun onResentVerifyEmailClicked() = Unit
 }

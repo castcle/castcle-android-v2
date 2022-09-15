@@ -125,6 +125,10 @@ class AccountFragment : BaseFragment(), AccountListener {
         })
     }
 
+    override fun onRegisterEmailClicked() {
+        directions.toRegisterEmailFragment().navigate()
+    }
+
     override fun onRequestOtpClicked(type: OtpType) {
         directions.toRequestOtpFragment(type).navigate()
     }
@@ -148,7 +152,7 @@ class AccountFragment : BaseFragment(), AccountListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = binding.root
 
 }

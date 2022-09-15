@@ -151,6 +151,7 @@ class WalletScanQrCodeFragment : BaseFragment() {
     companion object {
         const val ADDRESS_RESULT = "ADDRESS_RESULT"
         const val MEMO_RESULT = "MEMO_RESULT"
+        const val RESULT_AVATAR = "RESULT_AVATAR"
         const val RESULT_CASTCLE_ID = "RESULT_CASTCLE_ID"
         const val RESULT_MEMO = "RESULT_MEMO"
         const val RESULT_USER_ID = "RESULT_USER_ID"

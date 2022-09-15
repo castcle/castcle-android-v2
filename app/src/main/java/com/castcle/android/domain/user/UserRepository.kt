@@ -52,6 +52,7 @@ interface UserRepository {
     suspend fun unlikeCasts(content: CastEntity)
     suspend fun unlikeComment(comment: CommentEntity)
     suspend fun unrecastContent(contentId: String, otherUserRecasted: Boolean, userId: String)
+    suspend fun updateEmail(email: String)
     suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest): Flow<BaseUiState<Nothing>>
     suspend fun updateDetailProfile(userUpdateRequest: UserUpdateRequest): Flow<BaseUiState<Nothing>>
 }

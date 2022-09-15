@@ -33,10 +33,11 @@ import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
-import com.castcle.android.core.extensions.invisible
-import com.castcle.android.core.extensions.toast
+import com.castcle.android.core.extensions.*
+import com.castcle.android.databinding.DialogBasicBinding
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.wallet.type.WalletTransactionType
+import com.castcle.android.presentation.dialog.basic.BasicDialog
 import com.castcle.android.presentation.wallet.wallet_transaction.item_wallet_transaction.WalletTransactionViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -72,6 +73,16 @@ class WalletTransactionFragment : BaseFragment(), WalletTransactionListener {
             viewModel.views.collectLatest(adapter::submitList)
         }
         lifecycleScope.launch {
+            viewModel.onCreateShortcutSuccess.collectLatest {
+                dismissLoading()
+                BasicDialog(
+                    binding = DialogBasicBinding.inflate(layoutInflater),
+                    button = string(R.string.close),
+                    title = string(R.string.fragment_wallet_add_shortcut_title_5),
+                ).show()
+            }
+        }
+        lifecycleScope.launch {
             viewModel.onSuccess.collectLatest {
                 dismissLoading()
                 directions.toWalletOtpFragment(
@@ -98,7 +109,10 @@ class WalletTransactionFragment : BaseFragment(), WalletTransactionListener {
         viewModel.requestOtp()
     }
 
-    override fun onCreateShortcutClicked(userId: String) = Unit
+    override fun onCreateShortcutClicked(userId: String) {
+        showLoading()
+        viewModel.createWalletShortcut(userId)
+    }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
@@ -113,7 +127,7 @@ class WalletTransactionFragment : BaseFragment(), WalletTransactionListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = binding.root
 
     companion object {

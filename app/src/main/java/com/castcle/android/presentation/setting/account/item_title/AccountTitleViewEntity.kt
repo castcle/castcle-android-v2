@@ -29,7 +29,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
 
 data class AccountTitleViewEntity(
-    @StringRes val titleId: Int = R.string.fragment_account_title_1,
+    @StringRes val titleId: Int = R.string.account_setting,
     override val uniqueId: String = "$titleId"
 ) : CastcleViewEntity {
 

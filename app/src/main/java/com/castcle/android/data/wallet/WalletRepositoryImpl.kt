@@ -28,7 +28,7 @@ import com.castcle.android.core.api.WalletApi
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.data.wallet.entity.WalletTransactionRequest
+import com.castcle.android.data.wallet.entity.*
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.UserType
@@ -48,6 +48,35 @@ class WalletRepositoryImpl(
         apiCall { api.confirmTransaction(body = body, id = body.detail?.userId.orEmpty()) }
     }
 
+    override suspend fun createWalletShortcut(body: CreateWalletShortcutRequest) {
+        val accountId = database.accessToken().get()?.getAccountId().orEmpty()
+        val response = apiCall { api.createWalletShortcut(accountId = accountId, body = body) }
+        val ownerUser = database.user().get()
+        val shortcut = WalletShortcutEntity(
+            id = response?.id.orEmpty(),
+            order = response?.order ?: 0,
+            userId = response?.userId.orEmpty(),
+        )
+        val user = ownerUser.find { it.id == response?.userId } ?: UserEntity(
+            avatar = ImageEntity.map(response?.images?.avatar ?: response?.avatar) ?: ImageEntity(),
+            castcleId = response?.castcleId.orEmpty(),
+            displayName = response?.displayName.orEmpty(),
+            id = response?.userId.orEmpty(),
+            type = UserType.getFromId(response?.type.orEmpty()),
+        )
+        glidePreloader.loadUser(user)
+        database.withTransaction {
+            database.user().upsert(user)
+            database.walletShortcut().insert(listOf(shortcut))
+        }
+    }
+
+    override suspend fun deleteWalletShortcut(shortcutId: String) {
+        val accountId = database.accessToken().get()?.getAccountId().orEmpty()
+        apiCall { api.deleteWalletShortcut(accountId = accountId, shortcutId = shortcutId) }
+        database.walletShortcut().delete(shortcutId)
+    }
+
     override suspend fun getMyQrCode(userId: String): String {
         return try {
             apiCall { api.getMyQrCode(id = userId) }
@@ -57,6 +86,19 @@ class WalletRepositoryImpl(
         } catch (exception: Exception) {
             ""
         }
+    }
+
+    override suspend fun getWalletAddress(keyword: String, userId: String): List<UserEntity> {
+        val response = if (keyword.isBlank()) {
+            apiCall { api.getRecentWalletAddress(id = userId) }
+        } else {
+            apiCall { api.getWalletAddress(id = userId, keyword = keyword) }
+        }
+        val ownerUser = database.user().get().map { it.id }
+        val user = UserEntity.map(ownerUser, response?.castcle)
+        glidePreloader.loadUser(user)
+        database.user().upsert(user)
+        return user
     }
 
     override suspend fun getWalletBalance(userId: String): WalletBalanceEntity {
@@ -105,6 +147,12 @@ class WalletRepositoryImpl(
             database.walletShortcut().delete()
             database.walletShortcut().insert(shortcut)
         }
+    }
+
+    override suspend fun sortWalletShortcuts(body: SortWalletShortcutRequest) {
+        val accountId = database.accessToken().get()?.getAccountId().orEmpty()
+        apiCall { api.sortWalletShortcuts(accountId = accountId, body = body) }
+        database.walletShortcut().updateOrder(body.payload.orEmpty().map { it.id to it.order })
     }
 
     override suspend fun reviewTransaction(body: WalletTransactionRequest): WalletTransactionRequest {

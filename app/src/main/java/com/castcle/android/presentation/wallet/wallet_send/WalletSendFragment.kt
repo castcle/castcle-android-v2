@@ -128,10 +128,20 @@ class WalletSendFragment : BaseFragment(), WalletSendListener {
         }
     }
 
-    override fun onAddShortcutClicked() = Unit
+    override fun onAddShortcutClicked() {
+        directions.toWalletAddShortcutFragment(args.userId).navigate()
+    }
+
+    override fun onManageShortcutClicked() {
+        directions.toWalletShortcutFragment(args.userId).navigate()
+    }
 
     override fun onScanQrCodeClicked(requestType: WalletScanQrCodeRequestType) {
         directions.toWalletScanQrCodeFragment(requestType).navigate()
+    }
+
+    override fun onSendToClicked() {
+        directions.toWalletAddressFragment(userId = args.userId).navigate()
     }
 
     override fun onUpdateSendButton(amount: Double, enabled: Boolean) {

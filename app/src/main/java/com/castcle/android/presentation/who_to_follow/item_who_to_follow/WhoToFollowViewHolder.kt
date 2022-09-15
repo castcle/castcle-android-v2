@@ -53,7 +53,7 @@ class WhoToFollowViewHolder(
         binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
         binding.tvUserName.text = item.user.displayName
         binding.tvCastcleId.text = item.user.castcleId
-        binding.ivOfficial.isVisible = item.user.verifiedOfficial
+        binding.ivOfficial.isVisible = item.user.verifiedOfficial == true
         binding.tvDescription.text = item.user.overview
         binding.tvDescription.isVisible = !item.user.overview.isNullOrBlank()
         with(binding.tvFollow) {

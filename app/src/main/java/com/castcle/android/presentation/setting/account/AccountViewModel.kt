@@ -52,20 +52,21 @@ class AccountViewModel(
         .filterNotNull()
         .map { result ->
             listOf(
-                AccountTitleViewEntity(titleId = R.string.fragment_account_title_1),
+                AccountTitleViewEntity(titleId = R.string.account_setting),
                 AccountMenuViewEntity(
                     action = {
-                        if (!result.user.email.isNullOrBlank() && !result.user.verifiedEmail) {
-                            it.onResentVerifyEmailClicked()
+                        when {
+                            result.user.email.isNullOrBlank() -> it.onRegisterEmailClicked()
+                            result.user.verifiedEmail == false -> it.onResentVerifyEmailClicked()
                         }
                     },
-                    description = if (result.user.email.isNullOrBlank() || result.user.verifiedEmail) {
+                    description = if (result.user.email.isNullOrBlank() || result.user.verifiedEmail == true) {
                         null
                     } else {
                         R.string.not_verify
                     },
                     detail = result.user.email?.ifBlank { null } ?: R.string.unregistered,
-                    showArrow = !result.user.verifiedEmail,
+                    showArrow = result.user.verifiedEmail == false,
                     titleId = R.string.email,
                 ),
                 AccountMenuViewEntity(
@@ -140,7 +141,7 @@ class AccountViewModel(
                     showArrow = result.linkSocial.find { find -> find.provider is SocialType.Twitter } == null,
                     titleId = R.string.twitter,
                 ),
-                AccountTitleViewEntity(titleId = R.string.fragment_account_title_3),
+                AccountTitleViewEntity(titleId = R.string.fragment_account_title_1),
                 AccountMenuViewEntity(
                     action = { it.onDeleteAccountClicked() },
                     titleId = R.string.delete_account,
