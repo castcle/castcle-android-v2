@@ -23,6 +23,7 @@
 
 package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.item_wallet_history_filter_dialog
 
+import androidx.core.view.isVisible
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
@@ -46,6 +47,7 @@ class WalletDashboardDialogFilterViewHolder(
     }
 
     override fun bind(bindItem: WalletDashboardDialogFilterViewEntity) {
+        binding.ivCheck.isVisible = item.selected
         binding.tvTitle.text = item.filter.name
         binding.tvTitle.setTextColor(
             if (item.selected) {

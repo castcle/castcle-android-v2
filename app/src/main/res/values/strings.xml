@@ -116,11 +116,13 @@
     <string name="fragment_wallet_add_shortcut_title_2">Castcle ID or Wallet Address</string>
     <string name="fragment_wallet_add_shortcut_title_3">Enter @Castcle ID or Wallet Address</string>
     <string name="fragment_wallet_add_shortcut_title_4">Name</string>
+    <string name="fragment_wallet_add_shortcut_title_5">Shortcut successfully added</string>
     <string name="fragment_wallet_dashboard_title_1">Total Balance</string>
     <string name="fragment_wallet_dashboard_title_2">Farm Balance</string>
     <string name="fragment_wallet_dashboard_title_3">Avail. Balance</string>
     <string name="fragment_wallet_dashboard_title_4">No history</string>
     <string name="fragment_wallet_dashboard_title_5">All %s history will be displayed here</string>
+    <string name="fragment_wallet_dashboard_title_6">Value: Approximately\n%s USD</string>
     <string name="fragment_wallet_deposit_title_1">Deposit CAST</string>
     <string name="fragment_wallet_deposit_title_2">Castcle ID</string>
     <string name="fragment_wallet_deposit_title_3">Castcle Decentralized Social Media</string>
@@ -136,7 +138,7 @@
     <string name="fragment_wallet_scan_qr_code_title_2">Scan your QR code to get quick access</string>
     <string name="fragment_wallet_scan_qr_code_title_3">My QR Code</string>
     <string name="fragment_wallet_send_title_1">Send to</string>
-    <string name="fragment_wallet_send_title_2">\@Castcle ID or 0xgjd…bfjsfj</string>
+    <string name="fragment_wallet_send_title_2">\@Castcle ID or Wallet Address</string>
     <string name="fragment_wallet_send_title_3">Memo (optional)</string>
     <string name="fragment_wallet_send_title_4">Enter Memo</string>
     <string name="fragment_wallet_send_title_5">Network fee 0 CAST</string>

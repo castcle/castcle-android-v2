@@ -21,16 +21,31 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard
+package com.castcle.android.presentation.dialog.basic
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import com.castcle.android.core.base.dialog.BaseDialog
+import com.castcle.android.core.extensions.onClick
+import com.castcle.android.databinding.DialogBasicBinding
+import io.reactivex.rxkotlin.plusAssign
 
-interface WalletDashboardListener : CastcleListener {
-    fun onAirdropClicked()
-    fun onDepositClicked(currentUserId: String)
-    fun onFilterClicked(currentFilter: WalletHistoryFilter)
-    fun onInfoClicked(balance: String)
-    fun onSelectUserClicked(currentUserId: String)
-    fun onSendClicked(currentUserId: String)
+class BasicDialog(
+    private val binding: DialogBasicBinding,
+    private val button: String,
+    isCancelable: Boolean = true,
+    private val title: String,
+    private val dismissAction: () -> Unit = {},
+) : BaseDialog(binding = binding, isCancelable = isCancelable, width = 0.8) {
+
+    override fun initViewProperties() {
+        binding.tvTitle.text = title
+        binding.tvButton.text = button
+    }
+
+    override fun initListener() {
+        compositeDisposable += binding.tvButton.onClick {
+            dismissAction()
+            dismiss()
+        }
+    }
+
 }
