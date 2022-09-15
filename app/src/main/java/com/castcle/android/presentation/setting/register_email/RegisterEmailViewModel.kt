@@ -21,24 +21,33 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.account.item_title
+package com.castcle.android.presentation.setting.register_email
 
-import androidx.annotation.StringRes
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
+import androidx.lifecycle.MutableLiveData
+import com.castcle.android.core.base.view_model.BaseViewModel
+import com.castcle.android.domain.user.UserRepository
+import com.castcle.android.presentation.setting.register_email.item_register_email.RegisterEmailViewEntity
+import kotlinx.coroutines.flow.MutableSharedFlow
+import org.koin.android.annotation.KoinViewModel
 
-data class AccountTitleViewEntity(
-    @StringRes val titleId: Int = R.string.account_setting,
-    override val uniqueId: String = "$titleId"
-) : CastcleViewEntity {
+@KoinViewModel
+class RegisterEmailViewModel(
+    private val repository: UserRepository,
+) : BaseViewModel() {
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<AccountTitleViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<AccountTitleViewEntity>() == this
+    val onError = MutableSharedFlow<Throwable>()
+
+    val onSuccess = MutableSharedFlow<Unit>()
+
+    val views = MutableLiveData(listOf(RegisterEmailViewEntity()))
+
+    fun updateEmail(email: String) {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { onSuccess.emitOnSuspend(it) }
+        ) {
+            repository.updateEmail(email)
+        }
     }
-
-    override fun viewType() = R.layout.item_account_title
 
 }

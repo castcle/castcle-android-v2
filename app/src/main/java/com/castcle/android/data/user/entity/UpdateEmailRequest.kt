@@ -21,24 +21,12 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.account.item_title
+package com.castcle.android.data.user.entity
 
-import androidx.annotation.StringRes
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
-data class AccountTitleViewEntity(
-    @StringRes val titleId: Int = R.string.account_setting,
-    override val uniqueId: String = "$titleId"
-) : CastcleViewEntity {
-
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<AccountTitleViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<AccountTitleViewEntity>() == this
-    }
-
-    override fun viewType() = R.layout.item_account_title
-
-}
+@Keep
+data class UpdateEmailRequest(
+    @SerializedName("email") val email: String? = null,
+)

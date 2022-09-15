@@ -21,7 +21,7 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.account
+package com.castcle.android.presentation.wallet.wallet_verify
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,33 +30,20 @@ import androidx.lifecycle.lifecycleScope
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
-import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
-import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.authentication.type.OtpType
+import com.castcle.android.presentation.setting.account.AccountListener
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewRenderer
 import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewRenderer
-import com.facebook.*
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
-import com.twitter.sdk.android.core.*
-import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AccountFragment : BaseFragment(), AccountListener {
+class WalletVerifyFragment : BaseFragment(), AccountListener {
 
-    private val viewModel by stateViewModel<AccountViewModel>()
+    private val viewModel by viewModel<WalletVerifyViewModel>()
 
-    private val facebookLoginManager by inject<LoginManager>()
-
-    private val callbackManager = CallbackManager.Factory.create()
-
-    val twitterAuthClient by inject<TwitterAuthClient>()
-
-    private val directions = AccountFragmentDirections
+    private val directions = WalletVerifyFragmentDirections
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
@@ -64,18 +51,8 @@ class AccountFragment : BaseFragment(), AccountListener {
         binding.recyclerView.adapter = adapter
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            title = R.string.account,
+            title = R.string.account_setting,
         )
-    }
-
-    override fun initListener() {
-        viewModel.onError.observe(viewLifecycleOwner) {
-            dismissLoading()
-            toast(it.message)
-        }
-        viewModel.onSuccess.observe(viewLifecycleOwner) {
-            dismissLoading()
-        }
     }
 
     override fun initConsumer() {
@@ -84,64 +61,22 @@ class AccountFragment : BaseFragment(), AccountListener {
         }
     }
 
-    override fun onChangePasswordClicked() {
-        directions.toVerifyPasswordFragment().navigate()
-    }
-
-    override fun onDeleteAccountClicked() = Unit
-
-    override fun onLinkFacebookClicked() {
-        facebookLoginManager.logInWithReadPermissions(
-            callbackManager = callbackManager,
-            fragment = this,
-            permissions = listOf("email", "public_profile"),
-        )
-        facebookLoginManager.registerCallback(callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(result: LoginResult) {
-                    viewModel.linkWithFacebook()
-                    showLoading()
-                }
-
-                override fun onCancel() {
-                    viewModel.logoutFacebook()
-                }
-
-                override fun onError(error: FacebookException) {
-                    viewModel.logoutFacebook()
-                    toast(error.message)
-                }
-            })
-    }
-
-    override fun onLinkTwitterClicked() {
-        twitterAuthClient.cancelAuthorize()
-        twitterAuthClient.authorize(activity, object : Callback<TwitterSession>() {
-            override fun failure(exception: TwitterException?) = toast(exception?.message)
-            override fun success(result: Result<TwitterSession>?) {
-                viewModel.linkWithTwitter(result?.data?.authToken)
-                showLoading()
-            }
-        })
-    }
-
     override fun onRegisterEmailClicked() {
-        directions.toRegisterEmailFragment().navigate()
+        directions.toRegisterEmailFragment().navigate(R.id.walletVerifyFragment)
     }
 
     override fun onRequestOtpClicked(type: OtpType) {
-        directions.toRequestOtpFragment(type).navigate()
+        directions.toRequestOtpFragment(type).navigate(R.id.walletVerifyFragment)
     }
 
     override fun onResentVerifyEmailClicked() {
-        directions.toResentVerifyEmailFragment().navigate()
+        directions.toResentVerifyEmailFragment().navigate(R.id.walletVerifyFragment)
     }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(AccountMenuViewRenderer())
             registerRenderer(AccountTitleViewRenderer())
-            registerRenderer(LoadingViewRenderer())
         }
     }
 

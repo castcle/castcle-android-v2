@@ -313,8 +313,13 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest):
-        Flow<BaseUiState<Nothing>> {
+    override suspend fun updateEmail(email: String) {
+        val response = apiCall { api.updateEmail(UpdateEmailRequest(email)) }
+        val user = UserEntity.mapOwner(response)
+        database.user().upsert(user)
+    }
+
+    override suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest): Flow<BaseUiState<Nothing>> {
         return flow {
             apiCall {
                 api.updateUserProfile(

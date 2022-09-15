@@ -21,24 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.account.item_title
+package com.castcle.android.presentation.setting.register_email.item_register_email
 
-import androidx.annotation.StringRes
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemRegisterEmailBinding
+import com.castcle.android.presentation.setting.register_email.RegisterEmailListener
+import io.reactivex.disposables.CompositeDisposable
 
-data class AccountTitleViewEntity(
-    @StringRes val titleId: Int = R.string.account_setting,
-    override val uniqueId: String = "$titleId"
-) : CastcleViewEntity {
+class RegisterEmailViewRenderer : CastcleViewRenderer<RegisterEmailViewEntity,
+    RegisterEmailViewHolder,
+    RegisterEmailListener>(R.layout.item_register_email) {
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<AccountTitleViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<AccountTitleViewEntity>() == this
-    }
-
-    override fun viewType() = R.layout.item_account_title
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: RegisterEmailListener,
+        compositeDisposable: CompositeDisposable
+    ) = RegisterEmailViewHolder(
+        ItemRegisterEmailBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
 
 }

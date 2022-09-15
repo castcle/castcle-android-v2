@@ -21,24 +21,23 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.account.item_title
+package com.castcle.android.presentation.setting.register_email.item_register_email
 
-import androidx.annotation.StringRes
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
 
-data class AccountTitleViewEntity(
-    @StringRes val titleId: Int = R.string.account_setting,
-    override val uniqueId: String = "$titleId"
+data class RegisterEmailViewEntity(
+    var email: String = "",
+    override val uniqueId: String = "${R.layout.item_register_email}",
 ) : CastcleViewEntity {
 
     override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<AccountTitleViewEntity>()?.uniqueId == uniqueId
+        target?.cast<RegisterEmailViewEntity>()?.uniqueId == uniqueId
     } else {
-        target?.cast<AccountTitleViewEntity>() == this
+        target?.cast<RegisterEmailViewEntity>() == this
     }
 
-    override fun viewType() = R.layout.item_account_title
+    override fun viewType() = R.layout.item_register_email
 
 }
