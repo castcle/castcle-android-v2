@@ -32,8 +32,11 @@ import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
+import com.castcle.android.core.extensions.string
 import com.castcle.android.core.extensions.toast
+import com.castcle.android.databinding.DialogBasicBinding
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
+import com.castcle.android.presentation.dialog.basic.BasicDialog
 import com.castcle.android.presentation.wallet.wallet_add_shortcut.item_wallet_add_shortcut.WalletAddShortcutViewRenderer
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment.Companion.ADDRESS_RESULT
 import com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment.Companion.RESULT_AVATAR
@@ -86,7 +89,14 @@ class WalletAddShortcutFragment : BaseFragment(), WalletAddShortcutListener {
         lifecycleScope.launch {
             viewModel.onSuccess.collectLatest {
                 dismissLoading()
-                backPress()
+                BasicDialog(
+                    binding = DialogBasicBinding.inflate(layoutInflater),
+                    button = string(R.string.close),
+                    isCancelable = false,
+                    title = string(R.string.fragment_wallet_add_shortcut_title_5),
+                ) {
+                    backPress()
+                }.show()
             }
         }
         lifecycleScope.launch {

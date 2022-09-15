@@ -36,8 +36,10 @@ import com.castcle.android.core.custom_view.load_state.LoadStateRefreshItemsType
 import com.castcle.android.core.custom_view.load_state.item_error_append.ErrorAppendViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_append.LoadingAppendViewRenderer
 import com.castcle.android.core.extensions.*
+import com.castcle.android.databinding.DialogBasicBinding
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import com.castcle.android.presentation.dialog.basic.BasicDialog
 import com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dashboard_balance.WalletDashboardBalanceViewRenderer
 import com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dashboard_empty.WalletDashboardEmptyViewRenderer
 import com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dashboard_history.WalletDashboardHistoryViewRenderer
@@ -125,6 +127,14 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
         directions.toWalletDashboardDialogFragment(currentFilter, null).navigate()
     }
 
+    override fun onInfoClicked(balance: String) {
+        BasicDialog(
+            binding = DialogBasicBinding.inflate(layoutInflater),
+            button = string(R.string.close),
+            title = getString(R.string.fragment_wallet_dashboard_title_6, balance),
+        ).show()
+    }
+
     override fun onSelectUserClicked(currentUserId: String) {
         directions.toWalletDashboardDialogFragment(null, currentUserId).navigate()
     }
@@ -154,7 +164,7 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ) = binding.root
 
 }
