@@ -93,6 +93,25 @@ class HomeViewModel(
         }
     }
 
+    fun isCanUseWallet(
+        isCanUseAction: () -> Unit,
+        isCantUseAction: () -> Unit,
+    ) {
+        launch {
+            val user = database.user().get(UserType.People).firstOrNull()
+            if (user?.verifiedEmail == true && user.verifiedMobile == true) {
+                isCanUseAction()
+            } else {
+                val fetchUser = userRepository.fetchUserProfile()
+                if (fetchUser.verifiedEmail == true && fetchUser.verifiedMobile == true) {
+                    isCanUseAction()
+                } else {
+                    isCantUseAction()
+                }
+            }
+        }
+    }
+
     private fun isUserVerifiedUpdater() {
         launch {
             database.user().retrieve(UserType.People)

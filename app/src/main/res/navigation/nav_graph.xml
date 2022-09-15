@@ -52,6 +52,10 @@
         android:name="com.castcle.android.presentation.setting.account.AccountFragment">
 
         <action
+            android:id="@+id/toRegisterEmailFragment"
+            app:destination="@id/registerEmailFragment" />
+
+        <action
             android:id="@+id/toRequestOtpFragment"
             app:destination="@id/requestOtpFragment" />
 
@@ -221,6 +225,10 @@
             app:destination="@id/walletDashboardFragment" />
 
         <action
+            android:id="@+id/toWalletVerifyFragment"
+            app:destination="@id/walletVerifyFragment" />
+
+        <action
             android:id="@+id/toWhoToFollowFragment"
             app:destination="@id/whoToFollowFragment" />
 
@@ -319,6 +327,10 @@
             app:destination="@id/searchFragment" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/registerEmailFragment"
+        android:name="com.castcle.android.presentation.setting.register_email.RegisterEmailFragment"/>
 
     <fragment
         android:id="@+id/reportDetailFragment"
@@ -729,6 +741,24 @@
         <action
             android:id="@+id/toWalletOtpFragment"
             app:destination="@id/walletOtpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletVerifyFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_verify.WalletVerifyFragment">
+
+        <action
+            android:id="@+id/toRegisterEmailFragment"
+            app:destination="@id/registerEmailFragment" />
+
+        <action
+            android:id="@+id/toRequestOtpFragment"
+            app:destination="@id/requestOtpFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
     </fragment>
 

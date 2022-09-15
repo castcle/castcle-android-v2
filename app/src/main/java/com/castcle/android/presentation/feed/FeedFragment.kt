@@ -104,7 +104,11 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                         },
                         rightButtonIcon = R.drawable.ic_hamburger,
                         rightSecondButtonAction = {
-                            directions.toWalletDashboardFragment().navigate()
+                            shareViewModel.isCanUseWallet({
+                                directions.toWalletDashboardFragment().navigate()
+                            }) {
+                                directions.toWalletVerifyFragment().navigate()
+                            }
                         },
                         rightSecondButtonIcon = R.drawable.ic_wallet,
                         title = R.string.for_you,

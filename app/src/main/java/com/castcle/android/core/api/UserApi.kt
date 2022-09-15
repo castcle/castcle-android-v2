@@ -157,6 +157,11 @@ interface UserApi {
         @Path(PARAMETER_CONTENT_ID) contentId: String,
     ): Response<Unit>
 
+    @PUT("v2/users/me/email")
+    suspend fun updateEmail(
+        @Body body: UpdateEmailRequest
+    ): Response<UserResponse>
+
     @PUT("v2/users/{castcleId}")
     suspend fun updateUserProfile(
         @Path("castcleId") castcleId: String,
