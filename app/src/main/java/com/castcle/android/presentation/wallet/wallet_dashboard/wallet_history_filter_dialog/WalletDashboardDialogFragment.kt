@@ -57,6 +57,10 @@ class WalletDashboardDialogFragment : BaseBottomSheetDialogFragment(),
         }
     }
 
+    override fun onCancelClicked() {
+        backPress()
+    }
+
     override fun onFilterClicked(filter: WalletHistoryFilter) {
         setFragmentResult(SELECT_FILTER, bundleOf(SELECT_FILTER to filter))
         backPress()

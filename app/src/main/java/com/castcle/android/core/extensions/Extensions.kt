@@ -280,7 +280,7 @@ fun Bitmap.saveImageToCache(context: Context): Uri {
         compress(Bitmap.CompressFormat.PNG, 90, stream)
         stream.flush()
         stream.close()
-        FileProvider.getUriForFile(context, "com.castcle.android", file)
+        FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, file)
     } catch (exception: IOException) {
         throw exception
     }

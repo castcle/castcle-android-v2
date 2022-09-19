@@ -29,7 +29,7 @@ import com.castcle.android.core.extensions.cast
 import com.castcle.android.domain.wallet.type.WalletHistoryFilter
 
 data class WalletDashboardDialogFilterViewEntity(
-    val filter: WalletHistoryFilter = WalletHistoryFilter.WalletBalance,
+    val filter: WalletHistoryFilter? = WalletHistoryFilter.WalletBalance,
     val selected: Boolean = false,
     override val uniqueId: String = "${R.layout.item_wallet_dashboard_dialog_filter}"
 ) : CastcleViewEntity {

@@ -28,6 +28,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemWalletDashboardDialogFilterBinding
+import com.castcle.android.domain.wallet.type.WalletHistoryFilter
 import com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogListener
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -42,18 +43,22 @@ class WalletDashboardDialogFilterViewHolder(
 
     init {
         compositeDisposable += binding.root.onClick {
-            listener.onFilterClicked(item.filter)
+            if (item.filter != null) {
+                listener.onFilterClicked(item.filter ?: WalletHistoryFilter.WalletBalance)
+            } else {
+                listener.onCancelClicked()
+            }
         }
     }
 
     override fun bind(bindItem: WalletDashboardDialogFilterViewEntity) {
         binding.ivCheck.isVisible = item.selected
-        binding.tvTitle.text = item.filter.name
+        binding.tvTitle.text = item.filter?.name ?: string(R.string.cancel)
         binding.tvTitle.setTextColor(
-            if (item.selected) {
-                color(R.color.blue)
-            } else {
-                color(R.color.white)
+            when {
+                item.filter == null -> color(R.color.red_3)
+                item.selected -> color(R.color.blue)
+                else -> color(R.color.white)
             }
         )
         binding.root.background = if (bindingAdapterPosition == 0) {
