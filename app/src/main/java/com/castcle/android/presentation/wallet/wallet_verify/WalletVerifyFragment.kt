@@ -35,6 +35,7 @@ import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.presentation.setting.account.AccountListener
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewRenderer
 import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewRenderer
+import com.castcle.android.presentation.wallet.wallet_verify.item_wallet_verify_warning.WalletVerifyWarningViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,6 +78,7 @@ class WalletVerifyFragment : BaseFragment(), AccountListener {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(AccountMenuViewRenderer())
             registerRenderer(AccountTitleViewRenderer())
+            registerRenderer(WalletVerifyWarningViewRenderer())
         }
     }
 

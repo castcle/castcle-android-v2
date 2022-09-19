@@ -65,7 +65,7 @@ class AccountViewModel(
                     description = if (result.user.email.isNullOrBlank() || result.user.verifiedEmail == true) {
                         null
                     } else {
-                        R.string.not_verify
+                        R.string.please_verify_email
                     },
                     detail = result.user.email?.ifBlank { null } ?: R.string.unregistered,
                     showArrow = result.user.verifiedEmail == false,

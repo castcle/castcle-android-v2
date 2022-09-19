@@ -10,6 +10,7 @@
     <string name="app_name">Castcle V2</string>
     <string name="block_user">Block %s</string>
     <string name="buy">Buy</string>
+    <string name="cancel">Cancel</string>
     <string name="cast_of">Cast of %s</string>
     <string name="cast">Cast</string>
     <string name="casts">Casts</string>
@@ -112,6 +113,7 @@
     <string name="fragment_verify_otp_title_7">You will receive a 6 digit code to verify your e-mail. OTP code will be sent to %s</string>
     <string name="fragment_verify_otp_title_8">Enter verification code</string>
     <string name="fragment_verify_otp_title_9">You will receive a 6 digit code to reset you password. Verification code will be sent to %s</string>
+    <string name="fragment_verify_otp_title_10">Verify mobile number</string>
     <string name="fragment_verify_password_title_1">Please enter your current password</string>
     <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
     <string name="fragment_wallet_address_title_1">\@Castcle ID or Wallet Address</string>
@@ -164,6 +166,7 @@
     <string name="fragment_wallet_transaction_title_6">Be sure to check the address before confirming</string>
     <string name="fragment_wallet_transaction_title_7">Add to shortcut</string>
     <string name="fragment_wallet_verify_title_1">General Information</string>
+    <string name="fragment_wallet_verify_title_2">* Please register your mobile number to continue using the wallet</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
@@ -174,11 +177,12 @@
     <string name="message">Message</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="more_image">+%d</string>
+    <string name="ok">OK</string>
     <string name="new_cast">New Cast</string>
-    <string name="not_verify">Not verify</string>
     <string name="notification">Notification</string>
     <string name="page">Page</string>
     <string name="password">Password</string>
+    <string name="please_verify_email">Please verify you email</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="profile">Profile</string>
     <string name="public_title">Public</string>
