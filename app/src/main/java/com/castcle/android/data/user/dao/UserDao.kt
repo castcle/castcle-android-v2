@@ -45,6 +45,9 @@ interface UserDao {
     @Query("DELETE FROM $TABLE_USER")
     suspend fun delete()
 
+    @Query("DELETE FROM $TABLE_USER WHERE user_id = :userId")
+    suspend fun delete(userId: String)
+
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1")
     suspend fun get(): List<UserEntity>
 
@@ -68,6 +71,9 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(items: List<UserEntity>): List<Long>
+
+    @Query("SELECT * FROM $TABLE_USER WHERE user_id = :userId")
+    fun retrieve(userId: String): Flow<UserEntity?>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_isOwner = 1 AND user_type = :type")
     fun retrieve(type: UserType): Flow<List<UserEntity>>

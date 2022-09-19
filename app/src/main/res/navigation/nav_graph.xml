@@ -26,6 +26,10 @@
             app:argType="com.castcle.android.presentation.dialog.option.OptionDialogType" />
 
         <action
+            android:id="@+id/toConfirmDeleteAccountFragment"
+            app:destination="@id/confirmDeleteAccountFragment" />
+
+        <action
             android:id="@+id/toReportSubjectFragment"
             app:destination="@id/reportSubjectFragment" />
 
@@ -50,6 +54,10 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.castcle.android.presentation.setting.account.AccountFragment">
+
+        <action
+            android:id="@+id/toConfirmDeleteAccountFragment"
+            app:destination="@id/confirmDeleteAccountFragment" />
 
         <action
             android:id="@+id/toRegisterEmailFragment"
@@ -80,6 +88,20 @@
         <action
             android:id="@+id/toUpdateProfileSuccessFragment"
             app:destination="@id/updateProfileSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmDeleteAccountFragment"
+        android:name="com.castcle.android.presentation.setting.confirm_delete_account.ConfirmDeleteAccountFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toDeleteAccountFragment"
+            app:destination="@id/deleteAccountFragment" />
 
     </fragment>
 
@@ -139,6 +161,30 @@
     <fragment
         android:id="@+id/countryCodeFragment"
         android:name="com.castcle.android.presentation.setting.country_code.CountryCodeFragment" />
+
+    <fragment
+        android:id="@+id/deleteAccountFragment"
+        android:name="com.castcle.android.presentation.setting.delete_account.DeleteAccountFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toDeleteAccountSuccessFragment"
+            app:destination="@id/deleteAccountSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/deleteAccountSuccessFragment"
+        android:name="com.castcle.android.presentation.setting.delete_account_success.DeleteAccountSuccessFragment">
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.domain.user.type.UserType" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/followingFollowersFragment"
@@ -330,7 +376,7 @@
 
     <fragment
         android:id="@+id/registerEmailFragment"
-        android:name="com.castcle.android.presentation.setting.register_email.RegisterEmailFragment"/>
+        android:name="com.castcle.android.presentation.setting.register_email.RegisterEmailFragment" />
 
     <fragment
         android:id="@+id/reportDetailFragment"

@@ -34,8 +34,7 @@ import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewEntity
 import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewEntity
 import com.twitter.sdk.android.core.TwitterAuthToken
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -48,7 +47,10 @@ class AccountViewModel(
 
     val onSuccess = MutableLiveData<Unit>()
 
+    val userId = MutableLiveData<String>()
+
     val views = database.user().retrieveWithLinkSocial(UserType.People)
+        .onEach { userId.postValue(it?.user?.id.orEmpty()) }
         .filterNotNull()
         .map { result ->
             listOf(
