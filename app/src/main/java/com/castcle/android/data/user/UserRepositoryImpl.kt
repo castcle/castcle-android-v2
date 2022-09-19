@@ -23,15 +23,18 @@
 
 package com.castcle.android.data.user
 
+import android.content.Context
 import androidx.room.withTransaction
+import com.castcle.android.core.api.AuthenticationApi
 import com.castcle.android.core.api.UserApi
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.error.ErrorMapper
-import com.castcle.android.core.extensions.apiCall
-import com.castcle.android.core.extensions.toMilliSecond
+import com.castcle.android.core.extensions.*
 import com.castcle.android.core.glide.GlidePreloader
+import com.castcle.android.data.authentication.entity.GetGuestAccessTokenRequest
 import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.data.user.entity.*
+import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.content.entity.CommentEntity
@@ -50,6 +53,8 @@ import org.koin.core.annotation.Factory
 @Factory
 class UserRepositoryImpl(
     private val api: UserApi,
+    private val authenticationApi: AuthenticationApi,
+    private val context: Context,
     private val database: CastcleDatabase,
     private val glidePreloader: GlidePreloader,
 ) : UserRepository {
@@ -110,6 +115,20 @@ class UserRepositoryImpl(
         }
     }
 
+    override suspend fun deleteAccount(body: DeleteAccountRequest) {
+        apiCall { api.deleteAccount(body = body) }
+        database.withTransaction {
+            fetchGuestAccessToken()
+            database.cast().delete()
+            database.linkSocial().delete()
+            database.notificationBadges().delete()
+            database.profile().delete()
+            database.recursiveRefreshToken().delete()
+            database.syncSocial().delete()
+            database.user().delete()
+        }
+    }
+
     override suspend fun deleteComment(commentId: String) {
         apiCall { api.deleteComment(commentId = commentId) }
         database.withTransaction {
@@ -119,6 +138,14 @@ class UserRepositoryImpl(
                 .firstOrNull()
             database.cast().decreaseCommentCount(content?.originalCastId.orEmpty())
             database.content().deleteByCreatedAt(createdAt = comment?.createdAt ?: 0L)
+        }
+    }
+
+    override suspend fun deletePage(body: DeleteAccountRequest, userId: String) {
+        apiCall { api.deletePage(body = body, id = userId) }
+        database.withTransaction {
+            database.syncSocial().delete(listOf(userId))
+            database.user().delete(userId)
         }
     }
 
@@ -134,6 +161,12 @@ class UserRepositoryImpl(
             )
         }
         database.content().deleteByCommentId(commentId = replyComment?.commentId.orEmpty())
+    }
+
+    private suspend fun fetchGuestAccessToken() {
+        val body = GetGuestAccessTokenRequest(context.getDeviceUniqueId())
+        val response = apiCall { authenticationApi.getGuestAccessToken(body = body) }
+        database.accessToken().insert(AccessTokenEntity.map(response))
     }
 
     override suspend fun followUser(targetUser: UserEntity) {

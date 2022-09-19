@@ -88,7 +88,9 @@ class AccountFragment : BaseFragment(), AccountListener {
         directions.toVerifyPasswordFragment().navigate()
     }
 
-    override fun onDeleteAccountClicked() = Unit
+    override fun onDeleteAccountClicked() {
+        directions.toConfirmDeleteAccountFragment(viewModel.userId.value.orEmpty()).navigate()
+    }
 
     override fun onLinkFacebookClicked() {
         facebookLoginManager.logInWithReadPermissions(

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clInsertEmail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_background_1">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Medium"
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_12sdp"
+        android:text="@string/fragment_confirm_delete_account_title_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvTitle2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:text="@string/fragment_confirm_delete_account_title_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_36sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:background="@drawable/bg_corner_24dp"
+        android:backgroundTint="@color/blue"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="@string/delete_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
