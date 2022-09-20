@@ -21,14 +21,12 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog
+package com.castcle.android.data.user.entity
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
-interface WalletDashboardDialogListener : CastcleListener {
-    fun onCancelClicked()
-    fun onFilterClicked(filter: WalletHistoryFilter)
-    fun onUserClicked(user: UserEntity)
-}
+@Keep
+data class DeleteAccountRequest(
+    @SerializedName("password") val password: String? = null,
+)

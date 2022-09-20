@@ -21,64 +21,59 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_verify
+package com.castcle.android.presentation.setting.confirm_delete_account
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.castcle.android.R
+import androidx.navigation.fragment.navArgs
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.domain.authentication.type.OtpType
-import com.castcle.android.presentation.setting.account.AccountListener
-import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewRenderer
-import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewRenderer
-import com.castcle.android.presentation.wallet.wallet_verify.item_wallet_verify_warning.WalletVerifyWarningViewRenderer
+import com.castcle.android.presentation.setting.confirm_delete_account.item_confirm_delete_account.ConfirmDeleteAccountViewRenderer
+import com.castcle.android.presentation.setting.confirm_delete_account.item_confirm_delete_page.ConfirmDeletePageViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class WalletVerifyFragment : BaseFragment(), AccountListener {
+class ConfirmDeleteAccountFragment : BaseFragment(), ConfirmDeleteAccountListener {
 
-    private val viewModel by viewModel<WalletVerifyViewModel>()
+    private val viewModel by viewModel<ConfirmDeleteAccountViewModel> { parametersOf(args.userId) }
 
-    private val directions = WalletVerifyFragmentDirections
+    private val args by navArgs<ConfirmDeleteAccountFragmentArgs>()
+
+    private val directions = ConfirmDeleteAccountFragmentDirections
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
-        binding.actionBar.bind(
-            leftButtonAction = { backPress() },
-            title = R.string.account_setting,
-        )
     }
 
     override fun initConsumer() {
+        lifecycleScope.launch {
+            viewModel.title.collectLatest {
+                binding.actionBar.bind(
+                    leftButtonAction = { backPress() },
+                    title = it,
+                )
+            }
+        }
         lifecycleScope.launch {
             viewModel.views.collectLatest(adapter::submitList)
         }
     }
 
-    override fun onRegisterEmailClicked() {
-        directions.toRegisterEmailFragment().navigate(R.id.walletVerifyFragment)
-    }
-
-    override fun onRequestOtpClicked(type: OtpType) {
-        directions.toRequestOtpFragment(type).navigate(R.id.walletVerifyFragment)
-    }
-
-    override fun onResentVerifyEmailClicked() {
-        directions.toResentVerifyEmailFragment().navigate(R.id.walletVerifyFragment)
+    override fun onDeleteClicked() {
+        directions.toDeleteAccountFragment(args.userId).navigate()
     }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(AccountMenuViewRenderer())
-            registerRenderer(AccountTitleViewRenderer())
-            registerRenderer(WalletVerifyWarningViewRenderer())
+            registerRenderer(ConfirmDeleteAccountViewRenderer())
+            registerRenderer(ConfirmDeletePageViewRenderer())
         }
     }
 

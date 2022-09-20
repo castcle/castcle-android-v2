@@ -51,11 +51,12 @@ class WalletDashboardDialogViewModel(
                     WalletHistoryFilter.SocialRewards,
                     WalletHistoryFilter.DepositSend,
                     WalletHistoryFilter.AirdropReferral,
+                    null
                 ).map {
                     WalletDashboardDialogFilterViewEntity(
                         selected = currentFilter == it,
                         filter = it,
-                        uniqueId = it.id,
+                        uniqueId = it?.id.orEmpty(),
                     )
                 }
             } else {

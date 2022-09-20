@@ -21,14 +21,24 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog
+package com.castcle.android.presentation.setting.delete_account.item_delete_account_user
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
 
-interface WalletDashboardDialogListener : CastcleListener {
-    fun onCancelClicked()
-    fun onFilterClicked(filter: WalletHistoryFilter)
-    fun onUserClicked(user: UserEntity)
+data class DeleteAccountUserViewEntity(
+    val user: UserEntity = UserEntity(),
+    override val uniqueId: String = user.id
+) : CastcleViewEntity {
+
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<DeleteAccountUserViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<DeleteAccountUserViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_delete_account_user
+
 }

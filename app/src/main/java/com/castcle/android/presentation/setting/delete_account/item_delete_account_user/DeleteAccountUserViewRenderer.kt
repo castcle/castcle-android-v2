@@ -21,14 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog
+package com.castcle.android.presentation.setting.delete_account.item_delete_account_user
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemDeleteAccountUserBinding
+import com.castcle.android.presentation.setting.delete_account.DeleteAccountListener
+import io.reactivex.disposables.CompositeDisposable
 
-interface WalletDashboardDialogListener : CastcleListener {
-    fun onCancelClicked()
-    fun onFilterClicked(filter: WalletHistoryFilter)
-    fun onUserClicked(user: UserEntity)
+class DeleteAccountUserViewRenderer : CastcleViewRenderer<DeleteAccountUserViewEntity,
+    DeleteAccountUserViewHolder,
+    DeleteAccountListener>(R.layout.item_delete_account_user) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: DeleteAccountListener,
+        compositeDisposable: CompositeDisposable
+    ) = DeleteAccountUserViewHolder(
+        ItemDeleteAccountUserBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+    )
+
 }

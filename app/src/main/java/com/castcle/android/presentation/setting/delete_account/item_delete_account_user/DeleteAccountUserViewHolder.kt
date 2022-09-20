@@ -21,14 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog
+package com.castcle.android.presentation.setting.delete_account.item_delete_account_user
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewHolder
+import com.castcle.android.core.extensions.loadAvatarImage
+import com.castcle.android.core.extensions.string
+import com.castcle.android.databinding.ItemDeleteAccountUserBinding
+import com.castcle.android.domain.user.type.UserType
 
-interface WalletDashboardDialogListener : CastcleListener {
-    fun onCancelClicked()
-    fun onFilterClicked(filter: WalletHistoryFilter)
-    fun onUserClicked(user: UserEntity)
+class DeleteAccountUserViewHolder(
+    private val binding: ItemDeleteAccountUserBinding,
+) : CastcleViewHolder<DeleteAccountUserViewEntity>(binding.root) {
+
+    override var item = DeleteAccountUserViewEntity()
+
+    override fun bind(bindItem: DeleteAccountUserViewEntity) {
+        binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
+        binding.tvDisplayName.text = item.user.displayName
+        binding.tvUserType.text = when (item.user.type) {
+            is UserType.Page -> string(R.string.page)
+            is UserType.People -> string(R.string.profile)
+        }
+    }
+
 }

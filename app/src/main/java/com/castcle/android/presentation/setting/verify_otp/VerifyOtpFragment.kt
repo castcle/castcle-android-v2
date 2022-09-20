@@ -32,10 +32,12 @@ import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.*
+import com.castcle.android.databinding.DialogBasicBinding
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.authentication.entity.OtpEntity
 import com.castcle.android.domain.authentication.type.OtpObjective
 import com.castcle.android.domain.authentication.type.OtpType
+import com.castcle.android.presentation.dialog.basic.BasicDialog
 import com.castcle.android.presentation.setting.verify_otp.item_verify_otp.VerifyOtpViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,7 +60,7 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
             leftButtonAction = { backPress() },
             title = when (args.otp.type) {
                 is OtpType.Email, is OtpType.Password -> R.string.password
-                is OtpType.Mobile -> R.string.mobile_number
+                is OtpType.Mobile -> R.string.fragment_verify_otp_title_10
             },
         )
     }
@@ -78,7 +80,12 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
         lifecycleScope.launch {
             viewModel.onError.collectLatest {
                 dismissLoading()
-                toast(it.message)
+                BasicDialog(
+                    binding = DialogBasicBinding.inflate(layoutInflater),
+                    button = string(R.string.ok),
+                    isCancelable = false,
+                    title = it.message.orEmpty(),
+                ).show()
             }
         }
         lifecycleScope.launch {
@@ -95,6 +102,7 @@ class VerifyOtpFragment : BaseFragment(), VerifyOtpListener {
                             .toChangePasswordFragment(it)
                             .navigate(R.id.forgotPasswordFragment)
                     }
+                    is OtpObjective.SendToken -> Unit
                     is OtpObjective.VerifyMobile -> {
                         directions
                             .toUpdateProfileSuccessFragment(it)

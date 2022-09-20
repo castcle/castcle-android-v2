@@ -86,7 +86,11 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
                 viewModel.deleteContent(type.contentId)
             }
             is OptionDialogType.MyPageOption -> when (eventType) {
-                type.deletePage -> Unit
+                type.deletePage -> {
+                    OptionDialogFragmentDirections
+                        .toConfirmDeleteAccountFragment(userId = type.userId)
+                        .navigate()
+                }
                 type.syncSocialMedia -> Unit
             }
             is OptionDialogType.MyUserOption -> Unit

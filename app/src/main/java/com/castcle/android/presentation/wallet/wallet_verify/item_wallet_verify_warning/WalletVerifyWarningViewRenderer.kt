@@ -21,14 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog
+package com.castcle.android.presentation.wallet.wallet_verify.item_wallet_verify_warning
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemWalletVerifyWarningBinding
+import io.reactivex.disposables.CompositeDisposable
 
-interface WalletDashboardDialogListener : CastcleListener {
-    fun onCancelClicked()
-    fun onFilterClicked(filter: WalletHistoryFilter)
-    fun onUserClicked(user: UserEntity)
+class WalletVerifyWarningViewRenderer : CastcleViewRenderer<WalletVerifyWarningViewEntity,
+    WalletVerifyWarningViewHolder,
+    CastcleListener>(R.layout.item_wallet_verify_warning) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: CastcleListener,
+        compositeDisposable: CompositeDisposable
+    ) = WalletVerifyWarningViewHolder(
+        ItemWalletVerifyWarningBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
+    )
+
 }
