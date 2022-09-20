@@ -21,14 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog
+package com.castcle.android.presentation.setting.confirm_delete_account.item_confirm_delete_page
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.domain.wallet.type.WalletHistoryFilter
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemConfirmDeletePageBinding
+import com.castcle.android.presentation.setting.confirm_delete_account.ConfirmDeleteAccountListener
+import io.reactivex.disposables.CompositeDisposable
 
-interface WalletDashboardDialogListener : CastcleListener {
-    fun onCancelClicked()
-    fun onFilterClicked(filter: WalletHistoryFilter)
-    fun onUserClicked(user: UserEntity)
+class ConfirmDeletePageViewRenderer : CastcleViewRenderer<ConfirmDeletePageViewEntity,
+    ConfirmDeletePageViewHolder,
+    ConfirmDeleteAccountListener>(R.layout.item_confirm_delete_page) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: ConfirmDeleteAccountListener,
+        compositeDisposable: CompositeDisposable
+    ) = ConfirmDeletePageViewHolder(
+        ItemConfirmDeletePageBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
+
 }

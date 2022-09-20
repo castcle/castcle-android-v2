@@ -10,6 +10,7 @@
     <string name="app_name">Castcle V2</string>
     <string name="block_user">Block %s</string>
     <string name="buy">Buy</string>
+    <string name="cancel">Cancel</string>
     <string name="cast_of">Cast of %s</string>
     <string name="cast">Cast</string>
     <string name="casts">Casts</string>
@@ -18,6 +19,7 @@
     <string name="copy_message">Copy message</string>
     <string name="confirm">Confirm</string>
     <string name="content_farming">Content Farming</string>
+    <string name="continues">Continue</string>
     <string name="date">Date</string>
     <string name="docs">Docs</string>
     <string name="done">Done</string>
@@ -44,7 +46,7 @@
     <string name="from">From</string>
     <string name="delete">Delete</string>
     <string name="delete_account">Delete Account</string>
-    <string name="delete_page">Delete page</string>
+    <string name="delete_page">Delete Page</string>
     <string name="deposit">Deposit</string>
     <string name="dialog_recast_title">Choose Page or User</string>
     <string name="facebook">Facebook</string>
@@ -57,6 +59,9 @@
     <string name="fragment_change_password_title_5">Use both lowercase and uppercase letters</string>
     <string name="fragment_change_password_title_6">Password did not match</string>
     <string name="fragment_country_code_title_1">Select Country Code</string>
+    <string name="fragment_delete_account_success_title_1">Back to home</string>
+    <string name="fragment_delete_account_success_title_2">We\'ve successfully deleted your account.</string>
+    <string name="fragment_delete_account_success_title_3">Your page has been permanently deleted.</string>
     <string name="fragment_forgot_password_title_1">Forgot password?</string>
     <string name="fragment_forgot_password_title_2">Enter your registered email address. We will send a verification code to your inbox</string>
     <string name="fragment_login_title_1">Welcome Back to Castcle</string>
@@ -108,6 +113,7 @@
     <string name="fragment_verify_otp_title_7">You will receive a 6 digit code to verify your e-mail. OTP code will be sent to %s</string>
     <string name="fragment_verify_otp_title_8">Enter verification code</string>
     <string name="fragment_verify_otp_title_9">You will receive a 6 digit code to reset you password. Verification code will be sent to %s</string>
+    <string name="fragment_verify_otp_title_10">Verify mobile number</string>
     <string name="fragment_verify_password_title_1">Please enter your current password</string>
     <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
     <string name="fragment_wallet_address_title_1">\@Castcle ID or Wallet Address</string>
@@ -160,6 +166,7 @@
     <string name="fragment_wallet_transaction_title_6">Be sure to check the address before confirming</string>
     <string name="fragment_wallet_transaction_title_7">Add to shortcut</string>
     <string name="fragment_wallet_verify_title_1">General Information</string>
+    <string name="fragment_wallet_verify_title_2">* Please register your mobile number to continue using the wallet</string>
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
@@ -170,11 +177,12 @@
     <string name="message">Message</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="more_image">+%d</string>
+    <string name="ok">OK</string>
     <string name="new_cast">New Cast</string>
-    <string name="not_verify">Not verify</string>
     <string name="notification">Notification</string>
     <string name="page">Page</string>
     <string name="password">Password</string>
+    <string name="please_verify_email">Please verify you email</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="profile">Profile</string>
     <string name="public_title">Public</string>
@@ -222,6 +230,13 @@
     <string name="world_trends_search">World trends search</string>
     <string name="world_trends_title">Top 10 World Trends</string>
     <string name="you_recasted">You recasted</string>
+    <string name="fragment_confirm_delete_account_title_1">Delete Account %s?</string>
+    <string name="fragment_confirm_delete_account_title_2">If you delete account:\n\n● You won\'t be able to reactivate your account\n\n● Your profile, photos, posts, videos and everything else you\'ve added will be permanently deleted. You won\'t be able to retrieve anything you\'ve added.\n\n● Your pages will be deleted\n\n● Your CAST token will be returned to Castcle</string>
+    <string name="fragment_confirm_delete_account_title_3">Deleting a page cannot be un done.</string>
+    <string name="fragment_confirm_delete_account_title_4">When you delete a page. You will not be able to retrieve it.</string>
+    <string name="fragment_confirm_delete_account_title_5">Are you sure you want to delete?</string>
+    <string name="fragment_delete_account_title_1">Confirm that this is your %s</string>
+    <string name="fragment_delete_account_title_2">Before you permanently delete you %s, Please enter your password.</string>
     <string name="fragment_sign_up_castcle">Welcome to Castcle</string>
     <string name="fragment_sign_up_email">Email</string>
     <string name="fragment_sign_up_password">Password</string>

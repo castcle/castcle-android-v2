@@ -21,64 +21,78 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.wallet.wallet_verify
+package com.castcle.android.presentation.setting.delete_account
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
-import com.castcle.android.R
+import androidx.navigation.fragment.navArgs
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
+import com.castcle.android.core.extensions.hideKeyboard
+import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.domain.authentication.type.OtpType
-import com.castcle.android.presentation.setting.account.AccountListener
-import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewRenderer
-import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewRenderer
-import com.castcle.android.presentation.wallet.wallet_verify.item_wallet_verify_warning.WalletVerifyWarningViewRenderer
+import com.castcle.android.domain.user.type.UserType
+import com.castcle.android.presentation.setting.delete_account.item_delete_account.DeleteAccountViewRenderer
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class WalletVerifyFragment : BaseFragment(), AccountListener {
+class DeleteAccountFragment : BaseFragment(), DeleteAccountListener {
 
-    private val viewModel by viewModel<WalletVerifyViewModel>()
+    private val viewModel by viewModel<DeleteAccountViewModel> { parametersOf(args.userId) }
 
-    private val directions = WalletVerifyFragmentDirections
+    private val args by navArgs<DeleteAccountFragmentArgs>()
+
+    private val directions = DeleteAccountFragmentDirections
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
-        binding.actionBar.bind(
-            leftButtonAction = { backPress() },
-            title = R.string.account_setting,
-        )
     }
 
     override fun initConsumer() {
         lifecycleScope.launch {
+            viewModel.title.collectLatest {
+                binding.actionBar.bind(
+                    leftButtonAction = { backPress() },
+                    title = it,
+                )
+            }
+        }
+        lifecycleScope.launch {
             viewModel.views.collectLatest(adapter::submitList)
+        }
+        lifecycleScope.launch {
+            viewModel.onSuccess.collectLatest {
+                dismissLoading()
+                directions.toDeleteAccountSuccessFragment(it).navigate()
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onError.collectLatest {
+                dismissLoading()
+                toast(it.message)
+            }
         }
     }
 
-    override fun onRegisterEmailClicked() {
-        directions.toRegisterEmailFragment().navigate(R.id.walletVerifyFragment)
-    }
-
-    override fun onRequestOtpClicked(type: OtpType) {
-        directions.toRequestOtpFragment(type).navigate(R.id.walletVerifyFragment)
-    }
-
-    override fun onResentVerifyEmailClicked() {
-        directions.toResentVerifyEmailFragment().navigate(R.id.walletVerifyFragment)
+    override fun onDeleteAccountClicked(password: String, type: UserType) {
+        showLoading()
+        hideKeyboard()
+        if (type is UserType.People) {
+            viewModel.deleteAccount(password)
+        } else {
+            viewModel.deletePage(password)
+        }
     }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(AccountMenuViewRenderer())
-            registerRenderer(AccountTitleViewRenderer())
-            registerRenderer(WalletVerifyWarningViewRenderer())
+            registerRenderer(DeleteAccountViewRenderer())
         }
     }
 

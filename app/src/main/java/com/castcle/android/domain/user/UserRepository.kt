@@ -24,8 +24,7 @@
 package com.castcle.android.domain.user
 
 import com.castcle.android.data.base.BaseUiState
-import com.castcle.android.data.user.entity.CreateQuoteCastRequest
-import com.castcle.android.data.user.entity.ReportRequest
+import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -36,7 +35,9 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     suspend fun commentCast(contentId: String, message: String)
     suspend fun createQuoteCast(body: CreateQuoteCastRequest, userId: String)
+    suspend fun deleteAccount(body: DeleteAccountRequest)
     suspend fun deleteComment(commentId: String)
+    suspend fun deletePage(body: DeleteAccountRequest, userId: String)
     suspend fun deleteReplyComment(replyCommentId: String)
     suspend fun followUser(targetUser: UserEntity)
     suspend fun fetchUserPage(): List<UserEntity>

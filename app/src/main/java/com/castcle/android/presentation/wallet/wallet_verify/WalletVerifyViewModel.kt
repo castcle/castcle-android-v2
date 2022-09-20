@@ -30,6 +30,7 @@ import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewEntity
 import com.castcle.android.presentation.setting.account.item_title.AccountTitleViewEntity
+import com.castcle.android.presentation.wallet.wallet_verify.item_wallet_verify_warning.WalletVerifyWarningViewEntity
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import org.koin.android.annotation.KoinViewModel
@@ -54,7 +55,7 @@ class WalletVerifyViewModel(
                     description = if (result.user.email.isNullOrBlank() || result.user.verifiedEmail == true) {
                         null
                     } else {
-                        R.string.not_verify
+                        R.string.please_verify_email
                     },
                     detail = result.user.email?.ifBlank { null } ?: R.string.unregistered,
                     showArrow = result.user.verifiedEmail == false,
@@ -69,6 +70,7 @@ class WalletVerifyViewModel(
                     },
                     titleId = R.string.mobile_number,
                 ),
+                WalletVerifyWarningViewEntity(),
             )
         }
 
