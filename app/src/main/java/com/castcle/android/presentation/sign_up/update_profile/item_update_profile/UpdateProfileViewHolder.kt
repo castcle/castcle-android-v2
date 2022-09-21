@@ -57,6 +57,9 @@ class UpdateProfileViewHolder(
     override fun bind(bindItem: UpdateProfileViewEntity) {
         super.bind(bindItem)
         with(binding) {
+            binding.btNext.run {
+                isEnabled = true
+            }
             bindItem.userEntity.let {
                 tvCastcleId.text = it.castcleId
                 tvCastcleName.text = it.displayName
@@ -71,12 +74,6 @@ class UpdateProfileViewHolder(
                     thumbnailUrl = it.cover?.thumbnail,
                     uri = bindItem.coveUpLoad, url = it.cover?.original?.ifBlank { null }
                 )
-            }
-            (bindItem.avatarUpLoad != null || bindItem.coveUpLoad != null).also { isPass ->
-                binding.btNext.run {
-                    isEnabled = isPass
-                    setStatePass(isPass)
-                }
             }
             bindItem.onUploadAvatar?.let {
                 onAvatarLoading(it)

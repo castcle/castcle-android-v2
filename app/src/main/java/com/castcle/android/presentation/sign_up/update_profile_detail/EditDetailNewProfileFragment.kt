@@ -2,6 +2,7 @@ package com.castcle.android.presentation.sign_up.update_profile_detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -150,28 +151,10 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 )
             }
 
-            compositeDisposable += itLinkFacebook.onTextChange {
-                handleButtonDone(it.isNotBlank())
-            }
-
-            compositeDisposable += itLinkMedium.onTextChange {
-                handleButtonDone(it.isNotBlank())
-            }
-
-            compositeDisposable += itLinkTwitter.onTextChange {
-                handleButtonDone(it.isNotBlank())
-            }
-
-            compositeDisposable += itLinkYouTube.onTextChange {
-                handleButtonDone(it.isNotBlank())
-            }
-
-            compositeDisposable += itLinkWeb.onTextChange {
-                handleButtonDone(it.isNotBlank())
-            }
-
-            compositeDisposable += itOverView.onTextChange {
-                handleButtonDone(it.isNotBlank())
+            itOverView.run {
+                compositeDisposable += onTextChange {
+                    onBindOverviewCount(it.length)
+                }
             }
 
             compositeDisposable += btDone.onClick {
@@ -191,6 +174,26 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
             }
 
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun onBindOverviewCount(overviewCount: Int) {
+        val (color, isPass) = when {
+            overviewCount <= LIMIT_OVERVIEW -> {
+                R.color.white to true
+            }
+            else -> {
+                R.color.red_3 to false
+            }
+        }
+
+        binding.itemEditProfile.tvOverCount.run {
+            text = (LIMIT_OVERVIEW - overviewCount).toString()
+            setTextColor(color(color))
+        }
+
+        handleButtonDone(isPass)
+
     }
 
     private fun onInsertContactNumber() {
@@ -220,7 +223,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     tvNumberDescription.setTextColorState(contactNumber?.isNotBlank() == true)
                     tvNumberDescription.text =
                         contactNumber ?: requireContext().getString(R.string.none)
-                    handleButtonDone(contactEmail != null || contactNumber != null)
+                    handleButtonDone(true)
                 }
             }
         }
@@ -326,3 +329,5 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
         }
     }
 }
+
+private const val LIMIT_OVERVIEW = 280

@@ -122,7 +122,7 @@ class NewProfileViewModel(
                 castcleID.isBlank() -> {
                     VerifyProfileState.NONE
                 }
-                castcleID.length > CASTCLE_CHAR_LIMIT -> {
+                castcleID.length >= CASTCLE_CHAR_LIMIT -> {
                     VerifyProfileState.CASTCLE_ID_LENGHT_ERROR
                 }
                 !castcleID.replace("@", "").isEngText() -> {
