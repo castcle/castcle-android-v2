@@ -68,32 +68,14 @@ class SignUpViewModel(
     }
 
     fun createPassword(password: String? = null, confirmPass: String? = null) {
+
         viewModelScope.launch {
-            confirmPass?.let {
-                _confirmPassword.value = it
-                if (it == _password.value && it.isMinCharacters() &&
-                    _confirmPassword.value?.isLowerAndUpperCase() == true
-                ) {
-                    passwordUiState.emit(VerifyPasswordUiState.OnPasswordMatch)
-                } else {
-                    passwordUiState.emit(VerifyPasswordUiState.OnPasswordNotMatch)
-                }
-            }
 
             password?.let {
                 _password.value = it
                 when {
                     password.isEmpty() -> {
                         passwordUiState.emit(VerifyPasswordUiState.Default)
-                    }
-                    password.isMinCharacters() && password.isLowerAndUpperCase() -> {
-                        passwordUiState.emit(VerifyPasswordUiState.OnCharactersConditionPass)
-                    }
-                    password.isMinCharacters() -> {
-                        passwordUiState.emit(VerifyPasswordUiState.OnCharactersMinimumPass)
-                    }
-                    password.isLowerAndUpperCase() -> {
-                        passwordUiState.emit(VerifyPasswordUiState.OnCharacterUpperLowerPass)
                     }
                     !password.isMinCharacters() && !password.isLowerAndUpperCase() -> {
                         passwordUiState.emit(VerifyPasswordUiState.OnCharactersMinimumError)
@@ -105,6 +87,28 @@ class SignUpViewModel(
                     !password.isLowerAndUpperCase() -> {
                         passwordUiState.emit(VerifyPasswordUiState.OnCharacterUpperLowerError)
                     }
+                    password.isMinCharacters() && password.isLowerAndUpperCase() -> {
+                        passwordUiState.emit(VerifyPasswordUiState.OnCharactersConditionPass)
+                    }
+                    password.isMinCharacters() -> {
+                        passwordUiState.emit(VerifyPasswordUiState.OnCharactersMinimumPass)
+                    }
+                    password.isLowerAndUpperCase() -> {
+                        passwordUiState.emit(VerifyPasswordUiState.OnCharacterUpperLowerPass)
+                    }
+                }
+            }
+        }
+
+        viewModelScope.launch {
+            confirmPass?.let {
+                _confirmPassword.value = it
+                if (it == _password.value && it.isMinCharacters() &&
+                    _confirmPassword.value?.isLowerAndUpperCase() == true
+                ) {
+                    passwordUiState.emit(VerifyPasswordUiState.OnPasswordMatch)
+                } else {
+                    passwordUiState.emit(VerifyPasswordUiState.OnPasswordNotMatch)
                 }
             }
         }
