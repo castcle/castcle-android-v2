@@ -532,6 +532,9 @@
             android:id="@+id/toPageCondition"
             app:destination="@+id/createPageConditionFragment" />
 
+        <action
+            android:id="@+id/toAdManageFragment"
+            app:destination="@+id/adManageFragment" />
     </fragment>
 
     <fragment
@@ -841,4 +844,54 @@
             app:nullable="false" />
     </fragment>
 
+    <fragment
+        android:id="@+id/adManageFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.AdsManageFragment">
+
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
+        <action
+            android:id="@+id/toAdDialogFilter"
+            app:destination="@id/adDialogFilter" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/boostAdsFragment"
+        android:name="com.castcle.android.presentation.setting.ads.boost_ads.BoostAdsFragment">
+
+        <argument
+            android:name="boostBundle"
+            app:argType="com.castcle.android.domain.ads.type.BoostAdBundle"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/toPageChooseFragment"
+            app:destination="@id/pageChooseFragment"/>
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/adDialogFilter"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_dialog_filter.AdDialogFilterFragment">
+
+        <argument
+            android:name="adFilter"
+            app:argType="com.castcle.android.domain.ads.type.AdFilterType"
+            app:nullable="false" />
+
+    </dialog>
+
+    <fragment
+        android:id="@+id/pageChooseFragment"
+        android:name="com.castcle.android.presentation.setting.ads.boost_ads.page_choose_select.PageChooseFragment">
+
+        <argument
+            android:name="boostBundle"
+            app:argType="com.castcle.android.domain.ads.type.BoostAdBundle"
+            app:nullable="false" />
+
+    </fragment>
 </navigation>

@@ -155,4 +155,37 @@
     <style name="ThemeOverlay.App.CheckBox" parent="">
         <item name="buttonTint">@color/checkbox_tint</item>
     </style>
+
+    <style name="AppTextKanitBold">
+        <item name="fontFamily">@font/kanit_bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTextKanitBold.Headline">
+        <item name="android:textSize">@dimen/_18sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Medium">
+        <item name="android:textSize">@dimen/_16sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Regular">
+        <item name="android:textSize">@dimen/_14sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Small">
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.xSmall">
+        <item name="android:textSize">@dimen/_11sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.Default">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+
+    <style name="AppTextKanitBold.xxSmall">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
 </resources>

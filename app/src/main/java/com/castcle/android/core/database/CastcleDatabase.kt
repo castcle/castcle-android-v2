@@ -26,6 +26,7 @@ package com.castcle.android.core.database
 import androidx.room.*
 import com.castcle.android.core.constants.DATABASE_VERSION
 import com.castcle.android.core.database.type_converters.StringListConverter
+import com.castcle.android.data.ads.dao.*
 import com.castcle.android.data.authentication.dao.AccessTokenDao
 import com.castcle.android.data.authentication.dao.RecursiveRefreshTokenDao
 import com.castcle.android.data.cast.dao.CastDao
@@ -38,6 +39,8 @@ import com.castcle.android.data.notification.dao.NotificationBadgesDao
 import com.castcle.android.data.search.dao.*
 import com.castcle.android.data.user.dao.*
 import com.castcle.android.data.wallet.dao.*
+import com.castcle.android.domain.ads.entity.*
+import com.castcle.android.domain.ads.type.*
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.RecursiveRefreshTokenEntity
 import com.castcle.android.domain.authentication.type.AccessTokenType
@@ -89,6 +92,9 @@ import com.castcle.android.domain.wallet.type.*
         WalletHistoryEntity::class,
         WalletShortcutEntity::class,
         WhoToFollowEntity::class,
+        AdvertiseListEntity::class,
+        AdvertiseEntity::class,
+        BoostAdsEntity::class
     ],
     version = DATABASE_VERSION,
 )
@@ -108,6 +114,12 @@ import com.castcle.android.domain.wallet.type.*
     WalletHistoryFilter.Converter::class,
     WalletHistoryStatus.Converter::class,
     WalletHistoryType.Converter::class,
+    ObjectiveType.Converter::class,
+    PaymentType.Converter::class,
+    DailyBidType.Converter::class,
+    AdvertiseType.Converter::class,
+    AdBoostStatusType.Converter::class,
+    AdStatusType.Converter::class,
 )
 abstract class CastcleDatabase : RoomDatabase() {
     abstract fun accessToken(): AccessTokenDao
@@ -132,4 +144,7 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun walletHistory(): WalletHistoryDao
     abstract fun walletShortcut(): WalletShortcutDao
     abstract fun whoToFollow(): WhoToFollowDao
+    abstract fun boostAds(): BoostAdsDao
+    abstract fun advertise(): AdvertiseDao
+    abstract fun advertiseList(): AdvertiseListDao
 }
