@@ -92,7 +92,7 @@ class SettingFragment : BaseFragment(), SettingListener {
     }
 
     override fun onNewPageClick() {
-        directions.toPageCondition().navigate()
+        directions.toCreatePageOptionFragment().navigate()
     }
 
     override fun onNotificationClicked() = Unit

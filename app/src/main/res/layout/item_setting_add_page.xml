@@ -9,7 +9,6 @@
     android:layout_marginBottom="@dimen/_6sdp"
     android:background="@drawable/bg_outline_circle"
     android:backgroundTint="@color/gray_6"
-    android:foreground="@drawable/bg_ripple_circle"
     android:padding="@dimen/_10sdp"
     app:srcCompat="@drawable/ic_add"
     app:tint="@color/gray_6" />
