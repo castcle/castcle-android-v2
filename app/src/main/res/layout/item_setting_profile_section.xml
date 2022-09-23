@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/black_background_1"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/_12sdp">
+    android:layout_marginTop="@dimen/_12sdp"
+    android:background="@color/black_background_1">
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/AppTextKanit.Small"
@@ -24,7 +24,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_6sdp"
-        android:foreground="@drawable/bg_ripple_rectangle_corner_12dp"
         android:padding="@dimen/_6sdp"
         android:text="@string/fragment_setting_title_5"
         android:textColor="@color/blue"
