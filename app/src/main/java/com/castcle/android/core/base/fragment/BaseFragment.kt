@@ -34,6 +34,7 @@ import com.castcle.android.core.base.activity.BaseActivity
 import com.castcle.android.core.extensions.cast
 import com.castcle.android.core.extensions.hideKeyboard
 import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 
 abstract class BaseFragment : Fragment() {
 
@@ -53,8 +54,12 @@ abstract class BaseFragment : Fragment() {
     open fun initViewProperties() = Unit
 
     fun NavDirections.navigate(navOptions: NavOptions? = null) {
-        activity?.runOnUiThread {
-            findNavController().navigate(this, navOptions)
+        try {
+            activity?.runOnUiThread {
+                findNavController().navigate(this, navOptions)
+            }
+        } catch (throwable: Throwable) {
+            Timber.e(throwable)
         }
     }
 
@@ -99,12 +104,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     fun Fragment.addOnBackPressedCallback(block: (() -> Unit)? = null) {
-        activity?.onBackPressedDispatcher?.addCallback(
-            this, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    block?.invoke()
-                }
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                block?.invoke()
             }
-        )
+        })
     }
 }
