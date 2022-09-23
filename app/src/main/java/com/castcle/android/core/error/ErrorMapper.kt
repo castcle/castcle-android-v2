@@ -44,6 +44,10 @@ class ErrorMapper {
             3028 -> CastcleException.EmailHasBeenVerifiedException(throwable.errorMessage)
             4001 -> CastcleException.UserNotFoundException(throwable.errorMessage)
             5003 -> CastcleException.ContentNotFoundException(throwable.errorMessage)
+            1007 -> CastcleException.CannotAccessDataException(throwable.errorMessage)
+            500 -> CastcleException.InternalServerException(throwable.errorMessage)
+            400 -> CastcleException.BoostAdException(throwable.errorMessageList)
+            8008 -> CastcleException.BoostAdException(listOf(throwable.errorMessage))
             else -> throwable
         }
         null -> UnknownException()
@@ -67,20 +71,23 @@ class ErrorMapper {
                     statusCode = json?.asJsonObject?.get("statusCode")?.asInt,
                 )
             }
-            val response = GsonBuilder()
+            val response: ApiErrorResponse? = GsonBuilder()
                 .registerTypeAdapter(ApiErrorResponse::class.java, gsonDeserializer)
                 .create()
                 .fromJson(responseBody?.string().orEmpty(), ApiErrorResponse::class.java)
             ApiException(
-                errorCode = response.code ?: response.statusCode ?: -1,
-                errorMessage = response.message ?: "Something went wrong. Please try again later.",
-                statusCode = response.statusCode ?: -1,
+                errorCode = response?.code ?: response?.statusCode ?: -1,
+                errorMessage = response?.message as? String
+                    ?: "Something went wrong. Please try again later.",
+                errorMessageList = (response?.message as? List<*>).orEmpty().map { it.toString() },
+                statusCode = response?.statusCode ?: -1,
             )
         } catch (throwable: Throwable) {
             ApiException(
                 errorCode = -1,
-                errorMessage = throwable.message ?: "Something went wrong. Please try again later.",
+                errorMessage = "Something went wrong. Please try again later.",
                 statusCode = -1,
+                errorMessageList = null
             )
         }
         return map(apiException)

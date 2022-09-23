@@ -38,6 +38,7 @@ data class FeedQuoteViewEntity(
     val referenceCast: CastEntity? = null,
     override val uniqueId: String = "",
     val user: UserEntity = UserEntity(),
+    val quoteIsOwner: Boolean = false
 ) : CastcleViewEntity, FeedEngagement {
 
     override fun getFeedEngagementId(): String? {

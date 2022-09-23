@@ -96,7 +96,11 @@ class FeedWebViewHolder(
         }
         binding.participateBar.isGone =
             displayType is FeedDisplayType.QuoteCast || displayType is FeedDisplayType.NewCast
-        binding.participateBar.bind(item.cast, this)
+        binding.participateBar.bind(
+            item.cast,
+            this,
+            castIsOwner = displayType !is FeedDisplayType.AdPreview
+        )
         binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, displayType !is FeedDisplayType.NewCast)
         binding.castcleTextView.onClearMessage()
@@ -148,4 +152,7 @@ class FeedWebViewHolder(
         listener.onUserClicked(user)
     }
 
+    override fun onBoostCastClicked(cast: CastEntity) {
+        listener.onBoostCastClicked(cast)
+    }
 }

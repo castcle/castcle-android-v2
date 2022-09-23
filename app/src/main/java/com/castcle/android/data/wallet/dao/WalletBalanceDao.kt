@@ -40,4 +40,6 @@ interface WalletBalanceDao {
     @Query("SELECT * FROM $TABLE_WALLET_BALANCE WHERE walletBalance_userId = :userId")
     fun retrieve(userId: String): Flow<WalletBalanceEntity?>
 
+    @Query("SELECT * FROM $TABLE_WALLET_BALANCE WHERE walletBalance_userId = :userId")
+    suspend fun getWalletEntity(userId: String): List<WalletBalanceEntity>?
 }
