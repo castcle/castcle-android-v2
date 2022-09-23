@@ -23,7 +23,15 @@
 
 package com.castcle.android.core.extensions
 
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
+import com.castcle.android.R
 import kotlin.math.roundToInt
 
 private fun AppCompatTextView.resizeDrawable(multiplyer: Double) {
@@ -33,4 +41,35 @@ private fun AppCompatTextView.resizeDrawable(multiplyer: Double) {
         drawable.setBounds(0, 0, pixelDrawableSize, pixelDrawableSize)
         setCompoundDrawables(drawable, null, null, null)
     }
+}
+
+fun TextView.setTintColor(tintColor: Int) {
+    context.getColorResStateList(tintColor).run {
+        backgroundTintList = this
+        foregroundTintList = this
+    }
+}
+
+fun TextView.makeSpannableString(
+    message: String,
+    startSp: Int,
+    endSp: Int,
+    onClickSpannable: (() -> Unit)? = null
+) {
+    val textMessage = SpannableString(message)
+    val textClickListener1: ClickableSpan = object : ClickableSpan() {
+        override fun onClick(p0: View) {
+            onClickSpannable?.invoke()
+        }
+    }
+
+    textMessage.setSpan(textClickListener1, startSp, endSp, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    textMessage.setSpan(
+        ForegroundColorSpan(context.getColorResource(R.color.blue)),
+        startSp,
+        endSp,
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    movementMethod = LinkMovementMethod.getInstance()
+    text = textMessage
 }

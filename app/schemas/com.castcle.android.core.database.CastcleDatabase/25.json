@@ -1322,6 +1322,334 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "advertiseList",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `advertiseList_advertiseReferenceId` TEXT NOT NULL, `advertiseList_userReferenceId` TEXT NOT NULL, `advertiseList_castContentReferenceId` TEXT NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "advertiseReferenceId",
+            "columnName": "advertiseList_advertiseReferenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userReferenceId",
+            "columnName": "advertiseList_userReferenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "castContentReferenceId",
+            "columnName": "advertiseList_castContentReferenceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "advertise",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `advertise_id` TEXT, `adStatus` TEXT, `boostStatus` TEXT, `boostType` TEXT, `campaignCode` TEXT, `campaignMessage` TEXT, `campaignName` TEXT, `createdAt` TEXT, `dailyBudget` REAL, `dailyBudgetValue` REAL, `duration` INTEGER, `objective` TEXT, `dailyBid` TEXT, `dailyBidValue` INTEGER, `paymentMethod` TEXT, `updatedAt` TEXT, `endedAt` TEXT, `statusReason` TEXT, `engagementClicks` INTEGER, `engagementComments` INTEGER, `engagementFarm` INTEGER, `engagementFollowerGain` INTEGER, `engagementLikes` INTEGER, `engagementQuotecast` INTEGER, `engagementRecast` INTEGER, `engagementRewardDistributed` INTEGER, `engagementSaved` INTEGER, `statisticsCpm` REAL, `statisticsBudgetSpent` REAL, `statisticsImpressionOrganic` INTEGER, `statisticsImpressionPaid` INTEGER, `statisticsReachOrganic` INTEGER, `statisticsReachPaid` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adsId",
+            "columnName": "advertise_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "adStatus",
+            "columnName": "adStatus",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "boostStatus",
+            "columnName": "boostStatus",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "boostType",
+            "columnName": "boostType",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "campaignCode",
+            "columnName": "campaignCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "campaignMessage",
+            "columnName": "campaignMessage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "campaignName",
+            "columnName": "campaignName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyBudget",
+            "columnName": "dailyBudget",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyBudgetValue",
+            "columnName": "dailyBudgetValue",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "objective",
+            "columnName": "objective",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyBid",
+            "columnName": "dailyBid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dailyBidValue",
+            "columnName": "dailyBidValue",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "paymentMethod",
+            "columnName": "paymentMethod",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "endedAt",
+            "columnName": "endedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statusReason",
+            "columnName": "statusReason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementClicks",
+            "columnName": "engagementClicks",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementComments",
+            "columnName": "engagementComments",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementFarm",
+            "columnName": "engagementFarm",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementFollowerGain",
+            "columnName": "engagementFollowerGain",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementLikes",
+            "columnName": "engagementLikes",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementQuotecast",
+            "columnName": "engagementQuotecast",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementRecast",
+            "columnName": "engagementRecast",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementRewardDistributed",
+            "columnName": "engagementRewardDistributed",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "engagementSaved",
+            "columnName": "engagementSaved",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statisticsCpm",
+            "columnName": "statisticsCpm",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statisticsBudgetSpent",
+            "columnName": "statisticsBudgetSpent",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statisticsImpressionOrganic",
+            "columnName": "statisticsImpressionOrganic",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statisticsImpressionPaid",
+            "columnName": "statisticsImpressionPaid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statisticsReachOrganic",
+            "columnName": "statisticsReachOrganic",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "statisticsReachPaid",
+            "columnName": "statisticsReachPaid",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "boostAds",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`boostAds_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL DEFAULT 0, `boostAds_objective` TEXT NOT NULL, `boostAds_payment` TEXT NOT NULL, `boostAds_createAt` INTEGER NOT NULL DEFAULT 0, `boostAds_relationId` TEXT NOT NULL DEFAULT '', `boostAds_campaignName` TEXT NOT NULL DEFAULT '', `boostAds_campaignMessage` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "boostAds_id",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "objective",
+            "columnName": "boostAds_objective",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paymentMethod",
+            "columnName": "boostAds_payment",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createAt",
+            "columnName": "boostAds_createAt",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "0"
+          },
+          {
+            "fieldPath": "relationId",
+            "columnName": "boostAds_relationId",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "campaignName",
+            "columnName": "boostAds_campaignName",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "''"
+          },
+          {
+            "fieldPath": "campaignMessage",
+            "columnName": "boostAds_campaignMessage",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "boostAds_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],

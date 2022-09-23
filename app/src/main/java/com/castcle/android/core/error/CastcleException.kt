@@ -37,4 +37,10 @@ sealed class CastcleException(override val message: String?) : Throwable(message
 
     class UserNotFoundException(override val message: String?) : CastcleException(message)
 
+    class CannotAccessDataException(override val message: String?) : CastcleException(message)
+
+    class InternalServerException(override val message: String?) : CastcleException(message)
+
+    class BoostAdException(val messageList: List<String>?) : CastcleException("")
+
 }

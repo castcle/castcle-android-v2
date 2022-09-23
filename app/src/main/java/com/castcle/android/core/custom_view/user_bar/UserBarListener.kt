@@ -28,7 +28,7 @@ import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.UserEntity
 
 interface UserBarListener : CastcleListener {
-    fun onOptionClicked(cast: CastEntity, user: UserEntity)
-    fun onFollowClicked(user: UserEntity)
-    fun onUserClicked(user: UserEntity)
+    fun onOptionClicked(cast: CastEntity, user: UserEntity) = Unit
+    fun onFollowClicked(user: UserEntity) = Unit
+    fun onUserClicked(user: UserEntity) = Unit
 }

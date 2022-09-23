@@ -3,11 +3,16 @@ package com.castcle.android.core.extensions
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat.getSystemService
 import com.castcle.android.R
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
+import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.ln
+import kotlin.math.pow
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -135,4 +140,11 @@ fun TextView.setColorWaring(context: Context, isSelected: Boolean) {
             context.getColorResource(R.color.blue)
         }
     )
+}
+
+fun View.setTintColor(tintColor: Int) {
+    context.getColorResStateList(tintColor).run {
+        backgroundTintList = this
+        foregroundTintList = this
+    }
 }

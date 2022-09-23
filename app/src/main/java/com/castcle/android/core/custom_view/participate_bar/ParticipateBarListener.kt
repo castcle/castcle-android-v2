@@ -31,4 +31,5 @@ interface ParticipateBarListener : CastcleListener {
     fun onContentFarmingClicked(cast: CastEntity)
     fun onLikeClicked(cast: CastEntity)
     fun onRecastClicked(cast: CastEntity)
+    fun onBoostCastClicked(cast: CastEntity)
 }

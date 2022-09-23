@@ -28,4 +28,5 @@ sealed class FeedDisplayType {
     object Normal : FeedDisplayType()
     object QuoteCast : FeedDisplayType()
     object Recast : FeedDisplayType()
+    object AdPreview : FeedDisplayType()
 }
