@@ -80,7 +80,9 @@ class SettingFragment : BaseFragment(), SettingListener {
         directions.toAccountFragment().navigate()
     }
 
-    override fun onAdManagerClick() = Unit
+    override fun onAdManagerClick() {
+        directions.toAdManageFragment().navigate()
+    }
 
     override fun onContentFarmingClick() = Unit
 

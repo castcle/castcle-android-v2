@@ -90,6 +90,7 @@ class FeedMapper {
                 referenceCast = item.referenceCast,
                 uniqueId = item.feed.id.toString(),
                 user = item.originalUser ?: UserEntity(),
+                quoteIsOwner = item.referenceCast?.isOwner ?: false
             )
             CastType.Recast -> FeedRecastViewEntity(
                 cast = item.originalCast,

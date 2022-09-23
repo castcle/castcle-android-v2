@@ -278,6 +278,10 @@
             android:id="@+id/toWhoToFollowFragment"
             app:destination="@id/whoToFollowFragment" />
 
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
     </fragment>
 
     <fragment
@@ -371,6 +375,10 @@
         <action
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment" />
+
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
 
     </fragment>
 
@@ -532,6 +540,9 @@
             android:id="@+id/toPageCondition"
             app:destination="@+id/createPageConditionFragment" />
 
+        <action
+            android:id="@+id/toAdManageFragment"
+            app:destination="@+id/adManageFragment" />
     </fragment>
 
     <fragment
@@ -839,6 +850,95 @@
             android:name="insertEntity"
             app:argType="com.castcle.android.presentation.setting.create_page.insert.entity.InsertEntity"
             app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adManageFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.AdsManageFragment">
+
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
+        <action
+            android:id="@+id/toAdDialogFilter"
+            app:destination="@id/adDialogFilter" />
+
+        <action
+            android:id="@+id/toAdDetailFragment"
+            app:destination="@id/adDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/boostAdsFragment"
+        android:name="com.castcle.android.presentation.setting.ads.boost_ads.BoostAdsFragment">
+
+        <argument
+            android:name="boostBundle"
+            app:argType="com.castcle.android.domain.ads.type.BoostAdBundle"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/toPageChooseFragment"
+            app:destination="@id/pageChooseFragment" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/adDialogFilter"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_dialog_filter.AdDialogFilterFragment">
+
+        <argument
+            android:name="adFilter"
+            app:argType="com.castcle.android.domain.ads.type.AdFilterType"
+            app:nullable="false" />
+
+    </dialog>
+
+    <fragment
+        android:id="@+id/pageChooseFragment"
+        android:name="com.castcle.android.presentation.setting.ads.boost_ads.page_choose_select.PageChooseFragment">
+
+        <argument
+            android:name="boostBundle"
+            app:argType="com.castcle.android.domain.ads.type.BoostAdBundle"
+            app:nullable="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/adDetailFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_detail.AdDetailFragment">
+
+        <argument
+            android:name="adsId"
+            app:argType="string"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/toAdBoostStatus"
+            app:destination="@id/adBoostStatus" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/adBoostStatus"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_detail.ad_detail_result.change_ad_status.ChangeAdsStatusDialogFragment">
+
+        <argument
+            android:name="adBoostStatus"
+            app:argType="com.castcle.android.domain.ads.type.AdBoostStatusType"
+            app:nullable="false" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/adDetailResultFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_detail.ad_detail_result.AdDetailResultFragment">
+
+        <action
+            android:id="@+id/toAdBoostStatus"
+            app:destination="@id/adBoostStatus" />
+
     </fragment>
 
 </navigation>

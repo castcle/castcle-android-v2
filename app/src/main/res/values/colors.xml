@@ -34,4 +34,6 @@
     <color name="white_primary_alpha_20">#33F5F5F5</color>
     <color name="black_tranparen_80">#9917191A</color>
     <color name="gray_medium">#6A6C6F</color>
+    <color name="yellow_cancel">#FFB100</color>
+    <color name="green_approved">#75AC6B</color>
 </resources>

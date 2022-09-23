@@ -36,6 +36,7 @@ import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentFeedBinding
+import com.castcle.android.domain.ads.type.BoostAdBundle
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -240,6 +241,12 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
 
     override fun onRetryClicked() {
         adapter.retry()
+    }
+
+    override fun onBoostCastClicked(cast: CastEntity) {
+        directions.toBoostAdsFragment(
+            BoostAdBundle.BoostAdContentBundle(cast.id, cast.authorId)
+        ).navigate()
     }
 
     override fun onPause() {

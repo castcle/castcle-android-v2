@@ -28,6 +28,7 @@ import com.castcle.android.BuildConfig
 class ApiException(
     val errorCode: Int,
     val errorMessage: String,
+    val errorMessageList: List<String>?,
     val statusCode: Int,
 ) : Throwable(
     if (BuildConfig.DEBUG) {
