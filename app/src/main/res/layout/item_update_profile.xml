@@ -172,7 +172,7 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_24sdp"
         android:background="@drawable/bg_corner_24dp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/gray_1"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/fragment_update_profile_button_next"

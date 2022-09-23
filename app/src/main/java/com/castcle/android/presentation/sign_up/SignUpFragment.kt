@@ -79,17 +79,11 @@ class SignUpFragment : BaseFragment() {
             }
 
             compositeDisposable += etInPassword.onTextChange {
-                viewModel.createPassword(
-                    password = it,
-                    confirmPass = etInConfirmPassword.text.toString()
-                )
+                viewModel.createPassword(password = it)
             }
 
             compositeDisposable += etInConfirmPassword.onTextChange {
-                viewModel.createPassword(
-                    password = etInPassword.text.toString(),
-                    confirmPass = it
-                )
+                viewModel.createPassword(confirmPass = it)
             }
 
             cbAccept.setOnCheckedChangeListener { _, _ ->
@@ -142,8 +136,8 @@ class SignUpFragment : BaseFragment() {
 
         text.setSpan(textClickListener1, 25, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         text.setSpan(ForegroundColorSpan(textColor), 25, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.signUpPage.tvAlreadyAccount.movementMethod = LinkMovementMethod.getInstance()
-        binding.signUpPage.tvAlreadyAccount.text = text
+        binding.signUpPage.tvTermsService.movementMethod = LinkMovementMethod.getInstance()
+        binding.signUpPage.tvTermsService.text = text
     }
 
     private fun checkEmailExist(email: String) {

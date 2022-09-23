@@ -20,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,6 +108,7 @@
                     android:backgroundTint="@color/black_background_2"
                     android:hint="@string/fragment_new_profile_castcle_id_hint"
                     android:inputType="textEmailAddress"
+                    android:maxLength="30"
                     android:minHeight="@dimen/_35sdp"
                     android:padding="@dimen/_8sdp"
                     android:textColor="@color/white"

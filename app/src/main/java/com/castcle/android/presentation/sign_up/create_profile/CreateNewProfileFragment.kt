@@ -182,10 +182,7 @@ class CreateNewProfileFragment : BaseFragment() {
 
             compositeDisposable += itInDisplayName.onTextChange {
                 viewModel.getSuggestionCastcleID(it)
-                enableBottomNext(
-                    it.isNotBlank() && viewModel.inputUiState.value ==
-                        VerifyProfileState.CASTCLE_ID_PASS
-                )
+                enableBottomNext(it.isNotBlank())
                 buttonDone(it.isNotBlank())
             }
 
@@ -208,7 +205,7 @@ class CreateNewProfileFragment : BaseFragment() {
             RegisterRequest(
                 displayName = binding.itInDisplayName.text.toString(),
                 castcleId = binding.itInCastcleId.text.toString(),
-                email = viewModel.email.value?.lowercase(),
+                email = viewModel.email.value,
                 password = viewModel.password.value
             )
         )
