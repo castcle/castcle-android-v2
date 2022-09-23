@@ -33,7 +33,8 @@ sealed class BoostAdBundle : Parcelable {
 
     @Parcelize
     data class BoostAdContentBundle(
-        val castId: String
+        val castId: String,
+        val userId: String
     ) : BoostAdBundle()
 
     @Parcelize

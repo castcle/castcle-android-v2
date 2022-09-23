@@ -47,4 +47,24 @@ interface AdvertiseApi {
     suspend fun createBoostAdContent(
         @Body boostAdRequest: BoostAdRequest,
     ): Response<AdvertiseListResponse>
+
+    @POST("v2/ads/{adId}/running")
+    suspend fun runningBoostAd(
+        @Path("adId") adid: String,
+    ): Response<Unit>
+
+    @POST("v2/ads/{adId}/pause")
+    suspend fun pauseBoostAd(
+        @Path("adId") adid: String,
+    ): Response<Unit>
+
+    @POST("v2/ads/{adId}/cancel")
+    suspend fun cancelBoostAd(
+        @Path("adId") adid: String,
+    ): Response<Unit>
+
+    @POST("v2/ads/{adId}/end")
+    suspend fun endBoostAd(
+        @Path("adId") adid: String,
+    ): Response<Unit>
 }

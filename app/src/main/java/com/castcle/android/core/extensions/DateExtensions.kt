@@ -166,10 +166,29 @@ fun String.toFormatDateBirthDate(language: String = LANGUAGE_CODE_EN): String {
     }
 }
 
+fun String.toFormatAdsDate(language: String = LANGUAGE_CODE_EN): String {
+    return if (isNotBlank()) {
+        SimpleDateFormat(COMMON_DATE_FORMAT, Locale.getDefault())
+            .parse(this).toFormatString(DOB_DATE_FORMAT_V2, language)
+    } else {
+        ""
+    }
+}
+
+fun String.toFormatDate(language: String = LANGUAGE_CODE_EN): String {
+    return if (isNotBlank()) {
+        SimpleDateFormat(COMMON_DATE_FORMAT, Locale.getDefault())
+            .parse(this).toFormatString(SOURCE_DATE_FORMAT, language)
+    } else {
+        ""
+    }
+}
+
 const val COMMON_DOB_DATE_FORMAT_V1 = "yyyy-MM-dd"
 const val LANGUAGE_CODE_TH = "th"
 const val LANGUAGE_CODE_EN = "en"
 const val COMMON_DOB_DATE_FORMAT = "d MMMM yyyy"
 const val COMMON_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
 const val SOURCE_DATE_FORMAT = "MMM dd,yyyy"
+const val DOB_DATE_FORMAT_V2 = "d/MMM/YYYY"
 const val ADDITIONAL_BUDDHIST_YEARS = 543

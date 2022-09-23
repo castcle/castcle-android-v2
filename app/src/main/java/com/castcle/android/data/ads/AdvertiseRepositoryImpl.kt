@@ -10,6 +10,8 @@ import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.domain.ads.AdvertiseRepository
 import com.castcle.android.domain.ads.entity.AdvertiseEntityWithContent
 import com.castcle.android.domain.ads.entity.BoostAdRequest
+import com.castcle.android.domain.ads.type.AdBoostStatusType
+import com.castcle.android.domain.ads.type.AdStatusType
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -60,6 +62,12 @@ class AdvertiseRepositoryImpl(
     override suspend fun getAdvertiseHistory(): Flow<List<AdvertiseEntityWithContent>> {
         return database.withTransaction {
             database.advertiseList().retrieve()
+        }
+    }
+
+    override suspend fun getAdvertiseDetail(adsId: String): Flow<AdvertiseEntityWithContent> {
+        return database.withTransaction {
+            database.advertiseList().retrieveByAdsId(adsId)
         }
     }
 
@@ -124,6 +132,93 @@ class AdvertiseRepositoryImpl(
                         emit(BaseUiState.Error(exception = ErrorMapper().map(it.errorBody())))
                     }
                 }
+            }
+        }
+    }
+
+    override suspend fun runningAds(adsId: String): Flow<BaseUiState<Nothing>> {
+        return flow {
+            emit(BaseUiState.Loading(null, true))
+            apiCall {
+                advertiseApi.runningBoostAd(adsId).also { it ->
+                    emit(BaseUiState.Loading(null, false))
+
+                    if (it.isSuccessful) {
+                        updateBoostAdStatus(adsId, AdBoostStatusType.Running)
+                    } else {
+                        emit(BaseUiState.Error(exception = ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }
+    }
+
+    override suspend fun pauseAds(adsId: String): Flow<BaseUiState<Nothing>> {
+        return flow {
+            emit(BaseUiState.Loading(null, true))
+            apiCall {
+                advertiseApi.pauseBoostAd(adsId).also { it ->
+                    emit(BaseUiState.Loading(null, false))
+
+                    if (it.isSuccessful) {
+                        updateBoostAdStatus(adsId, AdBoostStatusType.Pause)
+                        emit(BaseUiState.SuccessNonBody)
+                    } else {
+                        emit(BaseUiState.Error(exception = ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }
+    }
+
+    override suspend fun endAds(adsId: String): Flow<BaseUiState<Nothing>> {
+        return flow {
+            emit(BaseUiState.Loading(null, true))
+            apiCall {
+                advertiseApi.endBoostAd(adsId).also { it ->
+                    emit(BaseUiState.Loading(null, false))
+
+                    if (it.isSuccessful) {
+                        updateBoostAdStatus(adsId, AdBoostStatusType.End)
+                        emit(BaseUiState.SuccessNonBody)
+                    } else {
+                        emit(BaseUiState.Error(exception = ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateBoostAdStatus(adsId: String, adBoostStatusType: AdBoostStatusType) {
+        scope.launch {
+            database.withTransaction {
+                database.advertise().updateBoostAdsStatus(adsId, adBoostStatusType)
+            }
+        }
+    }
+
+    override suspend fun cancelAds(adsId: String): Flow<BaseUiState<Nothing>> {
+        return flow {
+            emit(BaseUiState.Loading(null, true))
+            apiCall {
+                advertiseApi.cancelBoostAd(adsId).also { it ->
+                    emit(BaseUiState.Loading(null, false))
+
+                    if (it.isSuccessful) {
+                        updateAdStatus(adsId, AdStatusType.Canceled)
+                        emit(BaseUiState.SuccessNonBody)
+                    } else {
+                        emit(BaseUiState.Error(exception = ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateAdStatus(adsId: String, adStatusType: AdStatusType) {
+        scope.launch {
+            database.withTransaction {
+                database.advertise().updateAdsStatus(adsId, adStatusType)
             }
         }
     }

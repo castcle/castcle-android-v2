@@ -3,6 +3,8 @@ package com.castcle.android.data.ads.dao
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_ADVERTISE
 import com.castcle.android.domain.ads.entity.AdvertiseEntity
+import com.castcle.android.domain.ads.type.AdBoostStatusType
+import com.castcle.android.domain.ads.type.AdStatusType
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -36,5 +38,13 @@ interface AdvertiseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<AdvertiseEntity>)
+
+    @Transaction
+    @Query("UPDATE  $TABLE_ADVERTISE SET boostStatus =:adBoostStatusType WHERE advertise_id =:adsId")
+    fun updateBoostAdsStatus(adsId: String, adBoostStatusType: AdBoostStatusType)
+
+    @Transaction
+    @Query("UPDATE  $TABLE_ADVERTISE SET adStatus =:adStatusType WHERE advertise_id =:adsId")
+    fun updateAdsStatus(adsId: String, adStatusType: AdStatusType)
 
 }

@@ -2,7 +2,8 @@ package com.castcle.android.data.ads.dao
 
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_ADVERTISE_LIST
-import com.castcle.android.domain.ads.entity.*
+import com.castcle.android.domain.ads.entity.AdvertiseEntityWithContent
+import com.castcle.android.domain.ads.entity.AdvertiseListEntity
 import kotlinx.coroutines.flow.Flow
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
@@ -41,4 +42,8 @@ interface AdvertiseListDao {
     @Query("SELECT * FROM $TABLE_ADVERTISE_LIST ORDER BY createdAt DESC")
     @Transaction
     fun retrieve(): Flow<List<AdvertiseEntityWithContent>>
+
+    @Query("SELECT * FROM $TABLE_ADVERTISE_LIST WHERE advertiseList_advertiseReferenceId =:adsId")
+    @Transaction
+    fun retrieveByAdsId(adsId: String): Flow<AdvertiseEntityWithContent>
 }

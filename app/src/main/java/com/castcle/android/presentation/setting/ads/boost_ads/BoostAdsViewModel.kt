@@ -15,9 +15,11 @@ import com.castcle.android.domain.ads.AdvertiseRepository
 import com.castcle.android.domain.ads.entity.BoostAdRequest
 import com.castcle.android.domain.ads.entity.BoostAdsEntity
 import com.castcle.android.domain.ads.type.*
+import com.castcle.android.domain.cast.entity.CastWithUserEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.domain.wallet.WalletRepository
+import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 import com.castcle.android.presentation.setting.ads.boost_ads.ad_preview.item_ad_page.ItemPreviewAdPageViewEntity
 import com.castcle.android.presentation.setting.ads.boost_ads.ad_preview.item_error.ItemErrorViewEntity
 import com.castcle.android.presentation.setting.ads.boost_ads.item_budget.ItemBudgetViewEntity
@@ -66,9 +68,9 @@ class BoostAdsViewModel(
 
     private val cacheViewItem = MutableLiveData<List<CastcleViewEntity>>()
 
-    val userId = MutableStateFlow<String?>(null)
-
     val castId = MutableStateFlow<String?>(null)
+
+    private val castWithUserEntity = MutableStateFlow<CastWithUserEntity?>(null)
 
     val userChange = MutableStateFlow<String?>(null)
 
@@ -141,15 +143,25 @@ class BoostAdsViewModel(
                     }
                 }
         }
+
+        launch {
+            castId.filterNotNull()
+                .distinctUntilChangedBy { it }
+                .collectLatest { it ->
+                    database.cast().get(castId = it)?.let {
+                        castWithUserEntity.value = it
+                    }
+                }
+        }
     }
 
     private fun initUserFlow() {
         launch {
-            userId.value = database.user().get(UserType.People).firstOrNull()?.id
-            userId.filterNotNull().distinctUntilChangedBy { it }.collectLatest {
+            userChange.value?.let {
                 fetchItemView(userID = it)
             }
         }
+
         launch {
             userChange.filterNotNull()
                 .distinctUntilChangedBy { it }
@@ -201,7 +213,11 @@ class BoostAdsViewModel(
             database.boostAds()
                 .retrieve()
                 .map {
-                    mapper.apply(it.first(), viewItem.value)
+                    mapper.apply(
+                        it.first(),
+                        viewItem.value,
+                        boostType.value ?: AdvertiseType.User
+                    )
                 }.collectLatest(viewItem::postValue)
         }
     }
@@ -235,10 +251,9 @@ class BoostAdsViewModel(
                     )
                 }
                 else -> {
-                    ItemPreviewAdPageViewEntity(
-                        userEntity = userEntitySelect ?: UserEntity(),
-                        campaignMessage = campaignViewEntity?.campaignMessage ?: ""
-                    )
+                    castWithUserEntity.value?.let {
+                        mapper.applyPreview(it)
+                    } ?: FeedTextViewEntity()
                 }
             }.also {
                 cacheViewItem.value = viewItem.value

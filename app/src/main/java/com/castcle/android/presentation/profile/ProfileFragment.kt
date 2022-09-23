@@ -36,6 +36,7 @@ import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
+import com.castcle.android.domain.ads.type.BoostAdBundle
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -199,6 +200,12 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
 
     override fun onViewReportClicked(id: String, ignoreReportContentId: List<String>) {
         viewModel.showReportingContent(id = id, ignoreReportContentId = ignoreReportContentId)
+    }
+
+    override fun onBoostCastClicked(cast: CastEntity) {
+        directions.toBoostAdsFragment(
+            BoostAdBundle.BoostAdContentBundle(cast.id, cast.authorId)
+        ).navigate()
     }
 
     override fun onStop() {

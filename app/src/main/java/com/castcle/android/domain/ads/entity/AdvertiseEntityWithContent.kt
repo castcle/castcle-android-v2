@@ -5,6 +5,7 @@ import androidx.room.Relation
 import com.castcle.android.core.constants.*
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51,4 +52,10 @@ data class AdvertiseEntityWithContent(
         entityColumn = "${TABLE_CAST}_id"
     )
     val castContent: CastEntity? = null,
+
+    @Relation(
+        parentColumn = "${TABLE_ADVERTISE_LIST}_userReferenceId",
+        entityColumn = "${TABLE_WALLET_BALANCE}_userId"
+    )
+    val walletBalanceEntity: WalletBalanceEntity? = null,
 )

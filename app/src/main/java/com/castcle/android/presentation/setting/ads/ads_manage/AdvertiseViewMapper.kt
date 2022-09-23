@@ -51,7 +51,7 @@ fun getIconAdvertise(advertiseType: AdvertiseType): Int {
     }
 }
 
-private fun getAdStatusColor(status: String?): Int {
+fun getAdStatusColor(status: String?): Int {
     return when (status) {
         AdStatusType.InProcessing.id, AdBoostStatusType.Pause.id -> {
             R.color.gray_1
@@ -62,7 +62,7 @@ private fun getAdStatusColor(status: String?): Int {
         AdStatusType.Declined.id, AdBoostStatusType.End.id -> {
             R.color.red_3
         }
-        AdStatusType.Canceled.id -> {
+        AdStatusType.Canceled.id, AdBoostStatusType.Unknown.id -> {
             R.color.yellow_cancel
         }
         else -> R.color.gray_1

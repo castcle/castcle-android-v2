@@ -23,13 +23,22 @@
 
 package com.castcle.android.domain.ads.type
 
+import android.os.Parcelable
 import androidx.room.TypeConverter
+import kotlinx.parcelize.Parcelize
 
-sealed class AdBoostStatusType(val id: String, val name: String) {
+sealed class AdBoostStatusType(val id: String, val name: String): Parcelable {
 
+    @Parcelize
     object Running : AdBoostStatusType(id = "running", name = "Running")
+
+    @Parcelize
     object Pause : AdBoostStatusType(id = "pause", name = "Pause")
-    object Unknown : AdBoostStatusType(id = "unknown", "Unknown")
+
+    @Parcelize
+    object Unknown : AdBoostStatusType(id = "unknown", "N/A")
+
+    @Parcelize
     object End : AdBoostStatusType(id = "end", "End")
 
     companion object {

@@ -1,8 +1,8 @@
 package com.castcle.android.presentation.setting.ads.ads_manage
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.error.RetryException
@@ -39,7 +39,8 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class AdsManageViewModel(
-    private val repository: AdvertiseRepositoryImpl
+    private val repository: AdvertiseRepositoryImpl,
+    private val state: SavedStateHandle
 ) : BaseViewModel() {
 
     val filter = MutableStateFlow<AdFilterType>(AdFilterType.All)
@@ -103,5 +104,17 @@ class AdsManageViewModel(
                     }
                 }.collectLatest(itemView::postValue)
         }
+    }
+
+    fun saveItemsState(layoutManager: RecyclerView.LayoutManager) {
+        state[SAVE_STATE_RECYCLER_VIEW] = layoutManager.onSaveInstanceState()
+    }
+
+    fun restoreItemsState(layoutManager: RecyclerView.LayoutManager) {
+        layoutManager.onRestoreInstanceState(state[SAVE_STATE_RECYCLER_VIEW])
+    }
+
+    companion object {
+        private const val SAVE_STATE_RECYCLER_VIEW = "RECYCLER_VIEW"
     }
 }

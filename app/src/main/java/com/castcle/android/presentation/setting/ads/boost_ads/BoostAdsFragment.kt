@@ -19,6 +19,7 @@ import com.castcle.android.domain.ads.type.*
 import com.castcle.android.presentation.dialog.warning.CommonDialogFragment
 import com.castcle.android.presentation.dialog.warning.entity.CommonWarningBase
 import com.castcle.android.presentation.setting.ads.ads_manage.AdsManageFragment
+import com.castcle.android.presentation.setting.ads.boost_ads.ad_preview.item_ad_content.ItemAdContentViewRenderer
 import com.castcle.android.presentation.setting.ads.boost_ads.ad_preview.item_ad_page.ItemPreviewAdPageViewRenderer
 import com.castcle.android.presentation.setting.ads.boost_ads.ad_preview.item_error.ItemErrorViewRenderer
 import com.castcle.android.presentation.setting.ads.boost_ads.item_budget.ItemBudgetViewRenderer
@@ -75,6 +76,7 @@ class BoostAdsFragment : BaseFragment(), BoostAdsListener {
             registerRenderer(ItemBudgetViewRenderer())
             registerRenderer(ItemChoosePaymentViewRenderer())
             registerRenderer(ItemPreviewAdPageViewRenderer())
+            registerRenderer(ItemAdContentViewRenderer())
             registerRenderer(ItemErrorViewRenderer())
         }
     }
@@ -111,6 +113,20 @@ class BoostAdsFragment : BaseFragment(), BoostAdsListener {
     }
 
     override fun initConsumer() {
+        when (args.boostBundle) {
+            is BoostAdBundle.BoostAdPageBundle -> {
+                viewModel.boostType.value = AdvertiseType.User
+            }
+            is BoostAdBundle.BoostAdContentBundle -> {
+                viewModel.boostType.value = AdvertiseType.Content
+                viewModel.castId.value =
+                    (args.boostBundle as BoostAdBundle.BoostAdContentBundle).castId
+                viewModel.userChange.value =
+                    (args.boostBundle as BoostAdBundle.BoostAdContentBundle).userId
+            }
+            else -> Unit
+        }
+
         lifecycleScope.launch {
             viewModel.statePreview.collectLatest {
                 if (it) {
@@ -192,16 +208,12 @@ class BoostAdsFragment : BaseFragment(), BoostAdsListener {
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
         var titleMessage = 0
-        when (args.boostBundle) {
-            is BoostAdBundle.BoostAdPageBundle -> {
+        when (viewModel.boostType.value) {
+            AdvertiseType.User -> {
                 titleMessage = R.string.ad_boost_page
-                viewModel.boostType.value = AdvertiseType.User
             }
-            is BoostAdBundle.BoostAdContentBundle -> {
+            AdvertiseType.Content -> {
                 titleMessage = R.string.ad_boost_cast
-                viewModel.boostType.value = AdvertiseType.Content
-                viewModel.castId.value =
-                    (args.boostBundle as BoostAdBundle.BoostAdContentBundle).castId
             }
             else -> Unit
         }
@@ -396,6 +408,10 @@ class BoostAdsFragment : BaseFragment(), BoostAdsListener {
             btBoostPage.visibleOrGone(!shown)
         }
     }
+
+    override fun onBoostStatusClick(status: AdBoostStatusType) = Unit
+
+    override fun onShowCancel(isShow: Boolean) = Unit
 }
 
 private const val LIMIT_CAMPAIGN_MESSAGE = 280

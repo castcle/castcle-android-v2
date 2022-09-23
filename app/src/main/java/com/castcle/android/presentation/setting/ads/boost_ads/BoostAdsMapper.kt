@@ -25,10 +25,15 @@ package com.castcle.android.presentation.setting.ads.boost_ads
 
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.ads.entity.BoostAdsWithResultEntity
-import com.castcle.android.domain.ads.type.ObjectiveType
-import com.castcle.android.domain.ads.type.PaymentType
+import com.castcle.android.domain.ads.type.*
+import com.castcle.android.domain.cast.entity.CastWithUserEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
+import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
+import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
+import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewEntity
+import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewEntity
+import com.castcle.android.presentation.setting.ads.boost_ads.ad_preview.item_ad_content.ItemAdContentViewEntity
 import com.castcle.android.presentation.setting.ads.boost_ads.item_budget.ItemBudgetViewEntity
 import com.castcle.android.presentation.setting.ads.boost_ads.item_campaign.ItemCampaignViewEntity
 import com.castcle.android.presentation.setting.ads.boost_ads.item_choose_objective.ChooseObjectiveViewEntity
@@ -41,7 +46,8 @@ class BoostAdsMapper {
 
     fun apply(
         boostAdsEntity: BoostAdsWithResultEntity,
-        iteView: List<CastcleViewEntity>?
+        iteView: List<CastcleViewEntity>?,
+        advertiseType: AdvertiseType
     ): List<CastcleViewEntity> {
         val listView = mutableListOf<CastcleViewEntity>()
         val accountItems = ItemChoosePageViewEntity(
@@ -49,7 +55,10 @@ class BoostAdsMapper {
         )
 
         listView.apply {
-            add(accountItems)
+            if (advertiseType == AdvertiseType.User) {
+                add(accountItems)
+            }
+
             add(
                 ChooseObjectiveViewEntity(
                     objective = boostAdsEntity.balance?.objective ?: ObjectiveType.Engagement,
@@ -101,6 +110,46 @@ class BoostAdsMapper {
         }
 
         return listView
+    }
+
+    fun applyPreview(castResult: CastWithUserEntity): CastcleViewEntity {
+        return when {
+            castResult.cast.image.isNotEmpty() ->
+                listOf(
+                    FeedImageViewEntity(
+                        cast = castResult.cast,
+                        feedId = castResult.cast.id,
+                        uniqueId = castResult.cast.id,
+                        user = castResult.user ?: UserEntity(),
+                    )
+                )
+            castResult.cast.linkPreview.isNotBlank() -> listOf(
+                FeedWebImageViewEntity(
+                    cast = castResult.cast,
+                    feedId = castResult.cast.id,
+                    uniqueId = castResult.cast.id,
+                    user = castResult.user ?: UserEntity()
+                )
+            )
+            castResult.cast.linkUrl.isNotBlank() -> listOf(
+                FeedWebViewEntity(
+                    cast = castResult.cast,
+                    feedId = castResult.cast.id,
+                    uniqueId = castResult.cast.id,
+                    user = castResult.user ?: UserEntity()
+                )
+            )
+            else -> listOf(
+                FeedTextViewEntity(
+                    cast = castResult.cast,
+                    feedId = castResult.cast.id,
+                    uniqueId = castResult.cast.id,
+                    user = castResult.user ?: UserEntity(),
+                )
+            )
+        }.map {
+            ItemAdContentViewEntity(reference = it)
+        }.first()
     }
 
 }

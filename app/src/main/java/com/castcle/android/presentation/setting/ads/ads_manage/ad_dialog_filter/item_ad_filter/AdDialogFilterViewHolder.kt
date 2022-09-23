@@ -48,6 +48,7 @@ class AdDialogFilterViewHolder(
 
     override fun bind(bindItem: AdDialogFilterViewEntity) {
         binding.tvTitle.text = item.filter.filterName
+        binding.ivCheck.visibleOrGone(bindItem.selected)
         binding.tvTitle.setTextColor(
             when {
                 item.selected -> {

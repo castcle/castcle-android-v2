@@ -32,6 +32,11 @@ import kotlinx.coroutines.flow.Flow
 interface AdvertiseRepository {
     suspend fun fetchAdvertiseHistory(filter: String): Flow<BaseUiState<Nothing>>
     suspend fun getAdvertiseHistory(): Flow<List<AdvertiseEntityWithContent>>
+    suspend fun getAdvertiseDetail(adsId: String): Flow<AdvertiseEntityWithContent>
     suspend fun onRefreshAdvertiseHistory(): Job
     suspend fun createBoostPage(boostAdRequest: BoostAdRequest): Flow<BaseUiState<Nothing>>
+    suspend fun runningAds(adsId: String): Flow<BaseUiState<Nothing>>
+    suspend fun pauseAds(adsId: String): Flow<BaseUiState<Nothing>>
+    suspend fun endAds(adsId: String): Flow<BaseUiState<Nothing>>
+    suspend fun cancelAds(adsId: String): Flow<BaseUiState<Nothing>>
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 29,
-    "identityHash": "93b99bc2decdaf7a323ad9a4ce1b272f",
+    "identityHash": "654b2765f0afe685e7fb548e091a19ab",
     "entities": [
       {
         "tableName": "accessToken",
@@ -905,7 +905,7 @@
       },
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_avatar` TEXT NOT NULL, `user_blocked` INTEGER NOT NULL, `user_blocking` INTEGER NOT NULL, `user_canUpdateCastcleId` INTEGER, `user_castcleId` TEXT NOT NULL, `user_casts` INTEGER, `user_cover` TEXT, `user_createdAt` INTEGER, `user_displayName` TEXT NOT NULL, `user_dob` TEXT, `user_email` TEXT, `user_followed` INTEGER NOT NULL, `user_followers` INTEGER, `user_following` INTEGER, `user_id` TEXT NOT NULL, `user_isOwner` INTEGER NOT NULL, `user_linkFacebook` TEXT, `user_linkMedium` TEXT, `user_linkTwitter` TEXT, `user_linkWebsite` TEXT, `user_linkYoutube` TEXT, `user_mobileCountryCode` TEXT, `user_mobileNumber` TEXT, `user_overview` TEXT, `user_passwordNotSet` INTEGER, `user_pdpa` INTEGER, `user_type` TEXT NOT NULL, `user_verifiedEmail` INTEGER NOT NULL, `user_verifiedMobile` INTEGER NOT NULL, `user_verifiedOfficial` INTEGER NOT NULL, `user_verifiedSocial` INTEGER NOT NULL, `user_contactEmail` TEXT, `user_contactNumber` TEXT, PRIMARY KEY(`user_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`user_avatar` TEXT NOT NULL, `user_blocked` INTEGER NOT NULL, `user_blocking` INTEGER NOT NULL, `user_canUpdateCastcleId` INTEGER, `user_castcleId` TEXT NOT NULL, `user_casts` INTEGER, `user_cover` TEXT, `user_createdAt` INTEGER, `user_displayName` TEXT NOT NULL, `user_dob` TEXT, `user_email` TEXT, `user_followed` INTEGER NOT NULL, `user_followers` INTEGER, `user_following` INTEGER, `user_id` TEXT NOT NULL, `user_isOwner` INTEGER NOT NULL, `user_linkFacebook` TEXT, `user_linkMedium` TEXT, `user_linkTwitter` TEXT, `user_linkWebsite` TEXT, `user_linkYoutube` TEXT, `user_mobileCountryCode` TEXT, `user_mobileNumber` TEXT, `user_overview` TEXT, `user_passwordNotSet` INTEGER, `user_pdpa` INTEGER, `user_type` TEXT NOT NULL, `user_verifiedEmail` INTEGER, `user_verifiedMobile` INTEGER, `user_verifiedOfficial` INTEGER, `user_verifiedSocial` INTEGER, `user_contactEmail` TEXT, `user_contactNumber` TEXT, PRIMARY KEY(`user_id`))",
         "fields": [
           {
             "fieldPath": "avatar",
@@ -1073,25 +1073,25 @@
             "fieldPath": "verifiedEmail",
             "columnName": "user_verifiedEmail",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "verifiedMobile",
             "columnName": "user_verifiedMobile",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "verifiedOfficial",
             "columnName": "user_verifiedOfficial",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "verifiedSocial",
             "columnName": "user_verifiedSocial",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "contactEmail",
@@ -1661,7 +1661,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '93b99bc2decdaf7a323ad9a4ce1b272f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '654b2765f0afe685e7fb548e091a19ab')"
     ]
   }
 }

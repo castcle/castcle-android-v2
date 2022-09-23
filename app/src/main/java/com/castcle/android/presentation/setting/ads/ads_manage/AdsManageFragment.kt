@@ -23,7 +23,7 @@ import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51,7 +51,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdsManageFragment : BaseFragment(), AdvertiseListener {
 
-    private val viewModel by viewModel<AdsManageViewModel>()
+    private val viewModel by stateViewModel<AdsManageViewModel>()
 
     private val directions = AdsManageFragmentDirections
 
@@ -149,12 +149,23 @@ class AdsManageFragment : BaseFragment(), AdvertiseListener {
     }
 
     override fun onAdvertiseClick(adId: String) {
-
+        directions.toAdDetailFragment(adId).navigate()
     }
 
     override fun onBoostAdsClick() {
         directions.toBoostAdsFragment(BoostAdBundle.BoostAdPageBundle).navigate()
     }
+
+    override fun onPause() {
+        binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
+        super.onPause()
+    }
+
+    override fun onResume() {
+        binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
+        super.onResume()
+    }
+
 
     companion object {
         const val BOOST_SUCCESS = "boost-success"

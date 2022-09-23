@@ -9,7 +9,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat.getSystemService
 import com.castcle.android.R
 import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
+import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.ln
+import kotlin.math.pow
 
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

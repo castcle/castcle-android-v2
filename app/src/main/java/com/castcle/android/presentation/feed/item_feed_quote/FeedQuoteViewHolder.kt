@@ -84,7 +84,7 @@ class FeedQuoteViewHolder(
 
     override fun bind(bindItem: FeedQuoteViewEntity) {
         adapter.submitList(item.reference)
-        binding.participateBar.bind(item.cast, this)
+        binding.participateBar.bind(item.cast, this, item.quoteIsOwner)
         binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, true)
         binding.castcleTextView.onClearMessage()
@@ -128,4 +128,7 @@ class FeedQuoteViewHolder(
         listener.onUserClicked(user)
     }
 
+    override fun onBoostCastClicked(cast: CastEntity) {
+        listener.onBoostCastClicked(cast)
+    }
 }

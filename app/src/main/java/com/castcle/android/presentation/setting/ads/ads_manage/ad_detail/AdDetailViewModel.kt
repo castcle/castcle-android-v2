@@ -1,5 +1,8 @@
 package com.castcle.android.presentation.setting.ads.ads_manage.ad_detail
 
+import com.castcle.android.core.base.view_model.BaseViewModel
+import org.koin.android.annotation.KoinViewModel
+
 //  Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
 //  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
 //
@@ -24,5 +27,6 @@ package com.castcle.android.presentation.setting.ads.ads_manage.ad_detail
 //
 //  Created by sklim on 21/9/2022 AD at 09:25.
 
-class AdDetailViewModel {
+@KoinViewModel
+class AdDetailViewModel:BaseViewModel() {
 }
