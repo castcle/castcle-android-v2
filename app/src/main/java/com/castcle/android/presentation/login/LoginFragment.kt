@@ -45,7 +45,6 @@ import io.reactivex.rxkotlin.plusAssign
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class LoginFragment : BaseFragment(), LoginListener {
 
     private val viewModel by viewModel<LoginViewModel>()
@@ -99,8 +98,8 @@ class LoginFragment : BaseFragment(), LoginListener {
         facebookLoginManager.registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
-                    viewModel.loginWithFacebook()
                     showLoading()
+                    viewModel.loginWithFacebook()
                 }
 
                 override fun onCancel() {
@@ -108,8 +107,8 @@ class LoginFragment : BaseFragment(), LoginListener {
                 }
 
                 override fun onError(error: FacebookException) {
-                    viewModel.logoutFacebook()
                     toast(error.message)
+                    viewModel.logoutFacebook()
                 }
             })
     }
@@ -144,8 +143,8 @@ class LoginFragment : BaseFragment(), LoginListener {
         twitterAuthClient.authorize(activity, object : Callback<TwitterSession>() {
             override fun failure(exception: TwitterException?) = toast(exception?.message)
             override fun success(result: Result<TwitterSession>?) {
-                viewModel.loginWithTwitter(result?.data?.authToken)
                 showLoading()
+                viewModel.loginWithTwitter(result?.data?.authToken)
             }
         })
     }

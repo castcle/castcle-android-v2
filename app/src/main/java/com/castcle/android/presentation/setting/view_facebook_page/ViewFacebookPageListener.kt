@@ -21,43 +21,11 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.di
+package com.castcle.android.presentation.setting.view_facebook_page
 
-import com.castcle.android.core.api.*
-import org.koin.dsl.module
-import retrofit2.Retrofit
+import com.castcle.android.core.base.recyclerview.CastcleListener
+import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
 
-val apiModule = module {
-    single {
-        get<Retrofit>().create(AdvertiseApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(AuthenticationApi::class.java).also {
-            get<AuthenticationApiHolder>().api = it
-        }
-    }
-    single {
-        get<Retrofit>().create(ContentApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(FeedApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(MetadataApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(NotificationApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(PageApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(SearchApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(UserApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(WalletApi::class.java)
-    }
+interface ViewFacebookPageListener : CastcleListener {
+    fun onFacebookPageClicked(page: CreatePageWithSocialRequest)
 }

@@ -141,14 +141,6 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun deletePage(body: DeleteAccountRequest, userId: String) {
-        apiCall { api.deletePage(body = body, id = userId) }
-        database.withTransaction {
-            database.syncSocial().delete(listOf(userId))
-            database.user().delete(userId)
-        }
-    }
-
     override suspend fun deleteReplyComment(replyCommentId: String) {
         val replyComment = database.content().get(commentId = replyCommentId)
         val comment = database.content()
