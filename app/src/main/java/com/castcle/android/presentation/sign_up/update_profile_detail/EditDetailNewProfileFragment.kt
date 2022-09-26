@@ -109,7 +109,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     (profileBuild as ProfileBundle.CreateProfile).castcleId
             }
             CreateUserState.PAGE_CREATE -> {
-                initActionBar(getString(R.string.fragment_update_page))
+                initActionBar(getString(R.string.new_page))
                 binding.itemEditProfile.itemDetailProfile.clDetailProfile.gone()
                 binding.itemEditProfile.itemDetailPage.clDetailPage.visible()
                 binding.itemEditProfile.ivCover.background =

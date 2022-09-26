@@ -145,20 +145,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/createNewProfileFragment"
-        android:name="com.castcle.android.presentation.sign_up.create_profile.CreateNewProfileFragment">
-
-        <argument
-            android:name="profileBundle"
-            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
-
-        <action
-            android:id="@+id/toUpdateProfileFragment"
-            app:destination="@id/updateProfileFragment" />
-
-    </fragment>
-
-    <fragment
         android:id="@+id/countryCodeFragment"
         android:name="com.castcle.android.presentation.setting.country_code.CountryCodeFragment" />
 
@@ -173,6 +159,34 @@
         <action
             android:id="@+id/toDeleteAccountSuccessFragment"
             app:destination="@id/deleteAccountSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.create_profile.CreateNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toUpdateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createPageOptionFragment"
+        android:name="com.castcle.android.presentation.setting.create_page_option.CreatePageOptionFragment">
+
+        <action
+            android:id="@+id/toCreatePageConditionFragment"
+            app:destination="@id/createPageConditionFragment" />
+
+        <action
+            android:id="@+id/toViewFacebookPageFragment"
+            app:destination="@id/viewFacebookPageFragment" />
 
     </fragment>
 
@@ -529,6 +543,10 @@
             app:destination="@id/accountFragment" />
 
         <action
+            android:id="@+id/toCreatePageOptionFragment"
+            app:destination="@+id/createPageOptionFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
@@ -608,6 +626,16 @@
         <action
             android:id="@+id/toChangePasswordFragment"
             app:destination="@id/changePasswordFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewFacebookPageFragment"
+        android:name="com.castcle.android.presentation.setting.view_facebook_page.ViewFacebookPageFragment">
+
+        <argument
+            android:name="pageItems"
+            app:argType="com.castcle.android.data.page.entity.CreatePageWithSocialRequest[]" />
 
     </fragment>
 

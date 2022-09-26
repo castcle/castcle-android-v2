@@ -59,6 +59,11 @@
     <string name="fragment_change_password_title_5">Use both lowercase and uppercase letters</string>
     <string name="fragment_change_password_title_6">Password did not match</string>
     <string name="fragment_country_code_title_1">Select Country Code</string>
+    <string name="fragment_create_page_option_title_1">Sync your social media page</string>
+    <string name="fragment_create_page_option_title_2">Syncing your Castcle page with your social media account allows you to Cast your posts from another platform seamlessly</string>
+    <string name="fragment_create_page_option_title_3">Sync your page with Facebook</string>
+    <string name="fragment_create_page_option_title_4">Sync your page with Twitter</string>
+    <string name="fragment_create_page_option_title_5">+ Create new page</string>
     <string name="fragment_delete_account_success_title_1">Back to home</string>
     <string name="fragment_delete_account_success_title_2">We\'ve successfully deleted your account.</string>
     <string name="fragment_delete_account_success_title_3">Your page has been permanently deleted.</string>
@@ -116,6 +121,7 @@
     <string name="fragment_verify_otp_title_10">Verify mobile number</string>
     <string name="fragment_verify_password_title_1">Please enter your current password</string>
     <string name="fragment_verify_password_title_2">You need to enter your current password before creating a new password</string>
+    <string name="fragment_view_facebook_page_title_1">Facebook Pages</string>
     <string name="fragment_wallet_address_title_1">\@Castcle ID or Wallet Address</string>
     <string name="fragment_wallet_address_title_2">Recent Castcle ID</string>
     <string name="fragment_wallet_address_title_3">No wallet address found</string>
@@ -179,6 +185,7 @@
     <string name="more_image">+%d</string>
     <string name="ok">OK</string>
     <string name="new_cast">New Cast</string>
+    <string name="new_page">New Page</string>
     <string name="notification">Notification</string>
     <string name="page">Page</string>
     <string name="password">Password</string>
@@ -265,7 +272,6 @@
     <string name="fragment_new_profile_castcle_button_next">Next</string>
     <string name="fragment_new_profile_castcle_id_error">Castcle ID has been taken.</string>
     <string name="fragment_new_profile_bar_profile">New User Profile</string>
-    <string name="fragment_new_profile_bar_page">New Page</string>
     <string name="fragment_new_profile_warning_message">Castcle ID has been taken.</string>
     <string name="fragment_new_profile_castcle_id_error_limit_char">Castcle ID cannot exceed 30 characters</string>
     <string name="fragment_new_profile_castcle_id_error_special_char">Castcle ID cannot contain special characters</string>

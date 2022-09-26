@@ -32,10 +32,12 @@ import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.hideKeyboard
-import com.castcle.android.core.extensions.toast
+import com.castcle.android.core.extensions.string
+import com.castcle.android.databinding.DialogBasicBinding
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.authentication.entity.OtpEntity
 import com.castcle.android.domain.wallet.type.WalletTransactionType
+import com.castcle.android.presentation.dialog.basic.BasicDialog
 import com.castcle.android.presentation.wallet.wallet_otp.WalletOtpViewModel.WalletOtpViewModelParameter
 import com.castcle.android.presentation.wallet.wallet_otp.item_wallet_otp.WalletOtpViewRenderer
 import kotlinx.coroutines.flow.collectLatest
@@ -84,7 +86,12 @@ class WalletOtpFragment : BaseFragment(), WalletOtpListener {
         lifecycleScope.launch {
             viewModel.onError.collectLatest {
                 dismissLoading()
-                toast(it.message)
+                BasicDialog(
+                    binding = DialogBasicBinding.inflate(layoutInflater),
+                    button = string(R.string.ok),
+                    isCancelable = false,
+                    title = it.message.orEmpty(),
+                ).show()
             }
         }
     }
@@ -116,9 +123,7 @@ class WalletOtpFragment : BaseFragment(), WalletOtpListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ) = binding.root
 
 }
