@@ -21,43 +21,37 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.di
+package com.castcle.android.data.user.entity
 
-import com.castcle.android.core.api.*
-import org.koin.dsl.module
-import retrofit2.Retrofit
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
-val apiModule = module {
-    single {
-        get<Retrofit>().create(AdvertiseApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(AuthenticationApi::class.java).also {
-            get<AuthenticationApiHolder>().api = it
-        }
-    }
-    single {
-        get<Retrofit>().create(ContentApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(FeedApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(MetadataApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(NotificationApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(PageApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(SearchApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(UserApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(WalletApi::class.java)
-    }
+@Keep
+data class GetFacebookPageProfileResponse(
+    @SerializedName("data") val data: List<Data>? = null,
+) {
+
+    data class Cover(
+        @SerializedName("source") val source: String? = null,
+    )
+
+    data class Data(
+        @SerializedName("about") val about: String? = null,
+        @SerializedName("access_token") val access_token: String? = null,
+        @SerializedName("cover") val cover: Cover? = null,
+        @SerializedName("id") val id: String? = null,
+        @SerializedName("link") val link: String? = null,
+        @SerializedName("name") val name: String? = null,
+        @SerializedName("picture") val picture: Picture? = null,
+        @SerializedName("username") val username: String? = null,
+    )
+
+    data class Picture(
+        @SerializedName("data") val data: PictureData? = null,
+    )
+
+    data class PictureData(
+        @SerializedName("url") val url: String? = null,
+    )
+
 }

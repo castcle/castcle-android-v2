@@ -21,48 +21,33 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.base.view_model
+package com.castcle.android.presentation.setting.view_facebook_page.item_view_facebook_page
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.castcle.android.core.base.recyclerview.CastcleViewHolder
+import com.castcle.android.core.extensions.loadAvatarImage
+import com.castcle.android.core.extensions.onClick
+import com.castcle.android.databinding.ItemViewFacebookPageBinding
+import com.castcle.android.presentation.setting.view_facebook_page.ViewFacebookPageListener
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import timber.log.Timber
+import io.reactivex.rxkotlin.plusAssign
 
-abstract class BaseViewModel : ViewModel() {
+class ViewFacebookPageViewHolder(
+    private val binding: ItemViewFacebookPageBinding,
+    private val compositeDisposable: CompositeDisposable,
+    private val listener: ViewFacebookPageListener,
+) : CastcleViewHolder<ViewFacebookPageViewEntity>(binding.root) {
 
-    val compositeDisposable = CompositeDisposable()
+    override var item = ViewFacebookPageViewEntity()
 
-    fun <T> MutableSharedFlow<T>.emitOnSuspend(value: T) {
-        launch { emit(value) }
-    }
-
-    fun MutableSharedFlow<Unit>.emitOnSuspend() {
-        launch { emit(Unit) }
-    }
-
-    fun <T> launch(
-        onError: (Throwable) -> Unit = {},
-        onLaunch: () -> Unit = {},
-        onSuccess: (T) -> Unit = {},
-        suspendBlock: suspend () -> T
-    ): Job {
-        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            onError(throwable)
-            Timber.e(throwable)
+    init {
+        compositeDisposable += binding.root.onClick {
+            listener.onFacebookPageClicked(item.page)
         }
-        return viewModelScope
-            .plus(exceptionHandler)
-            .launch(Dispatchers.IO) {
-                onLaunch()
-                onSuccess(suspendBlock())
-            }
     }
 
-    override fun onCleared() {
-        compositeDisposable.clear()
-        super.onCleared()
+    override fun bind(bindItem: ViewFacebookPageViewEntity) {
+        binding.tvDisplayName.text = item.page.displayName.orEmpty()
+        binding.ivAvatar.loadAvatarImage(item.page.avatar.orEmpty())
     }
 
 }

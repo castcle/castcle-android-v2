@@ -24,7 +24,73 @@
 package com.castcle.android.presentation.setting.create_page_option
 
 import com.castcle.android.core.base.view_model.BaseViewModel
+import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.domain.authentication.AuthenticationRepository
+import com.castcle.android.domain.page.PageRepository
+import com.castcle.android.domain.user.UserRepository
+import com.twitter.sdk.android.core.TwitterAuthToken
+import kotlinx.coroutines.flow.MutableSharedFlow
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class CreatePageOptionViewModel : BaseViewModel()
+class CreatePageOptionViewModel(
+    private val authenticationRepository: AuthenticationRepository,
+    private val pageRepository: PageRepository,
+    private val userRepository: UserRepository,
+) : BaseViewModel() {
+
+    val onError = MutableSharedFlow<Throwable>()
+
+    val onFacebookPageProfileResult = MutableSharedFlow<List<CreatePageWithSocialRequest>>()
+
+    val onSuccess = MutableSharedFlow<Unit>()
+
+    init {
+        logoutFacebook()
+    }
+
+    fun createPageWithFacebook(body: CreatePageWithSocialRequest) {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { updateCurrentUser() },
+        ) {
+            pageRepository.createPageWithFacebook(body = body)
+            authenticationRepository.loginOutFacebook()
+        }
+    }
+
+    fun createPageWithTwitter(token: TwitterAuthToken?) {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { updateCurrentUser() },
+        ) {
+            pageRepository.createPageWithTwitter(token = token)
+        }
+    }
+
+    fun getFacebookPageProfile() {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { onFacebookPageProfileResult.emitOnSuspend(it) },
+        ) {
+            authenticationRepository.getFacebookPageProfile()
+        }
+    }
+
+    fun logoutFacebook() {
+        launch {
+            authenticationRepository.loginOutFacebook()
+        }
+    }
+
+    private fun updateCurrentUser() {
+        launch(
+            onError = { onSuccess.emitOnSuspend() },
+            onSuccess = { onSuccess.emitOnSuspend() },
+        ) {
+            userRepository.fetchUserPage()
+            userRepository.fetchUserProfile()
+        }
+    }
+
+}

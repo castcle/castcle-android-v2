@@ -21,43 +21,24 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.di
+package com.castcle.android.data.page.entity
 
-import com.castcle.android.core.api.*
-import org.koin.dsl.module
-import retrofit2.Retrofit
+import android.os.Parcelable
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
-val apiModule = module {
-    single {
-        get<Retrofit>().create(AdvertiseApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(AuthenticationApi::class.java).also {
-            get<AuthenticationApiHolder>().api = it
-        }
-    }
-    single {
-        get<Retrofit>().create(ContentApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(FeedApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(MetadataApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(NotificationApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(PageApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(SearchApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(UserApi::class.java)
-    }
-    single {
-        get<Retrofit>().create(WalletApi::class.java)
-    }
-}
+@Keep
+@Parcelize
+data class CreatePageWithSocialRequest(
+    @SerializedName("active") val active: Boolean? = null,
+    @SerializedName("authToken") val authToken: String? = null,
+    @SerializedName("avatar") val avatar: String? = null,
+    @SerializedName("cover") val cover: String? = null,
+    @SerializedName("displayName") val displayName: String? = null,
+    @SerializedName("link") val link: String? = null,
+    @SerializedName("overview") val overview: String? = null,
+    @SerializedName("provider") val provider: String? = null,
+    @SerializedName("socialId") val socialId: String? = null,
+    @SerializedName("userName") val userName: String? = null,
+) : Parcelable

@@ -34,8 +34,8 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.base.BaseUiState
-import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
-import com.castcle.android.data.user.entity.UserResponse
+import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.OtpEntity
@@ -78,7 +78,37 @@ class AuthenticationRepositoryImpl(
         return database.accessToken().get() ?: AccessTokenEntity()
     }
 
-    private suspend fun getFacebookUserProfile(): LoginWithSocialRequest {
+    override suspend fun getFacebookPageProfile(): List<CreatePageWithSocialRequest> {
+        return suspendCoroutine { coroutine ->
+            GraphRequest(
+                accessToken = AccessToken.getCurrentAccessToken(),
+                graphPath = "me/accounts",
+                httpMethod = HttpMethod.GET,
+                parameters = bundleOf("fields" to "about,access_token,cover,id,link,name,picture.type(large),username"),
+                callback = {
+                    val type = object : TypeToken<GetFacebookPageProfileResponse>() {}.type
+                    val response =
+                        Gson().fromJson<GetFacebookPageProfileResponse>(it.rawResponse, type)
+                    val pageItems = response.data.orEmpty().map { map ->
+                        CreatePageWithSocialRequest(
+                            authToken = map.access_token,
+                            avatar = map.picture?.data?.url,
+                            cover = map.cover?.source,
+                            displayName = map.name,
+                            link = map.link,
+                            overview = map.about,
+                            provider = SocialType.Facebook.id,
+                            socialId = map.id,
+                            userName = map.username,
+                        )
+                    }
+                    coroutine.resume(pageItems)
+                }
+            ).executeAsync()
+        }
+    }
+
+    override suspend fun getFacebookUserProfile(): LoginWithSocialRequest {
         return suspendCoroutine { coroutine ->
             GraphRequest(
                 accessToken = AccessToken.getCurrentAccessToken(),

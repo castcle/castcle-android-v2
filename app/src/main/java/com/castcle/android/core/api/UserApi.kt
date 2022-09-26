@@ -56,12 +56,6 @@ interface UserApi {
         @Path("commentId") commentId: String,
     ): Response<Unit>
 
-    @HTTP(method = "DELETE", path = "v2/pages/{$PARAMETER_ID}", hasBody = true)
-    suspend fun deletePage(
-        @Body body: DeleteAccountRequest,
-        @Path(PARAMETER_ID) id: String,
-    ): Response<Response<Unit>>
-
     @DELETE("/v2/users/me/comments/{commentId}/reply/{replyCommentId}")
     suspend fun deleteReplyComment(
         @Path("commentId") commentId: String,
