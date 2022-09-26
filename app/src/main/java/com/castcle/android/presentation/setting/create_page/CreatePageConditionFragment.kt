@@ -64,7 +64,7 @@ class CreatePageConditionFragment : BaseFragment(), CreatePageConditionListener 
     override fun initViewProperties() {
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            title = R.string.fragment_new_profile_bar_page,
+            title = R.string.new_page,
         )
         binding.recyclerView.adapter = adapter
     }

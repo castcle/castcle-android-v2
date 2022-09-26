@@ -38,6 +38,7 @@ import com.castcle.android.databinding.ActivityHomeBinding
 import com.castcle.android.presentation.feed.FeedFragment
 import com.castcle.android.presentation.login.LoginFragment
 import com.castcle.android.presentation.setting.account.AccountFragment
+import com.castcle.android.presentation.setting.create_page_option.CreatePageOptionFragment
 import com.twitter.sdk.android.core.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -81,6 +82,9 @@ class HomeActivity : BaseActivity() {
         if (requestCode == TwitterAuthConfig.DEFAULT_AUTH_REQUEST_CODE) {
             when (findNavController(R.id.navHostContainer).currentDestination?.id) {
                 R.id.accountFragment -> findFragmentInNavHost<AccountFragment>()
+                    ?.twitterAuthClient
+                    ?.onActivityResult(requestCode, resultCode, data)
+                R.id.createPageOptionFragment -> findFragmentInNavHost<CreatePageOptionFragment>()
                     ?.twitterAuthClient
                     ?.onActivityResult(requestCode, resultCode, data)
                 R.id.loginFragment -> findFragmentInNavHost<LoginFragment>()

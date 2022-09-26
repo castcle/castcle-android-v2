@@ -142,7 +142,7 @@ class CreateNewProfileFragment : BaseFragment() {
             }
             is ProfileBundle.CreatePage -> {
                 viewModel.createUserState.value = CreateUserState.PAGE_CREATE
-                initActionBar(getString(R.string.fragment_new_profile_bar_page))
+                initActionBar(getString(R.string.new_page))
                 binding.tvWelcome.text = getString(R.string.fragment_new_page_message)
                 binding.ivCreatePass.background =
                     requireContext().getDrawableRes(R.drawable.ic_create_page)

@@ -37,7 +37,6 @@ interface UserRepository {
     suspend fun createQuoteCast(body: CreateQuoteCastRequest, userId: String)
     suspend fun deleteAccount(body: DeleteAccountRequest)
     suspend fun deleteComment(commentId: String)
-    suspend fun deletePage(body: DeleteAccountRequest, userId: String)
     suspend fun deleteReplyComment(replyCommentId: String)
     suspend fun followUser(targetUser: UserEntity)
     suspend fun fetchUserPage(): List<UserEntity>

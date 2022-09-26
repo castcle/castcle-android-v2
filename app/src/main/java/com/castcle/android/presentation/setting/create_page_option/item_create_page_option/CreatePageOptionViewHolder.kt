@@ -21,48 +21,33 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.base.view_model
+package com.castcle.android.presentation.setting.create_page_option.item_create_page_option
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.castcle.android.core.base.recyclerview.CastcleViewHolder
+import com.castcle.android.core.extensions.onClick
+import com.castcle.android.databinding.ItemCreatePageOptionBinding
+import com.castcle.android.presentation.setting.create_page_option.CreatePageOptionListener
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import timber.log.Timber
+import io.reactivex.rxkotlin.plusAssign
 
-abstract class BaseViewModel : ViewModel() {
+class CreatePageOptionViewHolder(
+    binding: ItemCreatePageOptionBinding,
+    private val compositeDisposable: CompositeDisposable,
+    private val listener: CreatePageOptionListener
+) : CastcleViewHolder<CreatePageOptionViewEntity>(binding.root) {
 
-    val compositeDisposable = CompositeDisposable()
+    override var item = CreatePageOptionViewEntity()
 
-    fun <T> MutableSharedFlow<T>.emitOnSuspend(value: T) {
-        launch { emit(value) }
-    }
-
-    fun MutableSharedFlow<Unit>.emitOnSuspend() {
-        launch { emit(Unit) }
-    }
-
-    fun <T> launch(
-        onError: (Throwable) -> Unit = {},
-        onLaunch: () -> Unit = {},
-        onSuccess: (T) -> Unit = {},
-        suspendBlock: suspend () -> T
-    ): Job {
-        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            onError(throwable)
-            Timber.e(throwable)
+    init {
+        compositeDisposable += binding.tvCreatePageWithFacebook.onClick {
+            listener.onCreatePageWithFacebookClicked()
         }
-        return viewModelScope
-            .plus(exceptionHandler)
-            .launch(Dispatchers.IO) {
-                onLaunch()
-                onSuccess(suspendBlock())
-            }
-    }
-
-    override fun onCleared() {
-        compositeDisposable.clear()
-        super.onCleared()
+        compositeDisposable += binding.tvCreatePageWithTwitter.onClick {
+            listener.onCreatePageWithTwitterClicked()
+        }
+        compositeDisposable += binding.tvCreatePage.onClick {
+            listener.onCreatePageClicked()
+        }
     }
 
 }

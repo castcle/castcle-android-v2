@@ -25,6 +25,7 @@ package com.castcle.android.domain.authentication
 
 import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.base.BaseUiState
+import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.OtpEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -36,6 +37,8 @@ import kotlinx.coroutines.flow.Flow
 interface AuthenticationRepository {
     suspend fun changePassword(otp: OtpEntity)
     suspend fun getAccessToken(): AccessTokenEntity
+    suspend fun getFacebookPageProfile(): List<CreatePageWithSocialRequest>
+    suspend fun getFacebookUserProfile(): LoginWithSocialRequest
     suspend fun getFirebaseMessagingToken(): String
     suspend fun fetchGuestAccessToken()
     suspend fun linkWithFacebook()

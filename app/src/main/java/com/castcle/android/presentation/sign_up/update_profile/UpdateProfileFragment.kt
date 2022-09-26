@@ -140,7 +140,7 @@ class UpdateProfileFragment : BaseFragment(), UpdateProfileListener {
                     (profileBuild as ProfileBundle.CreateProfile).castcleId
             }
             is ProfileBundle.CreatePage -> {
-                initActionBar(getString(R.string.fragment_update_page))
+                initActionBar(getString(R.string.new_page))
                 viewModel.castcleId.value =
                     (profileBuild as ProfileBundle.CreatePage).castcleId
             }
