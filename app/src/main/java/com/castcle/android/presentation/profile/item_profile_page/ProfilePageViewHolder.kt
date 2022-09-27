@@ -62,10 +62,16 @@ class ProfilePageViewHolder(
             listener.onFollowingFollowersClicked(isFollowing = false, user = item.user)
         }
         compositeDisposable += binding.tvViewProfile.onClick {
-
+            listener.onEditProfileClicked(user = item.user)
         }
         compositeDisposable += binding.tvFollow.onClick {
             listener.onFollowClicked(user = item.user)
+        }
+        compositeDisposable += binding.ivAddAvatar.onClick {
+            listener.onAddAvatarClick()
+        }
+        compositeDisposable += binding.ivEditCover.onClick {
+            listener.onAddCoverClick()
         }
     }
 
@@ -76,12 +82,15 @@ class ProfilePageViewHolder(
         binding.tvOverview.text = item.user.overview?.trim()
         binding.tvDisplayName.text = item.user.displayName
         binding.tvCastcleId.text = item.user.castcleId
-        binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
+        binding.ivAvatar.loadAvatarImageLocal(item.avatarUpLoad, item.user.avatar.thumbnail)
         binding.ivCover.loadScaleCenterCrop(
             scale = 12 to 10,
             thumbnailUrl = item.user.cover?.thumbnail,
             url = item.user.cover?.original,
+            uri = item.coveUpLoad
         )
+        binding.ivAddAvatar.visibleOrGone(item.user.isOwner)
+        binding.ivEditCover.visibleOrGone(item.user.isOwner)
         binding.tvViewProfile.text = if (item.user.isOwner) {
             string(R.string.edit_page)
         } else {
@@ -106,6 +115,32 @@ class ProfilePageViewHolder(
                     color(R.color.blue)
                 }
             )
+        }
+
+        onAvatarLoading(item.onUploadAvatar ?: false)
+        onCoverLoading(item.onUploadCover ?: false)
+    }
+
+    private fun onAvatarLoading(isLoading: Boolean = false) {
+        with(binding) {
+            vLoading.visibleOrGone(isLoading)
+            animationLoading.visibleOrGone(isLoading)
+            if (!animationLoading.isAnimating) {
+                animationLoading.setAnimation(
+                    R.raw.loading_animations
+                )
+            }
+        }
+    }
+
+    private fun onCoverLoading(isLoading: Boolean = false) {
+        with(binding) {
+            animationLoadingCover.visibleOrGone(isLoading)
+            if (!animationLoadingCover.isAnimating) {
+                animationLoadingCover.setAnimation(
+                    R.raw.loading_animations
+                )
+            }
         }
     }
 

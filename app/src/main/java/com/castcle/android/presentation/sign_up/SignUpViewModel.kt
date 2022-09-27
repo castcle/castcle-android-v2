@@ -103,9 +103,7 @@ class SignUpViewModel(
         viewModelScope.launch {
             confirmPass?.let {
                 _confirmPassword.value = it
-                if (it == _password.value && it.isMinCharacters() &&
-                    _confirmPassword.value?.isLowerAndUpperCase() == true
-                ) {
+                if (it == _password.value && _confirmPassword.value?.isLowerAndUpperCase() == true) {
                     passwordUiState.emit(VerifyPasswordUiState.OnPasswordMatch)
                 } else {
                     passwordUiState.emit(VerifyPasswordUiState.OnPasswordNotMatch)

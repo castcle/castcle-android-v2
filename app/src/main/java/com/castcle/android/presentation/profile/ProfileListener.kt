@@ -33,4 +33,7 @@ interface ProfileListener : CastcleListener {
     fun onFollowingFollowersClicked(isFollowing: Boolean, user: UserEntity) = Unit
     fun onImageClicked(image: List<ImageEntity>, position: Int) = Unit
     fun onOptionClicked(type: OptionDialogType) = Unit
+    fun onEditProfileClicked(user: UserEntity) = Unit
+    fun onAddAvatarClick() = Unit
+    fun onAddCoverClick() = Unit
 }
