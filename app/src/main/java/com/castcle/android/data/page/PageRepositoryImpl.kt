@@ -29,7 +29,7 @@ import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.extensions.getLargeProfileImageUrlHttps
 import com.castcle.android.core.glide.GlidePreloader
-import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.DeleteAccountRequest
 import com.castcle.android.domain.page.PageRepository
 import com.castcle.android.domain.user.entity.SyncSocialEntity
@@ -47,7 +47,7 @@ class PageRepositoryImpl(
     private val glidePreloader: GlidePreloader,
 ) : PageRepository {
 
-    override suspend fun createPageWithFacebook(body: CreatePageWithSocialRequest) {
+    override suspend fun createPageWithFacebook(body: SyncSocialRequest) {
         val response = apiCall { api.createPageWithSocial(body = body) }
         val user = UserEntity.mapOwner(response?.payload)
         val syncSocialPage = SyncSocialEntity.map(response?.payload)
@@ -59,7 +59,7 @@ class PageRepositoryImpl(
     }
 
     override suspend fun createPageWithTwitter(token: TwitterAuthToken?) {
-        val body = suspendCoroutine<CreatePageWithSocialRequest> { coroutine ->
+        val body = suspendCoroutine<SyncSocialRequest> { coroutine ->
             TwitterCore.getInstance().apiClient.accountService
                 .verifyCredentials(false, true, true)
                 .enqueue(object : Callback<User>() {
@@ -68,7 +68,7 @@ class PageRepositoryImpl(
                     }
 
                     override fun success(result: Result<User>?) {
-                        val body = CreatePageWithSocialRequest(
+                        val body = SyncSocialRequest(
                             authToken = "${token?.token}",
                             avatar = result?.data?.getLargeProfileImageUrlHttps(),
                             cover = result?.data?.profileBannerUrl,
@@ -96,7 +96,7 @@ class PageRepositoryImpl(
     override suspend fun deletePage(body: DeleteAccountRequest, userId: String) {
         apiCall { api.deletePage(body = body, id = userId) }
         database.withTransaction {
-            database.syncSocial().delete(listOf(userId))
+            database.syncSocial().deleteByUserId(listOf(userId))
             database.user().delete(userId)
         }
     }

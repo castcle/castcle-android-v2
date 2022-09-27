@@ -35,5 +35,6 @@ data class SocialResponse(
     @SerializedName("id") val id: String? = null,
     @SerializedName("provider") val provider: String? = null,
     @SerializedName("socialId") val socialId: String? = null,
+    @SerializedName("username") val username: String? = null,
     @SerializedName("userName") val userName: String? = null,
 )

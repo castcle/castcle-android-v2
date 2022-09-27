@@ -34,7 +34,7 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.base.BaseUiState
-import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
@@ -78,7 +78,7 @@ class AuthenticationRepositoryImpl(
         return database.accessToken().get() ?: AccessTokenEntity()
     }
 
-    override suspend fun getFacebookPageProfile(): List<CreatePageWithSocialRequest> {
+    override suspend fun getFacebookPageProfile(): List<SyncSocialRequest> {
         return suspendCoroutine { coroutine ->
             GraphRequest(
                 accessToken = AccessToken.getCurrentAccessToken(),
@@ -90,7 +90,7 @@ class AuthenticationRepositoryImpl(
                     val response =
                         Gson().fromJson<GetFacebookPageProfileResponse>(it.rawResponse, type)
                     val pageItems = response.data.orEmpty().map { map ->
-                        CreatePageWithSocialRequest(
+                        SyncSocialRequest(
                             authToken = map.access_token,
                             avatar = map.picture?.data?.url,
                             cover = map.cover?.source,

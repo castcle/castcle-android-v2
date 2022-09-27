@@ -21,11 +21,24 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.view_facebook_page
+package com.castcle.android.data.page.entity
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.data.page.entity.SyncSocialRequest
+import android.os.Parcelable
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
-interface ViewFacebookPageListener : CastcleListener {
-    fun onFacebookPageClicked(page: SyncSocialRequest)
-}
+@Keep
+@Parcelize
+data class SyncSocialRequest(
+    @SerializedName("active") val active: Boolean? = null,
+    @SerializedName("authToken") val authToken: String? = null,
+    @SerializedName("avatar") val avatar: String? = null,
+    @SerializedName("cover") val cover: String? = null,
+    @SerializedName("displayName") val displayName: String? = null,
+    @SerializedName("link") val link: String? = null,
+    @SerializedName("overview") val overview: String? = null,
+    @SerializedName("provider") val provider: String? = null,
+    @SerializedName("socialId") val socialId: String? = null,
+    @SerializedName("userName") val userName: String? = null,
+) : Parcelable

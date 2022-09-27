@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_corner_16dp"
+    android:backgroundTint="@color/white_2">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivSync"
+        android:layout_width="@dimen/_16sdp"
+        android:layout_height="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatarCastcle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flAvatarCastcle"
+        app:srcCompat="@drawable/ic_sync"
+        app:tint="@color/black" />
+
+    <FrameLayout
+        android:id="@+id/flAvatarCastcle"
+        android:layout_width="@dimen/_52sdp"
+        android:layout_height="@dimen/_52sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintEnd_toStartOf="@+id/ivSync"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatarCastcle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white_2"
+        app:layout_constraintCircle="@+id/flAvatarCastcle"
+        app:layout_constraintCircleAngle="135"
+        app:layout_constraintCircleRadius="@dimen/_26sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatarCastcleIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_2sdp"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/black"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_castcle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/flAvatarProvider"
+        android:layout_width="@dimen/_52sdp"
+        android:layout_height="@dimen/_52sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/_2sdp"
+        app:layout_constraintBottom_toBottomOf="@+id/flAvatarCastcle"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivSync"
+        app:layout_constraintTop_toTopOf="@+id/flAvatarCastcle">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivAvatarProvider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAvatarProviderIcon"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:background="@drawable/bg_circle"
+        android:backgroundTint="@color/white_2"
+        app:layout_constraintCircle="@+id/flAvatarProvider"
+        app:layout_constraintCircleAngle="135"
+        app:layout_constraintCircleRadius="@dimen/_26sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProviderCastcleIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_2sdp"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@color/black"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_castcle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvCastcleName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/ivSync"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flAvatarCastcle"
+        app:layout_constraintWidth_default="wrap"
+        tools:text="earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvCastcleId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:textColor="@color/gray_1"
+        app:layout_constraintEnd_toStartOf="@+id/ivSync"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCastcleName"
+        app:layout_constraintWidth_default="wrap"
+        tools:text="\@earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvProviderName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivSync"
+        app:layout_constraintTop_toBottomOf="@+id/flAvatarProvider"
+        app:layout_constraintWidth_default="wrap"
+        tools:text="earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.xSmall"
+        android:id="@+id/tvProviderId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
+        android:textColor="@color/gray_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivSync"
+        app:layout_constraintTop_toBottomOf="@+id/tvProviderName"
+        app:layout_constraintWidth_default="wrap"
+        tools:text="\@earthza555xx" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:gravity="center"
+        android:text="@string/fragment_sync_social_detail_title_7"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProviderId" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:gravity="center"
+        android:text="@string/fragment_sync_social_detail_title_8"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvAccept"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:background="@drawable/bg_corner_24dp"
+        android:backgroundTint="@color/blue"
+        android:gravity="center"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:text="@string/accept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

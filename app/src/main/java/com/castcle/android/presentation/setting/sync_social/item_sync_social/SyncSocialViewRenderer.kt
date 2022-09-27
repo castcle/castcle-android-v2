@@ -21,11 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.view_facebook_page
+package com.castcle.android.presentation.setting.sync_social.item_sync_social
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.data.page.entity.SyncSocialRequest
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemSyncSocialBinding
+import com.castcle.android.presentation.setting.sync_social.SyncSocialListener
+import io.reactivex.disposables.CompositeDisposable
 
-interface ViewFacebookPageListener : CastcleListener {
-    fun onFacebookPageClicked(page: SyncSocialRequest)
+class SyncSocialViewRenderer : CastcleViewRenderer<SyncSocialViewEntity,
+    SyncSocialViewHolder,
+    SyncSocialListener>(R.layout.item_sync_social) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: SyncSocialListener,
+        compositeDisposable: CompositeDisposable
+    ) = SyncSocialViewHolder(
+        ItemSyncSocialBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
+
 }
