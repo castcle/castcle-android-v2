@@ -1,6 +1,7 @@
 <resources>
     <string name="add">Add</string>
     <string name="about_us">About Us</string>
+    <string name="accept">Accept</string>
     <string name="account">Account</string>
     <string name="account_setting">Account Setting</string>
     <string name="account_settings">Account Settings</string>
@@ -104,6 +105,16 @@
     <string name="fragment_setting_title_3">Please verify your e-mail</string>
     <string name="fragment_setting_title_4">Go to</string>
     <string name="fragment_setting_title_5">+ New Page</string>
+    <string name="fragment_sync_social_title_1">Sync Social Media</string>
+    <string name="fragment_sync_social_title_2">Synced</string>
+    <string name="fragment_sync_social_detail_title_1">Sync with %s</string>
+    <string name="fragment_sync_social_detail_title_2">Auto post</string>
+    <string name="fragment_sync_social_detail_title_3">Your post on %s will automatically cast on Castcle.</string>
+    <string name="fragment_sync_social_detail_title_4">Do You want to disconnect from %s?</string>
+    <string name="fragment_sync_social_detail_title_5">Disconnect sync does not affect any of the information you have posted, and it will not affect your account. You can reconnect it at any time</string>
+    <string name="fragment_sync_social_detail_title_6">Disconnect</string>
+    <string name="fragment_sync_social_detail_title_7">Start Auto post on Castcle Profile</string>
+    <string name="fragment_sync_social_detail_title_8">Your %s account %s is linked to your Castcle Page (%s). By continuing, your Twitter will no longer auto-post to (%s) and will now auto-post to your Castcle Profile</string>
     <string name="fragment_update_profile_success_title_1">Mobile number successfully verified</string>
     <string name="fragment_update_profile_success_title_2">You have successfully verified your mobile number with Castcle</string>
     <string name="fragment_update_profile_success_title_3">Password successfully changed</string>

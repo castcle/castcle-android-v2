@@ -21,21 +21,27 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.create_page_option
+package com.castcle.android.presentation.setting.sync_social
 
 import com.castcle.android.core.base.view_model.BaseViewModel
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.domain.authentication.AuthenticationRepository
-import com.castcle.android.domain.page.PageRepository
 import com.castcle.android.domain.user.UserRepository
+import com.castcle.android.domain.user.entity.SyncSocialEntity
+import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.user.type.SocialType
+import com.castcle.android.presentation.setting.sync_social.item_sync_social.SyncSocialViewEntity
 import com.twitter.sdk.android.core.TwitterAuthToken
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.map
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
-class CreatePageOptionViewModel(
+class SyncSocialViewModel(
     private val authenticationRepository: AuthenticationRepository,
-    private val pageRepository: PageRepository,
+    private val database: CastcleDatabase,
+    private val userId: String,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
@@ -43,29 +49,22 @@ class CreatePageOptionViewModel(
 
     val onFacebookPageProfileResult = MutableSharedFlow<List<SyncSocialRequest>>()
 
-    val onSuccess = MutableSharedFlow<Unit>()
+    val onSuccess = MutableSharedFlow<Triple<Boolean, SyncSocialEntity, UserEntity?>>()
+
+    val views = database.syncSocial().retrieve(userId = userId).map { map ->
+        val facebook = SyncSocialViewEntity(
+            map.find { it.provider is SocialType.Facebook },
+            SocialType.Facebook,
+        )
+        val twitter = SyncSocialViewEntity(
+            map.find { it.provider is SocialType.Twitter },
+            SocialType.Twitter,
+        )
+        listOf(facebook, twitter)
+    }
 
     init {
         logoutFacebook()
-    }
-
-    fun createPageWithFacebook(body: SyncSocialRequest) {
-        launch(
-            onError = { onError.emitOnSuspend(it) },
-            onSuccess = { updateCurrentUser() },
-        ) {
-            pageRepository.createPageWithFacebook(body = body)
-            authenticationRepository.loginOutFacebook()
-        }
-    }
-
-    fun createPageWithTwitter(token: TwitterAuthToken?) {
-        launch(
-            onError = { onError.emitOnSuspend(it) },
-            onSuccess = { updateCurrentUser() },
-        ) {
-            pageRepository.createPageWithTwitter(token = token)
-        }
     }
 
     fun getFacebookPageProfile() {
@@ -83,10 +82,31 @@ class CreatePageOptionViewModel(
         }
     }
 
-    private fun updateCurrentUser() {
+    fun syncWithFacebook(body: SyncSocialRequest) {
         launch(
-            onError = { onSuccess.emitOnSuspend() },
-            onSuccess = { onSuccess.emitOnSuspend() },
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { updateCurrentUser(result = it) },
+        ) {
+            val result = userRepository.syncWithFacebook(body = body, userId = userId)
+            authenticationRepository.loginOutFacebook()
+            Triple(result.first, result.second, database.user().get(userId).firstOrNull())
+        }
+    }
+
+    fun syncWithTwitter(token: TwitterAuthToken?) {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onSuccess = { updateCurrentUser(result = it) },
+        ) {
+            val result = userRepository.syncWithTwitter(token = token, userId = userId)
+            Triple(result.first, result.second, database.user().get(userId).firstOrNull())
+        }
+    }
+
+    private fun updateCurrentUser(result: Triple<Boolean, SyncSocialEntity, UserEntity?>) {
+        launch(
+            onError = { onSuccess.emitOnSuspend(result) },
+            onSuccess = { onSuccess.emitOnSuspend(result) },
         ) {
             userRepository.fetchUserPage()
             userRepository.fetchUserProfile()

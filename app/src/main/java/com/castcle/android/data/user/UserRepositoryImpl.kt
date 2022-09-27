@@ -33,6 +33,7 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.authentication.entity.GetGuestAccessTokenRequest
 import com.castcle.android.data.base.BaseUiState
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.cast.entity.CastEntity
@@ -42,13 +43,15 @@ import com.castcle.android.domain.content.entity.ContentEntity
 import com.castcle.android.domain.content.type.ContentType
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.*
-import com.castcle.android.domain.user.type.ProfileType
-import com.castcle.android.domain.user.type.UserType
+import com.castcle.android.domain.user.type.*
 import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
 import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
+import com.twitter.sdk.android.core.*
+import com.twitter.sdk.android.core.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.koin.core.annotation.Factory
+import kotlin.coroutines.*
 
 @Factory
 class UserRepositoryImpl(
@@ -161,6 +164,11 @@ class UserRepositoryImpl(
         database.accessToken().insert(AccessTokenEntity.map(response))
     }
 
+    override suspend fun disconnectWithSocial(syncSocialId: String, userId: String) {
+        apiCall { api.disconnectWithSocial(id = userId, syncSocialId = syncSocialId) }
+        database.syncSocial().deleteById(id = syncSocialId)
+    }
+
     override suspend fun followUser(targetUser: UserEntity) {
         database.withTransaction {
             val currentUserId = database.user().get(UserType.People).firstOrNull()?.id.orEmpty()
@@ -177,7 +185,7 @@ class UserRepositoryImpl(
         val user = UserEntity.mapOwner(response?.payload)
         glidePreloader.loadUser(user)
         database.withTransaction {
-            database.syncSocial().delete(user.map { it.id })
+            database.syncSocial().deleteByUserId(user.map { it.id })
             database.syncSocial().insert(syncSocial)
             database.user().upsert(user)
         }
@@ -193,7 +201,7 @@ class UserRepositoryImpl(
         database.withTransaction {
             database.linkSocial().delete()
             database.linkSocial().insert(linkSocial)
-            database.syncSocial().delete(listOf(user.id))
+            database.syncSocial().deleteByUserId(listOf(user.id))
             database.syncSocial().insert(syncSocial)
             database.user().upsert(user)
         }
@@ -292,6 +300,49 @@ class UserRepositoryImpl(
         apiCall { api.reportUser(body = body) }
     }
 
+    override suspend fun syncWithFacebook(
+        body: SyncSocialRequest,
+        userId: String,
+    ): Pair<Boolean, SyncSocialEntity> {
+        val response = apiCall { api.syncWithSocial(body = body, id = userId) }
+        val syncSocial = SyncSocialEntity.map(response?.socialSync, userId)
+        database.syncSocial().insert(listOf(syncSocial))
+        return (response?.duplicate ?: false) to syncSocial
+    }
+
+    override suspend fun syncWithTwitter(
+        token: TwitterAuthToken?,
+        userId: String,
+    ): Pair<Boolean, SyncSocialEntity> {
+        val body = suspendCoroutine<SyncSocialRequest> { coroutine ->
+            TwitterCore.getInstance().apiClient.accountService.verifyCredentials(false, true, true)
+                .enqueue(object : Callback<User>() {
+                    override fun failure(exception: TwitterException?) {
+                        coroutine.resumeWithException(Throwable(exception?.message))
+                    }
+
+                    override fun success(result: Result<User>?) {
+                        val body = SyncSocialRequest(
+                            authToken = token?.token,
+                            avatar = result?.data?.getLargeProfileImageUrlHttps(),
+                            cover = result?.data?.profileBannerUrl,
+                            displayName = result?.data?.name,
+                            link = result?.data?.idStr?.let { "https://twitter.com/i/user/$it" },
+                            overview = result?.data?.description,
+                            provider = SocialType.Twitter.id,
+                            socialId = result?.data?.idStr,
+                            userName = result?.data?.screenName,
+                        )
+                        coroutine.resume(body)
+                    }
+                })
+        }
+        val response = apiCall { api.syncWithSocial(body = body, id = userId) }
+        val syncSocial = SyncSocialEntity.map(response?.socialSync, userId)
+        database.syncSocial().insert(listOf(syncSocial))
+        return (response?.duplicate ?: false) to syncSocial
+    }
+
     override suspend fun unfollowUser(targetUser: UserEntity) {
         database.withTransaction {
             val currentUserId = database.user().get(UserType.People).firstOrNull()?.id.orEmpty()
@@ -336,6 +387,19 @@ class UserRepositoryImpl(
             database.cast().updateRecasted(contentId, otherUserRecasted)
             database.user().decreaseCastCount(userId)
         }
+    }
+
+    override suspend fun updateAutoPost(
+        enable: Boolean,
+        syncSocialId: String,
+        userId: String,
+    ) {
+        if (enable) {
+            apiCall { api.enableAutoPost(id = userId, syncSocialId = syncSocialId) }
+        } else {
+            apiCall { api.disableAutoPost(id = userId, syncSocialId = syncSocialId) }
+        }
+        database.syncSocial().updateAutoPost(enable = enable, id = syncSocialId)
     }
 
     override suspend fun updateEmail(email: String) {

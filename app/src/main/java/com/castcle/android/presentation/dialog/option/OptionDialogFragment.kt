@@ -91,9 +91,17 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
                         .toConfirmDeleteAccountFragment(userId = type.userId)
                         .navigate()
                 }
-                type.syncSocialMedia -> Unit
+                type.syncSocialMedia -> {
+                    OptionDialogFragmentDirections
+                        .toSyncSocialFragment(userId = type.userId)
+                        .navigate()
+                }
             }
-            is OptionDialogType.MyUserOption -> Unit
+            is OptionDialogType.MyUserOption -> {
+                OptionDialogFragmentDirections
+                    .toSyncSocialFragment(userId = type.userId)
+                    .navigate()
+            }
             is OptionDialogType.OtherCommentOption -> {
                 setFragmentResult(REPLY_RESULT, bundleOf(REPLY_RESULT to type))
                 backPress()
