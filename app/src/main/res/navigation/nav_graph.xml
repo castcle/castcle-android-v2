@@ -33,6 +33,10 @@
             android:id="@+id/toReportSubjectFragment"
             app:destination="@id/reportSubjectFragment" />
 
+        <action
+            android:id="@+id/toSyncSocialFragment"
+            app:destination="@id/syncSocialFragment" />
+
     </dialog>
 
     <dialog
@@ -355,6 +359,10 @@
             app:argType="com.castcle.android.domain.user.entity.UserEntity" />
 
         <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
+        <action
             android:id="@+id/toContentFragment"
             app:destination="@id/contentFragment" />
 
@@ -389,10 +397,6 @@
         <action
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment" />
-
-        <action
-            android:id="@+id/toBoostAdsFragment"
-            app:destination="@id/boostAdsFragment" />
 
     </fragment>
 
@@ -574,6 +578,34 @@
     </fragment>
 
     <fragment
+        android:id="@+id/syncSocialFragment"
+        android:name="com.castcle.android.presentation.setting.sync_social.SyncSocialFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toSyncSocialDetailFragment"
+            app:destination="@id/syncSocialDetailFragment" />
+
+        <action
+            android:id="@+id/toViewFacebookPageFragment"
+            app:destination="@id/viewFacebookPageFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/syncSocialDetailFragment"
+        android:name="com.castcle.android.presentation.setting.sync_social_detail.SyncSocialDetailFragment">
+
+        <argument
+            android:name="syncSocialId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/updateProfileFragment"
         android:name="com.castcle.android.presentation.sign_up.update_profile.UpdateProfileFragment">
 
@@ -635,7 +667,7 @@
 
         <argument
             android:name="pageItems"
-            app:argType="com.castcle.android.data.page.entity.CreatePageWithSocialRequest[]" />
+            app:argType="com.castcle.android.data.page.entity.SyncSocialRequest[]" />
 
     </fragment>
 

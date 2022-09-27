@@ -21,74 +21,91 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.view_facebook_page
+package com.castcle.android.presentation.setting.sync_social_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
-import com.castcle.android.data.page.entity.SyncSocialRequest
+import com.castcle.android.core.extensions.string
+import com.castcle.android.databinding.DialogBasicBinding
 import com.castcle.android.databinding.LayoutRecyclerViewBinding
-import com.castcle.android.presentation.setting.view_facebook_page.item_view_facebook_page.ViewFacebookPageViewEntity
-import com.castcle.android.presentation.setting.view_facebook_page.item_view_facebook_page.ViewFacebookPageViewRenderer
+import com.castcle.android.presentation.dialog.basic.BasicDialog
+import com.castcle.android.presentation.setting.sync_social_detail.item_sync_social_detail.SyncSocialDetailViewRenderer
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class ViewFacebookPageFragment : BaseFragment(), ViewFacebookPageListener {
+class SyncSocialDetailFragment : BaseFragment(), SyncSocialDetailListener {
 
-    private val viewModel by viewModel<ViewFacebookPageViewModel>()
+    private val viewModel by viewModel<SyncSocialDetailViewModel> { parametersOf(args.syncSocialId) }
 
-    private val args by navArgs<ViewFacebookPageFragmentArgs>()
-
-    private val items by lazy {
-        args.pageItems.toList().map {
-            ViewFacebookPageViewEntity(page = it, uniqueId = it.socialId.orEmpty())
-        }
-    }
+    private val args by navArgs<SyncSocialDetailFragmentArgs>()
 
     override fun initViewProperties() {
         binding.swipeRefresh.isEnabled = false
         binding.recyclerView.itemAnimator = null
         binding.recyclerView.adapter = adapter
-        binding.actionBar.bind(
-            leftButtonAction = { clearFacebookPage() },
-            title = R.string.fragment_view_facebook_page_title_1,
-        )
-        adapter.submitList(items)
     }
 
     override fun initConsumer() {
         lifecycleScope.launch {
-            viewModel.onLogoutFacebookSuccess.collectLatest {
+            viewModel.views.collectLatest(adapter::submitList)
+        }
+        lifecycleScope.launch {
+            viewModel.syncSocialType.filterNotNull().collectLatest { type ->
+                binding.actionBar.bind(
+                    leftButtonAction = { backPress() },
+                    title = getString(
+                        R.string.fragment_sync_social_detail_title_1,
+                        type.id.replaceFirstChar { it.uppercase() }
+                    ),
+                )
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onDisconnect.collectLatest {
                 dismissLoading()
                 backPress()
             }
         }
-        addOnBackPressedCallback {
-            clearFacebookPage()
+        lifecycleScope.launch {
+            viewModel.onSuccess.collectLatest {
+                dismissLoading()
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onError.collectLatest {
+                dismissLoading()
+                BasicDialog(
+                    binding = DialogBasicBinding.inflate(layoutInflater),
+                    button = string(R.string.ok),
+                    isCancelable = false,
+                    title = it.message.orEmpty(),
+                ).show()
+            }
         }
     }
 
-    private fun clearFacebookPage() {
+    override fun onAutoPostClicked(enable: Boolean, userId: String) {
         showLoading()
-        viewModel.logoutFacebook()
+        viewModel.updateAutoPost(enable = enable, userId = userId)
     }
 
-    override fun onFacebookPageClicked(page: SyncSocialRequest) {
-        setFragmentResult(SELECT_FACEBOOK_PAGE, bundleOf(SELECT_FACEBOOK_PAGE to page))
-        backPress()
+    override fun onDisconnectClicked(userId: String) {
+        showLoading()
+        viewModel.disconnectWithSocial(userId = userId)
     }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(ViewFacebookPageViewRenderer())
+            registerRenderer(SyncSocialDetailViewRenderer())
         }
     }
 
@@ -101,9 +118,5 @@ class ViewFacebookPageFragment : BaseFragment(), ViewFacebookPageListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ) = binding.root
-
-    companion object {
-        const val SELECT_FACEBOOK_PAGE = "SELECT_FACEBOOK_PAGE"
-    }
 
 }

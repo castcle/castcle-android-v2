@@ -21,11 +21,11 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.view_facebook_page
+package com.castcle.android.presentation.setting.sync_social_detail
 
 import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.data.page.entity.SyncSocialRequest
 
-interface ViewFacebookPageListener : CastcleListener {
-    fun onFacebookPageClicked(page: SyncSocialRequest)
+interface SyncSocialDetailListener : CastcleListener {
+    fun onAutoPostClicked(enable: Boolean, userId: String)
+    fun onDisconnectClicked(userId: String)
 }

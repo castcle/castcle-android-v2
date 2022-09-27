@@ -31,6 +31,7 @@
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="white_1">#CDD4D9</color>
+    <color name="white_2">#EDEDED</color>
     <color name="white_primary_alpha_20">#33F5F5F5</color>
     <color name="black_tranparen_80">#9917191A</color>
     <color name="gray_medium">#6A6C6F</color>

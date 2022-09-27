@@ -27,6 +27,7 @@ import com.castcle.android.core.base.response.BaseResponse
 import com.castcle.android.core.constants.*
 import com.castcle.android.data.cast.entity.CastResponse
 import com.castcle.android.data.content.entity.CommentResponse
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
 import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
@@ -60,6 +61,24 @@ interface UserApi {
     suspend fun deleteReplyComment(
         @Path("commentId") commentId: String,
         @Path("replyCommentId") replyCommentId: String,
+    ): Response<Unit>
+
+    @DELETE("v2/users/{$PARAMETER_ID}/sync-social/{$PARAMETER_SYNC_SOCIAL_ID}/auto-post")
+    suspend fun disableAutoPost(
+        @Path(PARAMETER_ID) id: String,
+        @Path(PARAMETER_SYNC_SOCIAL_ID) syncSocialId: String,
+    ): Response<Unit>
+
+    @DELETE("v2/users/{$PARAMETER_ID}/sync-social/{$PARAMETER_SYNC_SOCIAL_ID}")
+    suspend fun disconnectWithSocial(
+        @Path(PARAMETER_ID) id: String,
+        @Path(PARAMETER_SYNC_SOCIAL_ID) syncSocialId: String,
+    ): Response<Unit>
+
+    @POST("v2/users/{$PARAMETER_ID}/sync-social/{$PARAMETER_SYNC_SOCIAL_ID}/auto-post")
+    suspend fun enableAutoPost(
+        @Path(PARAMETER_ID) id: String,
+        @Path(PARAMETER_SYNC_SOCIAL_ID) syncSocialId: String,
     ): Response<Unit>
 
     @POST("v2/users/me/following")
@@ -140,6 +159,12 @@ interface UserApi {
     suspend fun reportUser(
         @Body body: ReportRequest,
     ): Response<Unit>
+
+    @POST("v2/users/{$PARAMETER_ID}/sync-social")
+    suspend fun syncWithSocial(
+        @Body body: SyncSocialRequest,
+        @Path(PARAMETER_ID) id: String,
+    ): Response<SyncWithSocialResponse>
 
     @DELETE("v2/users/me/following/{targetCastcleId}")
     suspend fun unfollowUser(

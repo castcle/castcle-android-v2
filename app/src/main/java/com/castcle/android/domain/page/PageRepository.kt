@@ -23,12 +23,12 @@
 
 package com.castcle.android.domain.page
 
-import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.DeleteAccountRequest
 import com.twitter.sdk.android.core.TwitterAuthToken
 
 interface PageRepository {
-    suspend fun createPageWithFacebook(body: CreatePageWithSocialRequest)
+    suspend fun createPageWithFacebook(body: SyncSocialRequest)
     suspend fun createPageWithTwitter(token: TwitterAuthToken?)
     suspend fun deletePage(body: DeleteAccountRequest, userId: String)
 }

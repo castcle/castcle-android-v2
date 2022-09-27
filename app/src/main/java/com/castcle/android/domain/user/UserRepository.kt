@@ -24,12 +24,15 @@
 package com.castcle.android.domain.user
 
 import com.castcle.android.data.base.BaseUiState
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.user.entity.SyncSocialEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.sign_up.update_profile.entity.UploadImageRequest
 import com.castcle.android.presentation.sign_up.update_profile.entity.UserUpdateRequest
+import com.twitter.sdk.android.core.TwitterAuthToken
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
@@ -38,6 +41,7 @@ interface UserRepository {
     suspend fun deleteAccount(body: DeleteAccountRequest)
     suspend fun deleteComment(commentId: String)
     suspend fun deleteReplyComment(replyCommentId: String)
+    suspend fun disconnectWithSocial(syncSocialId: String, userId: String)
     suspend fun followUser(targetUser: UserEntity)
     suspend fun fetchUserPage(): List<UserEntity>
     suspend fun fetchUserProfile(): UserEntity
@@ -48,10 +52,13 @@ interface UserRepository {
     suspend fun replyComment(commentId: String, message: String)
     suspend fun reportContent(body: ReportRequest)
     suspend fun reportUser(body: ReportRequest)
+    suspend fun syncWithFacebook(body: SyncSocialRequest, userId: String): Pair<Boolean, SyncSocialEntity>
+    suspend fun syncWithTwitter(token: TwitterAuthToken?, userId: String): Pair<Boolean, SyncSocialEntity>
     suspend fun unfollowUser(targetUser: UserEntity)
     suspend fun unlikeCasts(content: CastEntity)
     suspend fun unlikeComment(comment: CommentEntity)
     suspend fun unrecastContent(contentId: String, otherUserRecasted: Boolean, userId: String)
+    suspend fun updateAutoPost(enable: Boolean, syncSocialId: String, userId: String)
     suspend fun updateEmail(email: String)
     suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest): Flow<BaseUiState<Nothing>>
     suspend fun updateDetailProfile(userUpdateRequest: UserUpdateRequest): Flow<BaseUiState<Nothing>>

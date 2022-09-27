@@ -21,24 +21,13 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.data.page.entity
+package com.castcle.android.data.user.entity
 
-import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
 @Keep
-@Parcelize
-data class CreatePageWithSocialRequest(
-    @SerializedName("active") val active: Boolean? = null,
-    @SerializedName("authToken") val authToken: String? = null,
-    @SerializedName("avatar") val avatar: String? = null,
-    @SerializedName("cover") val cover: String? = null,
-    @SerializedName("displayName") val displayName: String? = null,
-    @SerializedName("link") val link: String? = null,
-    @SerializedName("overview") val overview: String? = null,
-    @SerializedName("provider") val provider: String? = null,
-    @SerializedName("socialId") val socialId: String? = null,
-    @SerializedName("userName") val userName: String? = null,
-) : Parcelable
+data class SyncWithSocialResponse(
+    @SerializedName("duplicate") val duplicate: Boolean? = null,
+    @SerializedName("socialSync") val socialSync: SocialResponse? = null,
+)

@@ -39,6 +39,7 @@ import com.castcle.android.presentation.feed.FeedFragment
 import com.castcle.android.presentation.login.LoginFragment
 import com.castcle.android.presentation.setting.account.AccountFragment
 import com.castcle.android.presentation.setting.create_page_option.CreatePageOptionFragment
+import com.castcle.android.presentation.setting.sync_social.SyncSocialFragment
 import com.twitter.sdk.android.core.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -88,6 +89,9 @@ class HomeActivity : BaseActivity() {
                     ?.twitterAuthClient
                     ?.onActivityResult(requestCode, resultCode, data)
                 R.id.loginFragment -> findFragmentInNavHost<LoginFragment>()
+                    ?.twitterAuthClient
+                    ?.onActivityResult(requestCode, resultCode, data)
+                R.id.syncSocialFragment -> findFragmentInNavHost<SyncSocialFragment>()
                     ?.twitterAuthClient
                     ?.onActivityResult(requestCode, resultCode, data)
             }
