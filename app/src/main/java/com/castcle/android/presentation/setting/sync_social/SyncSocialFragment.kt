@@ -21,24 +21,26 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.setting.create_page_option
+package com.castcle.android.presentation.setting.sync_social
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastcleAdapter
 import com.castcle.android.core.extensions.string
 import com.castcle.android.core.extensions.toast
 import com.castcle.android.data.page.entity.SyncSocialRequest
-import com.castcle.android.databinding.DialogBasicBinding
-import com.castcle.android.databinding.LayoutRecyclerViewBinding
+import com.castcle.android.databinding.*
+import com.castcle.android.domain.user.entity.SyncSocialEntity
+import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.dialog.basic.BasicDialog
-import com.castcle.android.presentation.setting.create_page_option.item_create_page_option.CreatePageOptionViewEntity
-import com.castcle.android.presentation.setting.create_page_option.item_create_page_option.CreatePageOptionViewRenderer
+import com.castcle.android.presentation.setting.sync_social.dialog_duplicate_sync_social.DuplicateSyncSocialDialog
+import com.castcle.android.presentation.setting.sync_social.item_sync_social.SyncSocialViewRenderer
 import com.castcle.android.presentation.setting.view_facebook_page.ViewFacebookPageFragment.Companion.SELECT_FACEBOOK_PAGE
 import com.facebook.*
 import com.facebook.login.LoginManager
@@ -49,12 +51,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class CreatePageOptionFragment : BaseFragment(), CreatePageOptionListener {
+class SyncSocialFragment : BaseFragment(), SyncSocialListener {
 
-    private val viewModel by viewModel<CreatePageOptionViewModel>()
+    private val viewModel by viewModel<SyncSocialViewModel> { parametersOf(args.userId) }
 
-    private val directions = CreatePageOptionFragmentDirections
+    private val args by navArgs<SyncSocialFragmentArgs>()
+
+    private val directions = SyncSocialFragmentDirections
 
     private val facebookLoginManager by inject<LoginManager>()
 
@@ -68,9 +73,8 @@ class CreatePageOptionFragment : BaseFragment(), CreatePageOptionListener {
         binding.recyclerView.adapter = adapter
         binding.actionBar.bind(
             leftButtonAction = { backPress() },
-            title = R.string.new_page,
+            title = R.string.fragment_sync_social_title_1,
         )
-        adapter.submitList(CreatePageOptionViewEntity())
     }
 
     @Suppress("DEPRECATION")
@@ -79,12 +83,33 @@ class CreatePageOptionFragment : BaseFragment(), CreatePageOptionListener {
             val page = bundle.getParcelable<SyncSocialRequest>(SELECT_FACEBOOK_PAGE)
             if (page != null) {
                 showLoading()
-                viewModel.createPageWithFacebook(page)
+                viewModel.syncWithFacebook(page)
             }
         }
     }
 
     override fun initConsumer() {
+        lifecycleScope.launch {
+            viewModel.views.collectLatest(adapter::submitList)
+        }
+        lifecycleScope.launch {
+            viewModel.onSuccess.collectLatest { (duplicate, syncSocial, user) ->
+                dismissLoading()
+                if (duplicate) {
+                    DuplicateSyncSocialDialog(
+                        binding = DialogDuplicateSyncSocialBinding.inflate(layoutInflater),
+                        syncSocial = syncSocial,
+                        user = user ?: UserEntity(),
+                    ).show()
+                }
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onFacebookPageProfileResult.collectLatest {
+                dismissLoading()
+                directions.toViewFacebookPageFragment(it.toTypedArray()).navigate()
+            }
+        }
         lifecycleScope.launch {
             viewModel.onError.collectLatest {
                 dismissLoading()
@@ -96,32 +121,21 @@ class CreatePageOptionFragment : BaseFragment(), CreatePageOptionListener {
                 ).show()
             }
         }
-        lifecycleScope.launch {
-            viewModel.onFacebookPageProfileResult.collectLatest {
-                dismissLoading()
-                directions.toViewFacebookPageFragment(it.toTypedArray()).navigate()
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.onSuccess.collectLatest {
-                dismissLoading()
-                backPress()
-            }
-        }
     }
 
-    override fun onCreatePageClicked() {
-        directions.toCreatePageConditionFragment().navigate()
+    override fun onSyncSocialClicked(syncSocial: SyncSocialEntity?) {
+        directions.toSyncSocialDetailFragment(syncSocial?.id.orEmpty()).navigate()
     }
 
-    override fun onCreatePageWithFacebookClicked() {
+    override fun onSyncWithFacebookClicked() {
         facebookLoginManager.logOut()
         facebookLoginManager.logInWithReadPermissions(
             callbackManager = callbackManager,
             fragment = this,
             permissions = listOf("pages_manage_metadata", "pages_show_list"),
         )
-        facebookLoginManager.registerCallback(callbackManager,
+        facebookLoginManager.registerCallback(
+            callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
                     showLoading()
@@ -139,20 +153,20 @@ class CreatePageOptionFragment : BaseFragment(), CreatePageOptionListener {
             })
     }
 
-    override fun onCreatePageWithTwitterClicked() {
+    override fun onSyncWithTwitterClicked() {
         twitterAuthClient.cancelAuthorize()
         twitterAuthClient.authorize(activity, object : Callback<TwitterSession>() {
             override fun failure(exception: TwitterException?) = toast(exception?.message)
             override fun success(result: Result<TwitterSession>?) {
                 showLoading()
-                viewModel.createPageWithTwitter(result?.data?.authToken)
+                viewModel.syncWithTwitter(result?.data?.authToken)
             }
         })
     }
 
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
-            registerRenderer(CreatePageOptionViewRenderer())
+            registerRenderer(SyncSocialViewRenderer())
         }
     }
 

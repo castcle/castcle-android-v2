@@ -25,6 +25,7 @@ package com.castcle.android.domain.user.entity
 
 import androidx.room.*
 import com.castcle.android.core.constants.TABLE_SYNC_SOCIAL
+import com.castcle.android.data.user.entity.SocialResponse
 import com.castcle.android.data.user.entity.UserResponse
 import com.castcle.android.domain.user.type.SocialType
 
@@ -42,6 +43,20 @@ data class SyncSocialEntity(
 ) {
 
     companion object {
+        fun map(response: SocialResponse?, userId: String): SyncSocialEntity {
+            return SyncSocialEntity(
+                active = response?.active ?: false,
+                autoPost = response?.autoPost ?: false,
+                avatar = response?.avatar.orEmpty(),
+                displayName = response?.displayName.orEmpty(),
+                id = response?.id.orEmpty(),
+                provider = SocialType.getFromId(response?.provider),
+                socialId = response?.socialId.orEmpty(),
+                userId = userId,
+                userName = response?.username ?: response?.userName.orEmpty(),
+            )
+        }
+
         fun map(response: UserResponse?): List<SyncSocialEntity> {
             return listOfNotNull(
                 response?.syncSocial?.facebook,
@@ -57,7 +72,7 @@ data class SyncSocialEntity(
                     provider = SocialType.getFromId(map.provider),
                     socialId = map.socialId.orEmpty(),
                     userId = response?.id.orEmpty(),
-                    userName = map.userName.orEmpty(),
+                    userName = map.username ?: map.userName.orEmpty(),
                 )
             }
         }

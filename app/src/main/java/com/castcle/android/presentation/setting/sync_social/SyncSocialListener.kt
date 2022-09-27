@@ -21,37 +21,13 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.data.user.dao
+package com.castcle.android.presentation.setting.sync_social
 
-import androidx.room.*
-import com.castcle.android.core.constants.TABLE_SYNC_SOCIAL
+import com.castcle.android.core.base.recyclerview.CastcleListener
 import com.castcle.android.domain.user.entity.SyncSocialEntity
-import com.castcle.android.domain.user.entity.SyncSocialWithUserEntity
-import kotlinx.coroutines.flow.Flow
 
-@Dao
-interface SyncSocialDao {
-
-    @Query("DELETE FROM $TABLE_SYNC_SOCIAL")
-    suspend fun delete()
-
-    @Query("DELETE FROM $TABLE_SYNC_SOCIAL WHERE syncSocial_id = :id")
-    suspend fun deleteById(id: String)
-
-    @Query("DELETE FROM $TABLE_SYNC_SOCIAL WHERE syncSocial_userId IN (:userId)")
-    suspend fun deleteByUserId(userId: List<String>)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(items: List<SyncSocialEntity>)
-
-    @Query("SELECT * FROM $TABLE_SYNC_SOCIAL WHERE syncSocial_userId = :userId")
-    fun retrieve(userId: String): Flow<List<SyncSocialEntity>>
-
-    @Query("SELECT * FROM $TABLE_SYNC_SOCIAL WHERE syncSocial_id = :id")
-    @Transaction
-    fun retrieveWithUser(id: String): Flow<SyncSocialWithUserEntity?>
-
-    @Query("UPDATE $TABLE_SYNC_SOCIAL SET syncSocial_autoPost = :enable WHERE syncSocial_id = :id")
-    suspend fun updateAutoPost(enable: Boolean, id: String)
-
+interface SyncSocialListener : CastcleListener {
+    fun onSyncSocialClicked(syncSocial: SyncSocialEntity?)
+    fun onSyncWithFacebookClicked()
+    fun onSyncWithTwitterClicked()
 }

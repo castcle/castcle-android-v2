@@ -26,10 +26,10 @@ package com.castcle.android.presentation.setting.view_facebook_page.item_view_fa
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.extensions.cast
-import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.data.page.entity.SyncSocialRequest
 
 data class ViewFacebookPageViewEntity(
-    val page: CreatePageWithSocialRequest = CreatePageWithSocialRequest(),
+    val page: SyncSocialRequest = SyncSocialRequest(),
     override val uniqueId: String = "${R.layout.item_view_facebook_page}"
 ) : CastcleViewEntity {
 

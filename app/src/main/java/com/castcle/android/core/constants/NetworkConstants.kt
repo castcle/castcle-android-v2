@@ -45,6 +45,7 @@ const val PARAMETER_MAX_RESULTS_MEDIUM_ITEM = 15
 const val PARAMETER_MAX_RESULTS_SMALL_ITEM = 20
 const val PARAMETER_NEXT_TOKEN = "nextToken"
 const val PARAMETER_SHORTCUT_ID = "shortcutId"
+const val PARAMETER_SYNC_SOCIAL_ID = "syncSocialId"
 const val PARAMETER_UNTIL_ID = "untilId"
 const val PARAMETER_USER_FIELDS = "userFields"
 const val PARAMETER_USER_FIELDS_DEFAULT = "casts,link-social,relationships,sync-social,wallet"

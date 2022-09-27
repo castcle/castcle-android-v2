@@ -25,7 +25,7 @@ package com.castcle.android.core.api
 
 import com.castcle.android.core.base.response.BaseResponse
 import com.castcle.android.core.constants.PARAMETER_ID
-import com.castcle.android.data.page.entity.CreatePageWithSocialRequest
+import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.data.user.entity.DeleteAccountRequest
 import com.castcle.android.data.user.entity.UserResponse
 import retrofit2.Response
@@ -35,7 +35,7 @@ interface PageApi {
 
     @POST("v2/pages/sync-social")
     suspend fun createPageWithSocial(
-        @Body body: CreatePageWithSocialRequest,
+        @Body body: SyncSocialRequest,
     ): Response<BaseResponse<UserResponse>>
 
     @HTTP(method = "DELETE", path = "v2/pages/{$PARAMETER_ID}", hasBody = true)
