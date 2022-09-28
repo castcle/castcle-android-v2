@@ -216,7 +216,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun getUserFlow(id: String): Flow<UserEntity?> {
-        return database.user().getByCastcleID(id)
+        return database.user().getByUserID(id)
     }
 
     override suspend fun likeCasts(content: CastEntity) {

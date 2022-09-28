@@ -62,8 +62,6 @@ class EditProfileViewModel(
 
     val updateUiState = MutableStateFlow<BaseUiState<Nothing>?>(null)
 
-    val displayName = MutableLiveData<String>()
-
     val userEntity = MutableStateFlow(UserEntity())
 
     val selectState = MutableStateFlow<PhotoSelectedState?>(null)
@@ -244,7 +242,9 @@ class EditProfileViewModel(
     fun handlerOnCastcleIdEdit(condition: Boolean, onPass: () -> Unit, onFail: () -> Unit) {
         when {
             inputUiState.value != null && userEntity.value.canUpdateCastcleId == true -> {
-                if (condition && inputUiState.value == VerifyProfileState.CASTCLE_ID_PASS) {
+                if (condition && inputUiState.value == VerifyProfileState.CASTCLE_ID_PASS &&
+                    itemView.value?.castcleId != userEntity.value.castcleId
+                ) {
                     onPass.invoke()
                 } else {
                     onFail.invoke()
@@ -256,6 +256,7 @@ class EditProfileViewModel(
                     itemView.value?.linkYoutube != userEntity.value.linkYoutube ||
                     itemView.value?.linkMedium != userEntity.value.linkMedium ||
                     itemView.value?.linkWeb != userEntity.value.linkWebsite ||
+                    itemView.value?.castcleId != userEntity.value.castcleId ||
                     itemView.value?.overview != userEntity.value.overview ||
                     itemView.value?.avatarUpLoad != userEntity.value.avatar.original.toUri() ||
                     itemView.value?.coveUpLoad != userEntity.value.cover?.original?.toUri() ||
