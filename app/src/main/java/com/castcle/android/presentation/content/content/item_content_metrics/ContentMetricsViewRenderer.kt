@@ -21,16 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.base.response
+package com.castcle.android.presentation.content.content.item_content_metrics
 
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemContentMetricsBinding
+import com.castcle.android.presentation.content.content.ContentListener
+import io.reactivex.disposables.CompositeDisposable
 
-@Keep
-data class MetricsResponse(
-    @SerializedName("commentCount") val commentCount: Int? = null,
-    @SerializedName("farmCount") val farmCount: Double? = null,
-    @SerializedName("likeCount") val likeCount: Int? = null,
-    @SerializedName("quoteCount") val quoteCount: Int? = null,
-    @SerializedName("recastCount") val recastCount: Int? = null,
-)
+class ContentMetricsViewRenderer : CastcleViewRenderer<ContentMetricsViewEntity,
+    ContentMetricsViewHolder,
+    ContentListener>(R.layout.item_content_metrics) {
+
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: ContentListener,
+        compositeDisposable: CompositeDisposable
+    ) = ContentMetricsViewHolder(
+        ItemContentMetricsBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
+
+}

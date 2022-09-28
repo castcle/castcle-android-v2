@@ -27,6 +27,7 @@ import com.castcle.android.core.base.response.BaseResponse
 import com.castcle.android.core.constants.*
 import com.castcle.android.data.cast.entity.CastResponse
 import com.castcle.android.data.content.entity.*
+import com.castcle.android.data.user.entity.UserResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -56,9 +57,23 @@ interface ContentApi {
         @Query(PARAMETER_USER_FIELDS) userField: String = PARAMETER_USER_FIELDS_DEFAULT,
     ): Response<BaseResponse<CastResponse>>
 
+    @GET("v2/contents/{$PARAMETER_CONTENT_ID}/liking-users")
+    suspend fun getContentLikesUsers(
+        @Path(PARAMETER_CONTENT_ID) contentId: String,
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int = PARAMETER_MAX_RESULTS_SMALL_ITEM,
+        @Query(PARAMETER_UNTIL_ID) untilId: String? = null,
+    ): Response<BaseResponse<List<UserResponse>>>
+
     @GET("v2/contents/{$PARAMETER_CONTENT_ID}/participates")
     suspend fun getContentParticipate(
         @Path(PARAMETER_CONTENT_ID) contentId: String,
     ): Response<List<ContentParticipateResponse>>
+
+    @GET("v2/contents/{$PARAMETER_CONTENT_ID}/recasts")
+    suspend fun getContentRecastsUsers(
+        @Path(PARAMETER_CONTENT_ID) contentId: String,
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int = PARAMETER_MAX_RESULTS_SMALL_ITEM,
+        @Query(PARAMETER_UNTIL_ID) untilId: String? = null,
+    ): Response<BaseResponse<List<UserResponse>>>
 
 }

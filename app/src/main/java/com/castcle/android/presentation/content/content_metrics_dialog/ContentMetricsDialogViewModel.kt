@@ -21,28 +21,22 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.item_reply
+package com.castcle.android.presentation.content.content_metrics_dialog
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
-import com.castcle.android.databinding.ItemReplyBinding
-import com.castcle.android.presentation.content.ContentListener
-import io.reactivex.disposables.CompositeDisposable
+import com.castcle.android.core.base.view_model.BaseViewModel
+import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.presentation.content.content_metrics.ContentMetricsType
+import kotlinx.coroutines.flow.filterNotNull
+import org.koin.android.annotation.KoinViewModel
 
-class ReplyViewRenderer : CastcleViewRenderer<ReplyViewEntity,
-    ReplyViewHolder,
-    ContentListener>(R.layout.item_reply) {
+@KoinViewModel
+class ContentMetricsDialogViewModel(
+    database: CastcleDatabase,
+    type: ContentMetricsType,
+) : BaseViewModel() {
 
-    override fun createViewHolder(
-        parent: ViewGroup,
-        listener: ContentListener,
-        compositeDisposable: CompositeDisposable
-    ) = ReplyViewHolder(
-        ItemReplyBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        ), compositeDisposable, listener
-    )
+    val content = database.cast()
+        .retrieve(contentId = type.contentId)
+        .filterNotNull()
 
 }

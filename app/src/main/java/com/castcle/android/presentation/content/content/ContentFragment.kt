@@ -21,7 +21,7 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content
+package com.castcle.android.presentation.content.content
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -43,9 +43,10 @@ import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.content.item_comment.CommentViewRenderer
-import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewRenderer
-import com.castcle.android.presentation.content.item_reply.ReplyViewRenderer
+import com.castcle.android.presentation.content.content.item_comment.CommentViewRenderer
+import com.castcle.android.presentation.content.content.item_content_metrics.ContentMetricsViewRenderer
+import com.castcle.android.presentation.content.content.item_reply.ReplyViewRenderer
+import com.castcle.android.presentation.content.content_metrics.ContentMetricsType
 import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
@@ -95,6 +96,7 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun initListener() {
         compositeDisposable += binding.clComment.onClick {
             binding.etComment.showKeyboard()
@@ -190,6 +192,10 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         binding.etComment.showKeyboard()
     }
 
+    override fun onContentMetricsClicked(type: ContentMetricsType) {
+        directions.toContentMetricsDialogFragment(type).navigate()
+    }
+
     override fun onFollowClicked(user: UserEntity) {
         shareViewModel.followUser(
             isGuestAction = { directions.toLoginFragment().navigate() },
@@ -222,8 +228,6 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         viewModel.likeComment(comment)
     }
 
-    override fun onLikeCountClicked(contentId: String, hasRecast: Boolean) = Unit
-
     override fun onLinkClicked(url: String) {
         openUrl(url)
     }
@@ -248,8 +252,6 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
             isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
         )
     }
-
-    override fun onRecastCountClicked(contentId: String, hasLike: Boolean) = Unit
 
     override fun onReplyClicked(castcleId: String, commentId: String) {
         viewModel.targetCommentId.value = commentId

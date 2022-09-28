@@ -4,6 +4,20 @@
     app:startDestination="@id/homeFragment">
 
     <dialog
+        android:id="@+id/contentMetricsDialogFragment"
+        android:name="com.castcle.android.presentation.content.content_metrics_dialog.ContentMetricsDialogFragment">
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.presentation.content.content_metrics.ContentMetricsType" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </dialog>
+
+    <dialog
         android:id="@+id/recastDialogFragment"
         android:name="com.castcle.android.presentation.dialog.recast.RecastDialogFragment">
 
@@ -111,7 +125,7 @@
 
     <fragment
         android:id="@+id/contentFragment"
-        android:name="com.castcle.android.presentation.content.ContentFragment">
+        android:name="com.castcle.android.presentation.content.content.ContentFragment">
 
         <argument
             android:name="contentId"
@@ -121,6 +135,10 @@
             android:name="contentOwnerDisplayName"
             app:argType="string"
             app:nullable="true" />
+
+        <action
+            android:id="@+id/toContentMetricsDialogFragment"
+            app:destination="@id/contentMetricsDialogFragment" />
 
         <action
             android:id="@+id/toLoginFragment"
