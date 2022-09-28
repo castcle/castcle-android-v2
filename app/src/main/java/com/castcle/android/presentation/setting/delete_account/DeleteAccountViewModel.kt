@@ -28,6 +28,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.user.entity.DeleteAccountRequest
 import com.castcle.android.domain.page.PageRepository
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.delete_account.item_delete_account.DeleteAccountViewEntity
@@ -39,6 +40,7 @@ import org.koin.android.annotation.KoinViewModel
 class DeleteAccountViewModel(
     database: CastcleDatabase,
     private val pageRepository: PageRepository,
+    private val trackerRepository: TrackerRepository,
     private val userId: String,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
@@ -72,12 +74,21 @@ class DeleteAccountViewModel(
             )
         }
 
+    init {
+        launch {
+            trackerRepository.trackViewDeleteAccount(userId)
+        }
+    }
+
     fun deleteAccount(password: String) {
         launch(
             onError = { onError.emitOnSuspend(it) },
             onSuccess = { onSuccess.emitOnSuspend(UserType.People) },
         ) {
             userRepository.deleteAccount(body = DeleteAccountRequest(password = password))
+        }
+        launch {
+            trackerRepository.trackDeleteAccount(userId)
         }
     }
 
@@ -90,6 +101,9 @@ class DeleteAccountViewModel(
                 body = DeleteAccountRequest(password = password),
                 userId = userId,
             )
+        }
+        launch {
+            trackerRepository.trackDeleteAccount(userId)
         }
     }
 
