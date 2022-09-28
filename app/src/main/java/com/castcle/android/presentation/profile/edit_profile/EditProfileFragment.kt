@@ -101,13 +101,15 @@ class EditProfileFragment : BaseFragment(), UpdateProfileListener {
         when (profileBuild) {
             is ProfileBundle.User -> {
                 viewModel.userType.value = UserType.People
-                viewModel.displayName.value = (profileBuild as ProfileBundle.User).displayName
                 viewModel.fetchProfile((profileBuild as ProfileBundle.User).userId)
+                (profileBuild as ProfileBundle.User).displayName?.let {
+                    initActionBar(it)
+                }
             }
             is ProfileBundle.Page -> {
                 viewModel.userType.value = UserType.Page
-                viewModel.displayName.value = (profileBuild as ProfileBundle.Page).displayName
                 viewModel.fetchProfile((profileBuild as ProfileBundle.Page).userId)
+                initActionBar(string(R.string.edit_page))
             }
             else -> Unit
         }
@@ -180,12 +182,6 @@ class EditProfileFragment : BaseFragment(), UpdateProfileListener {
         })
     }
 
-    override fun initObserver() {
-        viewModel.displayName.observe(viewLifecycleOwner) {
-            initActionBar(it)
-        }
-    }
-
     private fun bindProfileData(bindItem: ItemEditEntity) {
         with(binding) {
             compositeDisposable += binding.itOverView.onTextChange {
@@ -206,7 +202,7 @@ class EditProfileFragment : BaseFragment(), UpdateProfileListener {
 
                 with(binding.itCastcleId) {
                     setText(it.castcleId)
-                    isEnabled = it.canUpdateCastcleId == false
+                    isEnabled = it.canUpdateCastcleId ?: false
 
                     addTextChangedListener(
                         TextChangeCastcleIdListener(this,
@@ -235,7 +231,7 @@ class EditProfileFragment : BaseFragment(), UpdateProfileListener {
                     handlerButtonState(it.isNotBlank())
                 }
 
-                ivCastcleIdWarning.visibleOrGone(it.canUpdateCastcleId == true)
+                ivCastcleIdWarning.visibleOrGone(it.canUpdateCastcleId == false)
 
                 if (bindItem.userEntity.type == UserType.People) {
                     itemDetailPage.clDetailPage.gone()
@@ -472,7 +468,7 @@ class EditProfileFragment : BaseFragment(), UpdateProfileListener {
 
     private fun initActionBar(titleName: String) {
         binding.actionBar.bind(
-            rightButtonAction = {
+            leftButtonAction = {
                 backPress()
             },
             title = titleName,
