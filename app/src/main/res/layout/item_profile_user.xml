@@ -156,7 +156,6 @@
         android:ellipsize="end"
         android:gravity="center"
         android:lineSpacingMultiplier="1.2"
-        android:minLines="3"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
