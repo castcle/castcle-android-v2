@@ -30,7 +30,10 @@ data class UserUpdateRequest(
     var contract: Contract? = null,
 
     @SerializedName("links")
-    var links: UserLinkResponse? = null
+    var links: UserLinkResponse? = null,
+
+    @SerializedName("images")
+    var images: UpLoadImagesRequest? = null
 )
 
 data class Contract(

@@ -118,22 +118,20 @@ class NewProfileViewModel(
 
     fun handlerDisplayName(castcleID: String) {
         viewModelScope.launch {
-            val stateValidate = when {
+            when {
                 castcleID.isBlank() -> {
-                    VerifyProfileState.NONE
+                    inputUiState.emit(VerifyProfileState.NONE)
                 }
                 castcleID.length >= CASTCLE_CHAR_LIMIT -> {
-                    VerifyProfileState.CASTCLE_ID_LENGHT_ERROR
+                    inputUiState.emit(VerifyProfileState.CASTCLE_ID_LENGHT_ERROR)
                 }
                 !castcleID.replace("@", "").isEngText() -> {
-                    VerifyProfileState.CASTCLE_ID_SPECIAL_ERROR
+                    inputUiState.emit(VerifyProfileState.CASTCLE_ID_SPECIAL_ERROR)
                 }
                 else -> {
                     checkCastcleIdIsExist(castcleID).join()
-                    VerifyProfileState.ON_PROGRESS
                 }
             }
-            inputUiState.emit(stateValidate)
         }
     }
 

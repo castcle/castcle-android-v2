@@ -63,11 +63,10 @@ class UpdateProfileViewHolder(
             bindItem.userEntity.let {
                 tvCastcleId.text = it.castcleId
                 tvCastcleName.text = it.displayName
-                if (bindItem.avatarUpLoad != null) {
-                    ivAvatarProfile.loadAvatarImageLocal(bindItem.avatarUpLoad)
-                } else {
-                    ivAvatarProfile.loadAvatarImage(it.avatar.original)
-                }
+                ivAvatarProfile.loadAvatarImageLocal(
+                    imageUri = bindItem.avatarUpLoad,
+                    imageUrl = it.avatar.original
+                )
 
                 ivCreatePass.loadScaleCenterCrop(
                     scale = 12 to 10,

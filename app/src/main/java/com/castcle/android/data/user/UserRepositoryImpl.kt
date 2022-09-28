@@ -215,6 +215,10 @@ class UserRepositoryImpl(
         return user
     }
 
+    override suspend fun getUserFlow(id: String): Flow<UserEntity?> {
+        return database.user().getByCastcleID(id)
+    }
+
     override suspend fun likeCasts(content: CastEntity) {
         val updateItem = content.copy(
             likeCount = content.likeCount.plus(1),
@@ -457,6 +461,12 @@ class UserRepositoryImpl(
             database.syncSocial().delete()
             database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
             database.user().upsert(user)
+        }
+    }
+
+    override suspend fun updateProfileBirthDate(birthDate: String, userId: String) {
+        database.withTransaction {
+            database.user().updateProfileBirthDate(birthDate, userId)
         }
     }
 }

@@ -105,6 +105,22 @@ fun Editable.isHasValue(): String? {
     }
 }
 
+fun EditText.addOnTextChange(
+    onTextChanged: ((String) -> Unit)? = null
+) {
+    addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            onTextChanged?.invoke(s.toString())
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+        }
+    })
+}
+
 private const val schemeHttps = "https://"
 private const val schemeFailHttps = "https:/"
 private const val defaultCastcleId = "@"

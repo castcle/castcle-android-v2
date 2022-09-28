@@ -359,10 +359,6 @@
             app:argType="com.castcle.android.domain.user.entity.UserEntity" />
 
         <action
-            android:id="@+id/toBoostAdsFragment"
-            app:destination="@id/boostAdsFragment" />
-
-        <action
             android:id="@+id/toContentFragment"
             app:destination="@id/contentFragment" />
 
@@ -397,6 +393,14 @@
         <action
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment" />
+
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
+        <action
+            android:id="@+id/toEditProfileFragment"
+            app:destination="@id/editProfileFragment" />
 
     </fragment>
 
@@ -999,6 +1003,24 @@
             android:id="@+id/toAdBoostStatus"
             app:destination="@id/adBoostStatus" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.castcle.android.presentation.profile.edit_profile.EditProfileFragment">
+
+        <action
+            android:id="@+id/toInsertFragment"
+            app:destination="@id/insertFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle"
+            app:nullable="false" />
     </fragment>
 
 </navigation>

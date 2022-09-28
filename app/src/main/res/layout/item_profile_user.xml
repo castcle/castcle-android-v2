@@ -19,6 +19,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivEditCover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cover_camera" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationLoadingCover"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/ivCover"
+        app:layout_constraintEnd_toEndOf="@id/ivCover"
+        app:layout_constraintStart_toStartOf="@id/ivCover"
+        app:layout_constraintTop_toTopOf="@id/ivCover"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
     <View
         android:id="@+id/viewBackground"
         android:layout_width="0dp"
@@ -43,6 +66,41 @@
         app:layout_constraintStart_toStartOf="@+id/viewBackground"
         app:layout_constraintTop_toTopOf="@+id/viewBackground"
         app:srcCompat="@drawable/ic_avatar" />
+
+    <View
+        android:id="@+id/vLoading"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:background="@drawable/bg_loading_avatar"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+        app:layout_constraintEnd_toEndOf="@id/ivAvatar"
+        app:layout_constraintStart_toStartOf="@id/ivAvatar"
+        app:layout_constraintTop_toTopOf="@id/ivAvatar" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationLoading"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/ivAvatar"
+        app:layout_constraintEnd_toEndOf="@id/ivAvatar"
+        app:layout_constraintStart_toStartOf="@id/ivAvatar"
+        app:layout_constraintTop_toTopOf="@id/ivAvatar"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivAddAvatar"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        app:layout_constraintCircle="@id/ivAvatar"
+        app:layout_constraintCircleAngle="140"
+        app:layout_constraintCircleRadius="@dimen/_35sdp"
+        app:srcCompat="@drawable/ic_avatar_camera_white"
+        tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivOption"
@@ -98,7 +156,7 @@
         android:ellipsize="end"
         android:gravity="center"
         android:lineSpacingMultiplier="1.2"
-        android:maxLines="3"
+        android:minLines="3"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
