@@ -24,7 +24,6 @@
 package com.castcle.android.core.extensions
 
 import android.annotation.SuppressLint
-import android.os.Build
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -58,6 +57,15 @@ fun Long.toWalletTime(): String {
 fun Long.toDateTime(): String {
     return try {
         SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(Date(this))
+    } catch (exception: Exception) {
+        Timber.e(exception)
+        ""
+    }
+}
+
+fun Long.toCreateDate(): String {
+    return try {
+        SimpleDateFormat(COMMON_DOB_DATE_FORMAT, Locale.UK).format(Date(this))
     } catch (exception: Exception) {
         Timber.e(exception)
         ""
