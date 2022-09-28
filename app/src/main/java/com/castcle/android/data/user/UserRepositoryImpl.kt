@@ -385,6 +385,7 @@ class UserRepositoryImpl(
             database.cast().decreaseRecastCount(contentId)
             database.cast().get(contentId, CastType.Recast, userId)?.also { existRecast ->
                 database.cast().delete(existRecast.id)
+                database.contentQuoteCast().deleteByOriginalCast(existRecast.id)
                 database.profile().deleteByOriginalCast(existRecast.id)
                 database.search().deleteByOriginalCast(existRecast.id)
             }
