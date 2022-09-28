@@ -159,6 +159,11 @@ class CreateNewProfileFragment : BaseFragment() {
                             } else {
                                 buttonDone()
                             }
+
+                            enableBottomNext(
+                                it.isNotBlank() && viewModel.inputUiState.value ==
+                                    VerifyProfileState.CASTCLE_ID_PASS
+                            )
                         })
                 )
             }

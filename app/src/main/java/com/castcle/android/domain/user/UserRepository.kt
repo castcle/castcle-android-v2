@@ -46,6 +46,7 @@ interface UserRepository {
     suspend fun fetchUserPage(): List<UserEntity>
     suspend fun fetchUserProfile(): UserEntity
     suspend fun getUser(id: String): UserEntity
+    suspend fun getUserFlow(id: String): Flow<UserEntity?>
     suspend fun likeCasts(content: CastEntity)
     suspend fun likeComment(comment: CommentEntity)
     suspend fun recastContent(contentId: String, userId: String)
@@ -62,4 +63,5 @@ interface UserRepository {
     suspend fun updateEmail(email: String)
     suspend fun updateUserProfile(userUpdateRequest: UploadImageRequest): Flow<BaseUiState<Nothing>>
     suspend fun updateDetailProfile(userUpdateRequest: UserUpdateRequest): Flow<BaseUiState<Nothing>>
+    suspend fun updateProfileBirthDate(birthDate: String, userId: String)
 }

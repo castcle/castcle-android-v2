@@ -54,6 +54,8 @@ class EditDetailViewModel(
 
     val castcleId = MutableLiveData<String>()
 
+    val overviewStatePass = MutableLiveData(false)
+
     fun getUserLocal(castcleId: String) {
         launch {
             database.user().getByCastcleID(castcleId).collectLatest { it ->

@@ -2,7 +2,6 @@ package com.castcle.android.presentation.sign_up.update_profile_detail
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
@@ -180,9 +179,11 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
     private fun onBindOverviewCount(overviewCount: Int) {
         val (color, isPass) = when {
             overviewCount <= LIMIT_OVERVIEW -> {
+                viewModel.overviewStatePass.value = true
                 R.color.white to true
             }
             else -> {
+                viewModel.overviewStatePass.value = false
                 R.color.red_3 to false
             }
         }
@@ -223,7 +224,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     tvNumberDescription.setTextColorState(contactNumber?.isNotBlank() == true)
                     tvNumberDescription.text =
                         contactNumber ?: requireContext().getString(R.string.none)
-                    handleButtonDone(true)
+                    handleButtonDone(viewModel.overviewStatePass.value ?: false)
                 }
             }
         }
@@ -330,4 +331,4 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
     }
 }
 
-private const val LIMIT_OVERVIEW = 280
+const val LIMIT_OVERVIEW = 280

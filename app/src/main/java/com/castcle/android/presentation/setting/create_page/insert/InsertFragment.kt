@@ -3,6 +3,8 @@ package com.castcle.android.presentation.setting.create_page.insert
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
@@ -158,6 +160,7 @@ class InsertFragment : BaseFragment(), InsertFragmentListener {
                 handlerLoading(uiState.isLoading)
             }
             is BaseUiState.SuccessNonBody -> {
+                setFragmentResult(INSERT_DATA_SUCCESS, bundleOf(INSERT_DATA_SUCCESS to true))
                 backPress()
             }
             is BaseUiState.Error -> {
@@ -196,5 +199,9 @@ class InsertFragment : BaseFragment(), InsertFragmentListener {
 
     override fun inputNumber(number: String) {
         viewModel.onCheckNumber(number)
+    }
+
+    companion object {
+        const val INSERT_DATA_SUCCESS = "insert-success"
     }
 }
