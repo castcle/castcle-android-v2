@@ -122,31 +122,56 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
         with(binding.itemEditProfile) {
             with(itLinkFacebook) {
                 addTextChangedListener(
-                    TextChangeListener(this)
+                    TextChangeListener(this, onTextChanged = {
+                        handleButtonDone(
+                            it.isBlank() &&
+                                viewModel.overviewStatePass.value == true
+                        )
+                    })
                 )
             }
 
             with(itLinkMedium) {
                 addTextChangedListener(
-                    TextChangeListener(this)
+                    TextChangeListener(this, onTextChanged = {
+                        handleButtonDone(
+                            it.isBlank() &&
+                                viewModel.overviewStatePass.value == true
+                        )
+                    })
                 )
             }
 
             with(itLinkTwitter) {
                 addTextChangedListener(
-                    TextChangeListener(this)
+                    TextChangeListener(this, onTextChanged = {
+                        handleButtonDone(
+                            it.isBlank() &&
+                                viewModel.overviewStatePass.value == true
+                        )
+                    })
                 )
             }
 
             with(itLinkYouTube) {
                 addTextChangedListener(
-                    TextChangeListener(this)
+                    TextChangeListener(this, onTextChanged = {
+                        handleButtonDone(
+                            it.isBlank() &&
+                                viewModel.overviewStatePass.value == true
+                        )
+                    })
                 )
             }
 
             with(itLinkWeb) {
                 addTextChangedListener(
-                    TextChangeListener(this)
+                    TextChangeListener(this, onTextChanged = {
+                        handleButtonDone(
+                            it.isBlank() &&
+                                viewModel.overviewStatePass.value == true
+                        )
+                    })
                 )
             }
 

@@ -402,6 +402,10 @@
             android:id="@+id/toEditProfileFragment"
             app:destination="@id/editProfileFragment" />
 
+        <action
+            android:id="@+id/toViewProfileFragment"
+            app:destination="@id/viewProfileFragment" />
+
     </fragment>
 
     <fragment
@@ -1020,6 +1024,16 @@
         <argument
             android:name="profileBundle"
             app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewProfileFragment"
+        android:name="com.castcle.android.presentation.profile.view_profile.ViewProfileFragment">
+
+        <argument
+            android:name="userEntity"
+            app:argType="com.castcle.android.domain.user.entity.UserEntity"
             app:nullable="false" />
     </fragment>
 

@@ -405,4 +405,6 @@
     <string name="ads_dialog_cancel_status">Cancel Ad</string>
     <string name="ads_dialog_end_go_back">Go back</string>
     <string name="edit_profile_warning">Once your Castcle ID has been changed, you can edit it again after 60 days.</string>
+    <string name="page_contract_information">Page contract information</string>
+    <string name="page_create">Page create</string>
 </resources>

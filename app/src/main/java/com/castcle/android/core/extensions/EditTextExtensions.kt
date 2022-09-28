@@ -121,6 +121,6 @@ fun EditText.addOnTextChange(
     })
 }
 
-private const val schemeHttps = "https://"
+const val schemeHttps = "https://"
 private const val schemeFailHttps = "https:/"
 private const val defaultCastcleId = "@"
