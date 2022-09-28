@@ -84,7 +84,7 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
         val contentFarmingColor = getParticipateColor(cast.farming)
         binding.ivContentFarming.imageTintList = ColorStateList.valueOf(contentFarmingColor)
         binding.tvContentFarming.text = cast.farmCount.asCount()
-        binding.tvContentFarming.isVisible = cast.farmCount > 0
+        binding.tvContentFarming.isVisible = cast.farmCount > 0.0
         binding.tvContentFarming.setTextColor(contentFarmingColor)
 
         binding.clBoostCast.visibleOrGone(cast.isOwner && !cast.reported && castIsOwner)

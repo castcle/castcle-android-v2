@@ -28,6 +28,7 @@ import com.castcle.android.core.constants.TABLE_CAST
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.entity.CastWithUserEntity
 import com.castcle.android.domain.cast.type.CastType
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CastDao {
@@ -64,6 +65,9 @@ interface CastDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(items: List<CastEntity>)
+
+    @Query("SELECT * FROM $TABLE_CAST WHERE casts_id = :contentId")
+    fun retrieve(contentId: String): Flow<CastEntity?>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(item: CastEntity)

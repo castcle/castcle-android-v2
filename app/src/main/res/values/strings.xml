@@ -191,6 +191,7 @@
     <string name="introduction">Introduction</string>
     <string name="join_us">Join us</string>
     <string name="like_count">%s Likes</string>
+    <string name="likes">Likes</string>
     <string name="link">Link</string>
     <string name="linked">Linked</string>
     <string name="logout">Log out</string>
@@ -208,11 +209,12 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="profile">Profile</string>
     <string name="public_title">Public</string>
-    <string name="rank_trending">%d. Trending</string>
     <string name="quote_cast">Quote Cast</string>
     <string name="quote_cast_count">%s Quote Casts</string>
+    <string name="rank_trending">%d. Trending</string>
     <string name="read_more"> …Read more</string>
     <string name="recast">Recast</string>
+    <string name="recasts">Recasts</string>
     <string name="recast_count">%s Recasts</string>
     <string name="recent_searches">Recent searches</string>
     <string name="registered">Registered</string>

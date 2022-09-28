@@ -115,13 +115,27 @@ suspend fun <T> toApiCallFlow(call: suspend () -> Response<T>): Flow<BaseUiState
 fun Int?.asCount(): String {
     val number = if (this == null || this < 0) 0 else this
     val format = NumberFormat.getInstance().apply {
-        maximumFractionDigits = 1
+        maximumFractionDigits = 0
         minimumFractionDigits = 0
     }
     return when (number) {
         in 0..999 -> "$number"
         in 1_000..999_999 -> "${format.format(number.div(1_000.0))}K"
         in 1_000_000..999_999_999 -> "${format.format(number.div(1_000_000.0))}M"
+        else -> "${format.format(number.div(1_000_000_000.0))}G"
+    }
+}
+
+fun Double?.asCount(): String {
+    val number = if (this == null || this < 0.0) 0.0 else this
+    val format = NumberFormat.getInstance().apply {
+        maximumFractionDigits = 0
+        minimumFractionDigits = 0
+    }
+    return when (number) {
+        in 0.0..999.9999999999999 -> format.format(number)
+        in 1_000.0..999_999.9999999999999 -> "${format.format(number.div(1_000.0))}K"
+        in 1_000_000.0..999_999_999.9999999999999 -> "${format.format(number.div(1_000_000.0))}M"
         else -> "${format.format(number.div(1_000_000_000.0))}G"
     }
 }

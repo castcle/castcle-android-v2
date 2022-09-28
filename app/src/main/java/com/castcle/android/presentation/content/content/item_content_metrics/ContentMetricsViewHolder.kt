@@ -21,14 +21,15 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.item_content_metrics
+package com.castcle.android.presentation.content.content.item_content_metrics
 
 import androidx.core.view.isVisible
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ItemContentMetricsBinding
-import com.castcle.android.presentation.content.ContentListener
+import com.castcle.android.presentation.content.content.ContentListener
+import com.castcle.android.presentation.content.content_metrics.ContentMetricsType
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 
@@ -40,16 +41,10 @@ class ContentMetricsViewHolder(
 
     init {
         compositeDisposable += binding.tvLikeCount.onClick {
-            listener.onLikeCountClicked(
-                contentId = item.contentId,
-                hasRecast = item.recastCount > 0,
-            )
+            listener.onContentMetricsClicked(ContentMetricsType.Like(item.contentId))
         }
         compositeDisposable += binding.tvRecastCount.onClick {
-            listener.onRecastCountClicked(
-                contentId = item.contentId,
-                hasLike = item.likeCount > 0,
-            )
+            listener.onContentMetricsClicked(ContentMetricsType.Recast(item.contentId))
         }
         compositeDisposable += binding.tvQuoteCastCount.onClick {
             listener.onQuoteCastCountClicked(contentId = item.contentId)
