@@ -190,16 +190,16 @@ class AuthenticationRepositoryImpl(
         linkWithSocial(getTwitterUserProfile(token))
     }
 
-    override suspend fun loginWithEmail(body: LoginWithEmailRequest) {
-        updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
+    override suspend fun loginWithEmail(body: LoginWithEmailRequest): Pair<String, Boolean> {
+        return updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
     }
 
-    override suspend fun loginWithFacebook() {
-        loginWithSocial(getFacebookUserProfile())
+    override suspend fun loginWithFacebook(): Pair<String, Boolean> {
+        return loginWithSocial(getFacebookUserProfile())
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount) {
+    override suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount): Pair<String, Boolean> {
         val body = suspendCoroutine<LoginWithSocialRequest> { coroutine ->
             val plusScope = "oauth2:https://www.googleapis.com/auth/plus.me"
             val userInfoScope = "https://www.googleapis.com/auth/userinfo.profile"
@@ -215,15 +215,15 @@ class AuthenticationRepositoryImpl(
             )
             coroutine.resume(body)
         }
-        loginWithSocial(body)
+        return loginWithSocial(body)
     }
 
-    override suspend fun loginWithSocial(body: LoginWithSocialRequest) {
-        updateWhenLoginSuccess(apiCall { api.loginWithSocial(body = body) })
+    override suspend fun loginWithSocial(body: LoginWithSocialRequest): Pair<String, Boolean> {
+        return updateWhenLoginSuccess(apiCall { api.loginWithSocial(body = body) })
     }
 
-    override suspend fun loginWithTwitter(token: TwitterAuthToken?) {
-        loginWithSocial(getTwitterUserProfile(token))
+    override suspend fun loginWithTwitter(token: TwitterAuthToken?): Pair<String, Boolean> {
+        return loginWithSocial(getTwitterUserProfile(token))
     }
 
     override suspend fun loginOut() {
@@ -291,7 +291,7 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    private suspend fun updateWhenLoginSuccess(response: LoginResponse?) {
+    private suspend fun updateWhenLoginSuccess(response: LoginResponse?): Pair<String, Boolean> {
         val user = UserEntity.mapOwner(response?.profile)
         val page = UserEntity.mapOwner(response?.pages)
         val linkSocial = LinkSocialEntity.map(response?.profile)
@@ -308,6 +308,7 @@ class AuthenticationRepositoryImpl(
             database.accessToken().insert(accessToken)
         }
         registerFirebaseMessagingToken()
+        return user.id to (response?.registered ?: false)
     }
 
     override suspend fun updateMobileNumber(otp: OtpEntity): OtpEntity {

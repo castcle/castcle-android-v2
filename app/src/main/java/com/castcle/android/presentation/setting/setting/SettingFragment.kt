@@ -112,6 +112,7 @@ class SettingFragment : BaseFragment(), SettingListener {
     override fun onStart() {
         super.onStart()
         viewModel.fetchData()
+        viewModel.trackViewSetting()
     }
 
     private val adapter by lazy {

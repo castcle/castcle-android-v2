@@ -29,6 +29,7 @@ import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.extensions.timer
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.notification.NotificationRepository
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.type.UserType
 import kotlinx.coroutines.Job
@@ -41,6 +42,7 @@ class SettingViewModel(
     private val database: CastcleDatabase,
     private val mapper: SettingMapper,
     private val notificationRepository: NotificationRepository,
+    private val trackerRepository: TrackerRepository,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
@@ -99,6 +101,14 @@ class SettingViewModel(
             authenticationRepository.unregisterFirebaseMessagingToken()
             authenticationRepository.loginOut()
             logoutComplete.postValue(Unit)
+        }
+    }
+
+    fun trackViewSetting() {
+        launch {
+            database.user().get(UserType.People).firstOrNull()
+                ?.id
+                ?.also { trackerRepository.trackViewSetting(it) }
         }
     }
 

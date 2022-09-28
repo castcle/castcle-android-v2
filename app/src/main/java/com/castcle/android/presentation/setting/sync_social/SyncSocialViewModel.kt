@@ -27,6 +27,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.data.page.entity.SyncSocialRequest
 import com.castcle.android.domain.authentication.AuthenticationRepository
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.SyncSocialEntity
 import com.castcle.android.domain.user.entity.UserEntity
@@ -41,6 +42,7 @@ import org.koin.android.annotation.KoinViewModel
 class SyncSocialViewModel(
     private val authenticationRepository: AuthenticationRepository,
     private val database: CastcleDatabase,
+    private val trackerRepository: TrackerRepository,
     private val userId: String,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
@@ -103,6 +105,12 @@ class SyncSocialViewModel(
         }
     }
 
+    fun trackViewSyncSocial() {
+        launch {
+            trackerRepository.trackViewSyncSocial(userId)
+        }
+    }
+
     private fun updateCurrentUser(result: Triple<Boolean, SyncSocialEntity, UserEntity?>) {
         launch(
             onError = { onSuccess.emitOnSuspend(result) },
@@ -110,6 +118,9 @@ class SyncSocialViewModel(
         ) {
             userRepository.fetchUserPage()
             userRepository.fetchUserProfile()
+        }
+        launch {
+            trackerRepository.trackConnectSyncSocial(result.second.provider.id, userId)
         }
     }
 

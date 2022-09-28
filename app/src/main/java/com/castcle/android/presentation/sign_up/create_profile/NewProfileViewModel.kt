@@ -7,6 +7,7 @@ import com.castcle.android.core.extensions.isEngText
 import com.castcle.android.data.authentication.entity.*
 import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.domain.authentication.AuthenticationRepository
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.sign_up.create_profile.entity.RegisterRequest
 import com.castcle.android.presentation.sign_up.entity.*
@@ -41,7 +42,8 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class NewProfileViewModel(
-    private val authenticationRepository: AuthenticationRepository
+    private val authenticationRepository: AuthenticationRepository,
+    private val trackerRepository: TrackerRepository,
 ) : BaseViewModel() {
 
     val password = MutableLiveData<String?>(null)
@@ -50,7 +52,7 @@ class NewProfileViewModel(
 
     var createUserState = MutableLiveData(CreateUserState.PROFILE_CREATE)
 
-    var castcleIDUiState = MutableStateFlow<BaseUiState<AuthExistResponse>?>(null)
+    private var castcleIDUiState = MutableStateFlow<BaseUiState<AuthExistResponse>?>(null)
 
     var suggestionUiState = MutableStateFlow<BaseUiState<String>?>(null)
 
@@ -143,6 +145,9 @@ class NewProfileViewModel(
                 authenticationRepository
                     .registerWithEmail(register)
                     .collectLatest {
+                        if (it is BaseUiState.Success) {
+                            trackRegistration(it.data?.id.orEmpty())
+                        }
                         registerUiState.emit(it)
                     }
             } else {
@@ -152,6 +157,12 @@ class NewProfileViewModel(
                         registerUiState.emit(it)
                     }
             }
+        }
+    }
+
+    private fun trackRegistration(userId: String) {
+        launch {
+            trackerRepository.trackRegistration(channel = "email", userId = userId)
         }
     }
 

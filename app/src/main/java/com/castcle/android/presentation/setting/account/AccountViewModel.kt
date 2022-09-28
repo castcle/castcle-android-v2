@@ -29,6 +29,7 @@ import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.type.OtpType
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.type.SocialType
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.account.item_menu.AccountMenuViewEntity
@@ -39,8 +40,9 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class AccountViewModel(
-    database: CastcleDatabase,
-    private val repository: AuthenticationRepository,
+    private val authenticationRepository: AuthenticationRepository,
+    private val database: CastcleDatabase,
+    private val trackerRepository: TrackerRepository,
 ) : BaseViewModel() {
 
     val onError = MutableLiveData<Throwable>()
@@ -153,6 +155,7 @@ class AccountViewModel(
 
     init {
         logoutFacebook()
+        trackViewAccount()
     }
 
     fun linkWithFacebook() {
@@ -163,20 +166,28 @@ class AccountViewModel(
             onSuccess.postValue(Unit)
             logoutFacebook()
         }) {
-            repository.linkWithFacebook()
+            authenticationRepository.linkWithFacebook()
         }
     }
 
     fun linkWithTwitter(token: TwitterAuthToken?) {
         launch(onError = onError::postValue) {
-            repository.linkWithTwitter(token)
+            authenticationRepository.linkWithTwitter(token)
             onSuccess.postValue(Unit)
         }
     }
 
     fun logoutFacebook() {
         launch {
-            repository.loginOutFacebook()
+            authenticationRepository.loginOutFacebook()
+        }
+    }
+
+    private fun trackViewAccount() {
+        launch {
+            database.user().get(UserType.People).firstOrNull()
+                ?.id
+                ?.also { trackerRepository.trackViewAccount(it) }
         }
     }
 

@@ -76,6 +76,7 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
         )
     }
 
+    @Suppress("DEPRECATION")
     override fun initListener() {
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
@@ -145,6 +146,11 @@ class WalletDashboardFragment : BaseFragment(), WalletDashboardListener {
             targetUserId = null,
             userId = currentUserId,
         ).navigate()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.trackViewWallet()
     }
 
     private val adapter by lazy {
