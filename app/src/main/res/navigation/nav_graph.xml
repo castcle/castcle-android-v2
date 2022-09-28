@@ -141,6 +141,48 @@
             app:destination="@id/contentMetricsDialogFragment" />
 
         <action
+            android:id="@+id/toContentQuoteCastFragment"
+            app:destination="@id/contentQuoteCastFragment" />
+
+        <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
+
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/contentQuoteCastFragment"
+        android:name="com.castcle.android.presentation.content.content_quote_cast.ContentQuoteCastFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toContentFragment"
+            app:destination="@id/contentFragment" />
+
+        <action
             android:id="@+id/toLoginFragment"
             app:destination="@id/loginFragment" />
 

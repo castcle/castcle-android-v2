@@ -21,13 +21,10 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.content
+package com.castcle.android.presentation.content.content_quote_cast
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.*
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.paging.ExperimentalPagingApi
@@ -36,17 +33,11 @@ import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastclePagingDataAdapter
 import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
-import com.castcle.android.core.custom_view.mention_view.MentionView
 import com.castcle.android.core.extensions.*
-import com.castcle.android.databinding.FragmentContentBinding
+import com.castcle.android.databinding.LayoutRecyclerViewBinding
 import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.content.content.item_comment.CommentViewRenderer
-import com.castcle.android.presentation.content.content.item_content_metrics.ContentMetricsViewRenderer
-import com.castcle.android.presentation.content.content.item_reply.ReplyViewRenderer
-import com.castcle.android.presentation.content.content_metrics.ContentMetricsType
 import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.FeedListener
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
@@ -58,25 +49,28 @@ import com.castcle.android.presentation.feed.item_feed_web.FeedWebViewRenderer
 import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageViewRenderer
 import com.castcle.android.presentation.home.HomeViewModel
 import com.stfalcon.imageviewer.StfalconImageViewer
-import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.core.parameter.parametersOf
 
-@SuppressLint("SetTextI18n")
-class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, ContentListener {
+class ContentQuoteCastFragment : BaseFragment(), FeedListener, LoadStateListener {
 
-    private val viewModel by stateViewModel<ContentViewModel> { parametersOf(args.contentId) }
+    private val viewModel by stateViewModel<ContentQuoteCastViewModel> { parametersOf(args.contentId) }
 
     private val shareViewModel by sharedViewModel<HomeViewModel>()
 
-    private val directions = ContentFragmentDirections
+    private val args by navArgs<ContentQuoteCastFragmentArgs>()
 
-    private val args by navArgs<ContentFragmentArgs>()
+    private val directions = ContentQuoteCastFragmentDirections
 
+    @FlowPreview
     override fun initViewProperties() {
+        binding.actionBar.bind(
+            leftButtonAction = { backPress() },
+            title = getString(R.string.quote_cast),
+        )
         binding.swipeRefresh.setRefreshColor(
             backgroundColor = R.color.black_background_3,
             iconColor = R.color.blue,
@@ -85,115 +79,36 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         binding.recyclerView.adapter = adapter.withLoadStateFooter(
             footer = LoadStateAppendAdapter(compositeDisposable, this)
         )
-        binding.actionBar.bind(
-            leftButtonAction = { backPress() },
-            title = args.contentOwnerDisplayName?.let { getString(R.string.cast_of, it) },
-        )
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.currentUser.collectLatest {
-                binding.ivAvatar.loadAvatarImage(it.avatar.thumbnail)
-            }
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    override fun initListener() {
-        compositeDisposable += binding.clComment.onClick {
-            binding.etComment.showKeyboard()
-        }
-        compositeDisposable += binding.ivSentComment.onClick {
-            if (binding.etComment.text.isNotBlank()) {
-                showLoading()
-                viewModel.sentComment(binding.etComment.text.toString())
-            }
-        }
-        binding.swipeRefresh.setOnRefreshListener {
-            binding.swipeRefresh.isRefreshing = false
-            viewModel.fetchContent()
-            adapter.refresh()
-            clearComment()
-        }
-        binding.etComment.setMentionEnabled(true)
-        binding.etComment.setMentionTextChangedListener(object : MentionView.OnChangedListener {
-            override fun onChanged(view: MentionView, text: CharSequence) {
-                viewModel.getMentions(text.toString())
-            }
-        })
-        binding.etComment.setHashtagEnabled(true)
-        binding.etComment.setHashtagTextChangedListener(object : MentionView.OnChangedListener {
-            override fun onChanged(view: MentionView, text: CharSequence) {
-                viewModel.getHashtag(text.toString())
-            }
-        })
-        setFragmentResultListener(REPLY_RESULT) { key, bundle ->
-            if (key == REPLY_RESULT) {
-                when (val result = bundle.getParcelable<Parcelable>(REPLY_RESULT)) {
-                    is OptionDialogType.MyCommentOption -> onReplyClicked(
-                        castcleId = result.castcleId,
-                        commentId = result.commentId,
-                    )
-                    is OptionDialogType.OtherCommentOption -> onReplyClicked(
-                        castcleId = result.castcleId,
-                        commentId = result.commentId,
-                    )
-                }
-            }
-        }
-    }
-
-    override fun initObserver() {
-        viewModel.mentions.observe(viewLifecycleOwner) {
-            binding.etComment.updateMentionsItems(it)
-        }
-        viewModel.hashtags.observe(viewLifecycleOwner) {
-            binding.etComment.updateHashtagItems(it)
-        }
-        viewModel.contentOwnerDisplayName.observe(viewLifecycleOwner) {
-            binding.actionBar.bind(
-                leftButtonAction = { backPress() },
-                title = getString(R.string.cast_of, it),
+            binding.loadStateRefreshView.bind(
+                pagingAdapter = adapter,
+                pagingRecyclerView = binding.recyclerView,
+                type = LoadStateRefreshItemsType.SEARCH_CAST,
             )
         }
-        viewModel.onCommentSuccess.observe(viewLifecycleOwner) {
-            dismissLoading()
-            clearComment()
-        }
-        viewModel.onError.observe(viewLifecycleOwner) {
-            dismissLoading()
-            toast(it.message)
+    }
+
+    override fun initListener() {
+        binding.swipeRefresh.setOnRefreshListener {
+            binding.swipeRefresh.isRefreshing = false
+            adapter.refresh()
         }
     }
 
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
-    @FlowPreview
     override fun initConsumer() {
         lifecycleScope.launch {
             viewModel.views.collectLatest(adapter::submitData)
         }
-        lifecycleScope.launch {
-            binding.loadStateRefreshView.bind(
-                loadState = viewModel.loadState,
-                pagingAdapter = adapter,
-                pagingRecyclerView = binding.recyclerView,
-                type = LoadStateRefreshItemsType.CONTENT,
-            )
-        }
-    }
-
-    private fun clearComment() {
-        hideKeyboard()
-        binding.etComment.setText("")
-        binding.etComment.clearFocus()
-        viewModel.targetCommentId.value = null
     }
 
     override fun onCommentClicked(cast: CastEntity, user: UserEntity) {
-        binding.etComment.showKeyboard()
-    }
-
-    override fun onContentMetricsClicked(type: ContentMetricsType) {
-        directions.toContentMetricsDialogFragment(type).navigate()
+        shareViewModel.isUserCanEngagement(
+            isGuestAction = { directions.toLoginFragment().navigate() },
+            isMemberAction = { directions.toContentFragment(cast.id, user.displayName).navigate() },
+            isUserNotVerifiedAction = { directions.toResentVerifyEmailFragment().navigate() },
+        )
     }
 
     override fun onFollowClicked(user: UserEntity) {
@@ -224,10 +139,6 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         )
     }
 
-    override fun onLikeCommentClicked(comment: CommentEntity) {
-        viewModel.likeComment(comment)
-    }
-
     override fun onLinkClicked(url: String) {
         openUrl(url)
     }
@@ -243,10 +154,6 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         )
     }
 
-    override fun onQuoteCastCountClicked(contentId: String) {
-        directions.toContentQuoteCastFragment(contentId = contentId).navigate()
-    }
-
     override fun onRecastClicked(cast: CastEntity) {
         shareViewModel.isUserCanEngagement(
             isGuestAction = { directions.toLoginFragment().navigate() },
@@ -255,20 +162,17 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
         )
     }
 
-    override fun onReplyClicked(castcleId: String, commentId: String) {
-        viewModel.targetCommentId.value = commentId
-        binding.etComment.setText("$castcleId ")
-        binding.etComment.setSelection(binding.etComment.length())
-        lifecycleScope.launch {
-            while (!isKeyboardVisible(binding)) {
-                binding.etComment.showKeyboard()
-                delay(50)
-            }
-        }
+    override fun onUserClicked(user: UserEntity) {
+        hideKeyboard()
+        directions.toProfileFragment(user).navigate()
     }
 
-    override fun onUserClicked(user: UserEntity) {
-        directions.toProfileFragment(user).navigate()
+    override fun onRefreshClicked() {
+        adapter.refresh()
+    }
+
+    override fun onRetryClicked() {
+        adapter.retry()
     }
 
     override fun onViewReportClicked(id: String, ignoreReportContentId: List<String>) {
@@ -277,21 +181,16 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
 
     override fun onStop() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
-        changeSoftInputMode(false)
         super.onStop()
     }
 
     override fun onStart() {
-        super.onStart()
-        viewModel.fetchContent()
-        changeSoftInputMode(true)
         binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
+        super.onStart()
     }
 
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
-            registerRenderer(CommentViewRenderer())
-            registerRenderer(ContentMetricsViewRenderer())
             registerRenderer(FeedImageViewRenderer())
             registerRenderer(FeedQuoteViewRenderer())
             registerRenderer(FeedRecastViewRenderer())
@@ -299,23 +198,18 @@ class ContentFragment : BaseFragment(), LoadStateListener, FeedListener, Content
             registerRenderer(FeedTextViewRenderer())
             registerRenderer(FeedWebViewRenderer())
             registerRenderer(FeedWebImageViewRenderer())
-            registerRenderer(LoadingStateCastViewRenderer(), isDefaultItem = true)
-            registerRenderer(ReplyViewRenderer())
+            registerRenderer(LoadingStateCastViewRenderer(), true)
         }
     }
 
     private val binding by lazy {
-        FragmentContentBinding.inflate(layoutInflater)
-    }
-
-    companion object {
-        const val REPLY_RESULT = "REPLY_RESULT"
+        LayoutRecyclerViewBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = binding.root
 
 }
