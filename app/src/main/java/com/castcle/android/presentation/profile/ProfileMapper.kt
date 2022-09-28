@@ -50,12 +50,16 @@ class ProfileMapper {
             ProfileType.NewCast -> FeedNewCastViewEntity(
                 user = item.originalUser ?: UserEntity(),
             )
-            ProfileType.Profile -> if (item.originalUser?.type is UserType.Page) {
-                ProfilePageViewEntity(user = item.originalUser)
-            } else {
-                ProfileUserViewEntity(user = item.originalUser ?: UserEntity())
-            }
+
             else -> mapContentItem(item)
+        }
+    }
+
+    fun applyUserItemView(item: UserEntity): CastcleViewEntity {
+        return if (item.type is UserType.Page) {
+            ProfilePageViewEntity(user = item)
+        } else {
+            ProfileUserViewEntity(user = item)
         }
     }
 

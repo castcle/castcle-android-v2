@@ -9,6 +9,7 @@ import com.castcle.android.core.error.RetryException
 import com.castcle.android.data.ads.AdvertiseRepositoryImpl
 import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.domain.ads.type.AdFilterType
+import com.castcle.android.presentation.setting.ads.ads_manage.item_empty.AdvertiseEmptyViewEntity
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
@@ -101,6 +102,8 @@ class AdsManageViewModel(
                 .map {
                     it.map { advertise ->
                         advertise.toItemAdvertiseViewEntity()
+                    }.ifEmpty {
+                        listOf(AdvertiseEmptyViewEntity())
                     }
                 }.collectLatest(itemView::postValue)
         }

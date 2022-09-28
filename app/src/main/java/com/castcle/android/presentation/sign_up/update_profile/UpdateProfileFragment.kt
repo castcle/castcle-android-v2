@@ -185,6 +185,7 @@ class UpdateProfileFragment : BaseFragment(), UpdateProfileListener {
             is ProfileBundle.CreatePage -> {
                 viewModel.getUserLocal((profileBuild as ProfileBundle.CreatePage).castcleId)
             }
+            else -> Unit
         }
 
         lifecycleScope.launch {

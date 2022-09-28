@@ -47,6 +47,18 @@ sealed class ProfileBundle : Parcelable {
         var imageAvatar: String? = "",
         var imageCover: String? = ""
     ) : ProfileBundle()
+
+    @Parcelize
+    data class Page(
+        val userId: String,
+        var displayName: String? = "",
+    ) : ProfileBundle()
+
+    @Parcelize
+    data class User(
+        val userId: String,
+        var displayName: String? = "",
+    ) : ProfileBundle()
 }
 
 enum class CreateUserState(val state: String) {

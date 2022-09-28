@@ -24,9 +24,15 @@
 package com.castcle.android.presentation.sign_up.update_profile
 
 import com.castcle.android.core.base.recyclerview.CastcleListener
+import com.castcle.android.presentation.profile.edit_profile.ItemEditEntity
 
 interface UpdateProfileListener : CastcleListener {
     fun onUpdateAvatar()
     fun onUpdateCover()
-    fun onNext()
+    fun onNext() = Unit
+    fun onEditBirthDate() = Unit
+    fun onEditBirthDate(bindItem: ItemEditEntity) = Unit
+    fun onEditContractNumber() = Unit
+    fun onEditContractEmail() = Unit
+    fun onEditOverviewState(isPass: Boolean) = Unit
 }

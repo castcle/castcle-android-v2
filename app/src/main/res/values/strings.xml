@@ -29,6 +29,10 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
     <string name="none">None</string>
+    <string name="castcle_id">Castcle ID</string>
+    <string name="castcle_id_hit">\@Castcle_Official</string>
+    <string name="display_name">Display name</string>
+    <string name="display_name_hint">Display name</string>
     <string name="empty_state_content_title">Sorry, this cast isn\'t available</string>
     <string name="empty_state_content_description">This link you followed may be broken, or the cast may have been removed.</string>
     <string name="empty_feed_title">Trouble Loading News Feed</string>
@@ -400,4 +404,5 @@
     <string name="ads_dialog_end_status">End Ad</string>
     <string name="ads_dialog_cancel_status">Cancel Ad</string>
     <string name="ads_dialog_end_go_back">Go back</string>
+    <string name="edit_profile_warning">Once your Castcle ID has been changed, you can edit it again after 60 days.</string>
 </resources>

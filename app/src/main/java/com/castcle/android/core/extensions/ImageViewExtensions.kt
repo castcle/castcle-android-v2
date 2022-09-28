@@ -42,10 +42,10 @@ fun ImageView.loadAvatarImage(imageUrl: String?) {
         .into(this)
 }
 
-fun ImageView.loadAvatarImageLocal(imageUrl: Uri) {
+fun ImageView.loadAvatarImageLocal(imageUri: Uri? = null, imageUrl: String?) {
     GlideApp.with(context).clear(this)
     GlideApp.with(context)
-        .load(imageUrl)
+        .load(imageUri ?: GlideUrlWithQueryParameter(imageUrl))
         .error(R.drawable.ic_avatar)
         .placeholder(R.drawable.ic_avatar)
         .circleCrop()
