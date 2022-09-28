@@ -44,11 +44,11 @@ interface AuthenticationRepository {
     suspend fun linkWithFacebook()
     suspend fun linkWithSocial(body: LoginWithSocialRequest)
     suspend fun linkWithTwitter(token: TwitterAuthToken?)
-    suspend fun loginWithEmail(body: LoginWithEmailRequest)
-    suspend fun loginWithFacebook()
-    suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount)
-    suspend fun loginWithSocial(body: LoginWithSocialRequest)
-    suspend fun loginWithTwitter(token: TwitterAuthToken?)
+    suspend fun loginWithEmail(body: LoginWithEmailRequest): Pair<String, Boolean>
+    suspend fun loginWithFacebook(): Pair<String, Boolean>
+    suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount): Pair<String, Boolean>
+    suspend fun loginWithSocial(body: LoginWithSocialRequest): Pair<String, Boolean>
+    suspend fun loginWithTwitter(token: TwitterAuthToken?): Pair<String, Boolean>
     suspend fun loginOut()
     suspend fun loginOutFacebook()
     suspend fun registerFirebaseMessagingToken()

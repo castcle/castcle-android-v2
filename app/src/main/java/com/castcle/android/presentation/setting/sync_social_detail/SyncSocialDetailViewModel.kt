@@ -25,6 +25,7 @@ package com.castcle.android.presentation.setting.sync_social_detail
 
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.SocialType
@@ -35,8 +36,9 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class SyncSocialDetailViewModel(
     database: CastcleDatabase,
-    private val repository: UserRepository,
     private val synSocialId: String,
+    private val trackerRepository: TrackerRepository,
+    private val userRepository: UserRepository,
 ) : BaseViewModel() {
 
     val onDisconnect = MutableSharedFlow<Unit>()
@@ -61,8 +63,14 @@ class SyncSocialDetailViewModel(
             onError = { onError.emitOnSuspend(it) },
             onSuccess = { onDisconnect.emitOnSuspend() },
         ) {
-            repository.disconnectWithSocial(
+            userRepository.disconnectWithSocial(
                 syncSocialId = synSocialId,
+                userId = userId,
+            )
+        }
+        launch {
+            trackerRepository.trackDisconnectSyncSocial(
+                channel = syncSocialType.value?.id.orEmpty(),
                 userId = userId,
             )
         }
@@ -71,9 +79,12 @@ class SyncSocialDetailViewModel(
     fun updateAutoPost(enable: Boolean, userId: String) {
         launch(
             onError = { onError.emitOnSuspend(it) },
-            onSuccess = { onSuccess.emitOnSuspend() },
+            onSuccess = {
+                onSuccess.emitOnSuspend()
+                launch { trackerRepository.trackAutoPostSyncSocial(enable, userId) }
+            },
         ) {
-            repository.updateAutoPost(
+            userRepository.updateAutoPost(
                 enable = enable,
                 syncSocialId = synSocialId,
                 userId = userId,

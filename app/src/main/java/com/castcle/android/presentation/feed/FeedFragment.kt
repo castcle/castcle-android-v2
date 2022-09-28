@@ -259,6 +259,11 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
         super.onResume()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.trackViewFeed()
+    }
+
     private val adapter by lazy {
         CastclePagingDataAdapter(this, compositeDisposable).apply {
             registerRenderer(FeedImageViewRenderer())

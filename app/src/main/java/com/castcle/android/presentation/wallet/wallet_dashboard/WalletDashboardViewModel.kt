@@ -30,6 +30,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.core.error.RetryException
+import com.castcle.android.domain.tracker.TrackerRepository
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.domain.wallet.WalletRepository
 import com.castcle.android.domain.wallet.entity.WalletDashboardEntity
@@ -42,7 +43,8 @@ import org.koin.android.annotation.KoinViewModel
 class WalletDashboardViewModel(
     private val database: CastcleDatabase,
     private val mapper: WalletDashboardMapper,
-    private val repository: WalletRepository,
+    private val trackerRepository: TrackerRepository,
+    private val walletRepository: WalletRepository,
 ) : BaseViewModel() {
 
     val filter = MutableStateFlow<WalletHistoryFilter>(WalletHistoryFilter.WalletBalance)
@@ -69,9 +71,9 @@ class WalletDashboardViewModel(
         }) {
             val walletItems = WalletDashboardEntity(
                 filter = filter,
-                relationId = repository.getWalletBalance(userId).userId,
+                relationId = walletRepository.getWalletBalance(userId).userId,
             )
-            val historyItems = repository.getWalletHistory(filter.id, userId).map {
+            val historyItems = walletRepository.getWalletHistory(filter.id, userId).map {
                 WalletDashboardEntity(
                     createAt = it.createdAt,
                     filter = filter,
@@ -97,7 +99,7 @@ class WalletDashboardViewModel(
         }, onLaunch = {
             updateHistoryItems(getHistoryItems(WalletDashboardType.Loading))
         }) {
-            val historyItems = repository.getWalletHistory(filter.id, userId).map {
+            val historyItems = walletRepository.getWalletHistory(filter.id, userId).map {
                 WalletDashboardEntity(
                     createAt = it.createdAt,
                     filter = filter,
@@ -159,6 +161,14 @@ class WalletDashboardViewModel(
             userId.filterNotNull().distinctUntilChangedBy { it }.collectLatest {
                 fetchData(filter = filter.value, userId = it)
             }
+        }
+    }
+
+    fun trackViewWallet() {
+        launch {
+            database.user().get(UserType.People).firstOrNull()
+                ?.id
+                ?.also { trackerRepository.trackViewWallet(it) }
         }
     }
 

@@ -25,17 +25,22 @@ package com.castcle.android.presentation.setting.verify_otp
 
 import androidx.lifecycle.MutableLiveData
 import com.castcle.android.core.base.view_model.BaseViewModel
+import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.OtpEntity
 import com.castcle.android.domain.authentication.type.OtpObjective
+import com.castcle.android.domain.tracker.TrackerRepository
+import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.verify_otp.item_verify_otp.VerifyOtpViewEntity
 import kotlinx.coroutines.flow.MutableSharedFlow
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class VerifyOtpViewModel(
+    private val authenticationRepository: AuthenticationRepository,
+    private val database: CastcleDatabase,
     otp: OtpEntity,
-    private val repository: AuthenticationRepository,
+    private val trackerRepository: TrackerRepository,
 ) : BaseViewModel() {
 
     val onError = MutableSharedFlow<Throwable>()
@@ -52,7 +57,7 @@ class VerifyOtpViewModel(
             onSuccess = { onResentOtpSuccess.emitOnSuspend(Unit) }
         ) {
             val items = views.value
-                ?.map { it.copy(otp = repository.requestOtp(otp = otp)) }
+                ?.map { it.copy(otp = authenticationRepository.requestOtp(otp = otp)) }
                 ?: listOf(VerifyOtpViewEntity())
             views.postValue(items)
         }
@@ -61,13 +66,21 @@ class VerifyOtpViewModel(
     fun verifyOtp(otp: OtpEntity) {
         launch(
             onError = { onError.emitOnSuspend(it) },
-            onSuccess = { onSuccess.emitOnSuspend(it) }
+            onSuccess = {
+                onSuccess.emitOnSuspend(it)
+                launch {
+                    val userId = database.user().get(UserType.People).firstOrNull()?.id.orEmpty()
+                    if (it.objective is OtpObjective.VerifyMobile) {
+                        trackerRepository.trackVerificationMobile(otp.countryCode, userId)
+                    }
+                }
+            }
         ) {
             when (otp.objective) {
                 is OtpObjective.ChangePassword,
-                is OtpObjective.ForgotPassword -> repository.verifyOtp(otp)
+                is OtpObjective.ForgotPassword -> authenticationRepository.verifyOtp(otp)
                 is OtpObjective.SendToken,
-                is OtpObjective.VerifyMobile -> repository.updateMobileNumber(otp)
+                is OtpObjective.VerifyMobile -> authenticationRepository.updateMobileNumber(otp)
             }
         }
     }
