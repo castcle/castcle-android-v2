@@ -143,7 +143,7 @@ class ProfileViewModel(
                 loadState.emitOnSuspend(LoadState.Loading)
             },
         ) {
-            database.user().getByCastcleID(userId).collectLatest {
+            database.user().getByUserID(userId).collectLatest {
                 if (it != null) {
                     currentUser.value = it
                     handlerProfileView(profileMapper.applyUserItemView(it), it)
