@@ -63,12 +63,6 @@ import com.castcle.android.domain.wallet.entity.*
 import com.castcle.android.domain.wallet.type.*
 
 @Database(
-    autoMigrations = [
-        AutoMigration(
-            from = DATABASE_VERSION.minus(1),
-            to = DATABASE_VERSION,
-        )
-    ],
     entities = [
         AccessTokenEntity::class,
         CastEntity::class,

@@ -21,25 +21,25 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.item_comment
+package com.castcle.android.presentation.content.content.item_reply
 
 import android.content.res.ColorStateList
 import androidx.core.view.isVisible
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
-import com.castcle.android.databinding.ItemCommentBinding
-import com.castcle.android.presentation.content.ContentListener
+import com.castcle.android.databinding.ItemReplyBinding
+import com.castcle.android.presentation.content.content.ContentListener
 import com.castcle.android.presentation.dialog.option.OptionDialogType
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import java.util.*
 
-class CommentViewHolder(
-    private val binding: ItemCommentBinding,
+class ReplyViewHolder(
+    private val binding: ItemReplyBinding,
     private val compositeDisposable: CompositeDisposable,
     private val listener: ContentListener,
-) : CastcleViewHolder<CommentViewEntity>(binding.root) {
+) : CastcleViewHolder<ReplyViewEntity>(binding.root) {
 
     init {
         compositeDisposable += binding.flAvatar.onClick {
@@ -48,9 +48,6 @@ class CommentViewHolder(
         compositeDisposable += binding.tvDisplayName.onClick {
             listener.onUserClicked(item.user)
         }
-        compositeDisposable += binding.tvReply.onClick {
-            listener.onReplyClicked(item.user.castcleId, item.comment.id)
-        }
         compositeDisposable += binding.ivLike.onClick {
             listener.onLikeCommentClicked(item.comment)
         }
@@ -58,19 +55,16 @@ class CommentViewHolder(
             listener.onLikeCommentClicked(item.comment)
         }
         binding.root.setOnLongClickListener {
-            val type = if (item.comment.isOwner) {
-                OptionDialogType.MyCommentOption(item.user.castcleId, item.comment.id)
-            } else {
-                OptionDialogType.OtherCommentOption(item.user.castcleId, item.comment.id)
+            if (item.comment.isOwner) {
+                listener.onOptionClicked(OptionDialogType.ReplyOption(item.comment.id))
             }
-            listener.onOptionClicked(type)
             true
         }
     }
 
-    override var item = CommentViewEntity()
+    override var item = ReplyViewEntity()
 
-    override fun bind(bindItem: CommentViewEntity) {
+    override fun bind(bindItem: ReplyViewEntity) {
         binding.viewDivider.isVisible = item.showLine
         binding.ivAvatar.loadAvatarImage(item.user.avatar.thumbnail)
         binding.tvDisplayName.text = item.user.displayName

@@ -35,7 +35,7 @@ import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorSta
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewRenderer
 import com.castcle.android.core.extensions.toast
 import com.castcle.android.databinding.DialogOptionBinding
-import com.castcle.android.presentation.content.ContentFragment.Companion.REPLY_RESULT
+import com.castcle.android.presentation.content.content.ContentFragment.Companion.REPLY_RESULT
 import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_recast_title.RecastTitleViewRenderer
 import com.castcle.android.presentation.dialog.recast.item_select_recast_user.SelectRecastUserViewRenderer

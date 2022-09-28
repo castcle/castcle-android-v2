@@ -21,7 +21,7 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content
+package com.castcle.android.presentation.content.content
 
 import androidx.lifecycle.*
 import androidx.paging.*

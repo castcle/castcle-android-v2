@@ -21,19 +21,24 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content
+package com.castcle.android.presentation.content.content_metrics.item_content_metrics_dialog
 
-import com.castcle.android.core.base.recyclerview.CastcleListener
-import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.dialog.option.OptionDialogType
 
-interface ContentListener : CastcleListener {
-    fun onLikeCommentClicked(comment: CommentEntity)
-    fun onLikeCountClicked(contentId: String, hasRecast: Boolean)
-    fun onOptionClicked(type: OptionDialogType) = Unit
-    fun onQuoteCastCountClicked(contentId: String)
-    fun onRecastCountClicked(contentId: String, hasLike: Boolean)
-    fun onReplyClicked(castcleId: String, commentId: String)
-    fun onUserClicked(user: UserEntity)
+data class ContentMetricsDialogViewEntity(
+    val user: UserEntity = UserEntity(),
+    override val uniqueId: String = user.id,
+) : CastcleViewEntity {
+
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<ContentMetricsDialogViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<ContentMetricsDialogViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_content_metrics_dialog
+
 }

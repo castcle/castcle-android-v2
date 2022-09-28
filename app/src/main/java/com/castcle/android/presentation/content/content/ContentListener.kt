@@ -21,16 +21,19 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.base.response
+package com.castcle.android.presentation.content.content
 
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import com.castcle.android.core.base.recyclerview.CastcleListener
+import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.presentation.content.content_metrics.ContentMetricsType
+import com.castcle.android.presentation.dialog.option.OptionDialogType
 
-@Keep
-data class MetricsResponse(
-    @SerializedName("commentCount") val commentCount: Int? = null,
-    @SerializedName("farmCount") val farmCount: Double? = null,
-    @SerializedName("likeCount") val likeCount: Int? = null,
-    @SerializedName("quoteCount") val quoteCount: Int? = null,
-    @SerializedName("recastCount") val recastCount: Int? = null,
-)
+interface ContentListener : CastcleListener {
+    fun onContentMetricsClicked(type: ContentMetricsType)
+    fun onLikeCommentClicked(comment: CommentEntity)
+    fun onOptionClicked(type: OptionDialogType) = Unit
+    fun onQuoteCastCountClicked(contentId: String)
+    fun onReplyClicked(castcleId: String, commentId: String)
+    fun onUserClicked(user: UserEntity)
+}
