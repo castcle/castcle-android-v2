@@ -143,13 +143,11 @@ class ProfileViewModel(
                 loadState.emitOnSuspend(LoadState.Loading)
             },
         ) {
-            database.user().getByUserID(userId).collectLatest {
-                if (it != null) {
-                    currentUser.value = it
-                    handlerProfileView(profileMapper.applyUserItemView(it), it)
-                } else {
-                    currentUser.value = repository.getUser(userId)
-                }
+            val userInDatabase = database.user().get(userId).firstOrNull()
+            val user = userInDatabase ?: repository.getUser(userId)
+            database.user().getByUserID(user.id).filterNotNull().collectLatest {
+                currentUser.value = it
+                handlerProfileView(profileMapper.applyUserItemView(it), it)
             }
         }
     }
