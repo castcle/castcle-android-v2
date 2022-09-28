@@ -223,24 +223,32 @@ class ProfileFragment : BaseFragment(), LoadStateListener, FeedListener, Profile
     }
 
     override fun onEditProfileClicked(user: UserEntity) {
-        when (user.type) {
-            is UserType.People -> {
-                navigateToEditProfileFragment(
-                    profileBundle = ProfileBundle.User(
-                        userId = user.id,
-                        displayName = user.displayName
+        if (user.isOwner) {
+            when (user.type) {
+                is UserType.People -> {
+                    navigateToEditProfileFragment(
+                        profileBundle = ProfileBundle.User(
+                            userId = user.id,
+                            displayName = user.displayName
+                        )
                     )
-                )
-            }
-            is UserType.Page -> {
-                navigateToEditProfileFragment(
-                    profileBundle = ProfileBundle.Page(
-                        userId = user.id,
-                        displayName = user.displayName
+                }
+                is UserType.Page -> {
+                    navigateToEditProfileFragment(
+                        profileBundle = ProfileBundle.Page(
+                            userId = user.id,
+                            displayName = user.displayName
+                        )
                     )
-                )
+                }
             }
+        } else {
+            navigateToViewProfileFragment(user)
         }
+    }
+
+    private fun navigateToViewProfileFragment(user: UserEntity) {
+        directions.toViewProfileFragment(user).navigate()
     }
 
     private fun navigateToEditProfileFragment(profileBundle: ProfileBundle) {
