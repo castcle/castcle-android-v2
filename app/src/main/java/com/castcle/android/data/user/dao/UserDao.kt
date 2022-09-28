@@ -58,7 +58,10 @@ interface UserDao {
     suspend fun get(userId: String): List<UserEntity>
 
     @Query("SELECT * FROM $TABLE_USER WHERE user_id = :userId")
-    fun getByCastcleID(userId: String): Flow<UserEntity?>
+    fun getByUserID(userId: String): Flow<UserEntity?>
+
+    @Query("SELECT * FROM $TABLE_USER WHERE user_castcleId = :castcleId")
+    fun getByCastcleID(castcleId: String): Flow<UserEntity?>
 
     @Query("UPDATE $TABLE_USER SET user_casts = case when user_casts IS NOT NULL then user_casts + 1 else NULL end  WHERE user_id = :userId")
     suspend fun increaseCastCount(userId: String)
