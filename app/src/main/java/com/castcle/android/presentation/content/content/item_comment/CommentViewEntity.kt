@@ -21,16 +21,27 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.base.response
+package com.castcle.android.presentation.content.content.item_comment
 
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
+import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.user.entity.UserEntity
 
-@Keep
-data class MetricsResponse(
-    @SerializedName("commentCount") val commentCount: Int? = null,
-    @SerializedName("farmCount") val farmCount: Double? = null,
-    @SerializedName("likeCount") val likeCount: Int? = null,
-    @SerializedName("quoteCount") val quoteCount: Int? = null,
-    @SerializedName("recastCount") val recastCount: Int? = null,
-)
+data class CommentViewEntity(
+    val comment: CommentEntity = CommentEntity(),
+    val showLine: Boolean = false,
+    override val uniqueId: String = "",
+    val user: UserEntity = UserEntity(),
+) : CastcleViewEntity {
+
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<CommentViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<CommentViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_comment
+
+}

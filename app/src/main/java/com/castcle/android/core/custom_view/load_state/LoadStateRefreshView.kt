@@ -189,7 +189,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
         binding.recyclerView.adapter
             ?.cast<CastcleAdapter>()
             ?.submitList(emptyItems)
-        visible()
+        isVisible = emptyItems.isNotEmpty()
     }
 
     private fun setErrorState(
@@ -247,7 +247,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 loading = LoadingStateCastViewEntity.create(3),
             )
             PROFILE -> StateItems(
-                empty = ErrorStateViewEntity.create(1),
+                empty = listOf(),
                 error = ErrorStateViewEntity.create(1),
                 loading = LoadingStateProfileViewEntity.create(1)
                     .plus(LoadingStateCastViewEntity.create(1)),

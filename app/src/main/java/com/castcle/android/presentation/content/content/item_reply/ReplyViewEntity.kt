@@ -21,28 +21,27 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.item_comment
+package com.castcle.android.presentation.content.content.item_reply
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
-import com.castcle.android.databinding.ItemCommentBinding
-import com.castcle.android.presentation.content.ContentListener
-import io.reactivex.disposables.CompositeDisposable
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
+import com.castcle.android.domain.content.entity.CommentEntity
+import com.castcle.android.domain.user.entity.UserEntity
 
-class CommentViewRenderer : CastcleViewRenderer<CommentViewEntity,
-    CommentViewHolder,
-    ContentListener>(R.layout.item_comment) {
+data class ReplyViewEntity(
+    val comment: CommentEntity = CommentEntity(),
+    val showLine: Boolean = false,
+    override val uniqueId: String = "",
+    val user: UserEntity = UserEntity(),
+) : CastcleViewEntity {
 
-    override fun createViewHolder(
-        parent: ViewGroup,
-        listener: ContentListener,
-        compositeDisposable: CompositeDisposable
-    ) = CommentViewHolder(
-        ItemCommentBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        ), compositeDisposable, listener
-    )
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<ReplyViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<ReplyViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_reply
 
 }

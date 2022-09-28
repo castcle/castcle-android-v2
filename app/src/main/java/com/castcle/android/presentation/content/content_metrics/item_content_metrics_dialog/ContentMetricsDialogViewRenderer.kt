@@ -21,26 +21,28 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.item_content_metrics
+package com.castcle.android.presentation.content.content_metrics.item_content_metrics_dialog
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
+import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
+import com.castcle.android.databinding.ItemContentMetricsDialogBinding
+import com.castcle.android.presentation.content.content_metrics.ContentMetricsListener
+import io.reactivex.disposables.CompositeDisposable
 
-data class ContentMetricsViewEntity(
-    val contentId: String = "",
-    val likeCount: Int = 0,
-    val quoteCount: Int = 0,
-    val recastCount: Int = 0,
-    override val uniqueId: String = "${R.layout.item_content_metrics}",
-) : CastcleViewEntity {
+class ContentMetricsDialogViewRenderer : CastcleViewRenderer<ContentMetricsDialogViewEntity,
+    ContentMetricsDialogViewHolder,
+    ContentMetricsListener>(R.layout.item_content_metrics_dialog) {
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<ContentMetricsViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<ContentMetricsViewEntity>() == this
-    }
-
-    override fun viewType() = R.layout.item_content_metrics
+    override fun createViewHolder(
+        parent: ViewGroup,
+        listener: ContentMetricsListener,
+        compositeDisposable: CompositeDisposable
+    ) = ContentMetricsDialogViewHolder(
+        ItemContentMetricsDialogBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        ), compositeDisposable, listener
+    )
 
 }

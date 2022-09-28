@@ -21,16 +21,17 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.core.base.response
+package com.castcle.android.presentation.content.content_metrics
 
-import androidx.annotation.Keep
-import com.google.gson.annotations.SerializedName
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-@Keep
-data class MetricsResponse(
-    @SerializedName("commentCount") val commentCount: Int? = null,
-    @SerializedName("farmCount") val farmCount: Double? = null,
-    @SerializedName("likeCount") val likeCount: Int? = null,
-    @SerializedName("quoteCount") val quoteCount: Int? = null,
-    @SerializedName("recastCount") val recastCount: Int? = null,
-)
+sealed class ContentMetricsType(open val contentId: String) : Parcelable {
+
+    @Parcelize
+    data class Like(override val contentId: String) : ContentMetricsType(contentId = contentId)
+
+    @Parcelize
+    data class Recast(override val contentId: String) : ContentMetricsType(contentId = contentId)
+
+}

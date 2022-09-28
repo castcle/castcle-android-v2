@@ -21,7 +21,7 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content
+package com.castcle.android.presentation.content.content
 
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.cast.entity.CastEntity
@@ -30,9 +30,9 @@ import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.content.entity.ContentWithResultEntity
 import com.castcle.android.domain.content.type.ContentType
 import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.content.item_comment.CommentViewEntity
-import com.castcle.android.presentation.content.item_content_metrics.ContentMetricsViewEntity
-import com.castcle.android.presentation.content.item_reply.ReplyViewEntity
+import com.castcle.android.presentation.content.content.item_comment.CommentViewEntity
+import com.castcle.android.presentation.content.content.item_content_metrics.ContentMetricsViewEntity
+import com.castcle.android.presentation.content.content.item_reply.ReplyViewEntity
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
 import com.castcle.android.presentation.feed.item_feed_recast.FeedRecastViewEntity

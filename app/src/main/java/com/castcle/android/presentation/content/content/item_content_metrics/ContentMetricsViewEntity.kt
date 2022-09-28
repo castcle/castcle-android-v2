@@ -21,28 +21,26 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.content.item_content_metrics
+package com.castcle.android.presentation.content.content.item_content_metrics
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewRenderer
-import com.castcle.android.databinding.ItemContentMetricsBinding
-import com.castcle.android.presentation.content.ContentListener
-import io.reactivex.disposables.CompositeDisposable
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
 
-class ContentMetricsViewRenderer : CastcleViewRenderer<ContentMetricsViewEntity,
-    ContentMetricsViewHolder,
-    ContentListener>(R.layout.item_content_metrics) {
+data class ContentMetricsViewEntity(
+    val contentId: String = "",
+    val likeCount: Int = 0,
+    val quoteCount: Int = 0,
+    val recastCount: Int = 0,
+    override val uniqueId: String = "${R.layout.item_content_metrics}",
+) : CastcleViewEntity {
 
-    override fun createViewHolder(
-        parent: ViewGroup,
-        listener: ContentListener,
-        compositeDisposable: CompositeDisposable
-    ) = ContentMetricsViewHolder(
-        ItemContentMetricsBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false
-        ), compositeDisposable, listener
-    )
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<ContentMetricsViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<ContentMetricsViewEntity>() == this
+    }
+
+    override fun viewType() = R.layout.item_content_metrics
 
 }
