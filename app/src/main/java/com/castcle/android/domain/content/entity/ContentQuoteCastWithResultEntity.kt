@@ -21,46 +21,22 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.core.type
+package com.castcle.android.domain.content.entity
 
-import androidx.room.TypeConverter
+import androidx.room.Embedded
+import androidx.room.Relation
+import com.castcle.android.core.constants.*
+import com.castcle.android.domain.cast.entity.CastEntity
+import com.castcle.android.domain.user.entity.UserEntity
 
-sealed class LoadKeyType(val id: String) {
-
-    object Content : LoadKeyType(id = "content")
-
-    object ContentQuoteCast : LoadKeyType(id = "contentQuoteCast")
-
-    object Feed : LoadKeyType(id = "feed")
-
-    object FollowingFollowers : LoadKeyType(id = "followingFollowers")
-
-    object Profile : LoadKeyType(id = "profile")
-
-    object Search : LoadKeyType(id = "search")
-
-    object WhoToFollow : LoadKeyType(id = "whoToFollow")
-
-    companion object {
-        fun getFromId(id: String?) = when (id) {
-            Content.id -> Content
-            ContentQuoteCast.id -> ContentQuoteCast
-            Feed.id -> Feed
-            FollowingFollowers.id -> FollowingFollowers
-            Profile.id -> Profile
-            Search.id -> Search
-            else -> WhoToFollow
-        }
-    }
-
-    class Converter {
-
-        @TypeConverter
-        fun fromEntity(item: LoadKeyType): String = item.id
-
-        @TypeConverter
-        fun toEntity(item: String): LoadKeyType = getFromId(item)
-
-    }
-
-}
+data class ContentQuoteCastWithResultEntity(
+    @Embedded val contentQuoteCast: ContentQuoteCastEntity = ContentQuoteCastEntity(),
+    @Relation(parentColumn = "${TABLE_CONTENT_QUOTE_CAST}_originalCastId", entityColumn = "${TABLE_CAST}_id")
+    val originalCast: CastEntity? = null,
+    @Relation(parentColumn = "${TABLE_CONTENT_QUOTE_CAST}_originalUserId", entityColumn = "${TABLE_USER}_id")
+    val originalUser: UserEntity? = null,
+    @Relation(parentColumn = "${TABLE_CONTENT_QUOTE_CAST}_referenceCastId", entityColumn = "${TABLE_CAST}_id")
+    val referenceCast: CastEntity? = null,
+    @Relation(parentColumn = "${TABLE_CONTENT_QUOTE_CAST}_referenceUserId", entityColumn = "${TABLE_USER}_id")
+    val referenceUser: UserEntity? = null,
+)

@@ -30,8 +30,7 @@ import com.castcle.android.data.ads.dao.*
 import com.castcle.android.data.authentication.dao.AccessTokenDao
 import com.castcle.android.data.authentication.dao.RecursiveRefreshTokenDao
 import com.castcle.android.data.cast.dao.CastDao
-import com.castcle.android.data.content.dao.CommentDao
-import com.castcle.android.data.content.dao.ContentDao
+import com.castcle.android.data.content.dao.*
 import com.castcle.android.data.core.dao.LoadKeyDao
 import com.castcle.android.data.feed.dao.FeedDao
 import com.castcle.android.data.metadata.dao.CountryCodeDao
@@ -46,8 +45,7 @@ import com.castcle.android.domain.authentication.entity.RecursiveRefreshTokenEnt
 import com.castcle.android.domain.authentication.type.AccessTokenType
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
-import com.castcle.android.domain.content.entity.CommentEntity
-import com.castcle.android.domain.content.entity.ContentEntity
+import com.castcle.android.domain.content.entity.*
 import com.castcle.android.domain.content.type.ContentType
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.core.entity.LoadKeyEntity
@@ -68,6 +66,7 @@ import com.castcle.android.domain.wallet.type.*
         CastEntity::class,
         CommentEntity::class,
         ContentEntity::class,
+        ContentQuoteCastEntity::class,
         CountryCodeEntity::class,
         FeedEntity::class,
         FollowingFollowersEntity::class,
@@ -120,6 +119,7 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun cast(): CastDao
     abstract fun comment(): CommentDao
     abstract fun content(): ContentDao
+    abstract fun contentQuoteCast(): ContentQuoteCastDao
     abstract fun countryCode(): CountryCodeDao
     abstract fun feed(): FeedDao
     abstract fun followingFollowers(): FollowingFollowersDao

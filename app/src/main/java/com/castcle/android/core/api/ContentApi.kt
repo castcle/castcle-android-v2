@@ -69,6 +69,13 @@ interface ContentApi {
         @Path(PARAMETER_CONTENT_ID) contentId: String,
     ): Response<List<ContentParticipateResponse>>
 
+    @GET("v2/contents/{$PARAMETER_CONTENT_ID}/quotecasts")
+    suspend fun getContentQuoteCast(
+        @Path(PARAMETER_CONTENT_ID) contentId: String,
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int = PARAMETER_MAX_RESULTS_SMALL_ITEM,
+        @Query(PARAMETER_UNTIL_ID) untilId: String? = null,
+    ): Response<BaseResponse<List<CastResponse>>>
+
     @GET("v2/contents/{$PARAMETER_CONTENT_ID}/recasts")
     suspend fun getContentRecastsUsers(
         @Path(PARAMETER_CONTENT_ID) contentId: String,
