@@ -94,6 +94,7 @@ class ChangePasswordFragment : BaseFragment(), ChangePasswordListener {
     override fun onStart() {
         super.onStart()
         changeSoftInputMode(true)
+        viewModel.trackViewResetPassword()
     }
 
     private val adapter by lazy {

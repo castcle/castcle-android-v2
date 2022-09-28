@@ -37,6 +37,8 @@ import com.castcle.android.data.feed.data_source.FeedRemoteMediator
 import com.castcle.android.data.feed.mapper.FeedResponseMapper
 import com.castcle.android.domain.core.type.LoadKeyType
 import com.castcle.android.domain.feed.FeedRepository
+import com.castcle.android.domain.tracker.TrackerRepository
+import com.castcle.android.domain.user.type.UserType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import org.koin.android.annotation.KoinViewModel
@@ -46,10 +48,11 @@ class FeedViewModel(
     private val api: FeedApi,
     private val database: CastcleDatabase,
     private val feedMapper: FeedMapper,
+    private val feedRepository: FeedRepository,
     private val feedResponseMapper: FeedResponseMapper,
     private val glidePreloader: GlidePreloader,
-    private val repository: FeedRepository,
     private val state: SavedStateHandle,
+    private val trackerRepository: TrackerRepository,
 ) : BaseViewModel() {
 
     init {
@@ -103,8 +106,8 @@ class FeedViewModel(
         launch {
             if (!contentEngagement.contains(offView to seen)) {
                 contentEngagement.add(offView to seen)
-                repository.contentOffView(offView)
-                repository.contentSeen(seen)
+                feedRepository.contentOffView(offView)
+                feedRepository.contentSeen(seen)
             }
         }
     }
@@ -112,6 +115,13 @@ class FeedViewModel(
     fun showReportingContent(id: String, ignoreReportContentId: List<String>) {
         launch {
             database.feed().updateIgnoreReportContentId(id, ignoreReportContentId)
+        }
+    }
+
+    fun trackViewFeed() {
+        launch {
+            val userId = database.user().get(UserType.People).firstOrNull()?.id.orEmpty()
+            trackerRepository.trackViewFeed(userId)
         }
     }
 

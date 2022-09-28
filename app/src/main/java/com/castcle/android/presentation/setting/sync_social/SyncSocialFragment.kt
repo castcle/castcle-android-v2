@@ -164,6 +164,11 @@ class SyncSocialFragment : BaseFragment(), SyncSocialListener {
         })
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.trackViewSyncSocial()
+    }
+
     private val adapter by lazy {
         CastcleAdapter(this, compositeDisposable).apply {
             registerRenderer(SyncSocialViewRenderer())
