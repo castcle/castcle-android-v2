@@ -40,6 +40,7 @@ import com.castcle.android.domain.ads.type.BoostAdBundle
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.wallet.type.WalletType
 import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
@@ -84,19 +85,8 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
             )
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isGuest.collectLatest { isGuest ->
-                if (isGuest) {
-                    binding.actionBar.bind(
-                        leftButtonIcon = R.drawable.ic_castcle,
-                        leftButtonAction = { scrollToTop() },
-                        rightButtonAction = {
-                            directions.toLoginFragment().navigate()
-                        },
-                        rightButtonIcon = R.drawable.ic_user,
-                        title = R.string.for_you,
-                        titleColor = R.color.blue,
-                    )
-                } else {
+            viewModel.accessToken.collectLatest { (accessToken, config) ->
+                if (accessToken?.isGuest() == false) {
                     binding.actionBar.bind(
                         leftButtonIcon = R.drawable.ic_castcle,
                         leftButtonAction = { scrollToTop() },
@@ -105,13 +95,28 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                         },
                         rightButtonIcon = R.drawable.ic_hamburger,
                         rightSecondButtonAction = {
-                            shareViewModel.isCanUseWallet({
-                                directions.toWalletDashboardFragment().navigate()
-                            }) {
-                                directions.toWalletVerifyFragment().navigate()
+                            if (config?.walletType is WalletType.Native) {
+                                shareViewModel.isCanUseWallet({
+                                    directions.toWalletDashboardFragment().navigate()
+                                }) {
+                                    directions.toWalletVerifyFragment().navigate()
+                                }
+                            } else {
+                                openUrl(getString(R.string.airdrop_url, accessToken.accessToken))
                             }
                         },
                         rightSecondButtonIcon = R.drawable.ic_wallet,
+                        title = R.string.for_you,
+                        titleColor = R.color.blue,
+                    )
+                } else {
+                    binding.actionBar.bind(
+                        leftButtonIcon = R.drawable.ic_castcle,
+                        leftButtonAction = { scrollToTop() },
+                        rightButtonAction = {
+                            directions.toLoginFragment().navigate()
+                        },
+                        rightButtonIcon = R.drawable.ic_user,
                         title = R.string.for_you,
                         titleColor = R.color.blue,
                     )

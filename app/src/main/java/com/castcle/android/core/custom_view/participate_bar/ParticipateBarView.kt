@@ -31,7 +31,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.castcle.android.R
-import com.castcle.android.core.extensions.*
+import com.castcle.android.core.extensions.asCount
+import com.castcle.android.core.extensions.onClick
 import com.castcle.android.databinding.LayoutParticipateBarBinding
 import com.castcle.android.domain.cast.entity.CastEntity
 import io.reactivex.disposables.CompositeDisposable
@@ -45,7 +46,13 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun bind(cast: CastEntity, listener: ParticipateBarListener, castIsOwner: Boolean = true) {
+    fun bind(
+        adsEnable: Boolean,
+        cast: CastEntity,
+        farmingEnable: Boolean,
+        isNotAdPreview: Boolean = true,
+        listener: ParticipateBarListener,
+    ) {
         compositeDisposable.clear()
         compositeDisposable += binding.clLike.onClick {
             listener.onLikeClicked(cast)
@@ -86,8 +93,12 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
         binding.tvContentFarming.text = cast.farmCount.asCount()
         binding.tvContentFarming.isVisible = cast.farmCount > 0.0
         binding.tvContentFarming.setTextColor(contentFarmingColor)
+        binding.clContentFarming.isVisible = farmingEnable
 
-        binding.clBoostCast.visibleOrGone(cast.isOwner && !cast.reported && castIsOwner)
+        binding.clBoostCast.isVisible = cast.isOwner
+            && !cast.reported
+            && isNotAdPreview
+            && adsEnable
     }
 
     private fun getParticipateColor(isParticipate: Boolean): Int {

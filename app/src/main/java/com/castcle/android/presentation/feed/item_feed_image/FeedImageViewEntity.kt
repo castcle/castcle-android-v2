@@ -31,7 +31,9 @@ import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.FeedEngagement
 
 data class FeedImageViewEntity(
+    val adsEnable: Boolean = false,
     val cast: CastEntity = CastEntity(),
+    val farmEnable: Boolean = false,
     val feedId: String = "",
     override val uniqueId: String = "",
     val user: UserEntity = UserEntity(),

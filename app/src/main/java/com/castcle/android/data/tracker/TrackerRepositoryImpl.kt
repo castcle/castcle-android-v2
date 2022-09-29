@@ -30,6 +30,7 @@ import com.castcle.android.domain.tracker.TrackerRepository
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import org.koin.core.annotation.Factory
+import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @Factory
@@ -56,13 +57,13 @@ class TrackerRepositoryImpl(
     }
 
     private suspend fun sendToFirebase(name: String, parameter: Map<String, String>) {
-        return suspendCoroutine {
+        return suspendCoroutine { coroutine ->
             val bundle = bundleOf().apply {
                 parameter.entries.forEach {
                     putString(it.key, it.value)
                 }
             }
-            Firebase.analytics.logEvent(name, bundle)
+            coroutine.resume(Firebase.analytics.logEvent(name, bundle))
         }
     }
 
@@ -72,7 +73,7 @@ class TrackerRepositoryImpl(
             "active" to if (active) "on" else "off",
             "user_id" to userId,
         )
-        sendToFirebase(name = "auto_post_sync_social", parameter = parameter)
+        return sendToFirebase(name = "auto_post_sync_social", parameter = parameter)
     }
 
     override suspend fun trackConnectSyncSocial(channel: String, userId: String) {
@@ -81,7 +82,7 @@ class TrackerRepositoryImpl(
             "channel" to channel,
             "user_id" to userId,
         )
-        sendToFirebase(name = "connect_sync_social", parameter = parameter)
+        return sendToFirebase(name = "connect_sync_social", parameter = parameter)
     }
 
     override suspend fun trackDeleteAccount(userId: String) {
@@ -89,7 +90,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "delete_account", parameter = parameter)
+        return sendToFirebase(name = "delete_account", parameter = parameter)
     }
 
     override suspend fun trackDisconnectSyncSocial(channel: String, userId: String) {
@@ -98,7 +99,7 @@ class TrackerRepositoryImpl(
             "channel" to channel,
             "user_id" to userId,
         )
-        sendToFirebase(name = "disconnect_sync_social", parameter = parameter)
+        return sendToFirebase(name = "disconnect_sync_social", parameter = parameter)
     }
 
     override suspend fun trackLogin(channel: String, userId: String) {
@@ -107,7 +108,7 @@ class TrackerRepositoryImpl(
             "channel" to channel,
             "user_id" to userId,
         )
-        sendToFirebase(name = "login", parameter = parameter)
+        return sendToFirebase(name = "login", parameter = parameter)
     }
 
     override suspend fun trackRegistration(channel: String, userId: String) {
@@ -116,7 +117,7 @@ class TrackerRepositoryImpl(
             "channel" to channel,
             "user_id" to userId,
         )
-        sendToFirebase(name = "registration", parameter = parameter)
+        return sendToFirebase(name = "registration", parameter = parameter)
     }
 
     override suspend fun trackResetPassword(userId: String) {
@@ -124,7 +125,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "reset_password", parameter = parameter)
+        return sendToFirebase(name = "reset_password", parameter = parameter)
     }
 
     override suspend fun trackVerificationMobile(countryCode: String, userId: String) {
@@ -133,7 +134,7 @@ class TrackerRepositoryImpl(
             "country_code" to countryCode,
             "user_id" to userId,
         )
-        sendToFirebase(name = "verification_mobile", parameter = parameter)
+        return sendToFirebase(name = "verification_mobile", parameter = parameter)
     }
 
     override suspend fun trackViewAccount(userId: String) {
@@ -141,7 +142,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_account", parameter = parameter)
+        return sendToFirebase(name = "view_account", parameter = parameter)
     }
 
     override suspend fun trackViewDeleteAccount(userId: String) {
@@ -149,7 +150,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_delete_account", parameter = parameter)
+        return sendToFirebase(name = "view_delete_account", parameter = parameter)
     }
 
     override suspend fun trackViewFeed(userId: String) {
@@ -158,7 +159,7 @@ class TrackerRepositoryImpl(
             "role" to getAccountRole(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_feed", parameter = parameter)
+        return sendToFirebase(name = "view_feed", parameter = parameter)
     }
 
     override suspend fun trackViewResetPassword(userId: String) {
@@ -166,7 +167,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_reset_password", parameter = parameter)
+        return sendToFirebase(name = "view_reset_password", parameter = parameter)
     }
 
     override suspend fun trackViewSetting(userId: String) {
@@ -174,7 +175,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_setting", parameter = parameter)
+        return sendToFirebase(name = "view_setting", parameter = parameter)
     }
 
     override suspend fun trackViewSyncSocial(userId: String) {
@@ -182,7 +183,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_sync_social", parameter = parameter)
+        return sendToFirebase(name = "view_sync_social", parameter = parameter)
     }
 
     override suspend fun trackViewWallet(userId: String) {
@@ -190,7 +191,7 @@ class TrackerRepositoryImpl(
             "account_id" to getAccountId(),
             "user_id" to userId,
         )
-        sendToFirebase(name = "view_wallet", parameter = parameter)
+        return sendToFirebase(name = "view_wallet", parameter = parameter)
     }
 
 }

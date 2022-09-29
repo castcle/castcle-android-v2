@@ -23,8 +23,10 @@
 
 package com.castcle.android.data.search.entity
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class HashtagsResponse(
     @SerializedName("count") val count: Int? = null,
     @SerializedName("name") val name: String? = null,

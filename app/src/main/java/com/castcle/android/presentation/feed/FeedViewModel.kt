@@ -61,9 +61,8 @@ class FeedViewModel(
 
     private val contentEngagement = mutableListOf<Pair<String, String>>()
 
-    val isGuest = database.accessToken()
-        .retrieve()
-        .map { it?.isGuest() ?: true }
+    val accessToken = database.accessToken().retrieve()
+        .combine(database.config().retrieve(), ::Pair)
         .distinctUntilChanged()
 
     @ExperimentalCoroutinesApi
@@ -86,7 +85,7 @@ class FeedViewModel(
                     mapper = feedResponseMapper,
                 )
             ).flow.map { pagingData ->
-                pagingData.map { feedMapper.apply(it) }
+                pagingData.map { feedMapper.apply(it, database.config().get()) }
             }
         }.cachedIn(viewModelScope)
 
