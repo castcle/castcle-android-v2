@@ -103,7 +103,7 @@ class EditProfileFragment : BaseFragment(), UpdateProfileListener {
                 viewModel.userType.value = UserType.People
                 viewModel.fetchProfile((profileBuild as ProfileBundle.User).userId)
                 (profileBuild as ProfileBundle.User).displayName?.let {
-                    initActionBar(it)
+                    initActionBar(string(R.string.edit_profile))
                 }
             }
             is ProfileBundle.Page -> {
