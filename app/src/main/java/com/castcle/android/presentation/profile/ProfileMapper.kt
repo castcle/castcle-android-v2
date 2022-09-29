@@ -26,6 +26,7 @@ package com.castcle.android.presentation.profile
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
+import com.castcle.android.domain.setting.entity.ConfigEntity
 import com.castcle.android.domain.user.entity.ProfileWithResultEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.user.type.ProfileType
@@ -45,13 +46,12 @@ import org.koin.core.annotation.Factory
 @Factory
 class ProfileMapper {
 
-    fun apply(item: ProfileWithResultEntity): CastcleViewEntity {
+    fun apply(item: ProfileWithResultEntity, config: ConfigEntity?): CastcleViewEntity {
         return when (item.profile.type) {
             ProfileType.NewCast -> FeedNewCastViewEntity(
                 user = item.originalUser ?: UserEntity(),
             )
-
-            else -> mapContentItem(item)
+            else -> mapContentItem(item, config)
         }
     }
 
@@ -63,7 +63,10 @@ class ProfileMapper {
         }
     }
 
-    private fun mapContentItem(item: ProfileWithResultEntity): CastcleViewEntity {
+    private fun mapContentItem(
+        item: ProfileWithResultEntity,
+        config: ConfigEntity?,
+    ): CastcleViewEntity {
         when {
             item.originalCast?.reported == true &&
                 !item.profile.ignoreReportContentId.contains(item.originalCast.id) -> {
@@ -83,14 +86,16 @@ class ProfileMapper {
         }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
+                adsEnable = config?.adsEnable ?: false,
                 cast = item.originalCast,
+                farmEnable = config?.farmingEnable ?: false,
                 reference = mapContentItem(
                     item.copy(
                         originalCast = item.referenceCast,
                         originalUser = item.referenceUser,
                         referenceCast = null,
                         referenceUser = null,
-                    )
+                    ), config
                 ),
                 referenceCast = item.referenceCast,
                 uniqueId = item.originalCast.id,
@@ -104,29 +109,37 @@ class ProfileMapper {
                         originalUser = item.referenceUser,
                         referenceCast = null,
                         referenceUser = null,
-                    )
+                    ), config
                 ),
                 uniqueId = item.originalCast.id,
                 user = item.originalUser ?: UserEntity(),
             )
             else -> when {
                 item.originalCast?.image.orEmpty().isNotEmpty() -> FeedImageViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkPreview.orEmpty().isNotBlank() -> FeedWebImageViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkUrl.orEmpty().isNotBlank() -> FeedWebViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 else -> FeedTextViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )

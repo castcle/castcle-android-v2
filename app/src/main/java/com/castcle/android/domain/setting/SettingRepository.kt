@@ -21,34 +21,10 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web_image
+package com.castcle.android.domain.setting
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
+import com.castcle.android.domain.setting.entity.ConfigEntity
 
-data class FeedWebImageViewEntity(
-    val adsEnable: Boolean = false,
-    val cast: CastEntity = CastEntity(),
-    val farmEnable: Boolean = false,
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
-
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
-    }
-
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebImageViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebImageViewEntity>() == this
-    }
-
-    override fun viewType() = R.layout.item_feed_web_image
-
+interface SettingRepository {
+    suspend fun fetchFirebaseRemoteConfig(): ConfigEntity
 }

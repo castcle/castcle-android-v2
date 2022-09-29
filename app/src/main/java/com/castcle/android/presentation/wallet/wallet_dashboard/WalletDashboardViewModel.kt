@@ -150,7 +150,7 @@ class WalletDashboardViewModel(
                 fetchHistory(filter = filter.value, userId = userId.value.orEmpty())
             }
             database.walletDashboard().retrieve()
-                .map { mapper.apply(it, retryAction) }
+                .map { mapper.apply(it, retryAction, database.config().get()) }
                 .collectLatest(views::postValue)
         }
     }

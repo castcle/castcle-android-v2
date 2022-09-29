@@ -36,6 +36,7 @@ import com.castcle.android.data.feed.dao.FeedDao
 import com.castcle.android.data.metadata.dao.CountryCodeDao
 import com.castcle.android.data.notification.dao.NotificationBadgesDao
 import com.castcle.android.data.search.dao.*
+import com.castcle.android.data.setting.dao.ConfigDao
 import com.castcle.android.data.user.dao.*
 import com.castcle.android.data.wallet.dao.*
 import com.castcle.android.domain.ads.entity.*
@@ -55,6 +56,8 @@ import com.castcle.android.domain.feed.type.FeedType
 import com.castcle.android.domain.metadata.entity.CountryCodeEntity
 import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
 import com.castcle.android.domain.search.entity.*
+import com.castcle.android.domain.setting.entity.ConfigEntity
+import com.castcle.android.domain.setting.entity.UpdateVersionEntity
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.*
 import com.castcle.android.domain.wallet.entity.*
@@ -65,6 +68,7 @@ import com.castcle.android.domain.wallet.type.*
         AccessTokenEntity::class,
         CastEntity::class,
         CommentEntity::class,
+        ConfigEntity::class,
         ContentEntity::class,
         ContentQuoteCastEntity::class,
         CountryCodeEntity::class,
@@ -103,10 +107,12 @@ import com.castcle.android.domain.wallet.type.*
     SocialType.Converter::class,
     StringListConverter::class,
     UserType.Converter::class,
+    UpdateVersionEntity.Converter::class,
     WalletDashboardType.Converter::class,
     WalletHistoryFilter.Converter::class,
     WalletHistoryStatus.Converter::class,
     WalletHistoryType.Converter::class,
+    WalletType.Converter::class,
     ObjectiveType.Converter::class,
     PaymentType.Converter::class,
     DailyBidType.Converter::class,
@@ -118,6 +124,7 @@ abstract class CastcleDatabase : RoomDatabase() {
     abstract fun accessToken(): AccessTokenDao
     abstract fun cast(): CastDao
     abstract fun comment(): CommentDao
+    abstract fun config(): ConfigDao
     abstract fun content(): ContentDao
     abstract fun contentQuoteCast(): ContentQuoteCastDao
     abstract fun countryCode(): CountryCodeDao

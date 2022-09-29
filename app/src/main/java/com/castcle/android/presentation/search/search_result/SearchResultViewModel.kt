@@ -80,7 +80,7 @@ class SearchResultViewModel(
             type = type,
         )
     ).flow.map { pagingData ->
-        pagingData.map { searchResultMapper.apply(it, type) }
+        pagingData.map { searchResultMapper.apply(it, type, database.config().get()) }
     }.cachedIn(viewModelScope)
 
     fun showReportingContent(id: String, ignoreReportContentId: List<String>) {

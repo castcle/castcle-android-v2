@@ -23,30 +23,68 @@
 
 package com.castcle.android.presentation.splash_screen
 
-import androidx.lifecycle.MutableLiveData
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.type.AccessTokenType
+import com.castcle.android.domain.setting.SettingRepository
+import com.castcle.android.domain.setting.entity.ConfigEntity
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class SplashScreenViewModel(
-    private val repository: AuthenticationRepository,
+    private val authenticationRepository: AuthenticationRepository,
+    private val settingRepository: SettingRepository,
 ) : BaseViewModel() {
 
-    val fetchAccessTokenComplete = MutableLiveData<Unit>()
+    val config = MutableStateFlow<ConfigEntity?>(null)
+
+    val fetchAccessTokenComplete = MutableSharedFlow<Unit>()
+
+    private var fetchAccessTokenJob: Job? = null
+
+    val onError = MutableSharedFlow<Throwable>()
 
     init {
-        fetchAccessToken()
+        fetchFirebaseRemoteConfig()
     }
 
-    private fun fetchAccessToken() {
-        launch {
-            if (repository.getAccessToken().type is AccessTokenType.Guest) {
-                repository.fetchGuestAccessToken()
+    fun fetchAccessToken() {
+        launch(
+            onError = { onError.emitOnSuspend(it) },
+            onLaunch = { fetchAccessTokenJob?.cancel() },
+            onSuccess = { fetchAccessTokenComplete.emitOnSuspend() },
+        ) {
+            if (authenticationRepository.getAccessToken().type is AccessTokenType.Guest) {
+                authenticationRepository.fetchGuestAccessToken()
             }
-            fetchAccessTokenComplete.postValue(Unit)
         }
+    }
+
+    private fun fetchFirebaseRemoteConfig() {
+        launch(
+            onError = { fetchAccessToken() },
+            onLaunch = { startFetchAccessTokenJob() },
+            onSuccess = { config.value = it },
+        ) {
+            settingRepository.fetchFirebaseRemoteConfig()
+        }
+    }
+
+    private fun startFetchAccessTokenJob() {
+        fetchAccessTokenJob?.cancel()
+        fetchAccessTokenJob = launch {
+            delay(5000)
+            fetchAccessToken()
+        }
+    }
+
+    override fun onCleared() {
+        fetchAccessTokenJob?.cancel()
+        super.onCleared()
     }
 
 }

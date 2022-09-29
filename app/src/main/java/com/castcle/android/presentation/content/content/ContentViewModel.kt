@@ -110,7 +110,7 @@ class ContentViewModel(
                     sessionId = sessionId,
                 )
             ).flow.map { pagingData ->
-                pagingData.map { contentMapper.apply(it) }
+                pagingData.map { contentMapper.apply(it, database.config().get()) }
             }
         }.cachedIn(viewModelScope)
 

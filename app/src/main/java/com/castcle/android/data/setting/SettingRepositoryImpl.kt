@@ -21,34 +21,31 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web_image
+package com.castcle.android.data.setting
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
+import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.domain.setting.SettingRepository
+import com.castcle.android.domain.setting.entity.ConfigEntity
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import org.koin.core.annotation.Factory
+import kotlin.coroutines.*
 
-data class FeedWebImageViewEntity(
-    val adsEnable: Boolean = false,
-    val cast: CastEntity = CastEntity(),
-    val farmEnable: Boolean = false,
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
+@Factory
+class SettingRepositoryImpl(
+    private val database: CastcleDatabase,
+    private val firebaseRemoteConfig: FirebaseRemoteConfig,
+) : SettingRepository {
 
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
+    override suspend fun fetchFirebaseRemoteConfig(): ConfigEntity {
+        val config = suspendCoroutine<ConfigEntity> { coroutine ->
+            firebaseRemoteConfig.fetchAndActivate().addOnFailureListener {
+                coroutine.resumeWithException(it)
+            }.addOnSuccessListener {
+                coroutine.resume(ConfigEntity.map(firebaseRemoteConfig.all))
+            }
+        }
+        database.config().insert(config)
+        return config
     }
-
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebImageViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebImageViewEntity>() == this
-    }
-
-    override fun viewType() = R.layout.item_feed_web_image
 
 }

@@ -84,7 +84,13 @@ class FeedQuoteViewHolder(
 
     override fun bind(bindItem: FeedQuoteViewEntity) {
         adapter.submitList(item.reference)
-        binding.participateBar.bind(item.cast, this, item.quoteIsOwner)
+        binding.participateBar.bind(
+            adsEnable = item.adsEnable,
+            cast = item.cast,
+            farmingEnable = item.farmEnable,
+            isNotAdPreview = item.quoteIsOwner,
+            listener = this,
+        )
         binding.reported.root.isVisible = item.cast.reported
         binding.userBar.bind(item.cast, item.user, this, true)
         binding.castcleTextView.onClearMessage()

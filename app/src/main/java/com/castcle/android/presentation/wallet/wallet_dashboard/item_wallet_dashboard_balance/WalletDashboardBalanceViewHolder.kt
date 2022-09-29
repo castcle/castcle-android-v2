@@ -23,6 +23,7 @@
 
 package com.castcle.android.presentation.wallet.wallet_dashboard.item_wallet_dashboard_balance
 
+import androidx.core.view.isVisible
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
@@ -82,6 +83,7 @@ class WalletDashboardBalanceViewHolder(
         binding.tvAvailableBalance.text = item.balance.availableBalance.withCastToken()
         binding.tvTotalBalance.text = item.balance.totalBalance.withCastToken()
         binding.tvFarmBalance.text = item.balance.farmBalance.withCastToken()
+        binding.ivAirdrop.isVisible = item.airdropBannerEnable
         binding.tvFilter.text = item.filter.name
     }
 
