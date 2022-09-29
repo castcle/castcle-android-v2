@@ -11,7 +11,7 @@
     android:paddingTop="@dimen/_32sdp"
     android:paddingEnd="@dimen/_12sdp"
     android:paddingBottom="@dimen/_6sdp"
-    android:text="@string/fragment_account_title_1"
+    android:text="@string/account_setting"
     android:textColor="@color/gray_6"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"

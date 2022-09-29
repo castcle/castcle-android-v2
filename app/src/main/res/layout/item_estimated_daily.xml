@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_background_1">
+
+    <TextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDailyBugGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/daily_budget"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/AppTextKanit.Regular"
+        android:id="@+id/tvDailyBugGetValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:drawablePadding="@dimen/_4sdp"
+        android:textColor="@color/white"
+        app:drawableEndCompat="@drawable/ic_edit_bugget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDailyBugGet"
+        tools:text="$ 28" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/etDailyBugGetValue"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_corner_16dp"
+        android:backgroundTint="@color/black_background_3"
+        android:digits="0123456789"
+        android:drawablePadding="@dimen/_4sdp"
+        android:focusable="true"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:lines="1"
+        android:maxLength="100"
+        android:paddingStart="@dimen/_18sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingEnd="@dimen/_18sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/tvDailyBugGetValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDailyBugGetValue" />
+
+    <TextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvDailyBugGetNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:drawablePadding="@dimen/_4sdp"
+        android:text="@string/daily_budget_note"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDailyBugGetValue" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slDailyBudget"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:valueFrom="5.0"
+        android:valueTo="100.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDailyBugGetNote"
+        app:thumbColor="@color/blue"
+        app:thumbRadius="@dimen/_6sdp"
+        app:trackColorActive="@color/blue"
+        app:trackColorInactive="@color/gray_1"
+        app:trackHeight="@dimen/_4sdp"
+        tools:value="12" />
+
+    <TextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvMinDailyBugGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/min_cast"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slDailyBudget" />
+
+    <TextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvMaxDailyBugGet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:text="@string/max_cast"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slDailyBudget" />
+
+    <TextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/duration"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/tvMinDailyBugGet"
+        app:layout_constraintTop_toBottomOf="@id/tvMinDailyBugGet" />
+
+    <TextView
+        style="@style/AppTextKanit.Small"
+        android:id="@+id/tvDurationValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/slDuration"
+        app:layout_constraintStart_toStartOf="@id/slDuration"
+        app:layout_constraintTop_toBottomOf="@id/tvDuration"
+        tools:text="15 Days" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slDuration"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:valueFrom="1.0"
+        android:valueTo="30.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDurationValue"
+        app:thumbColor="@color/blue"
+        app:thumbRadius="@dimen/_6sdp"
+        app:trackColorActive="@color/blue"
+        app:trackColorInactive="@color/gray_1"
+        app:trackHeight="@dimen/_4sdp"
+        tools:value="12" />
+
+    <TextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvMinDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:text="@string/min_day"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvMinDailyBugGet"
+        app:layout_constraintTop_toBottomOf="@id/slDuration" />
+
+    <TextView
+        style="@style/AppTextKanitLight.xSmall"
+        android:id="@+id/tvMaxDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="@string/max_days"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/tvMaxDailyBugGet"
+        app:layout_constraintTop_toBottomOf="@id/slDuration" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

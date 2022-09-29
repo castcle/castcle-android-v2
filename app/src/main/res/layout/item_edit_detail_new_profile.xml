@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_background_1"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_50sdp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_cover_profile_detail" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AppTextKanit.Medium"
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_32sdp"
+                android:text="@string/fragment_edit_new_profile_tile"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivCover" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AppTextKanitLight.Regular"
+                android:id="@+id/tvSubTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_32sdp"
+                android:text="@string/fragment_edit_new_profile_message"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AppTextKanitLight.Regular"
+                android:id="@+id/tvOverView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:text="@string/fragment_edit_new_profile_over"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/itOverView"
+                app:layout_constraintStart_toStartOf="@id/itOverView" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                style="@style/AppTextKanitLight.Small"
+                android:id="@+id/itOverView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="@drawable/bg_corner_24dp"
+                android:backgroundTint="@color/black_background_3"
+                android:gravity="top"
+                android:hint="@string/fragment_edit_new_profile_over_view_hit"
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:minLines="4"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_12sdp"
+                android:paddingBottom="@dimen/_24sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvSubTitle"
+                tools:text="ใส่ข้อความแฮร์รี่ พอตเตอร์กับศิลาอาถรรพ์เป็นการบอกเล่าเรื่องราวชีวิตของเด็กชายกำพร้าคนหนึ่ง แฮร์รี่ พอตเตอร์ เติบโตมาราวกับเป็นทาสในเรือนเบี้ยในครอบครัวของญาติเพียงคนเดียวที่เหลืออยู่ ต่อมาไม่นานเขาก็พบความสามารถพิเศษและได้รู้ความจริงว่าเขาไม่ใช่มนุษย์ธรรมดาทั่วไป 12345678901112" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AppTextKanitLight.Small"
+                android:id="@+id/tvOverCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:text="@string/overview_limit"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/itOverView"
+                app:layout_constraintEnd_toEndOf="@id/itOverView" />
+
+            <include
+                android:id="@+id/itemDetailProfile"
+                layout="@layout/item_detail_profile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/itOverView" />
+
+            <include
+                android:id="@+id/itemDetailPage"
+                layout="@layout/item_detail_page"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/itemDetailProfile" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AppTextKanit.Small"
+                android:id="@+id/tvLinks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@string/fragment_edit_new_profile_social_links"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/itemDetailPage" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clLinkContact"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_250sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="@id/tvLinks"
+                app:layout_constraintStart_toStartOf="@id/tvLinks"
+                app:layout_constraintTop_toBottomOf="@id/tvLinks">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivFacebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_round_facebook" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/AppTextKanit.xSmall"
+                    android:id="@+id/itLinkFacebook"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/bg_corner_24dp"
+                    android:backgroundTint="@color/black_background_3"
+                    android:hint="@string/fragment_edit_new_profile_link_https"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/fragment_edit_new_profile_link_https"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_3"
+                    app:layout_constraintBottom_toBottomOf="@id/ivFacebook"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivFacebook"
+                    app:layout_constraintTop_toTopOf="@id/ivFacebook" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivTwitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="@id/ivFacebook"
+                    app:layout_constraintTop_toBottomOf="@id/itLinkFacebook"
+                    app:srcCompat="@drawable/ic_round_twitter" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/AppTextKanit.xSmall"
+                    android:id="@+id/itLinkTwitter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/bg_corner_24dp"
+                    android:backgroundTint="@color/black_background_3"
+                    android:hint="@string/fragment_edit_new_profile_link_https"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/fragment_edit_new_profile_link_https"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_3"
+                    app:layout_constraintBottom_toBottomOf="@id/ivTwitter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivTwitter"
+                    app:layout_constraintTop_toTopOf="@id/ivTwitter" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/tvYoutube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="@id/ivFacebook"
+                    app:layout_constraintTop_toBottomOf="@id/itLinkTwitter"
+                    app:srcCompat="@drawable/ic_round_youtube" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/AppTextKanit.xSmall"
+                    android:id="@+id/itLinkYouTube"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/bg_corner_24dp"
+                    android:backgroundTint="@color/black_background_3"
+                    android:hint="@string/fragment_edit_new_profile_link_https"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/fragment_edit_new_profile_link_https"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_3"
+                    app:layout_constraintBottom_toBottomOf="@id/tvYoutube"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tvYoutube"
+                    app:layout_constraintTop_toTopOf="@id/tvYoutube" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="@id/ivFacebook"
+                    app:layout_constraintTop_toBottomOf="@id/itLinkYouTube"
+                    app:srcCompat="@drawable/ic_round_medium" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/AppTextKanit.xSmall"
+                    android:id="@+id/itLinkMedium"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/bg_corner_24dp"
+                    android:backgroundTint="@color/black_background_3"
+                    android:hint="@string/fragment_edit_new_profile_link_https"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/fragment_edit_new_profile_link_https"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_3"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivMedium"
+                    app:layout_constraintTop_toTopOf="@id/ivMedium" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivWeb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="@id/ivFacebook"
+                    app:layout_constraintTop_toBottomOf="@id/itLinkMedium"
+                    app:srcCompat="@drawable/ic_round_web" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/AppTextKanit.xSmall"
+                    android:id="@+id/itLinkWeb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:background="@drawable/bg_corner_24dp"
+                    android:backgroundTint="@color/black_background_3"
+                    android:hint="@string/fragment_edit_new_profile_link_https"
+                    android:inputType="text"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/fragment_edit_new_profile_link_https"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/gray_3"
+                    app:layout_constraintBottom_toBottomOf="@id/ivWeb"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivWeb"
+                    app:layout_constraintTop_toTopOf="@id/ivWeb" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/AppTextKanitLight.Regular"
+        android:id="@+id/btDone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/bg_corner_24dp"
+        android:backgroundTint="@color/gray_3"
+        android:clickable="true"
+        android:enabled="false"
+        android:focusable="true"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:text="@string/confirm"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

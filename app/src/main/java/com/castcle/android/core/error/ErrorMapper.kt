@@ -1,3 +1,26 @@
+/* Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+ * Thailand 10160, or visit www.castcle.com if you need additional information
+ * or have any questions.
+ *
+ * Created by Prakan Sornbootnark on 15/08/2022. */
+
 package com.castcle.android.core.error
 
 import com.castcle.android.data.core.entity.ApiErrorPayloadResponse
@@ -21,6 +44,10 @@ class ErrorMapper {
             3028 -> CastcleException.EmailHasBeenVerifiedException(throwable.errorMessage)
             4001 -> CastcleException.UserNotFoundException(throwable.errorMessage)
             5003 -> CastcleException.ContentNotFoundException(throwable.errorMessage)
+            1007 -> CastcleException.CannotAccessDataException(throwable.errorMessage)
+            500 -> CastcleException.InternalServerException(throwable.errorMessage)
+            400 -> CastcleException.BoostAdException(throwable.errorMessageList)
+            8008 -> CastcleException.BoostAdException(listOf(throwable.errorMessage))
             else -> throwable
         }
         null -> UnknownException()
@@ -44,20 +71,23 @@ class ErrorMapper {
                     statusCode = json?.asJsonObject?.get("statusCode")?.asInt,
                 )
             }
-            val response = GsonBuilder()
+            val response: ApiErrorResponse? = GsonBuilder()
                 .registerTypeAdapter(ApiErrorResponse::class.java, gsonDeserializer)
                 .create()
                 .fromJson(responseBody?.string().orEmpty(), ApiErrorResponse::class.java)
             ApiException(
-                errorCode = response.code ?: response.statusCode ?: -1,
-                errorMessage = response.message ?: "Something went wrong. Please try again later.",
-                statusCode = response.statusCode ?: -1,
+                errorCode = response?.code ?: response?.statusCode ?: -1,
+                errorMessage = response?.message as? String
+                    ?: "Something went wrong. Please try again later.",
+                errorMessageList = (response?.message as? List<*>).orEmpty().map { it.toString() },
+                statusCode = response?.statusCode ?: -1,
             )
         } catch (throwable: Throwable) {
             ApiException(
                 errorCode = -1,
-                errorMessage = throwable.message ?: "Something went wrong. Please try again later.",
+                errorMessage = "Something went wrong. Please try again later.",
                 statusCode = -1,
+                errorMessageList = null
             )
         }
         return map(apiException)

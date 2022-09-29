@@ -4,6 +4,20 @@
     app:startDestination="@id/homeFragment">
 
     <dialog
+        android:id="@+id/contentMetricsDialogFragment"
+        android:name="com.castcle.android.presentation.content.content_metrics_dialog.ContentMetricsDialogFragment">
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.presentation.content.content_metrics.ContentMetricsType" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+    </dialog>
+
+    <dialog
         android:id="@+id/recastDialogFragment"
         android:name="com.castcle.android.presentation.dialog.recast.RecastDialogFragment">
 
@@ -26,13 +40,21 @@
             app:argType="com.castcle.android.presentation.dialog.option.OptionDialogType" />
 
         <action
+            android:id="@+id/toConfirmDeleteAccountFragment"
+            app:destination="@id/confirmDeleteAccountFragment" />
+
+        <action
             android:id="@+id/toReportSubjectFragment"
             app:destination="@id/reportSubjectFragment" />
+
+        <action
+            android:id="@+id/toSyncSocialFragment"
+            app:destination="@id/syncSocialFragment" />
 
     </dialog>
 
     <dialog
-        android:id="@+id/walletHistoryFilterDialogFragment"
+        android:id="@+id/walletDashboardDialogFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.wallet_history_filter_dialog.WalletDashboardDialogFragment">
 
         <argument
@@ -50,6 +72,14 @@
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.castcle.android.presentation.setting.account.AccountFragment">
+
+        <action
+            android:id="@+id/toConfirmDeleteAccountFragment"
+            app:destination="@id/confirmDeleteAccountFragment" />
+
+        <action
+            android:id="@+id/toRegisterEmailFragment"
+            app:destination="@id/registerEmailFragment" />
 
         <action
             android:id="@+id/toRequestOtpFragment"
@@ -80,8 +110,22 @@
     </fragment>
 
     <fragment
+        android:id="@+id/confirmDeleteAccountFragment"
+        android:name="com.castcle.android.presentation.setting.confirm_delete_account.ConfirmDeleteAccountFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toDeleteAccountFragment"
+            app:destination="@id/deleteAccountFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/contentFragment"
-        android:name="com.castcle.android.presentation.content.ContentFragment">
+        android:name="com.castcle.android.presentation.content.content.ContentFragment">
 
         <argument
             android:name="contentId"
@@ -91,6 +135,52 @@
             android:name="contentOwnerDisplayName"
             app:argType="string"
             app:nullable="true" />
+
+        <action
+            android:id="@+id/toContentMetricsDialogFragment"
+            app:destination="@id/contentMetricsDialogFragment" />
+
+        <action
+            android:id="@+id/toContentQuoteCastFragment"
+            app:destination="@id/contentQuoteCastFragment" />
+
+        <action
+            android:id="@+id/toLoginFragment"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toRecastDialogFragment"
+            app:destination="@id/recastDialogFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
+
+        <action
+            android:id="@+id/toSearchFragment"
+            app:destination="@id/searchFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/contentQuoteCastFragment"
+        android:name="com.castcle.android.presentation.content.content_quote_cast.ContentQuoteCastFragment">
+
+        <argument
+            android:name="contentId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toContentFragment"
+            app:destination="@id/contentFragment" />
 
         <action
             android:id="@+id/toLoginFragment"
@@ -121,6 +211,58 @@
     <fragment
         android:id="@+id/countryCodeFragment"
         android:name="com.castcle.android.presentation.setting.country_code.CountryCodeFragment" />
+
+    <fragment
+        android:id="@+id/deleteAccountFragment"
+        android:name="com.castcle.android.presentation.setting.delete_account.DeleteAccountFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toDeleteAccountSuccessFragment"
+            app:destination="@id/deleteAccountSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.create_profile.CreateNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toUpdateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createPageOptionFragment"
+        android:name="com.castcle.android.presentation.setting.create_page_option.CreatePageOptionFragment">
+
+        <action
+            android:id="@+id/toCreatePageConditionFragment"
+            app:destination="@id/createPageConditionFragment" />
+
+        <action
+            android:id="@+id/toViewFacebookPageFragment"
+            app:destination="@id/viewFacebookPageFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/deleteAccountSuccessFragment"
+        android:name="com.castcle.android.presentation.setting.delete_account_success.DeleteAccountSuccessFragment">
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.domain.user.type.UserType" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/followingFollowersFragment"
@@ -207,8 +349,16 @@
             app:destination="@id/walletDashboardFragment" />
 
         <action
+            android:id="@+id/toWalletVerifyFragment"
+            app:destination="@id/walletVerifyFragment" />
+
+        <action
             android:id="@+id/toWhoToFollowFragment"
             app:destination="@id/whoToFollowFragment" />
+
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
 
     </fragment>
 
@@ -219,6 +369,28 @@
         <action
             android:id="@+id/toForgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+
+        <action
+            android:id="@+id/toSignUpFragment"
+            app:destination="@id/signUpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editNewProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile_detail.EditDetailNewProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toProfileFragment"
+            app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/toInsertFragment"
+            app:destination="@id/insertFragment" />
 
     </fragment>
 
@@ -282,7 +454,23 @@
             android:id="@+id/toSearchFragment"
             app:destination="@id/searchFragment" />
 
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
+        <action
+            android:id="@+id/toEditProfileFragment"
+            app:destination="@id/editProfileFragment" />
+
+        <action
+            android:id="@+id/toViewProfileFragment"
+            app:destination="@id/viewProfileFragment" />
+
     </fragment>
+
+    <fragment
+        android:id="@+id/registerEmailFragment"
+        android:name="com.castcle.android.presentation.setting.register_email.RegisterEmailFragment" />
 
     <fragment
         android:id="@+id/reportDetailFragment"
@@ -427,12 +615,79 @@
             app:destination="@id/accountFragment" />
 
         <action
+            android:id="@+id/toCreatePageOptionFragment"
+            app:destination="@+id/createPageOptionFragment" />
+
+        <action
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
         <action
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
+
+        <action
+            android:id="@+id/toPageCondition"
+            app:destination="@+id/createPageConditionFragment" />
+
+        <action
+            android:id="@+id/toAdManageFragment"
+            app:destination="@+id/adManageFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.castcle.android.presentation.sign_up.SignUpFragment">
+
+        <action
+            android:id="@+id/toCreateNewProfileFragment"
+            app:destination="@id/createNewProfileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/syncSocialFragment"
+        android:name="com.castcle.android.presentation.setting.sync_social.SyncSocialFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toSyncSocialDetailFragment"
+            app:destination="@id/syncSocialDetailFragment" />
+
+        <action
+            android:id="@+id/toViewFacebookPageFragment"
+            app:destination="@id/viewFacebookPageFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/syncSocialDetailFragment"
+        android:name="com.castcle.android.presentation.setting.sync_social_detail.SyncSocialDetailFragment">
+
+        <argument
+            android:name="syncSocialId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.castcle.android.presentation.sign_up.update_profile.UpdateProfileFragment">
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle" />
+
+        <action
+            android:id="@+id/toEditNewProfileFragment"
+            app:destination="@id/editNewProfileFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
 
     </fragment>
 
@@ -475,12 +730,220 @@
     </fragment>
 
     <fragment
+        android:id="@+id/viewFacebookPageFragment"
+        android:name="com.castcle.android.presentation.setting.view_facebook_page.ViewFacebookPageFragment">
+
+        <argument
+            android:name="pageItems"
+            app:argType="com.castcle.android.data.page.entity.SyncSocialRequest[]" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletAddressFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_address.WalletAddressFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletAddShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_add_shortcut.WalletAddShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddressFragment"
+            app:destination="@id/walletAddressFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/walletDashboardFragment"
         android:name="com.castcle.android.presentation.wallet.wallet_dashboard.WalletDashboardFragment">
 
         <action
-            android:id="@+id/toWalletHistoryFilterDialogFragment"
-            app:destination="@id/walletHistoryFilterDialogFragment" />
+            android:id="@+id/toWalletDashboardDialogFragment"
+            app:destination="@id/walletDashboardDialogFragment" />
+
+        <action
+            android:id="@+id/toWalletDepositFragment"
+            app:destination="@id/walletDepositFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+        <action
+            android:id="@+id/toWalletSendFragment"
+            app:destination="@id/walletSendFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletDepositFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_deposit.WalletDepositFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletEditShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_edit_shortcut.WalletEditShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletOtpFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_otp.WalletOtpFragment">
+
+        <argument
+            android:name="otpEmail"
+            app:argType="com.castcle.android.domain.authentication.entity.OtpEntity" />
+
+        <argument
+            android:name="otpMobile"
+            app:argType="com.castcle.android.domain.authentication.entity.OtpEntity" />
+
+        <argument
+            android:name="request"
+            app:argType="com.castcle.android.data.wallet.entity.WalletTransactionRequest" />
+
+        <action
+            android:id="@+id/toWalletTransactionFragment"
+            app:destination="@id/walletTransactionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletScanQrCodeFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeFragment">
+
+        <argument
+            android:name="requestType"
+            app:argType="com.castcle.android.presentation.wallet.wallet_scan_qr_code.WalletScanQrCodeRequestType" />
+
+        <action
+            android:id="@+id/toWalletDepositFragment"
+            app:destination="@id/walletDepositFragment" />
+
+        <action
+            android:id="@+id/toWalletSendFragment"
+            app:destination="@id/walletSendFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletSendFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_send.WalletSendFragment">
+
+        <argument
+            android:name="targetCastcleId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="targetUserId"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddressFragment"
+            app:destination="@id/walletAddressFragment" />
+
+        <action
+            android:id="@+id/toWalletAddShortcutFragment"
+            app:destination="@id/walletAddShortcutFragment" />
+
+        <action
+            android:id="@+id/toWalletScanQrCodeFragment"
+            app:destination="@id/walletScanQrCodeFragment" />
+
+        <action
+            android:id="@+id/toWalletShortcutFragment"
+            app:destination="@id/walletShortcutFragment" />
+
+        <action
+            android:id="@+id/toWalletTransactionFragment"
+            app:destination="@id/walletTransactionFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletShortcutFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_shortcut.WalletShortcutFragment">
+
+        <argument
+            android:name="userId"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/toWalletAddShortcutFragment"
+            app:destination="@id/walletAddShortcutFragment" />
+
+        <action
+            android:id="@+id/toWalletEditShortcutFragment"
+            app:destination="@id/walletEditShortcutFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletTransactionFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_transaction.WalletTransactionFragment">
+
+        <argument
+            android:name="request"
+            app:argType="com.castcle.android.data.wallet.entity.WalletTransactionRequest" />
+
+        <argument
+            android:name="type"
+            app:argType="com.castcle.android.domain.wallet.type.WalletTransactionType" />
+
+        <action
+            android:id="@+id/toWalletOtpFragment"
+            app:destination="@id/walletOtpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/walletVerifyFragment"
+        android:name="com.castcle.android.presentation.wallet.wallet_verify.WalletVerifyFragment">
+
+        <action
+            android:id="@+id/toRegisterEmailFragment"
+            app:destination="@id/registerEmailFragment" />
+
+        <action
+            android:id="@+id/toRequestOtpFragment"
+            app:destination="@id/requestOtpFragment" />
+
+        <action
+            android:id="@+id/toResentVerifyEmailFragment"
+            app:destination="@id/resentVerifyEmailFragment" />
 
     </fragment>
 
@@ -496,6 +959,142 @@
             android:id="@+id/toProfileFragment"
             app:destination="@id/profileFragment" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/createPageConditionFragment"
+        android:name="com.castcle.android.presentation.setting.create_page.CreatePageConditionFragment">
+
+        <action
+            android:id="@+id/toCreateNewProfileFragment"
+            app:destination="@id/createNewProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertFragment"
+        android:name="com.castcle.android.presentation.setting.create_page.insert.InsertFragment">
+
+        <argument
+            android:name="insertEntity"
+            app:argType="com.castcle.android.presentation.setting.create_page.insert.entity.InsertEntity"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adManageFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.AdsManageFragment">
+
+        <action
+            android:id="@+id/toBoostAdsFragment"
+            app:destination="@id/boostAdsFragment" />
+
+        <action
+            android:id="@+id/toAdDialogFilter"
+            app:destination="@id/adDialogFilter" />
+
+        <action
+            android:id="@+id/toAdDetailFragment"
+            app:destination="@id/adDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/boostAdsFragment"
+        android:name="com.castcle.android.presentation.setting.ads.boost_ads.BoostAdsFragment">
+
+        <argument
+            android:name="boostBundle"
+            app:argType="com.castcle.android.domain.ads.type.BoostAdBundle"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/toPageChooseFragment"
+            app:destination="@id/pageChooseFragment" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/adDialogFilter"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_dialog_filter.AdDialogFilterFragment">
+
+        <argument
+            android:name="adFilter"
+            app:argType="com.castcle.android.domain.ads.type.AdFilterType"
+            app:nullable="false" />
+
+    </dialog>
+
+    <fragment
+        android:id="@+id/pageChooseFragment"
+        android:name="com.castcle.android.presentation.setting.ads.boost_ads.page_choose_select.PageChooseFragment">
+
+        <argument
+            android:name="boostBundle"
+            app:argType="com.castcle.android.domain.ads.type.BoostAdBundle"
+            app:nullable="false" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/adDetailFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_detail.AdDetailFragment">
+
+        <argument
+            android:name="adsId"
+            app:argType="string"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/toAdBoostStatus"
+            app:destination="@id/adBoostStatus" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/adBoostStatus"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_detail.ad_detail_result.change_ad_status.ChangeAdsStatusDialogFragment">
+
+        <argument
+            android:name="adBoostStatus"
+            app:argType="com.castcle.android.domain.ads.type.AdBoostStatusType"
+            app:nullable="false" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/adDetailResultFragment"
+        android:name="com.castcle.android.presentation.setting.ads.ads_manage.ad_detail.ad_detail_result.AdDetailResultFragment">
+
+        <action
+            android:id="@+id/toAdBoostStatus"
+            app:destination="@id/adBoostStatus" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.castcle.android.presentation.profile.edit_profile.EditProfileFragment">
+
+        <action
+            android:id="@+id/toInsertFragment"
+            app:destination="@id/insertFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+        <argument
+            android:name="profileBundle"
+            app:argType="com.castcle.android.presentation.sign_up.entity.ProfileBundle"
+            app:nullable="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewProfileFragment"
+        android:name="com.castcle.android.presentation.profile.view_profile.ViewProfileFragment">
+
+        <argument
+            android:name="userEntity"
+            app:argType="com.castcle.android.domain.user.entity.UserEntity"
+            app:nullable="false" />
     </fragment>
 
 </navigation>

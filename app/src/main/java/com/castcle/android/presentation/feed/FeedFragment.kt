@@ -1,20 +1,46 @@
+/* Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+ * Thailand 10160, or visit www.castcle.com if you need additional information
+ * or have any questions.
+ *
+ * Created by Prakan Sornbootnark on 15/08/2022. */
+
 package com.castcle.android.presentation.feed
 
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.castcle.android.R
 import com.castcle.android.core.base.fragment.BaseFragment
 import com.castcle.android.core.base.recyclerview.CastclePagingDataAdapter
 import com.castcle.android.core.custom_view.load_state.*
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
-import com.castcle.android.core.extensions.openUrl
-import com.castcle.android.core.extensions.setRefreshColor
+import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.FragmentFeedBinding
+import com.castcle.android.domain.ads.type.BoostAdBundle
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.core.entity.ImageEntity
 import com.castcle.android.domain.user.entity.UserEntity
+import com.castcle.android.domain.wallet.type.WalletType
 import com.castcle.android.presentation.dialog.option.OptionDialogType
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewRenderer
 import com.castcle.android.presentation.feed.item_feed_new_cast.FeedNewCastViewRenderer
@@ -27,6 +53,7 @@ import com.castcle.android.presentation.feed.item_feed_web_image.FeedWebImageVie
 import com.castcle.android.presentation.feed.item_feed_who_to_follow.FeedWhoToFollowViewRenderer
 import com.castcle.android.presentation.home.HomeFragmentDirections
 import com.castcle.android.presentation.home.HomeViewModel
+import com.stfalcon.imageviewer.StfalconImageViewer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -58,19 +85,8 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
             )
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isGuest.collectLatest { isGuest ->
-                if (isGuest) {
-                    binding.actionBar.bind(
-                        leftButtonIcon = R.drawable.ic_castcle,
-                        leftButtonAction = { scrollToTop() },
-                        rightButtonAction = {
-                            directions.toLoginFragment().navigate()
-                        },
-                        rightButtonIcon = R.drawable.ic_user,
-                        title = R.string.for_you,
-                        titleColor = R.color.blue,
-                    )
-                } else {
+            viewModel.accessToken.collectLatest { (accessToken, config) ->
+                if (accessToken?.isGuest() == false) {
                     binding.actionBar.bind(
                         leftButtonIcon = R.drawable.ic_castcle,
                         leftButtonAction = { scrollToTop() },
@@ -79,9 +95,28 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
                         },
                         rightButtonIcon = R.drawable.ic_hamburger,
                         rightSecondButtonAction = {
-                            directions.toWalletDashboardFragment().navigate()
+                            if (config?.walletType is WalletType.Native) {
+                                shareViewModel.isCanUseWallet({
+                                    directions.toWalletDashboardFragment().navigate()
+                                }) {
+                                    directions.toWalletVerifyFragment().navigate()
+                                }
+                            } else {
+                                openUrl(getString(R.string.airdrop_url, accessToken.accessToken))
+                            }
                         },
                         rightSecondButtonIcon = R.drawable.ic_wallet,
+                        title = R.string.for_you,
+                        titleColor = R.color.blue,
+                    )
+                } else {
+                    binding.actionBar.bind(
+                        leftButtonIcon = R.drawable.ic_castcle,
+                        leftButtonAction = { scrollToTop() },
+                        rightButtonAction = {
+                            directions.toLoginFragment().navigate()
+                        },
+                        rightButtonIcon = R.drawable.ic_user,
                         title = R.string.for_you,
                         titleColor = R.color.blue,
                     )
@@ -95,6 +130,23 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
             binding.swipeRefresh.isRefreshing = false
             adapter.refresh()
         }
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val visiblePosition = (recyclerView.layoutManager as? LinearLayoutManager)
+                    ?.findFirstVisibleItemPosition()
+                    ?: RecyclerView.NO_POSITION
+                val offView = adapter.snapshot().getOrNull(visiblePosition.minus(1))
+                    ?.cast<FeedEngagement>()
+                    ?.getFeedEngagementId()
+                val seen = adapter.snapshot().getOrNull(visiblePosition)
+                    ?.cast<FeedEngagement>()
+                    ?.getFeedEngagementId()
+                if (offView != null && seen != null) {
+                    viewModel.contentOffViewSeen(offView, seen)
+                }
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
     }
 
     @ExperimentalCoroutinesApi
@@ -128,8 +180,13 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
         directions.toSearchFragment(keyword).navigate()
     }
 
-    override fun onImageClicked(photo: ImageEntity) {
-        openUrl(photo.original)
+    override fun onImageClicked(image: List<ImageEntity>, position: Int) {
+        StfalconImageViewer.Builder(context, image, ::loadViewLargeImage)
+            .withStartPosition(position)
+            .withHiddenStatusBar(true)
+            .allowSwipeToDismiss(true)
+            .allowZooming(true)
+            .show()
     }
 
     override fun onLikeClicked(cast: CastEntity) {
@@ -191,6 +248,12 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
         adapter.retry()
     }
 
+    override fun onBoostCastClicked(cast: CastEntity) {
+        directions.toBoostAdsFragment(
+            BoostAdBundle.BoostAdContentBundle(cast.id, cast.authorId)
+        ).navigate()
+    }
+
     override fun onPause() {
         binding.recyclerView.layoutManager?.also(viewModel::saveItemsState)
         super.onPause()
@@ -199,6 +262,11 @@ class FeedFragment : BaseFragment(), FeedListener, LoadStateListener {
     override fun onResume() {
         binding.recyclerView.layoutManager?.also(viewModel::restoreItemsState)
         super.onResume()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.trackViewFeed()
     }
 
     private val adapter by lazy {

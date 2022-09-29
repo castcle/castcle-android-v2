@@ -82,7 +82,7 @@
         app:layout_constraintTop_toTopOf="@+id/tvCountryCode" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        style="@style/AppTextKanit.Regular"
+        style="@style/AppTextKanit.Small"
         android:id="@+id/tvConfirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

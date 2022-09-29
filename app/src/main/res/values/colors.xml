@@ -16,6 +16,7 @@
     <color name="black_background_4">#1C1F24</color>
     <color name="black_transparent_1">#80000000</color>
     <color name="black_transparent_2">#4C000000</color>
+    <color name="black_cover">#111313</color>
     <color name="blue">#01D2FF</color>
     <color name="blue_2">#B9F3FF</color>
     <color name="blue_facebook">#1877F2</color>
@@ -30,4 +31,10 @@
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFF</color>
     <color name="white_1">#CDD4D9</color>
+    <color name="white_2">#EDEDED</color>
+    <color name="white_primary_alpha_20">#33F5F5F5</color>
+    <color name="black_tranparen_80">#9917191A</color>
+    <color name="gray_medium">#6A6C6F</color>
+    <color name="yellow_cancel">#FFB100</color>
+    <color name="green_approved">#75AC6B</color>
 </resources>

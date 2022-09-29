@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_background_1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@color/black_background_1">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_230sdp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_cover_castcle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/fragment_sign_up_castcle"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/ivCover"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/ivCastcleId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/fragment_sign_up_email"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/tvWelcome"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcome" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/CastcleTextInputLayout"
+            android:id="@+id/ieEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivCastcleId"
+            app:layout_constraintTop_toBottomOf="@id/ivCastcleId">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/AppTextKanit.xSmall"
+                android:id="@+id/ieInEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/bg_corner_24dp"
+                android:backgroundTint="@color/black_background_2"
+                android:hint="@string/fragment_sign_up_email_hit"
+                android:inputType="textEmailAddress"
+                android:maxLength="250"
+                android:minHeight="@dimen/_35sdp"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitLight.Small"
+            android:id="@+id/tvErrorMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:drawablePadding="@dimen/_4sdp"
+            android:text="@string/fragment_sign_up_email_error_message"
+            android:textAlignment="viewStart"
+            android:textColor="@color/red_3"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_close"
+            app:drawableTint="@color/red_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ieEmail"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/ivPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/password"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/ivCastcleId"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorMessage" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/CastcleTextInputLayout"
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            app:endIconDrawable="@drawable/ic_password"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/transparent"
+            app:endIconTintMode="src_over"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivCastcleId"
+            app:layout_constraintTop_toBottomOf="@id/ivPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/AppTextKanit.xSmall"
+                android:id="@+id/etInPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/bg_corner_24dp"
+                android:backgroundTint="@color/black_background_2"
+                android:hint="@string/fragment_sign_up_password_hit"
+                android:inputType="textPassword"
+                android:maxLength="250"
+                android:minHeight="@dimen/_35sdp"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitLight.Small"
+            android:id="@+id/tvErrorCharacters"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:drawableStart="@drawable/ic_check_circle"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableTint="@color/gray_3"
+            android:text="@string/fragment_sign_up_condition_characters"
+            android:textAlignment="viewStart"
+            android:textColor="@color/gray_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitLight.Small"
+            android:id="@+id/tvErrorCase"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:drawableStart="@drawable/ic_check_circle"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableTint="@color/gray_3"
+            android:text="@string/fragment_sign_up_condition_upper_lower"
+            android:textAlignment="viewStart"
+            android:textColor="@color/gray_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorCharacters" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanit.Small"
+            android:id="@+id/ivConfirmPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/fragment_sign_up_confirm_password"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="@id/ivCastcleId"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorCase" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/CastcleTextInputLayout"
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            app:endIconDrawable="@drawable/ic_password"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/transparent"
+            app:endIconTintMode="src_over"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ivCastcleId"
+            app:layout_constraintTop_toBottomOf="@id/ivConfirmPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/AppTextKanit.xSmall"
+                android:id="@+id/etInConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/bg_corner_24dp"
+                android:backgroundTint="@color/black_background_2"
+                android:hint="@string/fragment_sign_up_confirm_password_hit"
+                android:inputType="textPassword"
+                android:maxLength="250"
+                android:minHeight="@dimen/_35sdp"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray_3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitLight.Small"
+            android:id="@+id/tvRetryPassError"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:drawableStart="@drawable/ic_check_circle"
+            android:drawablePadding="@dimen/_4sdp"
+            android:drawableTint="@color/gray_3"
+            android:text="@string/fragment_sign_up_condition_password"
+            android:textAlignment="viewStart"
+            android:textColor="@color/gray_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:scaleType="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_arrow_left" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            style="@style/ThemeOverlay.App.CheckBox"
+            android:id="@+id/cbAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTermsService"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvTermsService" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitLight.Small"
+            android:id="@+id/tvTermsService"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:text="@string/fragment_sign_up_terms_and_privacy"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cbAccept"
+            app:layout_constraintTop_toBottomOf="@+id/tvRetryPassError" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/AppTextKanitLight.Regular"
+            android:id="@+id/btContinue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:background="@drawable/bg_corner_24dp"
+            android:backgroundTint="@color/gray_3"
+            android:clickable="true"
+            android:enabled="false"
+            android:focusable="true"
+            android:paddingTop="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="@string/fragment_sign_up_button_next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTermsService" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTextKanitLight.Small"
+            android:id="@+id/tvAlreadyAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
+            android:text="@string/fragment_sign_up_already_login"
+            android:textColor="@color/gray_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btContinue"
+            app:layout_constraintStart_toStartOf="@id/btContinue"
+            app:layout_constraintTop_toBottomOf="@id/btContinue" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

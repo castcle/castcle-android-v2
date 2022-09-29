@@ -1,3 +1,26 @@
+/* Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+ * Thailand 10160, or visit www.castcle.com if you need additional information
+ * or have any questions.
+ *
+ * Created by Prakan Sornbootnark on 15/08/2022. */
+
 package com.castcle.android.core.custom_view.participate_bar
 
 import android.content.Context
@@ -23,7 +46,13 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun bind(cast: CastEntity, listener: ParticipateBarListener) {
+    fun bind(
+        adsEnable: Boolean,
+        cast: CastEntity,
+        farmingEnable: Boolean,
+        isNotAdPreview: Boolean = true,
+        listener: ParticipateBarListener,
+    ) {
         compositeDisposable.clear()
         compositeDisposable += binding.clLike.onClick {
             listener.onLikeClicked(cast)
@@ -36,6 +65,9 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
         }
         compositeDisposable += binding.clContentFarming.onClick {
             listener.onContentFarmingClicked(cast)
+        }
+        compositeDisposable += binding.btBoostCast.onClick {
+            listener.onBoostCastClicked(cast)
         }
 
         val likeColor = getParticipateColor(cast.liked)
@@ -59,8 +91,14 @@ class ParticipateBarView(context: Context, attrs: AttributeSet) : ConstraintLayo
         val contentFarmingColor = getParticipateColor(cast.farming)
         binding.ivContentFarming.imageTintList = ColorStateList.valueOf(contentFarmingColor)
         binding.tvContentFarming.text = cast.farmCount.asCount()
-        binding.tvContentFarming.isVisible = cast.farmCount > 0
+        binding.tvContentFarming.isVisible = cast.farmCount > 0.0
         binding.tvContentFarming.setTextColor(contentFarmingColor)
+        binding.clContentFarming.isVisible = farmingEnable
+
+        binding.clBoostCast.isVisible = cast.isOwner
+            && !cast.reported
+            && isNotAdPreview
+            && adsEnable
     }
 
     private fun getParticipateColor(isParticipate: Boolean): Int {

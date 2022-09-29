@@ -1,3 +1,26 @@
+/* Copyright (c) 2021, Castcle and/or its affiliates. All rights reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 3 only, as
+ * published by the Free Software Foundation.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * version 3 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 3 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Castcle, 22 Phet Kasem 47/2 Alley, Bang Khae, Bangkok,
+ * Thailand 10160, or visit www.castcle.com if you need additional information
+ * or have any questions.
+ *
+ * Created by Prakan Sornbootnark on 15/08/2022. */
+
 package com.castcle.android.data.authentication
 
 import android.accounts.Account
@@ -6,10 +29,13 @@ import androidx.core.os.bundleOf
 import androidx.room.withTransaction
 import com.castcle.android.core.api.AuthenticationApi
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.error.ErrorMapper
 import com.castcle.android.core.extensions.*
 import com.castcle.android.core.glide.GlidePreloader
 import com.castcle.android.data.authentication.entity.*
-import com.castcle.android.data.user.entity.GetFacebookUserProfileResponse
+import com.castcle.android.data.base.BaseUiState
+import com.castcle.android.data.page.entity.SyncSocialRequest
+import com.castcle.android.data.user.entity.*
 import com.castcle.android.domain.authentication.AuthenticationRepository
 import com.castcle.android.domain.authentication.entity.AccessTokenEntity
 import com.castcle.android.domain.authentication.entity.OtpEntity
@@ -17,6 +43,7 @@ import com.castcle.android.domain.authentication.type.OtpType
 import com.castcle.android.domain.user.entity.*
 import com.castcle.android.domain.user.type.SocialType
 import com.castcle.android.domain.user.type.UserType
+import com.castcle.android.presentation.sign_up.create_profile.entity.RegisterRequest
 import com.facebook.*
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.GoogleAuthUtil
@@ -26,6 +53,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.models.User
+import kotlinx.coroutines.flow.*
 import org.koin.core.annotation.Singleton
 import timber.log.Timber
 import kotlin.coroutines.*
@@ -50,7 +78,37 @@ class AuthenticationRepositoryImpl(
         return database.accessToken().get() ?: AccessTokenEntity()
     }
 
-    private suspend fun getFacebookUserProfile(): LoginWithSocialRequest {
+    override suspend fun getFacebookPageProfile(): List<SyncSocialRequest> {
+        return suspendCoroutine { coroutine ->
+            GraphRequest(
+                accessToken = AccessToken.getCurrentAccessToken(),
+                graphPath = "me/accounts",
+                httpMethod = HttpMethod.GET,
+                parameters = bundleOf("fields" to "about,access_token,cover,id,link,name,picture.type(large),username"),
+                callback = {
+                    val type = object : TypeToken<GetFacebookPageProfileResponse>() {}.type
+                    val response =
+                        Gson().fromJson<GetFacebookPageProfileResponse>(it.rawResponse, type)
+                    val pageItems = response.data.orEmpty().map { map ->
+                        SyncSocialRequest(
+                            authToken = map.access_token,
+                            avatar = map.picture?.data?.url,
+                            cover = map.cover?.source,
+                            displayName = map.name,
+                            link = map.link,
+                            overview = map.about,
+                            provider = SocialType.Facebook.id,
+                            socialId = map.id,
+                            userName = map.username,
+                        )
+                    }
+                    coroutine.resume(pageItems)
+                }
+            ).executeAsync()
+        }
+    }
+
+    override suspend fun getFacebookUserProfile(): LoginWithSocialRequest {
         return suspendCoroutine { coroutine ->
             GraphRequest(
                 accessToken = AccessToken.getCurrentAccessToken(),
@@ -132,16 +190,16 @@ class AuthenticationRepositoryImpl(
         linkWithSocial(getTwitterUserProfile(token))
     }
 
-    override suspend fun loginWithEmail(body: LoginWithEmailRequest) {
-        updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
+    override suspend fun loginWithEmail(body: LoginWithEmailRequest): Pair<String, Boolean> {
+        return updateWhenLoginSuccess(apiCall { api.loginWithEmail(body = body) })
     }
 
-    override suspend fun loginWithFacebook() {
-        loginWithSocial(getFacebookUserProfile())
+    override suspend fun loginWithFacebook(): Pair<String, Boolean> {
+        return loginWithSocial(getFacebookUserProfile())
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
-    override suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount) {
+    override suspend fun loginWithGoogle(signInAccount: GoogleSignInAccount): Pair<String, Boolean> {
         val body = suspendCoroutine<LoginWithSocialRequest> { coroutine ->
             val plusScope = "oauth2:https://www.googleapis.com/auth/plus.me"
             val userInfoScope = "https://www.googleapis.com/auth/userinfo.profile"
@@ -157,15 +215,15 @@ class AuthenticationRepositoryImpl(
             )
             coroutine.resume(body)
         }
-        loginWithSocial(body)
+        return loginWithSocial(body)
     }
 
-    override suspend fun loginWithSocial(body: LoginWithSocialRequest) {
-        updateWhenLoginSuccess(apiCall { api.loginWithSocial(body = body) })
+    override suspend fun loginWithSocial(body: LoginWithSocialRequest): Pair<String, Boolean> {
+        return updateWhenLoginSuccess(apiCall { api.loginWithSocial(body = body) })
     }
 
-    override suspend fun loginWithTwitter(token: TwitterAuthToken?) {
-        loginWithSocial(getTwitterUserProfile(token))
+    override suspend fun loginWithTwitter(token: TwitterAuthToken?): Pair<String, Boolean> {
+        return loginWithSocial(getTwitterUserProfile(token))
     }
 
     override suspend fun loginOut() {
@@ -233,7 +291,7 @@ class AuthenticationRepositoryImpl(
         }
     }
 
-    private suspend fun updateWhenLoginSuccess(response: LoginResponse?) {
+    private suspend fun updateWhenLoginSuccess(response: LoginResponse?): Pair<String, Boolean> {
         val user = UserEntity.mapOwner(response?.profile)
         val page = UserEntity.mapOwner(response?.pages)
         val linkSocial = LinkSocialEntity.map(response?.profile)
@@ -250,6 +308,7 @@ class AuthenticationRepositoryImpl(
             database.accessToken().insert(accessToken)
         }
         registerFirebaseMessagingToken()
+        return user.id to (response?.registered ?: false)
     }
 
     override suspend fun updateMobileNumber(otp: OtpEntity): OtpEntity {
@@ -275,4 +334,65 @@ class AuthenticationRepositoryImpl(
         return otp.fromVerifyOtpResponse(response)
     }
 
+    override suspend fun emailIsExist(emailIsExistRequest: EmailIsExistRequest):
+        Flow<BaseUiState<AuthExistResponse>> {
+        return toApiCallFlow { api.checkEmailIsExists(emailIsExistRequest) }
+    }
+
+    override suspend fun castcleIdIsExist(castcleRequest: CastcleIdExistRequest):
+        Flow<BaseUiState<AuthExistResponse>> {
+        return toApiCallFlow { api.checkCastcleIdExists(castcleRequest) }
+    }
+
+    override suspend fun getSuggestionCastcleId(displayNameRequest: DisplayNameRequest):
+        Flow<BaseUiState<AuthPayload>> {
+        return toApiCallFlow { api.getSuggestCastcleId(displayNameRequest) }
+    }
+
+    override suspend fun registerWithEmail(reqisterRequest: RegisterRequest): Flow<BaseUiState<UserEntity>> {
+        return flow {
+            emit(BaseUiState.Loading(null, true))
+            apiCall {
+                api.registerWithEmail(reqisterRequest).also {
+                    emit(BaseUiState.Loading(null, false))
+                    if (it.isSuccessful) {
+                        updateWhenLoginSuccess(it.body())
+                        emit(BaseUiState.Success(_data = UserEntity.mapOwner(it.body()?.profile)))
+                    } else {
+                        emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }.distinctUntilChanged()
+    }
+
+    override suspend fun createPage(reqisterRequest: RegisterRequest): Flow<BaseUiState<UserEntity>> {
+        return flow {
+            apiCall {
+                emit(BaseUiState.Loading(null, true))
+                api.createPage(reqisterRequest).also {
+                    emit(BaseUiState.Loading(null, false))
+                    if (it.isSuccessful) {
+                        updateCreatePageSuccess(it.body())
+                        emit(BaseUiState.Success(_data = UserEntity.mapOwner(it.body())))
+                    } else {
+                        emit(BaseUiState.Error(ErrorMapper().map(it.errorBody())))
+                    }
+                }
+            }
+        }
+    }
+
+    private suspend fun updateCreatePageSuccess(response: UserResponse?) {
+        val page = UserEntity.mapOwner(response)
+        val linkSocial = LinkSocialEntity.map(response)
+        val syncSocialUser = SyncSocialEntity.map(response)
+        val syncSocialPage = SyncSocialEntity.map(response)
+        glidePreloader.loadUser(page)
+        database.withTransaction {
+            database.linkSocial().insert(linkSocial)
+            database.syncSocial().insert(syncSocialPage.plus(syncSocialUser))
+            database.user().upsert(page)
+        }
+    }
 }
