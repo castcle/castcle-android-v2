@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.castcle.android.R
@@ -12,6 +14,7 @@ import com.castcle.android.core.extensions.*
 import com.castcle.android.data.base.BaseUiState
 import com.castcle.android.data.user.entity.UserLinkResponse
 import com.castcle.android.databinding.FragmentEditDetailNewProfileBinding
+import com.castcle.android.presentation.setting.create_page.insert.InsertFragment
 import com.castcle.android.presentation.setting.create_page.insert.entity.InsertEntity
 import com.castcle.android.presentation.sign_up.entity.CreateUserState
 import com.castcle.android.presentation.sign_up.entity.ProfileBundle
@@ -124,7 +127,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 addTextChangedListener(
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
-                            it.isBlank() &&
+                            getLinkHasInput() &&
                                 viewModel.overviewStatePass.value == true
                         )
                     })
@@ -135,7 +138,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 addTextChangedListener(
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
-                            it.isBlank() &&
+                            getLinkHasInput() &&
                                 viewModel.overviewStatePass.value == true
                         )
                     })
@@ -146,7 +149,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 addTextChangedListener(
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
-                            it.isBlank() &&
+                            getLinkHasInput() &&
                                 viewModel.overviewStatePass.value == true
                         )
                     })
@@ -157,7 +160,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 addTextChangedListener(
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
-                            it.isBlank() &&
+                            getLinkHasInput() &&
                                 viewModel.overviewStatePass.value == true
                         )
                     })
@@ -168,7 +171,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 addTextChangedListener(
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
-                            it.isBlank() &&
+                            getLinkHasInput() &&
                                 viewModel.overviewStatePass.value == true
                         )
                     })
@@ -200,6 +203,17 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
         }
     }
 
+    override fun initListener() {
+        setFragmentResultListener(InsertFragment.INSERT_DATA_SUCCESS) { key, bundle ->
+            if (key == InsertFragment.INSERT_DATA_SUCCESS) {
+                val result = bundle.getBoolean(InsertFragment.INSERT_DATA_SUCCESS)
+                handleButtonDone(
+                    result && viewModel.overviewStatePass.value == true && getLinkHasInput()
+                )
+            }
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private fun onBindOverviewCount(overviewCount: Int) {
         val (color, isPass) = when {
@@ -218,8 +232,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
             setTextColor(color(color))
         }
 
-        handleButtonDone(isPass)
-
+        handleButtonDone(isPass && getLinkHasInput())
     }
 
     private fun onInsertContactNumber() {
@@ -245,11 +258,10 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
 
                     tvEmailDescription.setTextColorState(contactEmail?.isNotBlank() == true)
                     tvEmailDescription.text =
-                        contactEmail ?: requireContext().getString(R.string.none)
+                        contactEmail ?: string(R.string.none)
                     tvNumberDescription.setTextColorState(contactNumber?.isNotBlank() == true)
                     tvNumberDescription.text =
-                        contactNumber ?: requireContext().getString(R.string.none)
-                    handleButtonDone(viewModel.overviewStatePass.value ?: false)
+                        contactNumber ?: string(R.string.none)
                 }
             }
         }
@@ -352,6 +364,28 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 website = itLinkWeb.text?.isHasValue(),
                 medium = itLinkMedium.text?.isHasValue(),
             )
+        }
+    }
+
+    private fun getLinkHasInput(): Boolean {
+        with(binding.itemEditProfile) {
+            return (itLinkFacebook.text.toString().isNotBlank() &&
+                itLinkFacebook.text.toString() != schemeHttps) ||
+                (itLinkTwitter.text.toString().isNotBlank() &&
+                    itLinkTwitter.text.toString() != schemeHttps) ||
+                (itLinkYouTube.text.toString().isNotBlank() &&
+                    itLinkYouTube.text.toString() != schemeHttps) ||
+                (itLinkWeb.text.toString().isNotBlank() &&
+                    itLinkWeb.text.toString() != schemeHttps) ||
+                (itLinkMedium.text.toString().isNotBlank() &&
+                    itLinkWeb.text.toString() != schemeHttps) ||
+                itOverView.text.toString().isNotBlank() ||
+                (itemDetailProfile.clDetailProfile.isVisible &&
+                    itemDetailProfile.tvBirthdayDescription.text.toString() != string(R.string.none)) ||
+                (itemDetailPage.clDetailPage.isVisible &&
+                    itemDetailPage.tvContactNumber.text.toString() != string(R.string.none)) ||
+                (itemDetailPage.clDetailPage.isVisible &&
+                    itemDetailPage.tvEmailDescription.text.toString() != string(R.string.none))
         }
     }
 }
