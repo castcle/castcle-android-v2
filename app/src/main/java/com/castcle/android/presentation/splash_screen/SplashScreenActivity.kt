@@ -25,10 +25,22 @@ package com.castcle.android.presentation.splash_screen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
+import com.castcle.android.BuildConfig
+import com.castcle.android.R
 import com.castcle.android.core.base.activity.BaseActivity
-import com.castcle.android.core.extensions.navigate
+import com.castcle.android.core.extensions.*
 import com.castcle.android.databinding.ActivitySplashScreenBinding
+import com.castcle.android.databinding.DialogBasicBinding
+import com.castcle.android.domain.setting.entity.ConfigEntity
+import com.castcle.android.domain.setting.entity.UpdateVersionEntity
+import com.castcle.android.presentation.dialog.basic.BasicDialog
 import com.castcle.android.presentation.home.HomeActivity
+import com.castcle.android.presentation.splash_screen.dialog_update_version.UpdateVersionDialog
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @SuppressLint("CustomSplashScreen")
@@ -37,8 +49,47 @@ class SplashScreenActivity : BaseActivity() {
     private val viewModel by viewModel<SplashScreenViewModel>()
 
     override fun initObserver() {
-        viewModel.fetchAccessTokenComplete.observe(this) {
-            navigate<HomeActivity>(finishCurrent = true)
+        lifecycleScope.launch {
+            viewModel.config.filterNotNull().collectLatest {
+                checkUpdateAvailable(config = it)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.fetchAccessTokenComplete.collectLatest {
+                navigate<HomeActivity>(finishCurrent = true)
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.onError.collectLatest {
+                BasicDialog(
+                    binding = DialogBasicBinding.inflate(layoutInflater),
+                    button = string(R.string.retry),
+                    isCancelable = false,
+                    title = it.message.orEmpty(),
+                ) {
+                    viewModel.fetchAccessToken()
+                }.show()
+            }
+        }
+    }
+
+    private fun checkUpdateAvailable(config: ConfigEntity) {
+        when {
+            config.forceUpdateVersion.version > BuildConfig.VERSION_CODE ->
+                showUpdateVersionDialog(config.forceUpdateVersion)
+            config.playStoreUpdateVersion.version > BuildConfig.VERSION_CODE ->
+                showUpdateVersionDialog(config.playStoreUpdateVersion)
+            else -> viewModel.fetchAccessToken()
+        }
+    }
+
+    private fun showUpdateVersionDialog(updateVersion: UpdateVersionEntity) {
+        UpdateVersionDialog(
+            onNegativeButtonClick = { viewModel.fetchAccessToken() },
+            onPositiveButtonClick = { openUrl(updateVersion.updateUrl) },
+            updateVersion = updateVersion,
+        ).also {
+            supportFragmentManager.commit(allowStateLoss = true) { add(it, null) }
         }
     }
 

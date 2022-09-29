@@ -27,6 +27,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.constants.URL_ABOUT_US
 import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
+import com.castcle.android.domain.setting.entity.ConfigEntity
 import com.castcle.android.domain.user.entity.UserWithSyncSocialEntity
 import com.castcle.android.domain.user.type.UserType
 import com.castcle.android.presentation.setting.setting.item_logout.SettingLogoutViewEntity
@@ -41,11 +42,13 @@ import org.koin.core.annotation.Factory
 class SettingMapper {
 
     fun map(
-        response: List<UserWithSyncSocialEntity>,
+        response: Pair<List<UserWithSyncSocialEntity>, ConfigEntity?>,
         notification: List<NotificationBadgesEntity>
     ): List<CastcleViewEntity> {
-        val pageProfile = response.filter { it.user.type is UserType.Page }
-        val userProfile = response.firstOrNull { it.user.type is UserType.People }
+        val user = response.first
+        val config = response.second ?: ConfigEntity()
+        val pageProfile = user.filter { it.user.type is UserType.Page }
+        val userProfile = user.firstOrNull { it.user.type is UserType.People }
             ?: UserWithSyncSocialEntity()
         val notificationItems = notification.map { map ->
             SettingNotificationViewEntity(item = map)
@@ -97,7 +100,13 @@ class SettingMapper {
                 menuIcon = R.drawable.ic_info,
                 uniqueId = "${R.string.about_us}",
             ),
-        )
+        ).filter {
+            when (it.menu) {
+                R.string.ad_manager -> config.adsEnable
+                R.string.content_farming -> config.farmingEnable
+                else -> true
+            }
+        }
         return notificationItems.plus(verifyEmailItems)
             .plus(profileItems)
             .plus(menuItems)

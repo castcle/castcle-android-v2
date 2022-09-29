@@ -113,7 +113,7 @@ class ProfileViewModel(
                     .filter {
                         it.profile.type != ProfileType.Profile
                     }.map {
-                        profileMapper.apply(it)
+                        profileMapper.apply(it, database.config().get())
                     }
             }
         }.cachedIn(viewModelScope)

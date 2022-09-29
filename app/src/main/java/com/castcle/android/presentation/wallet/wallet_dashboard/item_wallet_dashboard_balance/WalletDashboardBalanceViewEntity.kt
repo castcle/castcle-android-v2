@@ -31,6 +31,7 @@ import com.castcle.android.domain.wallet.entity.WalletBalanceEntity
 import com.castcle.android.domain.wallet.type.WalletHistoryFilter
 
 data class WalletDashboardBalanceViewEntity(
+    val airdropBannerEnable: Boolean = false,
     val balance: WalletBalanceEntity = WalletBalanceEntity(),
     val filter: WalletHistoryFilter = WalletHistoryFilter.WalletBalance,
     val user: UserEntity = UserEntity(),

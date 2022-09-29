@@ -21,34 +21,32 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web_image
+package com.castcle.android.data.setting.entity
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
+import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 
-data class FeedWebImageViewEntity(
-    val adsEnable: Boolean = false,
-    val cast: CastEntity = CastEntity(),
-    val farmEnable: Boolean = false,
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
+@Keep
+data class UpdateVersionResponse(
+    @SerializedName("android") val android: Android? = null,
+    @SerializedName("meta") val meta: Meta? = null,
+) {
 
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
-    }
+    data class Android(
+        @SerializedName("url") val url: String? = null,
+        @SerializedName("version") val version: String? = null,
+    )
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebImageViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebImageViewEntity>() == this
-    }
+    data class Message(
+        @SerializedName("en") val en: String? = null,
+    )
 
-    override fun viewType() = R.layout.item_feed_web_image
+    data class Meta(
+        @SerializedName("button") val button: Message? = null,
+        @SerializedName("button_cancel") val buttonCancel: Message? = null,
+        @SerializedName("button_ok") val buttonOk: Message? = null,
+        @SerializedName("message") val message: Message? = null,
+        @SerializedName("title") val title: Message? = null,
+    )
 
 }

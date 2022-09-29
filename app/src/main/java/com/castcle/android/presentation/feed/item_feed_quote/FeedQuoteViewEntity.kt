@@ -32,7 +32,9 @@ import com.castcle.android.presentation.feed.FeedEngagement
 import com.castcle.android.presentation.feed.item_feed_text.FeedTextViewEntity
 
 data class FeedQuoteViewEntity(
+    val adsEnable: Boolean = false,
     val cast: CastEntity = CastEntity(),
+    val farmEnable: Boolean = false,
     val feedId: String = "",
     val reference: CastcleViewEntity = FeedTextViewEntity(),
     val referenceCast: CastEntity? = null,

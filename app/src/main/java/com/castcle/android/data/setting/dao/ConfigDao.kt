@@ -21,34 +21,23 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web_image
+package com.castcle.android.data.setting.dao
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
+import androidx.room.*
+import com.castcle.android.core.constants.TABLE_CONFIG
+import com.castcle.android.domain.setting.entity.ConfigEntity
+import kotlinx.coroutines.flow.Flow
 
-data class FeedWebImageViewEntity(
-    val adsEnable: Boolean = false,
-    val cast: CastEntity = CastEntity(),
-    val farmEnable: Boolean = false,
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
+@Dao
+interface ConfigDao {
 
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
-    }
+    @Query("SELECT * FROM $TABLE_CONFIG")
+    suspend fun get(): ConfigEntity?
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebImageViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebImageViewEntity>() == this
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(item: ConfigEntity)
 
-    override fun viewType() = R.layout.item_feed_web_image
+    @Query("SELECT * FROM $TABLE_CONFIG")
+    fun retrieve(): Flow<ConfigEntity?>
 
 }

@@ -27,6 +27,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.content.entity.ContentQuoteCastWithResultEntity
+import com.castcle.android.domain.setting.entity.ConfigEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.feed.item_feed_image.FeedImageViewEntity
 import com.castcle.android.presentation.feed.item_feed_quote.FeedQuoteViewEntity
@@ -40,11 +41,14 @@ import org.koin.core.annotation.Factory
 @Factory
 class ContentQuoteCastMapper {
 
-    fun apply(item: ContentQuoteCastWithResultEntity): CastcleViewEntity {
-        return mapContentItem(item)
+    fun apply(item: ContentQuoteCastWithResultEntity, config: ConfigEntity?): CastcleViewEntity {
+        return mapContentItem(item, config)
     }
 
-    private fun mapContentItem(item: ContentQuoteCastWithResultEntity): CastcleViewEntity {
+    private fun mapContentItem(
+        item: ContentQuoteCastWithResultEntity,
+        config: ConfigEntity?,
+    ): CastcleViewEntity {
         when {
             item.originalCast?.reported == true &&
                 !item.contentQuoteCast.ignoreReportContentId.contains(item.originalCast.id) -> {
@@ -64,14 +68,16 @@ class ContentQuoteCastMapper {
         }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
+                adsEnable = config?.adsEnable ?: false,
                 cast = item.originalCast,
+                farmEnable = config?.farmingEnable ?: false,
                 reference = mapContentItem(
                     item.copy(
                         originalCast = item.referenceCast,
                         originalUser = item.referenceUser,
                         referenceCast = null,
                         referenceUser = null,
-                    )
+                    ), config
                 ),
                 referenceCast = item.referenceCast,
                 uniqueId = item.originalCast.id,
@@ -85,29 +91,37 @@ class ContentQuoteCastMapper {
                         originalUser = item.referenceUser,
                         referenceCast = null,
                         referenceUser = null,
-                    )
+                    ), config
                 ),
                 uniqueId = item.originalCast.id,
                 user = item.originalUser ?: UserEntity(),
             )
             else -> when {
                 item.originalCast?.image.orEmpty().isNotEmpty() -> FeedImageViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkPreview.orEmpty().isNotBlank() -> FeedWebImageViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkUrl.orEmpty().isNotBlank() -> FeedWebViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 else -> FeedTextViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )

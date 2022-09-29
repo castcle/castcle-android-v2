@@ -24,9 +24,13 @@
 package com.castcle.android.core.di
 
 import android.content.Context
+import com.castcle.android.BuildConfig
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.twitter.sdk.android.core.identity.TwitterAuthClient
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
@@ -37,6 +41,13 @@ import org.koin.dsl.module
 class ApplicationModule
 
 val applicationModule = module {
+    single {
+        val fetchInterval = if (BuildConfig.DEBUG) 60L else 3600L
+        val config = remoteConfigSettings { minimumFetchIntervalInSeconds = fetchInterval }
+        Firebase.remoteConfig.apply {
+            setConfigSettingsAsync(config)
+        }
+    }
     single {
         GoogleSignIn.getClient(
             get<Context>(), GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

@@ -29,6 +29,7 @@ import com.castcle.android.domain.cast.type.CastType
 import com.castcle.android.domain.content.entity.CommentEntity
 import com.castcle.android.domain.content.entity.ContentWithResultEntity
 import com.castcle.android.domain.content.type.ContentType
+import com.castcle.android.domain.setting.entity.ConfigEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.presentation.content.content.item_comment.CommentViewEntity
 import com.castcle.android.presentation.content.content.item_content_metrics.ContentMetricsViewEntity
@@ -45,10 +46,10 @@ import org.koin.core.annotation.Factory
 @Factory
 class ContentMapper {
 
-    fun apply(item: ContentWithResultEntity): CastcleViewEntity {
+    fun apply(item: ContentWithResultEntity, config: ConfigEntity?): CastcleViewEntity {
         return when (item.content.type) {
             is ContentType.Comment -> mapCommentItem(item)
-            is ContentType.Content -> mapContentItem(item)
+            is ContentType.Content -> mapContentItem(item, config)
             is ContentType.Metrics -> mapMetricsItem(item)
             is ContentType.Reply -> mapReplyItem(item)
         }
@@ -86,7 +87,10 @@ class ContentMapper {
         )
     }
 
-    private fun mapContentItem(item: ContentWithResultEntity): CastcleViewEntity {
+    private fun mapContentItem(
+        item: ContentWithResultEntity,
+        config: ConfigEntity?,
+    ): CastcleViewEntity {
         when {
             item.originalCast?.reported == true &&
                 !item.content.ignoreReportContentId.contains(item.originalCast.id) -> {
@@ -106,14 +110,16 @@ class ContentMapper {
         }
         return when (item.originalCast?.type) {
             CastType.Quote -> FeedQuoteViewEntity(
+                adsEnable = config?.adsEnable ?: false,
                 cast = item.originalCast,
+                farmEnable = config?.farmingEnable ?: false,
                 reference = mapContentItem(
                     item.copy(
                         originalCast = item.referenceCast,
                         originalUser = item.referenceUser,
                         referenceCast = null,
                         referenceUser = null,
-                    )
+                    ), config
                 ),
                 referenceCast = item.referenceCast,
                 uniqueId = item.originalCast.id,
@@ -127,29 +133,37 @@ class ContentMapper {
                         originalUser = item.referenceUser,
                         referenceCast = null,
                         referenceUser = null,
-                    )
+                    ), config
                 ),
                 uniqueId = item.originalCast.id,
                 user = item.originalUser ?: UserEntity(),
             )
             else -> when {
                 item.originalCast?.image.orEmpty().isNotEmpty() -> FeedImageViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkPreview.orEmpty().isNotBlank() -> FeedWebImageViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 item.originalCast?.linkUrl.orEmpty().isNotBlank() -> FeedWebViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
                 else -> FeedTextViewEntity(
+                    adsEnable = config?.adsEnable ?: false,
                     cast = item.originalCast ?: CastEntity(),
+                    farmEnable = config?.farmingEnable ?: false,
                     uniqueId = item.originalCast?.id.orEmpty(),
                     user = item.originalUser ?: UserEntity(),
                 )
