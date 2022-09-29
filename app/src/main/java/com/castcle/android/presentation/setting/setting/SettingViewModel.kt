@@ -52,11 +52,18 @@ class SettingViewModel(
 
     private var userUpdater: Job? = null
 
+    private var fetchNotificationBadgesJob: Job? = null
+
+    private var fetchUserPageJob: Job? = null
+
+    private var fetchUserProfileJob: Job? = null
+
     init {
         startUserUpdater()
     }
 
     val views = database.user().retrieveWithSyncSocial()
+        .combine(database.config().retrieve(), ::Pair)
         .combine(database.notificationBadges().retrieve(), mapper::map)
         .distinctUntilChanged()
 
@@ -67,19 +74,22 @@ class SettingViewModel(
     }
 
     private fun fetchNotificationBadges() {
-        launch {
+        fetchNotificationBadgesJob?.cancel()
+        fetchNotificationBadgesJob = launch {
             notificationRepository.fetchNotificationsBadges()
         }
     }
 
     private fun fetchUserPage() {
-        launch {
+        fetchUserPageJob?.cancel()
+        fetchUserPageJob = launch {
             userRepository.fetchUserPage()
         }
     }
 
     private fun fetchUserProfile() {
-        launch {
+        fetchUserProfileJob?.cancel()
+        fetchUserProfileJob = launch {
             userRepository.fetchUserProfile()
         }
     }
@@ -98,6 +108,9 @@ class SettingViewModel(
 
     fun logout() {
         launch(onError = logoutError::postValue) {
+            fetchNotificationBadgesJob?.cancel()
+            fetchUserPageJob?.cancel()
+            fetchUserProfileJob?.cancel()
             authenticationRepository.unregisterFirebaseMessagingToken()
             authenticationRepository.loginOut()
             logoutComplete.postValue(Unit)
@@ -110,6 +123,13 @@ class SettingViewModel(
                 ?.id
                 ?.also { trackerRepository.trackViewSetting(it) }
         }
+    }
+
+    override fun onCleared() {
+        fetchNotificationBadgesJob?.cancel()
+        fetchUserPageJob?.cancel()
+        fetchUserProfileJob?.cancel()
+        super.onCleared()
     }
 
 }

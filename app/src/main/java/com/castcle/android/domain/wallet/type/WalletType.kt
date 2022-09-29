@@ -21,34 +21,35 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.presentation.feed.item_feed_web_image
+package com.castcle.android.domain.wallet.type
 
-import com.castcle.android.R
-import com.castcle.android.core.base.recyclerview.CastcleViewEntity
-import com.castcle.android.core.extensions.cast
-import com.castcle.android.domain.cast.entity.CastEntity
-import com.castcle.android.domain.user.entity.UserEntity
-import com.castcle.android.presentation.feed.FeedEngagement
+import android.os.Parcelable
+import androidx.room.TypeConverter
+import kotlinx.parcelize.Parcelize
 
-data class FeedWebImageViewEntity(
-    val adsEnable: Boolean = false,
-    val cast: CastEntity = CastEntity(),
-    val farmEnable: Boolean = false,
-    val feedId: String = "",
-    override val uniqueId: String = "",
-    val user: UserEntity = UserEntity(),
-) : CastcleViewEntity, FeedEngagement {
+sealed class WalletType(val id: Int) : Parcelable {
 
-    override fun getFeedEngagementId(): String? {
-        return feedId.ifBlank { null }
+    @Parcelize
+    object Native : WalletType(id = 2)
+
+    @Parcelize
+    object WebVew : WalletType(id = 1)
+
+    companion object {
+        fun getFromId(id: Int?) = when (id) {
+            Native.id -> Native
+            else -> WebVew
+        }
     }
 
-    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
-        target?.cast<FeedWebImageViewEntity>()?.uniqueId == uniqueId
-    } else {
-        target?.cast<FeedWebImageViewEntity>() == this
-    }
+    class Converter {
 
-    override fun viewType() = R.layout.item_feed_web_image
+        @TypeConverter
+        fun fromEntity(item: WalletType): String = item.id.toString()
+
+        @TypeConverter
+        fun toEntity(item: String) = getFromId(item.toIntOrNull())
+
+    }
 
 }

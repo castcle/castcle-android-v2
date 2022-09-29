@@ -26,6 +26,7 @@ package com.castcle.android.presentation.wallet.wallet_dashboard
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.custom_view.load_state.item_error_append.ErrorAppendViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_append.LoadingAppendViewEntity
+import com.castcle.android.domain.setting.entity.ConfigEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import com.castcle.android.domain.wallet.entity.*
 import com.castcle.android.domain.wallet.type.WalletDashboardType
@@ -40,10 +41,12 @@ class WalletDashboardMapper {
     fun apply(
         response: List<WalletDashboardWithResultEntity>,
         retryAction: () -> Unit,
+        config: ConfigEntity?,
     ): List<CastcleViewEntity> {
         return response.map { map ->
             when (map.dashboard.type) {
                 is WalletDashboardType.Balance -> WalletDashboardBalanceViewEntity(
+                    airdropBannerEnable = config?.airdropBannerEnable ?: false,
                     balance = map.balance ?: WalletBalanceEntity(),
                     filter = map.dashboard.filter,
                     user = map.user ?: UserEntity(),

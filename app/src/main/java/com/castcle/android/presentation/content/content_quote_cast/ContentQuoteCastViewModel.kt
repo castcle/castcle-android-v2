@@ -68,7 +68,7 @@ class ContentQuoteCastViewModel(
             sessionId = sessionId,
         )
     ).flow.map { pagingData ->
-        pagingData.map { contentQuoteCastMapper.apply(it) }
+        pagingData.map { contentQuoteCastMapper.apply(it, database.config().get()) }
     }.cachedIn(viewModelScope)
 
     fun showReportingContent(id: String, ignoreReportContentId: List<String>) {
