@@ -81,7 +81,7 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:1.1.0"
     implementation "androidx.camera:camera-view:1.1.0"
     implementation "androidx.core:core-ktx:1.9.0"
-    implementation "androidx.fragment:fragment-ktx:1.5.3"
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
     implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
@@ -101,7 +101,7 @@ dependencies {
     implementation "com.google.firebase:firebase-config-ktx"
     implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation "com.google.firebase:firebase-messaging-ktx"
-    implementation platform("com.google.firebase:firebase-bom:30.5.0")
+    implementation platform("com.google.firebase:firebase-bom:31.0.1")
 
     // Glide
     implementation "com.github.bumptech.glide:glide:4.13.2"
@@ -110,7 +110,7 @@ dependencies {
     // Google
     implementation "com.google.android.gms:play-services-auth:20.3.0"
     implementation "com.google.android.gms:play-services-mlkit-barcode-scanning:18.1.0"
-    implementation "com.google.android.material:material:1.6.1"
+    implementation "com.google.android.material:material:1.7.0"
 
     // Image Picker
     implementation "com.github.Drjacky:ImagePicker:2.3.18"
@@ -131,8 +131,8 @@ dependencies {
     implementation "com.airbnb.android:lottie:3.4.1"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
 
     // Network
     implementation "com.squareup.okhttp3:logging-interceptor"
