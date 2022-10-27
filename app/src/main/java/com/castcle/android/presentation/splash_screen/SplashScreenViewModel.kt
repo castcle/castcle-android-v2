@@ -68,9 +68,9 @@ class SplashScreenViewModel(
         launch(
             onError = { fetchAccessToken() },
             onLaunch = { startFetchAccessTokenJob() },
-            onSuccess = { config.value = it },
+            onSuccess = { fetchAccessTokenJob?.cancel() },
         ) {
-            settingRepository.fetchFirebaseRemoteConfig()
+            config.value = settingRepository.fetchFirebaseRemoteConfig()
         }
     }
 
