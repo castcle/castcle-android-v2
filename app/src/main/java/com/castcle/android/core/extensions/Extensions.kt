@@ -71,7 +71,6 @@ import java.text.NumberFormat
 import java.util.*
 import java.util.concurrent.*
 
-
 suspend fun <T> apiCall(apiCall: suspend () -> Response<T>): T? {
     try {
         val response = apiCall()

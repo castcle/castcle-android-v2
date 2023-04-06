@@ -21,29 +21,14 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.notification.entity
+package com.castcle.android.core.custom_view.load_state.item_loading_state_notification
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.castcle.android.core.constants.TABLE_NOTIFICATION_BADGES
-import com.castcle.android.data.notification.entity.NotificationBadgesResponse
+import com.castcle.android.core.base.recyclerview.CastcleViewHolder
+import com.castcle.android.databinding.ItemLoadingStateNotificationBinding
 
-@Entity(tableName = TABLE_NOTIFICATION_BADGES)
-data class NotificationBadgesEntity(
-    @PrimaryKey val id: Long = 0,
-    val page: Int = 0,
-    val profile: Int = 0,
-    val system: Int = 0,
-) {
+class LoadingStateNotificationViewHolder(binding: ItemLoadingStateNotificationBinding) :
+    CastcleViewHolder<LoadingStateNotificationViewEntity>(binding.root) {
 
-    fun total() = profile
-
-    companion object {
-        fun map(response: NotificationBadgesResponse?) = NotificationBadgesEntity(
-            page = response?.page ?: 0,
-            profile = response?.profile ?: 0,
-            system = response?.system ?: 0,
-        )
-    }
+    override var item = LoadingStateNotificationViewEntity()
 
 }

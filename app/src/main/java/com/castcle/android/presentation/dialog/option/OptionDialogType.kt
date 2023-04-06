@@ -52,6 +52,12 @@ sealed class OptionDialogType : Parcelable {
     }
 
     @Parcelize
+    data class NotificationOption(val notificationId: String, val isRead: Boolean) : OptionDialogType() {
+        @IgnoredOnParcel val remove = 0
+        @IgnoredOnParcel val markAsRead = 1
+    }
+
+    @Parcelize
     data class OtherCommentOption(val castcleId: String, val commentId: String) :
         OptionDialogType() {
         @IgnoredOnParcel val replyComment = 0

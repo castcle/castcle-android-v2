@@ -21,49 +21,30 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.core.type
+package com.castcle.android.core.custom_view.load_state.item_loading_state_notification
 
-import androidx.room.TypeConverter
+import com.castcle.android.R
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
+import com.castcle.android.core.extensions.cast
 
-sealed class LoadKeyType(val id: String) {
+data class LoadingStateNotificationViewEntity(
+    override val uniqueId: String = "${R.layout.item_loading_state_notification}",
+) : CastcleViewEntity {
 
-    object Content : LoadKeyType(id = "content")
-
-    object ContentQuoteCast : LoadKeyType(id = "contentQuoteCast")
-
-    object Feed : LoadKeyType(id = "feed")
-
-    object FollowingFollowers : LoadKeyType(id = "followingFollowers")
-
-    object Notification : LoadKeyType(id = "notification")
-
-    object Profile : LoadKeyType(id = "profile")
-
-    object Search : LoadKeyType(id = "search")
-
-    object WhoToFollow : LoadKeyType(id = "whoToFollow")
-
-    companion object {
-        fun getFromId(id: String?) = when (id) {
-            Content.id -> Content
-            ContentQuoteCast.id -> ContentQuoteCast
-            Feed.id -> Feed
-            FollowingFollowers.id -> FollowingFollowers
-            Notification.id -> Notification
-            Profile.id -> Profile
-            Search.id -> Search
-            else -> WhoToFollow
-        }
+    override fun sameAs(isSameItem: Boolean, target: Any?) = if (isSameItem) {
+        target?.cast<LoadingStateNotificationViewEntity>()?.uniqueId == uniqueId
+    } else {
+        target?.cast<LoadingStateNotificationViewEntity>() == this
     }
 
-    class Converter {
+    override fun viewType() = R.layout.item_loading_state_notification
 
-        @TypeConverter
-        fun fromEntity(item: LoadKeyType): String = item.id
-
-        @TypeConverter
-        fun toEntity(item: String): LoadKeyType = getFromId(item)
-
+    companion object {
+        fun create(size: Int): List<LoadingStateNotificationViewEntity> {
+            return mutableListOf<LoadingStateNotificationViewEntity>().apply {
+                repeat(size) { add(LoadingStateNotificationViewEntity()) }
+            }
+        }
     }
 
 }

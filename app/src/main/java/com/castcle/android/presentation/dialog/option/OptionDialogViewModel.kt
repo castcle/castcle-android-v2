@@ -31,6 +31,7 @@ import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.base.view_model.BaseViewModel
 import com.castcle.android.core.database.CastcleDatabase
 import com.castcle.android.domain.content.ContentRepository
+import com.castcle.android.domain.notification.NotificationRepository
 import com.castcle.android.domain.user.UserRepository
 import com.castcle.android.presentation.dialog.option.item_option_dialog.OptionDialogViewEntity
 import org.koin.android.annotation.KoinViewModel
@@ -39,6 +40,7 @@ import org.koin.android.annotation.KoinViewModel
 class OptionDialogViewModel(
     private val contentRepository: ContentRepository,
     private val database: CastcleDatabase,
+    private val notificationRepository: NotificationRepository,
     private val type: OptionDialogType,
     private val userRepository: UserRepository,
 ) : BaseViewModel() {
@@ -68,6 +70,15 @@ class OptionDialogViewModel(
                 contentRepository.deleteContent(contentId = contentId, userId = userId)
                 userRepository.getUser(id = userId)
             }
+        }
+    }
+
+    fun deleteNotification(notificationId: String) {
+        launch(
+            onError = { onError.postValue(it) },
+            onSuccess = { onSuccess.postValue(Unit) },
+        ) {
+            notificationRepository.deleteNotification(notificationId = notificationId)
         }
     }
 
@@ -124,6 +135,19 @@ class OptionDialogViewModel(
                 )
                 listOf(syncSocialMediaItem)
             }
+            is OptionDialogType.NotificationOption -> {
+                val removeItem = OptionDialogViewEntity(
+                    eventType = type.remove,
+                    icon = R.drawable.ic_delete,
+                    title = context.getString(R.string.remove_this_notification)
+                )
+                val markAsReadItem = OptionDialogViewEntity(
+                    eventType = type.markAsRead,
+                    icon = R.drawable.ic_check,
+                    title = context.getString(R.string.mark_as_read)
+                )
+                listOfNotNull(removeItem, markAsReadItem.takeIf { !type.isRead })
+            }
             is OptionDialogType.OtherCommentOption -> {
                 val replyContentItem = OptionDialogViewEntity(
                     eventType = type.replyComment,
@@ -177,6 +201,15 @@ class OptionDialogViewModel(
             }
         }
         views.postValue(items)
+    }
+
+    fun readNotification(notificationId: String) {
+        launch(
+            onError = { onError.postValue(it) },
+            onSuccess = { onSuccess.postValue(Unit) },
+        ) {
+            notificationRepository.readNotification(notificationId = notificationId)
+        }
     }
 
 }

@@ -95,7 +95,9 @@ class SettingFragment : BaseFragment(), SettingListener {
         directions.toCreatePageOptionFragment().navigate()
     }
 
-    override fun onNotificationClicked() = Unit
+    override fun onNotificationClicked() {
+        directions.toNotificationFragment().navigate()
+    }
 
     override fun onUrlClicked(url: String) {
         openUrl(url)
