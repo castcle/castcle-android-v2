@@ -21,29 +21,30 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.notification.entity
+package com.castcle.android.data.notification.dao
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.castcle.android.core.constants.TABLE_NOTIFICATION_BADGES
-import com.castcle.android.data.notification.entity.NotificationBadgesResponse
+import androidx.paging.PagingSource
+import androidx.room.*
+import com.castcle.android.core.constants.TABLE_NOTIFICATION
+import com.castcle.android.domain.notification.entity.NotificationEntity
 
-@Entity(tableName = TABLE_NOTIFICATION_BADGES)
-data class NotificationBadgesEntity(
-    @PrimaryKey val id: Long = 0,
-    val page: Int = 0,
-    val profile: Int = 0,
-    val system: Int = 0,
-) {
+@Dao
+interface NotificationDao {
 
-    fun total() = profile
+    @Query("DELETE FROM $TABLE_NOTIFICATION")
+    suspend fun delete()
 
-    companion object {
-        fun map(response: NotificationBadgesResponse?) = NotificationBadgesEntity(
-            page = response?.page ?: 0,
-            profile = response?.profile ?: 0,
-            system = response?.system ?: 0,
-        )
-    }
+    @Query("DELETE FROM $TABLE_NOTIFICATION WHERE notification_id = :notificationId")
+    suspend fun delete(notificationId: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(items: List<NotificationEntity>)
+
+    @Query("SELECT * FROM $TABLE_NOTIFICATION")
+    @Transaction
+    fun pagingSource(): PagingSource<Int, NotificationEntity>
+
+    @Query("UPDATE $TABLE_NOTIFICATION SET notification_isRead = :isRead WHERE notification_id = :notificationId")
+    suspend fun updateIsRead(notificationId: String, isRead: Boolean)
 
 }

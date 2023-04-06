@@ -83,6 +83,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                 viewModel.createUserState.value = CreateUserState.PAGE_CREATE
                 viewModel.getUserLocal((profileBuild as ProfileBundle.CreatePage).castcleId)
             }
+            else -> Unit
         }
 
         lifecycleScope.launch {
@@ -128,7 +129,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
                             getLinkHasInput() &&
-                                viewModel.overviewStatePass.value == true
+                                    viewModel.overviewStatePass.value == true
                         )
                     })
                 )
@@ -139,7 +140,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
                             getLinkHasInput() &&
-                                viewModel.overviewStatePass.value == true
+                                    viewModel.overviewStatePass.value == true
                         )
                     })
                 )
@@ -150,7 +151,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
                             getLinkHasInput() &&
-                                viewModel.overviewStatePass.value == true
+                                    viewModel.overviewStatePass.value == true
                         )
                     })
                 )
@@ -161,7 +162,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
                             getLinkHasInput() &&
-                                viewModel.overviewStatePass.value == true
+                                    viewModel.overviewStatePass.value == true
                         )
                     })
                 )
@@ -172,7 +173,7 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
                     TextChangeListener(this, onTextChanged = {
                         handleButtonDone(
                             getLinkHasInput() &&
-                                viewModel.overviewStatePass.value == true
+                                    viewModel.overviewStatePass.value == true
                         )
                     })
                 )
@@ -370,24 +371,25 @@ class EditDetailNewProfileFragment : BaseFragment(), EditNewProfileListener {
     private fun getLinkHasInput(): Boolean {
         with(binding.itemEditProfile) {
             return (itLinkFacebook.text.toString().isNotBlank() &&
-                itLinkFacebook.text.toString() != schemeHttps) ||
-                (itLinkTwitter.text.toString().isNotBlank() &&
-                    itLinkTwitter.text.toString() != schemeHttps) ||
-                (itLinkYouTube.text.toString().isNotBlank() &&
-                    itLinkYouTube.text.toString() != schemeHttps) ||
-                (itLinkWeb.text.toString().isNotBlank() &&
-                    itLinkWeb.text.toString() != schemeHttps) ||
-                (itLinkMedium.text.toString().isNotBlank() &&
-                    itLinkWeb.text.toString() != schemeHttps) ||
-                itOverView.text.toString().isNotBlank() ||
-                (itemDetailProfile.clDetailProfile.isVisible &&
-                    itemDetailProfile.tvBirthdayDescription.text.toString() != string(R.string.none)) ||
-                (itemDetailPage.clDetailPage.isVisible &&
-                    itemDetailPage.tvContactNumber.text.toString() != string(R.string.none)) ||
-                (itemDetailPage.clDetailPage.isVisible &&
-                    itemDetailPage.tvEmailDescription.text.toString() != string(R.string.none))
+                    itLinkFacebook.text.toString() != schemeHttps) ||
+                    (itLinkTwitter.text.toString().isNotBlank() &&
+                            itLinkTwitter.text.toString() != schemeHttps) ||
+                    (itLinkYouTube.text.toString().isNotBlank() &&
+                            itLinkYouTube.text.toString() != schemeHttps) ||
+                    (itLinkWeb.text.toString().isNotBlank() &&
+                            itLinkWeb.text.toString() != schemeHttps) ||
+                    (itLinkMedium.text.toString().isNotBlank() &&
+                            itLinkWeb.text.toString() != schemeHttps) ||
+                    itOverView.text.toString().isNotBlank() ||
+                    (itemDetailProfile.clDetailProfile.isVisible &&
+                            itemDetailProfile.tvBirthdayDescription.text.toString() != string(R.string.none)) ||
+                    (itemDetailPage.clDetailPage.isVisible &&
+                            itemDetailPage.tvContactNumber.text.toString() != string(R.string.none)) ||
+                    (itemDetailPage.clDetailPage.isVisible &&
+                            itemDetailPage.tvEmailDescription.text.toString() != string(R.string.none))
         }
     }
+
 }
 
 const val LIMIT_OVERVIEW = 280

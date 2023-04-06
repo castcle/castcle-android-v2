@@ -147,6 +147,7 @@ class CreateNewProfileFragment : BaseFragment() {
                 binding.ivCreatePass.background =
                     requireContext().getDrawableRes(R.drawable.ic_create_page)
             }
+            else -> Unit
         }
 
         with(binding) {
@@ -162,7 +163,7 @@ class CreateNewProfileFragment : BaseFragment() {
 
                             enableBottomNext(
                                 it.isNotBlank() && viewModel.inputUiState.value ==
-                                    VerifyProfileState.CASTCLE_ID_PASS
+                                        VerifyProfileState.CASTCLE_ID_PASS
                             )
                         })
                 )
@@ -189,7 +190,7 @@ class CreateNewProfileFragment : BaseFragment() {
                 viewModel.getSuggestionCastcleID(it)
                 enableBottomNext(
                     it.isNotBlank() && viewModel.inputUiState.value ==
-                        VerifyProfileState.CASTCLE_ID_PASS
+                            VerifyProfileState.CASTCLE_ID_PASS
                 )
                 buttonDone(it.isNotBlank())
             }
@@ -316,7 +317,7 @@ class CreateNewProfileFragment : BaseFragment() {
         with(binding) {
             clCast.visibleOrGone(
                 shown && viewModel.createUserState.value ==
-                    CreateUserState.PAGE_CREATE, delay = delay
+                        CreateUserState.PAGE_CREATE, delay = delay
             )
             when {
                 itInDisplayName.isFocused -> {
@@ -333,4 +334,5 @@ class CreateNewProfileFragment : BaseFragment() {
     private fun buttonDone(isPass: Boolean = false) {
         binding.tvCast.setStateDone(isPass)
     }
+
 }

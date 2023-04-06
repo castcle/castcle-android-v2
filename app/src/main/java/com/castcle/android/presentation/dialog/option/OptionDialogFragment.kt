@@ -102,6 +102,16 @@ class OptionDialogFragment : BaseBottomSheetDialogFragment(), OptionDialogListen
                     .toSyncSocialFragment(userId = type.userId)
                     .navigate()
             }
+            is OptionDialogType.NotificationOption -> when (eventType) {
+                type.remove -> {
+                    showLoading()
+                    viewModel.deleteNotification(type.notificationId)
+                }
+                type.markAsRead -> {
+                    showLoading()
+                    viewModel.readNotification(type.notificationId)
+                }
+            }
             is OptionDialogType.OtherCommentOption -> {
                 setFragmentResult(REPLY_RESULT, bundleOf(REPLY_RESULT to type))
                 backPress()

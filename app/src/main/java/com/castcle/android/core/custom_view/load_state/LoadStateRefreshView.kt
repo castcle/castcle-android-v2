@@ -28,10 +28,15 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.paging.*
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.castcle.android.core.base.recyclerview.*
+import com.castcle.android.core.base.recyclerview.CastcleAdapter
+import com.castcle.android.core.base.recyclerview.CastcleListener
+import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.custom_view.load_state.LoadStateRefreshItemsType.*
 import com.castcle.android.core.custom_view.load_state.item_empty_state_content.EmptyStateContentViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_empty_state_feed.EmptyStateFeedViewEntity
@@ -47,12 +52,16 @@ import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.L
 import com.castcle.android.core.custom_view.load_state.item_loading_state_cast.LoadingStateCastViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_comment.LoadingStateCommentViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_comment.LoadingStateCommentViewRenderer
+import com.castcle.android.core.custom_view.load_state.item_loading_state_notification.LoadingStateNotificationViewEntity
+import com.castcle.android.core.custom_view.load_state.item_loading_state_notification.LoadingStateNotificationViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_profile.LoadingStateProfileViewRenderer
 import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading_state_user.LoadingStateUserViewRenderer
 import com.castcle.android.core.error.RetryException
-import com.castcle.android.core.extensions.*
+import com.castcle.android.core.extensions.cast
+import com.castcle.android.core.extensions.gone
+import com.castcle.android.core.extensions.visible
 import com.castcle.android.databinding.LayoutLoadStateRefreshBinding
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.FlowPreview
@@ -72,6 +81,7 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
             registerRenderer(LoadingViewRenderer())
             registerRenderer(LoadingStateCastViewRenderer())
             registerRenderer(LoadingStateCommentViewRenderer())
+            registerRenderer(LoadingStateNotificationViewRenderer())
             registerRenderer(LoadingStateProfileViewRenderer())
             registerRenderer(LoadingStateUserViewRenderer())
         }
@@ -159,16 +169,16 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
 
     private fun CombinedLoadStates.isEmptyState(itemCount: Int) =
         refresh is LoadState.NotLoading
-            && append is LoadState.NotLoading
-            && append.endOfPaginationReached
-            && itemCount < 1
+                && append is LoadState.NotLoading
+                && append.endOfPaginationReached
+                && itemCount < 1
 
     private fun CombinedLoadStates.isErrorState() =
         refresh is LoadState.Error
 
     private fun CombinedLoadStates.isIdleState(itemCount: Int) =
         refresh is LoadState.NotLoading
-            && itemCount > 0
+                && itemCount > 0
 
     private fun CombinedLoadStates.isLoadingState() =
         refresh is LoadState.Loading
@@ -245,6 +255,11 @@ class LoadStateRefreshView(context: Context, attrs: AttributeSet) :
                 empty = EmptyStateFeedViewEntity.create(1),
                 error = EmptyStateFeedViewEntity.create(1),
                 loading = LoadingStateCastViewEntity.create(3),
+            )
+            NOTIFICATION -> StateItems(
+                empty = EmptyStateSearchViewEntity.create(1),
+                error = EmptyStateFeedViewEntity.create(1),
+                loading = LoadingStateNotificationViewEntity.create(10),
             )
             PROFILE -> StateItems(
                 empty = listOf(),

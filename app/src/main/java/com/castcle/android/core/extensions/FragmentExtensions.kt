@@ -29,6 +29,8 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
+import android.os.Parcelable
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -40,6 +42,27 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.castcle.android.R
+import timber.log.Timber
+
+@Suppress("DEPRECATION")
+inline fun <reified T> Fragment.arguments(key: String?): T? = try {
+    when (T::class) {
+        Boolean::class -> arguments?.getBoolean(key) as? T
+        Float::class -> arguments?.getFloat(key) as? T
+        Int::class -> arguments?.getInt(key) as? T
+        Long::class -> arguments?.getLong(key) as? T
+        Parcelable::class -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelable(key, T::class.java)
+        } else {
+            arguments?.getParcelable(key)
+        }
+        String::class -> arguments?.getString(key) as? T
+        else -> null
+    }
+} catch (throwable: Throwable) {
+    Timber.e(throwable)
+    null
+}
 
 @Suppress("DEPRECATION")
 fun Fragment.changeSoftInputMode(isResize: Boolean) {

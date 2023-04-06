@@ -24,5 +24,7 @@
 package com.castcle.android.domain.notification
 
 interface NotificationRepository {
+    suspend fun deleteNotification(notificationId: String)
     suspend fun fetchNotificationsBadges()
+    suspend fun readNotification(notificationId: String)
 }
