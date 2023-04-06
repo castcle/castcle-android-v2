@@ -78,17 +78,17 @@ android {
 dependencies {
 
     // Android
-    implementation "androidx.appcompat:appcompat:1.5.1"
-    implementation "androidx.camera:camera-camera2:1.2.0"
-    implementation "androidx.camera:camera-core:1.2.0"
-    implementation "androidx.camera:camera-lifecycle:1.2.0"
-    implementation "androidx.camera:camera-view:1.2.0"
-    implementation "androidx.core:core-ktx:1.9.0"
-    implementation "androidx.fragment:fragment-ktx:1.5.4"
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.camera:camera-camera2:1.2.2"
+    implementation "androidx.camera:camera-core:1.2.2"
+    implementation "androidx.camera:camera-lifecycle:1.2.2"
+    implementation "androidx.camera:camera-view:1.2.2"
+    implementation "androidx.core:core-ktx:1.10.0"
+    implementation "androidx.fragment:fragment-ktx:1.5.6"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
     implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
-    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation "androidx.work:work-runtime-ktx:2.8.1"
 
     // Date Picker
     implementation "com.github.florent37:singledateandtimepicker:2.2.7"
@@ -97,23 +97,23 @@ dependencies {
     implementation "com.intuit.sdp:sdp-android:1.1.0"
 
     // Facebook
-    implementation "com.facebook.android:facebook-android-sdk:14.1.0"
+    implementation "com.facebook.android:facebook-android-sdk:16.0.1"
 
     // Firebase
     implementation "com.google.firebase:firebase-analytics-ktx"
     implementation "com.google.firebase:firebase-config-ktx"
     implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation "com.google.firebase:firebase-messaging-ktx"
-    implementation platform("com.google.firebase:firebase-bom:31.1.1")
+    implementation platform("com.google.firebase:firebase-bom:31.4.0")
 
     // Glide
     implementation "com.github.bumptech.glide:glide:4.13.2"
     kapt "com.github.bumptech.glide:compiler:4.13.2"
 
     // Google
-    implementation "com.google.android.gms:play-services-auth:20.4.0"
-    implementation "com.google.android.gms:play-services-mlkit-barcode-scanning:18.1.0"
-    implementation "com.google.android.material:material:1.7.0"
+    implementation "com.google.android.gms:play-services-auth:20.4.1"
+    implementation "com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0"
+    implementation "com.google.android.material:material:1.8.0"
 
     // Image Picker
     implementation "com.github.Drjacky:ImagePicker:2.3.18"
@@ -122,7 +122,7 @@ dependencies {
     implementation "com.github.stfalcon-studio:StfalconImageViewer:v1.0.1"
 
     // Jwt Decode
-    implementation "com.auth0.android:jwtdecode:2.0.1"
+    implementation "com.auth0.android:jwtdecode:2.0.2"
 
     // Koin
     implementation "io.insert-koin:koin-android:3.2.2"
@@ -155,10 +155,10 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
     // Room
-    implementation "androidx.room:room-ktx:2.4.3"
-    implementation "androidx.room:room-paging:2.4.3"
-    implementation "androidx.room:room-rxjava2:2.4.3"
-    kapt "androidx.room:room-compiler:2.4.3"
+    implementation "androidx.room:room-ktx:2.5.1"
+    implementation "androidx.room:room-paging:2.5.1"
+    implementation "androidx.room:room-rxjava2:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.1"
 
     // Shimmer Effect
     implementation "com.facebook.shimmer:shimmer:0.5.0"

@@ -21,29 +21,19 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.notification.entity
+package com.castcle.android.data.notification.entity
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.castcle.android.core.constants.TABLE_NOTIFICATION_BADGES
-import com.castcle.android.data.notification.entity.NotificationBadgesResponse
+import androidx.annotation.Keep
+import com.castcle.android.core.base.response.PhotoResponse
+import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = TABLE_NOTIFICATION_BADGES)
-data class NotificationBadgesEntity(
-    @PrimaryKey val id: Long = 0,
-    val page: Int = 0,
-    val profile: Int = 0,
-    val system: Int = 0,
-) {
-
-    fun total() = profile
-
-    companion object {
-        fun map(response: NotificationBadgesResponse?) = NotificationBadgesEntity(
-            page = response?.page ?: 0,
-            profile = response?.profile ?: 0,
-            system = response?.system ?: 0,
-        )
-    }
-
-}
+@Keep
+data class NotificationResponse(
+    @SerializedName("avatar") val avatar: PhotoResponse? = null,
+    @SerializedName("contentId") val contentId: String? = null,
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("message") val message: String? = null,
+    @SerializedName("profileId") val profileId: String? = null,
+    @SerializedName("read") val read: Boolean? = null,
+    @SerializedName("updatedAt") val updatedAt: String? = null,
+)

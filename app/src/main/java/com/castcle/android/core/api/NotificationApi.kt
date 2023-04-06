@@ -23,13 +23,33 @@
 
 package com.castcle.android.core.api
 
+import com.castcle.android.core.base.response.BaseResponse
+import com.castcle.android.core.constants.*
 import com.castcle.android.data.notification.entity.NotificationBadgesResponse
+import com.castcle.android.data.notification.entity.NotificationResponse
 import retrofit2.Response
-import retrofit2.http.GET
+import retrofit2.http.*
 
 interface NotificationApi {
 
+    @DELETE("v2/notifications/{$PARAMETER_NOTIFICATION_ID}")
+    suspend fun deleteNotification(
+        @Path(PARAMETER_NOTIFICATION_ID) notificationId: String,
+    ): Response<Unit>
+
+    @GET("v2/notifications")
+    suspend fun getNotification(
+        @Query(PARAMETER_MAX_RESULTS) maxResults: Int,
+        @Query(PARAMETER_SOURCE) source: String = PARAMETER_SOURCE_DEFAULT,
+        @Query(PARAMETER_UNTIL_ID) untilId: String?,
+    ): Response<BaseResponse<List<NotificationResponse>>>
+
     @GET("v2/notifications/badges")
     suspend fun getNotificationBadges(): Response<NotificationBadgesResponse>
+
+    @POST("v2/notifications/{$PARAMETER_NOTIFICATION_ID}/reads")
+    suspend fun readNotification(
+        @Path(PARAMETER_NOTIFICATION_ID) notificationId: String,
+    ): Response<Unit>
 
 }

@@ -28,7 +28,10 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.widget.Toast
-import androidx.annotation.*
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.MutableLiveData
@@ -39,6 +42,7 @@ import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewEntity
 import com.castcle.android.core.custom_view.load_state.item_error_state.ErrorStateViewEntity
 import com.castcle.android.core.custom_view.load_state.item_loading.LoadingViewEntity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 
 fun RecyclerView.ViewHolder.color(@ColorRes id: Int?) = if (id != null) {
@@ -79,11 +83,24 @@ fun MutableStateFlow<List<CastcleViewEntity>?>.error(
     value = listOf(ErrorStateViewEntity(action = retryAction, error = error))
 }
 
-fun RecyclerView.firstVisibleItemPosition(): Int {
-    return layoutManager
-        ?.cast<LinearLayoutManager>()
-        ?.findFirstVisibleItemPosition()
-        ?: Int.MAX_VALUE
+fun RecyclerView.findFirstVisibleItemPosition(isCompletelyVisible: Boolean = true): Int {
+    val layoutManager = layoutManager as? LinearLayoutManager
+    return if (isCompletelyVisible) {
+        layoutManager?.findFirstCompletelyVisibleItemPosition() ?: -1
+    } else {
+        layoutManager?.findFirstVisibleItemPosition() ?: -1
+    }
+}
+
+suspend fun RecyclerView.forceScrollToTop() {
+    if (findFirstVisibleItemPosition() == 0) {
+        delay(69)
+        return
+    }
+    while (findFirstVisibleItemPosition() != 0) {
+        scrollToPosition(0)
+        delay(69)
+    }
 }
 
 fun MutableLiveData<List<CastcleViewEntity>>.loading() {
