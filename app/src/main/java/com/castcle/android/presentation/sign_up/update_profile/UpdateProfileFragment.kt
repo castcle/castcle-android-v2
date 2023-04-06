@@ -144,6 +144,7 @@ class UpdateProfileFragment : BaseFragment(), UpdateProfileListener {
                 viewModel.castcleId.value =
                     (profileBuild as ProfileBundle.CreatePage).castcleId
             }
+            else -> Unit
         }
 
         with(binding) {
@@ -169,9 +170,7 @@ class UpdateProfileFragment : BaseFragment(), UpdateProfileListener {
                     PhotoSelectedState.COVER_SELECT ->
                         false
                     else -> null
-                }?.let {
-                    viewModel.onStopLoading(it)
-                }
+                }?.let(viewModel::onStopLoading)
             }
         }?.addTo(compositeDisposable)
     }

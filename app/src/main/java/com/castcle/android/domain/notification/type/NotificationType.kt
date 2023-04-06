@@ -21,48 +21,34 @@
  *
  * Created by Prakan Sornbootnark on 15/08/2022. */
 
-package com.castcle.android.domain.core.type
+package com.castcle.android.domain.notification.type
 
+import android.os.Parcelable
 import androidx.room.TypeConverter
+import kotlinx.parcelize.Parcelize
 
-sealed class LoadKeyType(val id: String) {
+sealed class NotificationType(val id: String) : Parcelable {
 
-    object Content : LoadKeyType(id = "content")
+    @Parcelize
+    object Cast : NotificationType(id = "cast")
 
-    object ContentQuoteCast : LoadKeyType(id = "contentQuoteCast")
-
-    object Feed : LoadKeyType(id = "feed")
-
-    object FollowingFollowers : LoadKeyType(id = "followingFollowers")
-
-    object Notification : LoadKeyType(id = "notification")
-
-    object Profile : LoadKeyType(id = "profile")
-
-    object Search : LoadKeyType(id = "search")
-
-    object WhoToFollow : LoadKeyType(id = "whoToFollow")
+    @Parcelize
+    object Follow : NotificationType(id = "follow")
 
     companion object {
         fun getFromId(id: String?) = when (id) {
-            Content.id -> Content
-            ContentQuoteCast.id -> ContentQuoteCast
-            Feed.id -> Feed
-            FollowingFollowers.id -> FollowingFollowers
-            Notification.id -> Notification
-            Profile.id -> Profile
-            Search.id -> Search
-            else -> WhoToFollow
+            Cast.id -> Cast
+            else -> Follow
         }
     }
 
     class Converter {
 
         @TypeConverter
-        fun fromEntity(item: LoadKeyType): String = item.id
+        fun fromEntity(item: NotificationType): String = item.id
 
         @TypeConverter
-        fun toEntity(item: String): LoadKeyType = getFromId(item)
+        fun toEntity(item: String) = getFromId(item)
 
     }
 

@@ -31,6 +31,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import org.koin.ksp.generated.module
 import timber.log.Timber
 
@@ -45,8 +46,8 @@ class CastcleApplication : Application(), KoinComponent {
 
     private fun initKoin() {
         startKoin {
-            androidContext(this@CastcleApplication)
-            androidLogger()
+            androidContext(androidContext = this@CastcleApplication)
+            androidLogger(level = Level.DEBUG)
             workManagerFactory()
             modules(
                 ApplicationModule().module,
@@ -54,7 +55,7 @@ class CastcleApplication : Application(), KoinComponent {
                 applicationModule,
                 networkModule,
                 storageModule,
-                workModule
+                workModule,
             )
         }
     }

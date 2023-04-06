@@ -411,6 +411,24 @@
     </fragment>
 
     <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.castcle.android.presentation.notification.NotificationFragment">
+
+        <action
+            android:id="@+id/toContentFragment"
+            app:destination="@id/contentFragment" />
+
+        <action
+            android:id="@+id/toFollowingFollowersFragment"
+            app:destination="@id/followingFollowersFragment" />
+
+        <action
+            android:id="@+id/toOptionDialogFragment"
+            app:destination="@id/optionDialogFragment" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.castcle.android.presentation.profile.ProfileFragment">
 
@@ -615,8 +633,20 @@
             app:destination="@id/accountFragment" />
 
         <action
+            android:id="@+id/toAdManageFragment"
+            app:destination="@+id/adManageFragment" />
+
+        <action
             android:id="@+id/toCreatePageOptionFragment"
             app:destination="@+id/createPageOptionFragment" />
+
+        <action
+            android:id="@+id/toNotificationFragment"
+            app:destination="@+id/notificationFragment" />
+
+        <action
+            android:id="@+id/toPageCondition"
+            app:destination="@+id/createPageConditionFragment" />
 
         <action
             android:id="@+id/toProfileFragment"
@@ -626,13 +656,6 @@
             android:id="@+id/toResentVerifyEmailFragment"
             app:destination="@id/resentVerifyEmailFragment" />
 
-        <action
-            android:id="@+id/toPageCondition"
-            app:destination="@+id/createPageConditionFragment" />
-
-        <action
-            android:id="@+id/toAdManageFragment"
-            app:destination="@+id/adManageFragment" />
     </fragment>
 
     <fragment

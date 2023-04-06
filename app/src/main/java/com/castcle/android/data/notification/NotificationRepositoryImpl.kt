@@ -24,8 +24,8 @@
 package com.castcle.android.data.notification
 
 import com.castcle.android.core.api.NotificationApi
-import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.core.database.CastcleDatabase
+import com.castcle.android.core.extensions.apiCall
 import com.castcle.android.domain.notification.NotificationRepository
 import com.castcle.android.domain.notification.entity.NotificationBadgesEntity
 import org.koin.core.annotation.Factory
@@ -36,9 +36,19 @@ class NotificationRepositoryImpl(
     private val database: CastcleDatabase,
 ) : NotificationRepository {
 
+    override suspend fun deleteNotification(notificationId: String) {
+        apiCall { api.deleteNotification(notificationId = notificationId) }
+        database.notification().delete(notificationId)
+    }
+
     override suspend fun fetchNotificationsBadges() {
         val response = apiCall { api.getNotificationBadges() }
         database.notificationBadges().insert(NotificationBadgesEntity.map(response))
+    }
+
+    override suspend fun readNotification(notificationId: String) {
+        apiCall { api.readNotification(notificationId = notificationId) }
+        database.notification().updateIsRead(notificationId, true)
     }
 
 }
