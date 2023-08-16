@@ -27,14 +27,17 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.castcle.android.R
-import com.castcle.android.core.glide.*
+import com.castcle.android.core.glide.DpRoundedCorners
+import com.castcle.android.core.glide.GlideUrlWithQueryParameter
+import com.castcle.android.core.glide.ScaleCenterCrop
 import com.castcle.android.domain.core.entity.ImageEntity
 
 fun ImageView.loadAvatarImage(imageUrl: String?) {
-    GlideApp.with(context).clear(this)
-    GlideApp.with(context)
+    Glide.with(context).clear(this)
+    Glide.with(context)
         .load(GlideUrlWithQueryParameter(imageUrl))
         .error(R.drawable.ic_avatar)
         .placeholder(R.drawable.ic_avatar)
@@ -43,8 +46,8 @@ fun ImageView.loadAvatarImage(imageUrl: String?) {
 }
 
 fun ImageView.loadAvatarImageLocal(imageUri: Uri? = null, imageUrl: String?) {
-    GlideApp.with(context).clear(this)
-    GlideApp.with(context)
+    Glide.with(context).clear(this)
+    Glide.with(context)
         .load(imageUri ?: GlideUrlWithQueryParameter(imageUrl))
         .error(R.drawable.ic_avatar)
         .placeholder(R.drawable.ic_avatar)
@@ -53,12 +56,12 @@ fun ImageView.loadAvatarImageLocal(imageUri: Uri? = null, imageUrl: String?) {
 }
 
 fun loadViewLargeImage(imageView: ImageView, image: ImageEntity) {
-    val thumbnail = GlideApp.with(imageView.context)
+    val thumbnail = Glide.with(imageView.context)
         .asDrawable()
         .load(GlideUrlWithQueryParameter(image.thumbnail))
-    val error = GlideApp.with(imageView.context)
+    val error = Glide.with(imageView.context)
         .load(R.drawable.ic_image)
-    GlideApp.with(imageView.context)
+    Glide.with(imageView.context)
         .load(GlideUrlWithQueryParameter(image.original))
         .thumbnail(thumbnail)
         .placeholder(R.drawable.ic_image)
@@ -69,7 +72,7 @@ fun loadViewLargeImage(imageView: ImageView, image: ImageEntity) {
 fun ImageView.loadImage(
     @DrawableRes imageId: Int,
 ) {
-    GlideApp.with(context)
+    Glide.with(context)
         .load(imageId)
         .into(this)
 }
@@ -84,14 +87,14 @@ fun ImageView.loadScaleCenterCrop(
         scaleWidth = scale.first,
         scaleHeight = scale.second
     )
-    val thumbnail = GlideApp.with(context)
+    val thumbnail = Glide.with(context)
         .asDrawable()
         .load(GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(scaleCenterCrop)
-    val error = GlideApp.with(context)
+    val error = Glide.with(context)
         .load(R.drawable.ic_image)
         .transform(scaleCenterCrop)
-    GlideApp.with(context)
+    Glide.with(context)
         .load(uri ?: GlideUrlWithQueryParameter(url))
         .thumbnail(thumbnail)
         .placeholder(R.drawable.ic_image)
@@ -119,7 +122,7 @@ fun ImageView.loadCenterCropWithRoundedCorners(
         enableBottomLeft = enableBottomLeft,
         enableBottomRight = enableBottomRight,
     )
-    GlideApp.with(context)
+    Glide.with(context)
         .load(id)
         .transform(centerCrop, roundedCorners)
         .into(this)
@@ -144,15 +147,15 @@ fun ImageView.loadCenterCropWithRoundedCorners(
         enableBottomLeft = enableBottomLeft,
         enableBottomRight = enableBottomRight,
     )
-    val placeholder = GlideApp.with(context)
+    val placeholder = Glide.with(context)
         .load(R.drawable.ic_image)
         .transform(centerCrop, roundedCorners)
-    val thumbnail = GlideApp.with(context)
+    val thumbnail = Glide.with(context)
         .load(uri ?: GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(centerCrop, roundedCorners)
         .thumbnail(placeholder)
         .error(placeholder)
-    GlideApp.with(context)
+    Glide.with(context)
         .load(uri ?: GlideUrlWithQueryParameter(url))
         .transform(centerCrop, roundedCorners)
         .thumbnail(thumbnail)
@@ -183,15 +186,15 @@ fun ImageView.loadScaleCenterCropWithRoundedCorners(
         enableBottomLeft = enableBottomLeft,
         enableBottomRight = enableBottomRight,
     )
-    val placeholder = GlideApp.with(context)
+    val placeholder = Glide.with(context)
         .load(R.drawable.ic_image)
         .transform(centerCrop, roundedCorners)
-    val thumbnail = GlideApp.with(context)
+    val thumbnail = Glide.with(context)
         .load(uri ?: GlideUrlWithQueryParameter(thumbnailUrl))
         .transform(centerCrop, roundedCorners)
         .thumbnail(placeholder)
         .error(placeholder)
-    GlideApp.with(context)
+    Glide.with(context)
         .load(uri ?: GlideUrlWithQueryParameter(url))
         .transform(centerCrop, roundedCorners)
         .thumbnail(thumbnail)

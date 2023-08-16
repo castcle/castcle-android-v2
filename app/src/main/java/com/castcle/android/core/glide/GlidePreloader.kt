@@ -24,6 +24,7 @@
 package com.castcle.android.core.glide
 
 import android.content.Context
+import com.bumptech.glide.Glide
 import com.castcle.android.domain.cast.entity.CastEntity
 import com.castcle.android.domain.user.entity.UserEntity
 import org.koin.core.annotation.Factory
@@ -53,7 +54,7 @@ class GlidePreloader(private val context: Context) {
 
     private fun startPreload(url: String?) {
         if (!url.isNullOrBlank()) {
-            GlideApp.with(context)
+            Glide.with(context)
                 .load(GlideUrlWithQueryParameter(url))
                 .preload()
         }

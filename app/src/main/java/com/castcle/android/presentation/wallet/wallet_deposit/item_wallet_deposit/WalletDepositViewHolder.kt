@@ -24,9 +24,12 @@
 package com.castcle.android.presentation.wallet.wallet_deposit.item_wallet_deposit
 
 import android.util.Base64
+import com.bumptech.glide.Glide
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
-import com.castcle.android.core.extensions.*
-import com.castcle.android.core.glide.GlideApp
+import com.castcle.android.core.extensions.context
+import com.castcle.android.core.extensions.copyToClipboard
+import com.castcle.android.core.extensions.onClick
+import com.castcle.android.core.extensions.toBitmap
 import com.castcle.android.databinding.ItemWalletDepositBinding
 import com.castcle.android.presentation.wallet.wallet_deposit.WalletDepositListener
 import io.reactivex.disposables.CompositeDisposable
@@ -60,10 +63,10 @@ class WalletDepositViewHolder(
         try {
             binding.tvCastcleId.text = item.castcleId
             binding.tvDescription.text = item.castcleId
-            GlideApp.with(context())
+            Glide.with(context())
                 .load(Base64.decode(item.qrCode.toByteArray(), Base64.DEFAULT))
                 .into(binding.ivQrCode)
-            GlideApp.with(context())
+            Glide.with(context())
                 .load(Base64.decode(item.qrCode.toByteArray(), Base64.DEFAULT))
                 .into(binding.ivQrCodeExport)
         } catch (exception: Exception) {

@@ -321,7 +321,7 @@ fun Activity.saveImage(bitmap: Bitmap, name: String) {
         val image = File(imagesDir, "$name.png")
         FileOutputStream(image)
     }
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+    fos?.let { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
     fos?.flush()
     fos?.close()
 }

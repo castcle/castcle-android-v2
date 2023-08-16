@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id "com.android.application"
     id "com.google.devtools.ksp"
@@ -12,11 +14,11 @@ plugins {
 
 android {
     namespace "com.castcle.android"
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         minSdk 26
-        targetSdk 33
-        versionCode 69
+        targetSdk 34
+        versionCode 169
         versionName "2.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
@@ -27,16 +29,16 @@ android {
             }
         }
     }
-    flavorDimensions "environment"
+    flavorDimensions += "environment"
     productFlavors {
         development {
-            applicationId "com.castcle.android.dev.v2"
+            applicationId "com.castcle.android.dev"
         }
         production {
-            applicationId "com.castcle.android.v2"
+            applicationId "com.castcle.android"
         }
         staging {
-            applicationId "com.castcle.android.stg.v2"
+            applicationId "com.castcle.android.stg"
         }
     }
     buildFeatures {
@@ -63,15 +65,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     applicationVariants.configureEach { variant ->
         kotlin.sourceSets {
-            getByName(name) {
+            named(name) {
                 kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
             }
         }
+    }
+    tasks.withType(KotlinCompile).configureEach {
+        it.kotlinOptions.jvmTarget = "1.8"
     }
 }
 
@@ -79,15 +81,15 @@ dependencies {
 
     // Android
     implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.camera:camera-camera2:1.2.2"
-    implementation "androidx.camera:camera-core:1.2.2"
-    implementation "androidx.camera:camera-lifecycle:1.2.2"
-    implementation "androidx.camera:camera-view:1.2.2"
-    implementation "androidx.core:core-ktx:1.10.0"
-    implementation "androidx.fragment:fragment-ktx:1.5.6"
+    implementation "androidx.camera:camera-camera2:1.2.3"
+    implementation "androidx.camera:camera-core:1.2.3"
+    implementation "androidx.camera:camera-lifecycle:1.2.3"
+    implementation "androidx.camera:camera-view:1.2.3"
+    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.fragment:fragment-ktx:1.6.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
-    implementation "androidx.viewpager2:viewpager2:1.1.0-beta01"
+    implementation "androidx.paging:paging-runtime-ktx:3.2.0"
+    implementation "androidx.viewpager2:viewpager2:1.1.0-beta02"
     implementation "androidx.work:work-runtime-ktx:2.8.1"
 
     // Date Picker
@@ -104,16 +106,16 @@ dependencies {
     implementation "com.google.firebase:firebase-config-ktx"
     implementation "com.google.firebase:firebase-crashlytics-ktx"
     implementation "com.google.firebase:firebase-messaging-ktx"
-    implementation platform("com.google.firebase:firebase-bom:31.4.0")
+    implementation platform("com.google.firebase:firebase-bom:32.2.2")
 
     // Glide
-    implementation "com.github.bumptech.glide:glide:4.13.2"
-    kapt "com.github.bumptech.glide:compiler:4.13.2"
+    implementation "com.github.bumptech.glide:glide:4.15.1"
+    ksp "com.github.bumptech.glide:ksp:4.15.1"
 
     // Google
-    implementation "com.google.android.gms:play-services-auth:20.4.1"
-    implementation "com.google.android.gms:play-services-mlkit-barcode-scanning:18.2.0"
-    implementation "com.google.android.material:material:1.8.0"
+    implementation "com.google.android.gms:play-services-auth:20.6.0"
+    implementation "com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0"
+    implementation "com.google.android.material:material:1.9.0"
 
     // Image Picker
     implementation "com.github.Drjacky:ImagePicker:2.3.18"
@@ -125,17 +127,17 @@ dependencies {
     implementation "com.auth0.android:jwtdecode:2.0.2"
 
     // Koin
-    implementation "io.insert-koin:koin-android:3.2.2"
-    implementation "io.insert-koin:koin-annotations:1.0.1"
-    implementation "io.insert-koin:koin-androidx-workmanager:3.2.2"
-    ksp "io.insert-koin:koin-ksp-compiler:1.0.1"
+    implementation "io.insert-koin:koin-android:3.4.3"
+    implementation "io.insert-koin:koin-androidx-workmanager:3.4.3"
+    implementation "io.insert-koin:koin-annotations:1.2.2"
+    ksp "io.insert-koin:koin-ksp-compiler:1.2.2"
 
     // Lottie
     implementation "com.airbnb.android:lottie:3.4.1"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.0"
 
     // Network
     implementation "com.squareup.okhttp3:logging-interceptor"
@@ -155,10 +157,10 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
     // Room
-    implementation "androidx.room:room-ktx:2.5.1"
-    implementation "androidx.room:room-paging:2.5.1"
-    implementation "androidx.room:room-rxjava2:2.5.1"
-    kapt "androidx.room:room-compiler:2.5.1"
+    implementation "androidx.room:room-ktx:2.5.2"
+    implementation "androidx.room:room-paging:2.5.2"
+    implementation "androidx.room:room-rxjava2:2.5.2"
+    ksp "androidx.room:room-compiler:2.5.2"
 
     // Shimmer Effect
     implementation "com.facebook.shimmer:shimmer:0.5.0"
