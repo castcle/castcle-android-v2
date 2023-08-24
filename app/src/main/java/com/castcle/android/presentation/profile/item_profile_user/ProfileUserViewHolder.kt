@@ -25,6 +25,7 @@ package com.castcle.android.presentation.profile.item_profile_user
 
 import android.annotation.SuppressLint
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.castcle.android.R
 import com.castcle.android.core.base.recyclerview.CastcleViewHolder
 import com.castcle.android.core.extensions.*
@@ -86,6 +87,8 @@ class ProfileUserViewHolder(
         binding.tvDisplayName.text = item.user.displayName
         binding.tvCastcleId.text = item.user.castcleId
         binding.ivAvatar.loadAvatarImageLocal(item.avatarUpLoad, item.user.avatar.thumbnail)
+        binding.ivAddAvatar.isVisible = item.user.isOwner
+        binding.ivEditCover.isVisible = item.user.isOwner
         binding.ivCover.loadScaleCenterCrop(
             scale = 12 to 10,
             thumbnailUrl = item.user.cover?.thumbnail,
